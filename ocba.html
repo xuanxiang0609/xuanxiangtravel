@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>網路訂車協議｜玹翔旅遊 Xuan Xiang Travel</title>
+<meta name="description" content="玹翔旅遊網路訂車協議、預約流程、付款規範、乘客責任、取消改期、個人資料使用與服務條款。">
+<meta name="keywords" content="玹翔旅遊,機場接送,包車旅遊">
+<meta property="og:title" content="網路訂車協議｜玹翔旅遊 Xuan Xiang Travel">
+<meta property="og:description" content="玹翔旅遊網路訂車協議、預約流程、付款規範、乘客責任、取消改期、個人資料使用與服務條款。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo.jpg">
+<style>
+:root{
+  --ocba-gold:#d8b56d;
+  --ocba-gold2:#f7df9b;
+  --ocba-gold3:#fff3c2;
+  --ocba-text:#f7f1e7;
+  --ocba-muted:#cfc7bb;
+  --ocba-line:rgba(216,181,109,.22);
+}
+
+body{
+  background:
+    radial-gradient(circle at top,rgba(216,181,109,.12),transparent 28%),
+    linear-gradient(180deg,#040506 0%,#0a1018 48%,#05070b 100%);
+  color:var(--ocba-text);
+}
+
+.hero{
+  padding:110px 0 72px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  left:50%;
+  top:-120px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(216,181,109,.18),transparent 70%);
+  pointer-events:none;
+}
+
+.hero .wrap{
+  position:relative;
+  z-index:1;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 18px;
+  border-radius:999px;
+  border:1px solid var(--ocba-line);
+  background:rgba(216,181,109,.08);
+  color:var(--ocba-gold2);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.18em;
+}
+
+.hero h1{
+  margin:24px 0 18px;
+  font-size:clamp(40px,7vw,76px);
+  line-height:1.1;
+  letter-spacing:.08em;
+  color:var(--ocba-gold3);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  text-shadow:0 0 42px rgba(216,181,109,.24);
+}
+
+.hero p{
+  max-width:860px;
+  margin:auto;
+  line-height:2;
+  color:#d6dce4;
+  font-size:17px;
+}
+
+#original-ocba.card.faq{
+  width:min(1100px,calc(100% - 32px));
+  margin:0 auto 50px;
+  padding:34px;
+  border-radius:34px;
+  border:1px solid rgba(216,181,109,.18);
+  background:linear-gradient(180deg,rgba(15,22,31,.96),rgba(8,12,18,.98));
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+}
+
+#original-ocba h2{
+  margin-top:0;
+  margin-bottom:26px;
+  color:var(--ocba-gold3);
+  font-size:clamp(28px,4vw,44px);
+  text-align:center;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+}
+
+.ocba-top-note,
+.ocba-mini-note{
+  margin-bottom:22px;
+  padding:20px 22px;
+  border-radius:22px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(255,255,255,.04);
+  line-height:1.95;
+  color:#e8dfd2;
+}
+
+.policy-quick-nav{
+  display:flex;flex-wrap:wrap;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin:0 auto 26px;
+}
+
+.policy-quick-nav a{
+  padding:12px 18px;
+  border-radius:999px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(255,255,255,.04);
+  color:#f7df9b;
+  font-weight:900;
+  transition:.25s ease;
+}
+
+.policy-quick-nav a:hover{
+  transform:translateY(-2px);
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  color:#111;
+}
+
+#original-ocba details{
+  margin-bottom:18px;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(216,181,109,.14);
+  background:rgba(255,255,255,.03);
+  transition:.25s ease;
+}
+
+#original-ocba details:hover{
+  border-color:rgba(247,223,155,.35);
+}
+
+#original-ocba summary{
+  list-style:none;
+  cursor:pointer;
+  padding:22px 56px 22px 26px;
+  font-size:18px;
+  font-weight:900;
+  color:var(--ocba-gold2);
+  position:relative;
+  transition:.25s ease;
+}
+
+#original-ocba summary::-webkit-details-marker{
+  display:none;
+}
+
+#original-ocba summary::after{
+  content:"+";
+  position:absolute;
+  right:24px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:24px;
+  color:var(--ocba-gold3);
+}
+
+#original-ocba details[open] summary::after{
+  content:"−";
+}
+
+#original-ocba details[open] summary{
+  background:rgba(216,181,109,.08);
+}
+
+#original-ocba details p{
+  margin:0;
+  padding:0 26px 26px;
+  color:#e6e1d8;
+  line-height:2;
+  font-size:15px;
+  white-space:pre-line;
+}
+
+.policy-content{
+  padding:0 26px 26px;
+}
+
+.policy-content ol{
+  margin:0;
+  padding-left:22px;
+}
+
+.policy-content li{
+  margin-bottom:16px;
+  color:#e8e2d8;
+  line-height:2;
+}
+
+.policy-content li:last-child{
+  margin-bottom:0;
+}
+
+.seo-mini,
+.seo-soft,
+.xx-seo-hidden{
+  opacity:.35;
+  line-height:2;
+}
+
+.xx-humor-tip{
+  width:min(1100px,calc(100% - 32px));
+  margin:18px auto;
+  padding:18px 22px;
+  border-radius:20px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(216,181,109,.12);
+  color:#e7dcc8;
+  line-height:1.9;
+}
+
+.xx-brand-lines{
+  width:min(1100px,calc(100% - 32px));
+  margin:44px auto;
+  padding:34px;
+  border-radius:30px;
+  border:1px solid rgba(216,181,109,.16);
+  background:linear-gradient(180deg,rgba(17,26,38,.95),rgba(8,11,16,.98));
+}
+
+.xx-brand-lines h3{
+  color:var(--ocba-gold3);
+  margin-top:0;
+  margin-bottom:14px;
+  font-size:26px;
+}
+
+.xx-brand-lines ul{
+  margin:0 0 28px;
+  padding-left:20px;
+}
+
+.xx-brand-lines li{
+  color:#e8e2d7;
+  margin-bottom:12px;
+  line-height:1.95;
+}
+
+.xx-seo-school,
+.xx-faq-seo{
+  width:min(1100px,calc(100% - 32px));
+  margin:40px auto;
+  padding:34px;
+  border-radius:30px;
+  border:1px solid rgba(216,181,109,.14);
+  background:rgba(255,255,255,.03);
+}
+
+.xx-seo-school h2,
+.xx-faq-seo h2{
+  color:var(--ocba-gold3);
+  margin-top:0;
+  margin-bottom:14px;
+}
+
+.xx-seo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:26px;
+}
+
+.xx-seo-card{
+  padding:22px;
+  border-radius:22px;
+  border:1px solid rgba(216,181,109,.12);
+  background:rgba(255,255,255,.03);
+}
+
+.xx-seo-card h3{
+  margin-top:0;
+  color:var(--ocba-gold2);
+}
+
+.xx-seo-card p{
+  margin-bottom:0;
+  color:#d6dce4;
+  line-height:1.9;
+}
+
+@media(max-width:900px){
+  .xx-seo-grid{
+    grid-template-columns:1fr;
+  }
+
+  #original-ocba.card.faq{
+    padding:24px;
+  }
+
+  #original-ocba summary{
+    padding:18px 52px 18px 20px;
+    font-size:16px;
+  }
+
+  #original-ocba details p,
+  .policy-content{
+    padding:0 20px 22px;
+    font-size:14px;
+  }
+
+  .hero{
+    padding:76px 0 48px;
+  }
+
+  .hero h1{
+    letter-spacing:.04em;
+  }
+}
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{
+font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+::selection{
+background:#d8b56d;
+color:#111;
+}
+img{
+max-width:100%;
+height:auto;
+}
+a,button{
+transition:.28s ease;
+}
+a:hover{
+opacity:.92;
+}
+@media(max-width:768px){
+.container,
+.wrap,
+.content,
+.main{
+width:92% !important;
+max-width:92% !important;
+}
+h1{font-size:2.2rem !important;line-height:1.25 !important;}
+h2{font-size:1.7rem !important;}
+p,li,a,span{
+font-size:1rem !important;
+line-height:1.9 !important;
+}
+}
+</style>
+
+
+<link rel="canonical" href="https://xuanxiangtravel.com/ocba.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+</head>
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main id="top">
+<section class="hero">
+<div class="wrap">
+<span class="eyebrow">ONLINE 官方客服 BOOKING AGREEMENT</span>
+<h1>網路訂車與協議</h1>
+<p>預約前先看清楚，路線、付款、取消、等待與責任歸屬都明明白白，旅程就更穩。</p>
+</div>
+</section>
+<section class="card faq wrap" id="original-ocba">
+<h2>網路訂車與協議</h2>
+<div class="ocba-top-note">
+    🚐 <b>預約前小提醒：</b><br/>
+    這裡是玹翔旅遊的「訂車遊戲規則」。不是要考倒您，而是讓等待時間、付款、取消、責任歸屬都清清楚楚。先看懂，旅程就能少一點問號，多一點從容。
+  </div>
+<div class="policy-quick-nav" aria-label="訂車協議快速導覽">
+  <a href="#original-ocba">預約規範</a>
+  <a href="#contact">客服聯絡</a>
+  <a href="privacy.html">隱私權政策</a>
+  <a href="booking.html">立即預約專車 ✨</a>
+</div>
+<details open>
+<summary>一、平台預約與合約效力</summary>
+<div class="policy-content">
+  <ol>
+    <li>當您依照玹翔旅遊線上訂車平台完成預約流程，並收到系統發送之預約完成通知後，即視同成立「小客車租賃合約」，並同意由本平台提供附帶駕駛服務。</li>
+    <li>本平台提供之服務，依法投保強制汽車責任險與乘客責任險，每位乘客最高保障新臺幣五百萬元。</li>
+    <li>您於完成預約時，即代表已閱讀並同意「網路訂車協議」、「訂車須知」、「隱私權政策」等相關規範。</li>
+    <li>如訂車人非實際乘客本人，訂車人應善盡告知義務，並使同行乘客了解相關規範與限制。</li>
+    <li>自訂單成立至預約時間超過 24 小時者，平台將優先安排車輛並保留服務。</li>
+  </ol>
+</div>
+</details>
+<details>
+<summary>二、預約送機</summary>
+<p>本服務係指由您指定的第一個地址乘車並依序停靠訂單上所填寫之地址，最後到達指定機場；以訂單上所填寫的第一個地址做為預約時間依據。
+
+1. 預約乘車時間前10~20分鐘司機會主動與您聯繫，請確保手機暢通，您亦可主動與司機聯繫。
+
+2. 司機等待時間上限為自預約時間起算30分鐘，若您需更多時間請聯繫客服中心；如司機等待超過30分鐘，並且司機與客服中心都未能與您取得聯繫，平台有權取消本次預約，視同行程結束，收取全額費用。
+
+3. 如遇突發情事，平台有權更換派遣車輛，請您於乘車前再次由電子郵件或簡訊連結查詢最新承接車輛及司機資訊。</p>
+</details>
+<details>
+<summary>三、預約接機</summary>
+<p>本服務係指由指定機場乘車並依序停靠訂單上所填寫之地址。
+
+依航班時間：
+
+1. 不論航班提早或延誤，系統都會持續更新時間，不用擔心時間異動問題
+
+2. 司機會於航班實際降落時間起算等待75分鐘，如因故需延長等待時間，請與24H客服中心聯繫。
+
+3. 如於航班實際降落時間起算60分鐘內，司機與客服中心都未能與您取得聯繫，平台有權取消訂單，視同行程結束，收取全額費用。
+
+指定時間：
+
+1. 司機會於訂單指定時間起算等待30分鐘，如因故需延長等待時間，請聯繫客服中心。
+
+2. 如於訂單指定時間起算30分鐘內，司機與客服中心都未能與您取得聯繫，平台有權變更派遣車輛。如超過60分鐘以上客服中心都未能與您取得聯繫，平台有權取消訂單，視同行程結束，收取全額費用。
+
+3. 當您有填寫正確航班編號且指定時間與表定抵達時間相同時，比照上述『依航班時間』條款。
+
+4. 如遇航班提早或您提早辦完所需事務，在您主動與客服中心聯繫後，客服中心會盡力協調派遣車輛為您服務，但如若當下無其他車輛可以調度，僅能維持原預約時間。
+
+5. 航班延誤超過30分鐘以上：以實際降落時間為準，並比照上述『依航班時間』條款</p>
+</details>
+<details>
+<summary>四、短中長途接送服務</summary>
+<p>本服務係指由您指定的第一個地址乘車，依序停靠訂單上所填寫之地址；以訂單上所填寫的第一個地址做為預約時間依據。
+
+1. 預約指定時間前10~20分鐘司機會主動與您聯繫，請確保手機暢通，您亦可主動與司機聯繫。
+
+2. 司機等待時間上限為自預約時間起算30分鐘，若您需更多時間請聯繫24H客服中心；如司機等待超過30分鐘，並且司機與客服中心都未能與您取得聯繫，平台有權取消本次預約，視同行程結束，收取全額費用。
+
+3. 司機等待時間超過30分鐘（多點累計制），休旅車＆轎車每逾30分鐘加收車資200元；商務車每逾30分鐘加收車資250元，未滿30分鐘以30分鐘計。
+
+4. 如遇突發情事，平台有權更換派遣車輛，請您於乘車前再次由電子郵件或簡訊連結查詢最新承接車輛及司機資訊。
+
+5. 本服務未能提供安全座椅及增高墊等設備之租借。</p>
+</details>
+<details>
+<summary>五、當日臨時預約</summary>
+<p>1. 本服務是為了協助臨時出差或忘記預約的貴賓，平台會盡力媒合派遣車輛，但未能保證有車。
+
+2. 如預約時間已到但未能媒合到車輛，系統將自動發送電子郵件通知並取消訂單，且無須收取任何費用。</p>
+</details>
+<details>
+<summary>六、訂單修改及取消</summary>
+<p>訂單修改：
+
+1. 訂單成立後您無法自行修改訂單內容，如因故須更改部分資訊，請聯繫客服中心協助更新訂單。
+
+2. 最晚需於預約乘車時間前60分鐘聯繫客服中心；如在預約乘車時間前不足60分鐘內修改訂單，平台亦會盡力媒合派遣車輛，但在無法順利媒合之情況下，平台有權取消訂單。
+
+訂單取消：
+
+1. 最晚於預約乘車時間前14天，您可以從訂單資訊查詢頁面之功能自行取消訂單；如已超過時效限制，請聯繫客服中心協助處理，平台不會額外收取費用。</p>
+</details>
+<details>
+<summary>七、交通違規法律責任</summary>
+<p>1.車輛行駛時乘客應依規定使用安全帶。
+根據《道路交通管理處罰條例》第31條第1項規定辦理。
+
+2.車輛行駛時乘客應依規定使用安全座椅。
+根據《道路交通管理處罰條例》第31條第3項規定辦理。
+
+3.如遇交通違規開罰情事，若責任歸屬司機由司機負責；若責任歸屬乘客由乘客負責。</p>
+</details>
+<details>
+<summary>八、會員帳號及密碼</summary>
+<p>凡經本公司同意成為本訂車平台會員者，均可自行建立之一組帳號及密碼，每一個人會員僅得申請一組帳號及密碼。</p>
+</details>
+<details>
+<summary>九、會員資料之提供</summary>
+<p>您同意提供並維持正確、精確、最新及完整的個人資料，若您提供任何錯誤、不實、過時或不完整的資料，或者本公司有合理理由懷疑個人基本資料為錯誤、不實、過時或不完整，本公司有權終止您的帳號並暫停本服務，並拒絕您於現在和未來使用本服務之全部或一部分。</p>
+</details>
+<details>
+<summary>十、會員規範之修改</summary>
+<p>本公司保留隨時修改本會員規範之權利，將於修改會員規範時，於本網站首頁公告之，不另作會員個別通知。如果會員不同意修改的內容，請勿繼續使用本網站服務。如會員繼續使用本網站服務，即視為會員已同意接受修改後之會員規範。預約完成後即為本公司之基礎會員，如須方便查詢紀錄等服務須註冊為註冊會員，方可完整體驗會員服務之便利性。</p>
+</details>
+<details>
+<summary>十一、服務之停止或暫停</summary>
+<p>於發生下列情形之一時，本公司有權停止或暫時中斷提供服務
+
+1. 乘車人數或行李數增加，並超過派遣車輛可乘載上限（超載），為了確保司機與乘客安全且違反法規情況下，司機有權拒載，並聯繫客服中心取消訂單。
+
+2. 由於天災等不可抗力之因素致使無法提供服務時。
+
+3. 因訂單資料不正確，導致無法聯繫訂車人或乘客時。
+
+4. 對本平台之電子通信設備進行必要之保養及施工時，平台可能暫時停止提供服務。</p>
+</details>
+<details>
+<summary>十二、風險承擔</summary>
+<p>會員同意使用本訂車平台各項服務係基於會員的個人意願，並同意自負風險。</p>
+</details>
+<details>
+<summary>十三、保管及通知義務</summary>
+<p>會員有義務妥善保管在本訂車平台之帳號與密碼，並為使用該帳號與密碼登入系統後所進行負責。為維護會員自身權益，請勿將帳號與密碼洩露或提供予第三之一切活動人知悉，或出借或轉讓他人使用。若會員發現帳號或密碼遭人非法使用或有任何異常破壞使用安全之情形時，應立即通知本公司。</p>
+</details>
+<details>
+<summary>十四、會員資料保護</summary>
+<p>會員所登錄或留存之個人資料，除下列情況外，同意本公司在未獲得會員同意前，不對外揭露會員之姓名、地址、電子郵件地址及其他依法受保護之個人資料：
+
+1. 基於法律之規定。
+
+2. 受司法機關或其他有權機關基於法定程序之要求。
+
+3. 為保障本公司之財產及權益。
+
+4. 為維護其他會員或第三人之人身安全所採取之必要措施。</p>
+</details>
+<details>
+<summary>十五、會員資料之使用</summary>
+<p>會員登錄留存之資料，本公司得於前條【會員資料保護】之前提下，於合理範圍內使用相關會員資料、或為其他合法之使用。</p>
+</details>
+<details>
+<summary>十六、賠償責任限制</summary>
+<p>1. 本公司對於會員使用各項服務、或無法使用各項服務所產生之任何直接、間接、衍生、或特別損害，不負任何賠償責任。若會員使用之服務係有對價者，本公司於會員所付之對價範圍內，負賠償責任，惟依法不得限制賠償責任者，則該限制規定不予適用。
+
+2. 會員應了解並同意，本公司雖盡力維持本訂車平台之正常運作，但仍可能因故導致全部或一部分之系統中斷、暫時無法使用、遲延、資料傳輸或儲存上之錯誤、或遭第三人侵入系統篡改或偽造變造資料等，會員不得因此要求任何補償或賠償。</p>
+</details>
+<details>
+<summary>十七、連結</summary>
+<p>在網站或所有服務相關網頁上所提供之所有連結，可能連結到其他個人、公司或組織之網站，提供該等連結之目的，僅係為便利會員自行搜集或取得資訊，本公司對於被連結之該等個人、公司或組織之網站上所提供之產品、服務或資訊，既不擔保其真實性、完整性、即時性或可信度，該等個人、公司或組織亦不因此而當然與本網站有任何僱佣、委任、代理、合夥或其他類似之關係 。</p>
+</details>
+<details>
+<summary>十八、個別條款之效力</summary>
+<p>本協議所定之任何條款之全部或一部分無效時，不影響其他條款之效力。</p>
+</details>
+<details>
+<summary>十九、一般聲明</summary>
+<p>本平台保留隨時修改本協議全部或部分條款及細則之權利，修改後的條款將公佈在本平台上，不另外個別通知。如您繼續使用本平台提供之服務，即表示您已確認且同意本協議之全部內容。</p>
+</details>
+<div class="ocba-mini-note">
+    📌 <b>玹翔旅遊小補充：</b><br/>
+    大型行李、嬰兒車、輪椅、登山裝備、寵物籠、樂器、衝浪板、攝影器材或特殊需求，建議提前告知客服。提前說，車子好安排；現場才說，就容易變成後車廂俄羅斯方塊大賽。😆
+  </div>
+</section>
+<div class="seo-mini">
+  機場接送｜港口接送｜旅遊包車｜登山包車｜長途接送｜商務包車｜寵物接送｜演唱會專車｜明星保母車｜Alphard｜VITO-2｜Tesla｜台北｜新北｜桃園｜新竹｜苗栗｜台中｜彰化｜南投｜雲林｜嘉義｜台南｜高雄｜屏東｜宜蘭｜花蓮｜台東
+</div>
+<div class="xx-humor-tip">
+  小提醒：行李很多時，建議升級大車型。旅程還沒開始就玩後車廂密室逃脫，乘客會累，行李也會想辭職。
+</div>
+<div class="xx-humor-tip">
+  小提示：孩童座椅請提前告知年齡、身高、體重。安全帶不是魔法腰帶，不會自動變成剛剛好。
+</div>
+<section class="xx-brand-lines">
+<h3>玹翔秉持</h3>
+<ul>
+<li>讓您搭的不只是車，而是一路被細節照顧的尊榮感。</li>
+<li>不只是接送，而是舒服到忘了時間的移動體驗。</li>
+<li>每一次上車，都像替旅程升等頭等艙。</li>
+</ul>
+<h3>玹翔秉持宗旨</h3>
+<ul>
+<li>從開門那刻開始，旅程就已經在享受。</li>
+<li>真正高級的接送，是讓人舒服到不想抵達。</li>
+<li>不是把您送到目的地，而是讓整段路程都值得期待。</li>
+</ul>
+</section>
+<section aria-label="玹翔旅遊小學堂與常見問題" class="xx-seo-school">
+<h2>訂車協議小學堂</h2>
+<p>本頁說明線上訂車、乘客責任、取消改期、個資使用、等待時間與服務限制，讓預約更透明。</p>
+<div class="xx-seo-grid">
+<div class="xx-seo-card">
+<h3>預約流程</h3>
+<p>建議完整提供日期、時間、上下車地點、人數、行李與航班資訊。</p>
+</div>
+<div class="xx-seo-card">
+<h3>接送服務</h3>
+<p>機場接送、港口接送、長途接送、包車旅遊與商務接送皆可洽詢。</p>
+</div>
+<div class="xx-seo-card">
+<h3>乘客責任</h3>
+<p>乘車時請遵守安全帶、兒童安全座椅、行李告知與準時上車等規範。</p>
+</div>
+</div>
+</section>
+<section aria-label="玹翔旅遊常見問題與小知識" class="xx-faq-seo">
+<h2>常見問題與小知識</h2>
+<p>以下為預約前常見提醒，讓資訊更透明，也讓 Google 知道我們不是只會把關鍵字塞到滿出來的那種網站。</p>
+<details>
+<summary>預約前需要先準備哪些資料？</summary>
+<p>建議先準備日期、時間、上下車地點、人數、行李數、航班或船班資訊。資料越完整，報價越精準；司機也比較不會在宇宙中尋找你的行李。</p>
+</details>
+<details>
+<summary>機場接送、包車旅遊、商務接送可以客製化嗎？</summary>
+<p>可以依照人數、行李、車款、停靠點與行程需求安排。若有長輩、小朋友、寵物或大量行李，建議提前告知，安排會更貼心。</p>
+</details>
+<details>
+<summary>為什麼條款政策、訂車協議與隱私權說明要看？</summary>
+<p>這些內容可以保障雙方權益，包含付款、取消、改期、個資使用與服務責任。簡單說，就是旅程開始前先把規則講清楚，後面才能優雅出發。</p>
+</details>
+</section>
+<section aria-label="半隱藏式 SEO 語意補強" class="xx-seo-hidden">
+  玹翔旅遊、網路訂車協議、線上訂車、機場接送、港口接送、旅遊包車、登山包車、長途接送、商務包車、寵物接送、演唱會專車、結婚禮車、九人座接送、VIP 保母車、Lexus LM、Alphard、VITO-2、Tesla 包車、台中機場接送、桃園機場接送、LINE 官方客服 預約機場接送、airport transfer taiwan、taiwan private car charter。
+</section>
+</main>
+<section class="seo-soft" aria-label="玹翔旅遊 SEO 語意補強">玹翔旅遊、機場接送、港口接送、長途接送、旅遊包車、登山包車、商務包車、寵物接送、演唱會專車、結婚禮車、明星保母車、Alphard、Lexus LM、VITO-2、Tesla、台中機場接送、桃園機場接送、24小時客服、公司行號長期配合、可統編、可收據。</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

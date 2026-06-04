@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!--
+=========================================================
+玹翔旅遊｜即時價目表頁
+版本：Ultimate Final v8.2 Price Storefront
+
+新手小白維護重點：
+1. 全站 Header / Footer / 浮動 LINE 電話不要寫在本頁，統一由 assets/js/site-layout.js 注入。
+2. 電話、LINE、Email、服務選單都改 assets/js/config.js，不要在本頁硬寫。
+3. 價目表分頁名稱來源是 config.js 的 PRICE_GROUPS。
+4. 本頁查詢功能會優先讀 Apps Script API；API 掛掉時會顯示示範資料，不讓頁面空白。
+5. 若未來新增車型欄位，只要 Google Sheet 表頭有車型名稱，本頁會自動跟著顯示。
+======ㄆ===================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>即時價目表｜機場接送・港口接送・旅遊包車｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊即時價目表，支援機場接送、港口接送、登山包車、長途接送與旅遊包車查詢，輸入縣市、行政區與車型快速篩選。">
+<meta name="keywords" content="玹翔旅遊,即時價目表,機場接送價目表,港口接送價目表,旅遊包車價格,登山包車,長途接送,明星保母車,VITO,Alphard,Lexus LM">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#050505">
+<link rel="canonical" href="https://xuanxiangtravel.com/price.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="玹翔旅遊">
+<meta property="og:title" content="即時價目表｜玹翔旅遊">
+<meta property="og:description" content="查價不用通靈，選分類、輸入地區與車型，快速找到參考報價。實際價格仍以客服確認為準。">
+<meta property="og:url" content="https://xuanxiangtravel.com/price.html">
+<meta property="og:image" content="https://xuanxiangtravel.com/assets/img/og/og-price.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="assets/js/config.js"></script>
+<style>
+/* =========================================================
+   價目表頁專用美編
+   新手提醒：只改這一段不會影響全站 header/footer。
+========================================================= */
+:root{
+  --price-bg:#050505;
+  --price-panel:#15110b;
+  --price-panel-2:#1d1710;
+  --price-gold:#d8b56d;
+  --price-gold-2:#fff0b8;
+  --price-green:#89e6b2;
+  --price-blue:#9ed8ff;
+  --price-text:#fff8e8;
+  --price-muted:#d8ccb0;
+  --price-line:rgba(216,181,109,.28);
+  --price-line-strong:rgba(255,240,184,.42);
+  --price-shadow:0 28px 82px rgba(0,0,0,.44);
+  --price-safe:min(1180px,92vw);
+}
+
+body[data-page="price"]{
+  background:
+    linear-gradient(180deg,#050505 0%,#0b0906 46%,#050505 100%);
+}
+
+.price-wrap{
+  width:var(--price-safe);
+  margin:auto;
+}
+
+.price-hero{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  padding:clamp(72px,9vw,128px) 0 clamp(46px,7vw,78px);
+}
+
+.price-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.76),rgba(0,0,0,.48)),
+    url("images/index/hero.jpg") center/cover no-repeat;
+}
+
+.price-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  z-index:-1;
+  height:150px;
+  background:linear-gradient(180deg,transparent,var(--price-bg));
+}
+
+.price-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);
+  gap:clamp(24px,4vw,44px);
+  align-items:stretch;
+}
+
+.price-hero-card,
+.price-panel,
+.price-tip,
+.price-route-card,
+.price-flow-card,
+.price-faq-card{
+  position:relative;
+  border:1px solid var(--price-line);
+  background:linear-gradient(145deg,rgba(23,23,23,.94),rgba(22,16,8,.9));
+  box-shadow:var(--price-shadow);
+  overflow:hidden;
+}
+
+.price-hero-card{
+  border-radius:34px;
+  padding:clamp(28px,5vw,56px);
+}
+
+.price-hero-card::before,
+.price-panel::before,
+.price-route-card::before,
+.price-flow-card::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--price-line-strong),transparent);
+}
+
+.price-kicker{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  padding:8px 14px;
+  border:1px solid var(--price-line);
+  border-radius:999px;
+  color:var(--price-gold-2);
+  background:rgba(216,181,109,.1);
+  font-size:.9rem;
+  font-weight:950;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.price-hero h1{
+  margin:18px 0 0;
+  color:var(--price-gold-2);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(2.4rem,6.2vw,5.45rem);
+  line-height:1.08;
+  letter-spacing:.035em;
+  text-shadow:0 12px 38px rgba(0,0,0,.7);
+}
+
+.price-lead{
+  max-width:780px;
+  margin:20px 0 0;
+  color:#eadfca;
+  font-size:clamp(1rem,1.7vw,1.2rem);
+  line-height:2;
+}
+
+.price-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+
+.price-actions .btn{
+  min-height:50px;
+}
+
+.price-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:30px;
+}
+
+.price-stat{
+  min-height:98px;
+  padding:18px;
+  border:1px solid rgba(216,181,109,.22);
+  border-radius:20px;
+  background:rgba(255,255,255,.045);
+}
+
+.price-stat strong{
+  display:block;
+  color:var(--price-gold-2);
+  font-size:clamp(1.35rem,3vw,2.25rem);
+  line-height:1.1;
+  font-weight:950;
+}
+
+.price-stat span{
+  display:block;
+  margin-top:8px;
+  color:var(--price-muted);
+  font-weight:850;
+  line-height:1.55;
+}
+
+.price-side-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:100%;
+  border-radius:34px;
+  padding:clamp(24px,4vw,38px);
+  border:1px solid rgba(255,240,184,.34);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03)),
+    rgba(9,8,6,.86);
+  box-shadow:var(--price-shadow);
+  backdrop-filter:blur(12px);
+}
+
+.price-side-card h2{
+  margin:0;
+  color:var(--price-gold-2);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(1.65rem,3vw,2.45rem);
+  line-height:1.2;
+}
+
+.price-side-card p{
+  margin:14px 0 0;
+  color:#eadfca;
+  line-height:1.9;
+}
+
+.price-badges{
+  display:grid;
+  gap:10px;
+  margin-top:24px;
+}
+
+.price-badges span{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border:1px solid rgba(216,181,109,.2);
+  border-radius:16px;
+  color:var(--price-gold-2);
+  background:rgba(255,255,255,.045);
+  font-weight:900;
+}
+
+.price-section{
+  padding:clamp(46px,7vw,82px) 0;
+}
+
+.price-title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:26px;
+}
+
+.price-title h2{
+  margin:0;
+  color:var(--price-gold-2);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(1.8rem,3.8vw,3.15rem);
+  line-height:1.18;
+}
+
+.price-title p{
+  max-width:560px;
+  margin:0;
+  color:var(--price-muted);
+  line-height:1.9;
+}
+
+.price-panel{
+  border-radius:30px;
+  padding:clamp(20px,3.5vw,32px);
+}
+
+.price-toolbar{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:12px;
+  align-items:end;
+  margin-top:20px;
+}
+
+.price-field{
+  display:grid;
+  gap:7px;
+}
+
+.price-field label{
+  color:#f6e9cf;
+  font-size:.92rem;
+  font-weight:900;
+}
+
+.price-field small{
+  color:rgba(216,204,176,.86);
+  line-height:1.5;
+}
+
+.price-field.category{grid-column:span 3}
+.price-field.sheet{grid-column:span 3}
+.price-field.keyword{grid-column:span 3}
+.price-field.city{grid-column:span 1}
+.price-field.district{grid-column:span 1}
+.price-field.vehicle{grid-column:span 1}
+.price-submit{grid-column:span 12;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+.price-status{
+  min-height:28px;
+  margin-top:16px;
+  color:var(--price-muted);
+  line-height:1.8;
+  font-weight:800;
+}
+
+.price-status.is-warning{
+  color:var(--price-gold-2);
+}
+
+.price-status.is-error{
+  color:#ffd0d0;
+}
+
+.price-result-summary{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:18px 0;
+}
+
+.price-chip{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:6px 12px;
+  border:1px solid rgba(216,181,109,.24);
+  border-radius:999px;
+  color:var(--price-gold-2);
+  background:rgba(216,181,109,.08);
+  font-weight:900;
+  font-size:.9rem;
+}
+
+.price-empty{
+  padding:22px;
+  border:1px dashed rgba(216,181,109,.35);
+  border-radius:20px;
+  color:var(--price-gold-2);
+  background:rgba(216,181,109,.08);
+  font-weight:900;
+  line-height:1.9;
+}
+
+.mobile-price-list{
+  display:none;
+}
+
+.price-mobile-card{
+  border:1px solid rgba(216,181,109,.24);
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(23,23,23,.96),rgba(22,16,8,.9));
+  overflow:hidden;
+}
+
+.price-mobile-card h3{
+  margin:0;
+  padding:14px 16px;
+  color:var(--price-gold-2);
+  font-size:1.06rem;
+  line-height:1.45;
+  background:rgba(216,181,109,.09);
+}
+
+.price-mobile-card dl{
+  display:grid;
+  margin:0;
+}
+
+.price-mobile-card div{
+  display:grid;
+  grid-template-columns:118px 1fr;
+  gap:12px;
+  padding:10px 16px;
+  border-top:1px solid rgba(216,181,109,.14);
+}
+
+.price-mobile-card dt{
+  color:var(--price-gold-2);
+  font-weight:900;
+}
+
+.price-mobile-card dd{
+  margin:0;
+  color:#f4ead2;
+}
+
+.price-route-grid,
+.price-flow-grid,
+.price-faq-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.price-route-card,
+.price-flow-card,
+.price-faq-card,
+.price-tip{
+  border-radius:24px;
+  padding:24px;
+}
+
+.price-route-card h3,
+.price-flow-card h3,
+.price-faq-card h3,
+.price-tip h3{
+  margin:0 0 10px;
+  color:var(--price-gold-2);
+  font-size:1.25rem;
+  line-height:1.45;
+}
+
+.price-route-card p,
+.price-flow-card p,
+.price-faq-card p,
+.price-tip p{
+  margin:0;
+  color:#e7dbc4;
+  line-height:1.9;
+}
+
+.price-flow-num{
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  margin-bottom:14px;
+  border-radius:999px;
+  color:#130c04;
+  background:linear-gradient(135deg,var(--price-gold-2),var(--price-gold));
+  font-weight:950;
+}
+
+.price-tip-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+
+.price-tip ul{
+  margin:12px 0 0;
+  padding-left:22px;
+  color:#e7dbc4;
+  line-height:1.9;
+}
+
+@media(max-width:1060px){
+  .price-hero-grid,
+  .price-tip-grid{
+    grid-template-columns:1fr;
+  }
+
+  .price-toolbar{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .price-field.category,
+  .price-field.sheet,
+  .price-field.keyword,
+  .price-field.city,
+  .price-field.district,
+  .price-field.vehicle,
+  .price-submit{
+    grid-column:span 1;
+  }
+
+  .price-route-grid,
+  .price-flow-grid,
+  .price-faq-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:760px){
+  .price-wrap{
+    width:min(100% - 28px,1180px);
+  }
+
+  .price-hero{
+    padding:44px 0 34px;
+  }
+
+  .price-hero-card,
+  .price-side-card,
+  .price-panel{
+    border-radius:26px;
+    padding:24px;
+  }
+
+  .price-hero h1{
+    font-size:clamp(2.15rem,11vw,3.35rem);
+  }
+
+  .price-actions,
+  .price-submit{
+    display:grid;
+  }
+
+  .price-actions .btn,
+  .price-submit .btn{
+    width:100%;
+  }
+
+  .price-stats,
+  .price-toolbar,
+  .price-route-grid,
+  .price-flow-grid,
+  .price-faq-grid{
+    grid-template-columns:1fr;
+  }
+
+  .price-title{
+    display:grid;
+    gap:10px;
+  }
+
+  .mobile-price-list{
+    display:grid;
+    gap:12px;
+  }
+
+  .price-panel .table-wrap{
+    display:none;
+  }
+}
+</style>
+</head>
+<body data-xx-layout="v8" data-page="price">
+<div id="xx-site-header"></div>
+
+<main id="top">
+  <section class="price-hero" aria-label="玹翔旅遊即時價目表">
+    <div class="price-wrap price-hero-grid">
+      <article class="price-hero-card">
+        <span class="price-kicker">Live Price Store</span>
+        <h1>即時價目表</h1>
+        <p class="price-lead">查價不用通靈，也不用把客服逼成算命師。選分類、挑分頁、輸入地區或車型，就能快速找到參考價格；最後金額仍會依日期、時間、車款、行李與路線由客服確認。</p>
+        <div class="price-actions">
+          <a class="btn primary" href="booking.html">立即預約專車</a>
+          <a class="btn" href="#price-search-panel">開始查價</a>
+          <a class="btn ghost" href="faq.html">常見問題</a>
+        </div>
+        <div class="price-stats" aria-label="價目表服務特色">
+          <div class="price-stat"><strong>5大類</strong><span>機場、港口、登山、長途、旅遊包車一次查。</span></div>
+          <div class="price-stat"><strong>A-G欄</strong><span>支援橫向滑動與凍結欄位，手機也看得懂。</span></div>
+          <div class="price-stat"><strong>防呆版</strong><span>API 忙碌時也不空白，先給你示範參考。</span></div>
+        </div>
+      </article>
+
+      <aside class="price-side-card" aria-label="報價確認提醒">
+        <div>
+          <h2>像商城一樣好查，像專車一樣精準。</h2>
+          <p>價目表是快速估算工具，不是最後判決書。遇到凌晨、連假、山區、演唱會散場、超多行李，客服會再幫你把細節算清楚。</p>
+        </div>
+        <div class="price-badges">
+          <span>透明報價 <b>不玩隱藏關卡</b></span>
+          <span>車型篩選 <b>五人座到保母車</b></span>
+          <span>客服確認 <b>避免現場加戲</b></span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="price-section" id="price-search-panel">
+    <div class="price-wrap">
+      <div class="price-title">
+        <h2>價目表查詢</h2>
+        <p>請先選分類與分頁，再輸入縣市、行政區、景點、港口、機場或車型。關鍵字越精準，價目表越不會裝忙。</p>
+      </div>
+
+      <article class="price-panel" aria-label="價目表查詢工具">
+        <div class="price-toolbar">
+          <div class="price-field category">
+            <label for="priceCategory">服務分類</label>
+            <select id="priceCategory" class="select">
+              <option value="airport">機場接送</option>
+              <option value="port">港口接送</option>
+              <option value="mountain">登山包車</option>
+              <option value="long">長途接送</option>
+              <option value="tour">旅遊包車</option>
+            </select>
+            <small>先選大類，避免查到隔壁棚。</small>
+          </div>
+
+          <div class="price-field sheet">
+            <label for="priceSheet">價目分頁</label>
+            <select id="priceSheet" class="select"></select>
+            <small>分頁名稱來自 config.js。</small>
+          </div>
+
+          <div class="price-field keyword">
+            <label for="priceSearch">關鍵字搜尋</label>
+            <input id="priceSearch" class="input" type="search" placeholder="例：台中、北屯、鹿港、桃園機場">
+            <small>會搜尋整列資料。</small>
+          </div>
+
+          <div class="price-field city">
+            <label for="priceCity">縣市</label>
+            <input id="priceCity" class="input" type="search" placeholder="台中">
+          </div>
+
+          <div class="price-field district">
+            <label for="priceDistrict">行政區</label>
+            <input id="priceDistrict" class="input" type="search" placeholder="北屯">
+          </div>
+
+          <div class="price-field vehicle">
+            <label for="priceVehicle">車型</label>
+            <select id="priceVehicle" class="select">
+              <option value="">全部車型</option>
+              <option value="五人座">五人座</option>
+              <option value="九人座">九人座</option>
+              <option value="VITO">VITO</option>
+              <option value="Alphard">Alphard</option>
+              <option value="LM">LM</option>
+              <option value="明星保母車">明星保母車</option>
+            </select>
+          </div>
+
+          <div class="price-submit">
+            <button id="priceSubmit" class="btn primary" type="button">查詢價目表</button>
+            <button id="priceReset" class="btn ghost" type="button">清空條件</button>
+            <a class="btn" href="booking.html">查到喜歡就預約</a>
+          </div>
+        </div>
+
+        <div id="updatedAt" class="price-status" role="status" aria-live="polite">請選擇分類後查詢，價目表正在旁邊暖身。</div>
+        <div id="priceSummary" class="price-result-summary" aria-label="查詢結果摘要"></div>
+        <div id="mobilePriceCards" class="mobile-price-list" aria-label="手機版價目卡片"></div>
+
+        <div class="table-wrap">
+          <table aria-label="玹翔旅遊即時價目表">
+            <thead id="priceHead"></thead>
+            <tbody id="priceBody"><tr><td>請按「查詢價目表」載入資料。</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="notice" style="margin-top:16px">
+          以上價格為參考價。特殊節日、夜間、臨時調度、山區路線、行李爆量、車款升級與多點停靠，會由客服再次確認。先講清楚，旅程才不會半路變成數學考卷。
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="price-section">
+    <div class="price-wrap">
+      <div class="price-title">
+        <h2>熱門查價入口</h2>
+        <p>大旅行社級首頁會把常用入口放在眼前；玹翔也一樣，少找一秒，多一點從容。</p>
+      </div>
+      <div class="price-route-grid">
+        <article class="price-route-card"><h3>機場接送</h3><p>桃園、松山、清泉岡、小港機場，適合紅眼班機、親子行李與商務接待。</p></article>
+        <article class="price-route-card"><h3>港口接送</h3><p>基隆港、台中港、東港、布袋、富岡與後壁湖，船班不要用猜的。</p></article>
+        <article class="price-route-card"><h3>長途與旅遊包車</h3><p>跨縣市、清境、日月潭、司馬庫斯、合歡山，坐得舒服才有旅遊的樣子。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="price-section">
+    <div class="price-wrap">
+      <div class="price-title">
+        <h2>查價到預約流程</h2>
+        <p>流程越清楚，現場越少驚喜；我們喜歡驚喜，但不喜歡價格驚嚇。</p>
+      </div>
+      <div class="price-flow-grid">
+        <article class="price-flow-card"><div class="price-flow-num">01</div><h3>先查參考價</h3><p>用分類、分頁與關鍵字快速找出相近路線，先抓預算範圍。</p></article>
+        <article class="price-flow-card"><div class="price-flow-num">02</div><h3>送出預約需求</h3><p>提供日期、時間、人數、行李、上下車地點與希望車款。</p></article>
+        <article class="price-flow-card"><div class="price-flow-num">03</div><h3>客服確認報價</h3><p>客服依當日路況、車款與需求確認最終金額，再正式保留車輛。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="price-section">
+    <div class="price-wrap price-tip-grid">
+      <article class="price-tip">
+        <h3>價格會變動的常見原因</h3>
+        <p>不是司機突然靈感來了，而是服務條件真的不同。</p>
+        <ul>
+          <li>凌晨、深夜、連假、春節、熱門活動散場。</li>
+          <li>山區道路、臨時多點停靠、等待時間拉長。</li>
+          <li>大型行李、嬰兒推車、寵物、舉牌或安全座椅。</li>
+          <li>指定高端車款、明星保母車或企業貴賓接待。</li>
+        </ul>
+      </article>
+      <article class="price-tip">
+        <h3>新手維護小提醒</h3>
+        <p>後台若要改價，請優先改 Google Sheet 與 Apps Script，不要直接改 HTML 表格。這樣全站價目比較不會出現「同一趟路三種價格」的尷尬場面。</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+<script>
+/*
+=========================================================
+即時價目表查詢程式
+新手小白說明：
+1. 不懂 JS 也沒關係，通常只要改 config.js 的 PRICE_GROUPS。
+2. Google Sheet 表頭不用完全固定，本程式會盡量自動判斷縣市、行政區與車型欄位。
+3. API 失敗時會使用 DEMO_DATA 示範資料，避免正式頁面空白。
+=========================================================
+*/
+(function(){
+  "use strict";
+
+  var cfg = window.XUANXIANG_CONFIG || {};
+  var groups = cfg.PRICE_GROUPS || {};
+  var cache = {};
+  var latestRows = [];
+  var latestHeaders = [];
+  var usingDemoData = false;
+  var debounceTimer = 0;
+
+  var DEMO_DATA = {
+    airport: {
+      headers:["縣市","行政區域","舒適五人座","九人座商務車","VITO","Alphard / LM","明星保母車"],
+      rows:[
+        ["台中市","西屯區 ⇄ 桃園機場","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["台中市","北屯區 ⇄ 清泉岡機場","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["彰化縣","鹿港鎮 ⇄ 桃園機場","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"]
+      ]
+    },
+    port: {
+      headers:["縣市","碼頭 / 港口","舒適五人座","九人座商務車","VITO","Alphard / LM","明星保母車"],
+      rows:[
+        ["基隆市","基隆港郵輪接送","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["屏東縣","東港碼頭接送","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["嘉義縣","布袋港碼頭接送","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"]
+      ]
+    },
+    mountain: {
+      headers:["縣市","登山口 / 路線","舒適五人座","九人座商務車","VITO","Alphard / LM","明星保母車"],
+      rows:[
+        ["新竹縣","司馬庫斯接送","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["南投縣","合歡山接送","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["台中市","武陵農場 / 雪山登山口","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"]
+      ]
+    },
+    long: {
+      headers:["縣市","路線","舒適五人座","九人座商務車","VITO","Alphard / LM","明星保母車"],
+      rows:[
+        ["台中市","台中 ⇄ 台北","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["台中市","台中 ⇄ 高雄","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["彰化縣","彰化 ⇄ 花蓮","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"]
+      ]
+    },
+    tour: {
+      headers:["地區","行程","舒適五人座","九人座商務車","VITO","Alphard / LM","明星保母車"],
+      rows:[
+        ["南投","清境・日月潭一日遊","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["台中","高美濕地・逢甲夜市","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+        ["苗栗","南庄・三義客製包車","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"]
+      ]
+    }
+  };
+
+  var els = {};
+
+  function $(id){
+    return document.getElementById(id);
+  }
+
+  function text(value){
+    return String(value == null ? "" : value).trim();
+  }
+
+  function norm(value){
+    return text(value).toLowerCase().replace(/\s+/g,"");
+  }
+
+  function esc(value){
+    return text(value).replace(/[&<>'"]/g,function(char){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char];
+    });
+  }
+
+  function categoryLabel(category){
+    var map = {
+      airport:"機場接送",
+      port:"港口接送",
+      mountain:"登山包車",
+      long:"長途接送",
+      tour:"旅遊包車"
+    };
+    return map[category] || "價目表";
+  }
+
+  function groupSheets(category){
+    var list = Array.isArray(groups[category]) ? groups[category] : [];
+    if (list.length) return list;
+    var fallback = {
+      airport:["桃園機場"],
+      port:["基隆港"],
+      mountain:["百岳報價"],
+      long:["長途接送-五人座"],
+      tour:["旅遊包車"]
+    };
+    return fallback[category] || ["價目表"];
+  }
+
+  function setStatus(message, type){
+    if (!els.status) return;
+    els.status.className = "price-status" + (type ? " is-" + type : "");
+    els.status.textContent = message;
+  }
+
+  function renderSheetOptions(){
+    var category = els.category.value || "airport";
+    var current = els.sheet.value;
+    var sheets = groupSheets(category);
+    els.sheet.innerHTML = sheets.map(function(sheet){
+      return '<option value="' + esc(sheet) + '">' + esc(sheet) + "</option>";
+    }).join("");
+    if (sheets.indexOf(current) >= 0) els.sheet.value = current;
+  }
+
+  function setLoading(isLoading){
+    els.submit.disabled = isLoading;
+    els.submit.classList.toggle("is-loading", isLoading);
+    els.submit.textContent = isLoading ? "查詢中" : "查詢價目表";
+  }
+
+  function pickDemo(category){
+    var demo = DEMO_DATA[category] || DEMO_DATA.airport;
+    return {
+      headers: demo.headers.slice(),
+      rows: demo.rows.map(function(row){ return row.slice(); })
+    };
+  }
+
+  async function fetchSheet(category, sheetName){
+    var key = category + "::" + sheetName;
+    if (cache[key]) return cache[key];
+
+    if (!window.XXPricing || typeof window.XXPricing.fetchSheet !== "function") {
+      throw new Error("價目表 API 尚未準備好");
+    }
+
+    var data = await window.XXPricing.fetchSheet(sheetName);
+    cache[key] = {
+      headers: Array.isArray(data.headers) ? data.headers.map(text) : [],
+      rows: Array.isArray(data.rows) ? data.rows : []
+    };
+    return cache[key];
+  }
+
+  function guessIndexes(headers){
+    var city = 0;
+    var district = Math.min(1, Math.max(headers.length - 1, 0));
+
+    headers.forEach(function(header, index){
+      var h = norm(header);
+      if (/縣市|城市|地區|出發|目的/.test(h)) city = index;
+      if (/行政|區域|鄉鎮|鄉|鎮|區|路線|碼頭|港口|機場|登山口|行程/.test(h) && index !== city) district = index;
+    });
+
+    return { city: city, district: district };
+  }
+
+  function vehicleColumnIndexes(headers, vehicle){
+    var keyword = norm(vehicle);
+    if (!keyword) return headers.map(function(_, index){ return index; });
+
+    var base = [0, 1];
+    var matches = headers.reduce(function(list, header, index){
+      if (index < 2) return list;
+      var h = norm(header);
+      if (h.indexOf(keyword) >= 0 || keyword.indexOf(h) >= 0) list.push(index);
+      if (keyword === "九人座" && /九人|商務車|vito/.test(h)) list.push(index);
+      if (keyword === "五人座" && /五人|舒適|轎車|休旅/.test(h)) list.push(index);
+      if (keyword === "lm" && /lm|alphard|阿法/.test(h)) list.push(index);
+      return list;
+    }, []);
+
+    var unique = base.concat(matches).filter(function(index, pos, arr){
+      return index < headers.length && arr.indexOf(index) === pos;
+    });
+
+    return unique.length > base.length ? unique : headers.map(function(_, index){ return index; });
+  }
+
+  function filterRows(headers, rows){
+    var indexes = guessIndexes(headers);
+    var keyword = norm(els.search.value);
+    var city = norm(els.city.value);
+    var district = norm(els.district.value);
+
+    return rows.filter(function(row){
+      var cells = headers.map(function(_, index){ return text(row[index]); });
+      var all = norm(cells.join(" "));
+      var cityCell = norm(cells[indexes.city]);
+      var districtCell = norm(cells[indexes.district]);
+
+      if (keyword && all.indexOf(keyword) < 0) return false;
+      if (city && cityCell.indexOf(city) < 0 && all.indexOf(city) < 0) return false;
+      if (district && districtCell.indexOf(district) < 0 && all.indexOf(district) < 0) return false;
+      return true;
+    });
+  }
+
+  function renderSummary(category, sheetName, total, filtered, headers, selectedIndexes){
+    var vehicle = text(els.vehicle.value) || "全部車型";
+    els.summary.innerHTML = [
+      '<span class="price-chip">分類：' + esc(categoryLabel(category)) + "</span>",
+      '<span class="price-chip">分頁：' + esc(sheetName) + "</span>",
+      '<span class="price-chip">車型：' + esc(vehicle) + "</span>",
+      '<span class="price-chip">結果：' + filtered + " / " + total + " 筆</span>",
+      '<span class="price-chip">欄位：' + selectedIndexes.length + " 欄</span>"
+    ].join("");
+  }
+
+  function renderTable(headers, rows, selectedIndexes){
+    if (!headers.length) {
+      els.head.innerHTML = "";
+      els.body.innerHTML = '<tr><td><div class="price-empty">目前沒有表頭資料，請確認 Google Sheet 第一列是否有欄位名稱。</div></td></tr>';
+      return;
+    }
+
+    els.head.innerHTML = "<tr>" + selectedIndexes.map(function(index){
+      return "<th>" + esc(headers[index] || ("欄位" + (index + 1))) + "</th>";
+    }).join("") + "</tr>";
+
+    if (!rows.length) {
+      els.body.innerHTML = '<tr><td colspan="' + selectedIndexes.length + '"><div class="price-empty">查無符合條件的價格資料。可以放寬關鍵字，或直接預約讓客服幫你精準報價。</div></td></tr>';
+      return;
+    }
+
+    els.body.innerHTML = rows.map(function(row){
+      return "<tr>" + selectedIndexes.map(function(index){
+        var value = text(row[index]) || "請洽客服";
+        return "<td>" + esc(value) + "</td>";
+      }).join("") + "</tr>";
+    }).join("");
+  }
+
+  function renderMobileCards(headers, rows, selectedIndexes){
+    if (!rows.length) {
+      els.mobile.innerHTML = "";
+      return;
+    }
+
+    els.mobile.innerHTML = rows.slice(0, 60).map(function(row){
+      var title = [row[selectedIndexes[0]], row[selectedIndexes[1]]].map(text).filter(Boolean).join("｜") || "價目資料";
+      var pairs = selectedIndexes.map(function(index){
+        return "<div><dt>" + esc(headers[index] || "欄位") + "</dt><dd>" + esc(text(row[index]) || "請洽客服") + "</dd></div>";
+      }).join("");
+      return '<article class="price-mobile-card"><h3>' + esc(title) + '</h3><dl>' + pairs + "</dl></article>";
+    }).join("");
+  }
+
+  function applyFreeze(){
+    if (window.XXPricingFreeze && typeof window.XXPricingFreeze.schedule === "function") {
+      window.XXPricingFreeze.schedule();
+    }
+  }
+
+  function trackSearch(category, sheetName, count){
+    if (window.XXAnalytics && typeof window.XXAnalytics.trackEvent === "function") {
+      window.XXAnalytics.trackEvent("price_search", {
+        price_category: category,
+        price_sheet: sheetName,
+        result_count: count,
+        used_demo_data: usingDemoData
+      });
+    }
+  }
+
+  async function loadPrices(){
+    var category = els.category.value || "airport";
+    var sheetName = els.sheet.value || groupSheets(category)[0];
+
+    setLoading(true);
+    setStatus("價目表載入中，請稍等。資料正在整理隊形。");
+
+    try {
+      usingDemoData = false;
+      var data = await fetchSheet(category, sheetName);
+      latestHeaders = data.headers;
+      latestRows = data.rows;
+      setStatus("已載入「" + sheetName + "」資料。實際報價仍以客服確認為準。");
+    } catch (error) {
+      usingDemoData = true;
+      var demo = pickDemo(category);
+      latestHeaders = demo.headers;
+      latestRows = demo.rows;
+      setStatus("API 暫時無法取得資料，已顯示示範格式。正式報價請送出預約或洽客服確認。", "warning");
+      if (window.console) console.warn("[玹翔價目表] API 載入失敗，已啟用示範資料", error);
+    } finally {
+      setLoading(false);
+      renderCurrent();
+    }
+  }
+
+  function renderCurrent(){
+    var category = els.category.value || "airport";
+    var sheetName = els.sheet.value || groupSheets(category)[0];
+    var headers = latestHeaders.slice();
+    var rows = filterRows(headers, latestRows);
+    var selectedIndexes = vehicleColumnIndexes(headers, els.vehicle.value);
+
+    renderSummary(category, sheetName, latestRows.length, rows.length, headers, selectedIndexes);
+    renderTable(headers, rows, selectedIndexes);
+    renderMobileCards(headers, rows, selectedIndexes);
+    trackSearch(category, sheetName, rows.length);
+    applyFreeze();
+  }
+
+  function scheduleRender(){
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function(){
+      if (!latestHeaders.length) loadPrices();
+      else renderCurrent();
+    }, 180);
+  }
+
+  function resetFilters(){
+    els.search.value = "";
+    els.city.value = "";
+    els.district.value = "";
+    els.vehicle.value = "";
+    renderCurrent();
+  }
+
+  function bind(){
+    els.category.addEventListener("change", function(){
+      renderSheetOptions();
+      loadPrices();
+    });
+    els.sheet.addEventListener("change", loadPrices);
+    els.submit.addEventListener("click", loadPrices);
+    els.reset.addEventListener("click", resetFilters);
+    [els.search, els.city, els.district, els.vehicle].forEach(function(input){
+      input.addEventListener("input", scheduleRender);
+      input.addEventListener("change", scheduleRender);
+    });
+  }
+
+  function init(){
+    els = {
+      category:$("priceCategory"),
+      sheet:$("priceSheet"),
+      search:$("priceSearch"),
+      city:$("priceCity"),
+      district:$("priceDistrict"),
+      vehicle:$("priceVehicle"),
+      submit:$("priceSubmit"),
+      reset:$("priceReset"),
+      status:$("updatedAt"),
+      summary:$("priceSummary"),
+      head:$("priceHead"),
+      body:$("priceBody"),
+      mobile:$("mobilePriceCards")
+    };
+
+    if (!els.category || !els.sheet || !els.head || !els.body) return;
+    renderSheetOptions();
+    bind();
+    loadPrices();
+  }
+
+  window.loadPrices = loadPrices;
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once:true });
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

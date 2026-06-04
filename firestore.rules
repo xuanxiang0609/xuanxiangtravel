@@ -1,0 +1,567 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* =========================================================
+       玹翔旅遊｜Firestore Rules Ultimate Final v8.3 Enterprise
+       正式營運防呆版
+
+       核心原則：
+       1. 一般會員只能讀寫自己的會員資料。
+       2. 已登入會員可建立自己的訂單；未登入訪客可建立訪客訂單。
+       3. 一般會員與訪客不可自行改單、刪單。
+       4. 管理員權限由 admins/{uid} 控制，staff 權限由 staff/{uid} 控制。
+       5. 前端不可建立 admin / staff 權限文件。
+       6. LINE Token、Admin ID、金流密鑰不可放前端與 Firestore 公開文件。
+       7. 後台設定、通知、稽核紀錄、司機申請皆有明確權限邊界。
+       8. 欄位白名單 + 必填欄位 + 長度限制，降低髒資料與惡意寫入。
+    ========================================================= */
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function uid() {
+      return signedIn() ? request.auth.uid : null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && uid() == userId;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/admins/$(uid()))
+        && get(/databases/$(database)/documents/admins/$(uid())).data.enabled == true;
+    }
+
+    function isStaff() {
+      return isAdmin()
+        || (
+          signedIn()
+          && exists(/databases/$(database)/documents/staff/$(uid()))
+          && get(/databases/$(database)/documents/staff/$(uid())).data.enabled == true
+        );
+    }
+
+    function validCreatedAt() {
+      return 'createdAt' in request.resource.data
+        && request.resource.data.createdAt != null;
+    }
+
+    function validUpdatedAt() {
+      return !('updatedAt' in request.resource.data)
+        || request.resource.data.updatedAt != null;
+    }
+
+    function validText(field, max) {
+      return field in request.resource.data
+        && request.resource.data[field] is string
+        && request.resource.data[field].size() > 0
+        && request.resource.data[field].size() <= max;
+    }
+
+    function validOptionalText(field, max) {
+      return !(field in request.resource.data)
+        || (
+          request.resource.data[field] is string
+          && request.resource.data[field].size() <= max
+        );
+    }
+
+    function isOptionalNumber(field) {
+      return !(field in request.resource.data)
+        || request.resource.data[field] is number;
+    }
+
+    function isOptionalBool(field) {
+      return !(field in request.resource.data)
+        || request.resource.data[field] is bool;
+    }
+
+    function isOptionalList(field) {
+      return !(field in request.resource.data)
+        || request.resource.data[field] is list;
+    }
+
+    function isOptionalMap(field) {
+      return !(field in request.resource.data)
+        || request.resource.data[field] is map;
+    }
+
+    function memberAllowedFields() {
+      return [
+        'uid',
+        'name',
+        'displayName',
+        'phone',
+        'email',
+        'lineId',
+        'lineUserId',
+        'photoURL',
+        'provider',
+        'providerIds',
+        'role',
+        'status',
+        'source',
+        'createdAt',
+        'updatedAt',
+        'lastLoginAt',
+        'marketingConsent',
+        'note'
+      ];
+    }
+
+    function memberUserEditableFields() {
+      return [
+        'uid',
+        'name',
+        'displayName',
+        'phone',
+        'email',
+        'lineId',
+        'lineUserId',
+        'photoURL',
+        'provider',
+        'providerIds',
+        'source',
+        'createdAt',
+        'updatedAt',
+        'lastLoginAt',
+        'marketingConsent'
+      ];
+    }
+
+    function validMemberBase(userId) {
+      return request.resource.data.uid == userId
+        && validOptionalText('name', 80)
+        && validOptionalText('displayName', 80)
+        && validOptionalText('phone', 40)
+        && validOptionalText('email', 120)
+        && validOptionalText('lineId', 80)
+        && validOptionalText('lineUserId', 160)
+        && validOptionalText('photoURL', 500)
+        && validOptionalText('provider', 80)
+        && validOptionalText('source', 80)
+        && isOptionalList('providerIds')
+        && isOptionalBool('marketingConsent')
+        && validUpdatedAt();
+    }
+
+    function validMemberCreate(userId) {
+      return isOwner(userId)
+        && request.resource.data.keys().hasOnly(memberUserEditableFields())
+        && validMemberBase(userId)
+        && validCreatedAt();
+    }
+
+    function validMemberUpdate(userId) {
+      return isOwner(userId)
+        && request.resource.data.keys().hasOnly(memberUserEditableFields())
+        && validMemberBase(userId)
+        && !request.resource.data.diff(resource.data).changedKeys().hasAny(['role', 'status']);
+    }
+
+    function orderAllowedFields() {
+      return [
+        'orderId',
+        'memberUid',
+        'guestId',
+        'serviceType',
+        'serviceDetail',
+        'source',
+        'utmSource',
+        'utmMedium',
+        'utmCampaign',
+        'utmContent',
+        'utmTerm',
+        'landingPage',
+        'referrer',
+        'name',
+        'customerName',
+        'phone',
+        'customerPhone',
+        'lineId',
+        'customerLineId',
+        'email',
+        'travelDate',
+        'travelTime',
+        'pickupAddress',
+        'dropoffAddress',
+        'midpoints',
+        'passengers',
+        'luggage',
+        'flightNumber',
+        'shipSession',
+        'vehicleType',
+        'addons',
+        'customerAddons',
+        'price',
+        'estimatedTotal',
+        'depositAmount',
+        'paymentStatus',
+        'paymentMethod',
+        'needReceipt',
+        'taxIdNumber',
+        'taxTitle',
+        'isRoundTrip',
+        'note',
+        'customerNote',
+        'adminNote',
+        'status',
+        'driver',
+        'driverUid',
+        'createdAt',
+        'updatedAt',
+        'confirmedAt',
+        'cancelledAt'
+      ];
+    }
+
+    function orderCreateAllowedFields() {
+      return [
+        'orderId',
+        'memberUid',
+        'guestId',
+        'serviceType',
+        'serviceDetail',
+        'source',
+        'utmSource',
+        'utmMedium',
+        'utmCampaign',
+        'utmContent',
+        'utmTerm',
+        'landingPage',
+        'referrer',
+        'name',
+        'customerName',
+        'phone',
+        'customerPhone',
+        'lineId',
+        'customerLineId',
+        'email',
+        'travelDate',
+        'travelTime',
+        'pickupAddress',
+        'dropoffAddress',
+        'midpoints',
+        'passengers',
+        'luggage',
+        'flightNumber',
+        'shipSession',
+        'vehicleType',
+        'addons',
+        'customerAddons',
+        'price',
+        'estimatedTotal',
+        'needReceipt',
+        'taxIdNumber',
+        'taxTitle',
+        'isRoundTrip',
+        'note',
+        'customerNote',
+        'status',
+        'paymentStatus',
+        'createdAt',
+        'updatedAt'
+      ];
+    }
+
+    function hasRequiredOrderFields() {
+      return request.resource.data.keys().hasAll([
+        'serviceType',
+        'name',
+        'phone',
+        'travelDate',
+        'travelTime',
+        'pickupAddress',
+        'dropoffAddress',
+        'status',
+        'createdAt'
+      ]);
+    }
+
+    function validOrderOwnerForCreate() {
+      return (
+          signedIn()
+          && 'memberUid' in request.resource.data
+          && request.resource.data.memberUid == uid()
+        )
+        || (
+          !signedIn()
+          && !('memberUid' in request.resource.data)
+        );
+    }
+
+    function validOrderStatusForCreate() {
+      return request.resource.data.status in ['待確認', '已送出', '客服確認中'];
+    }
+
+    function validPaymentStatusForCreate() {
+      return !('paymentStatus' in request.resource.data)
+        || request.resource.data.paymentStatus in ['未付款', '待確認', '訂金待確認'];
+    }
+
+    function validOrderTextFields() {
+      return validText('serviceType', 60)
+        && validText('name', 80)
+        && validText('phone', 40)
+        && validText('travelDate', 40)
+        && validText('travelTime', 40)
+        && validText('pickupAddress', 300)
+        && validText('dropoffAddress', 300)
+        && validOptionalText('orderId', 80)
+        && validOptionalText('memberUid', 160)
+        && validOptionalText('guestId', 160)
+        && validOptionalText('serviceDetail', 120)
+        && validOptionalText('source', 80)
+        && validOptionalText('utmSource', 120)
+        && validOptionalText('utmMedium', 120)
+        && validOptionalText('utmCampaign', 160)
+        && validOptionalText('utmContent', 160)
+        && validOptionalText('utmTerm', 160)
+        && validOptionalText('landingPage', 500)
+        && validOptionalText('referrer', 500)
+        && validOptionalText('customerName', 80)
+        && validOptionalText('customerPhone', 40)
+        && validOptionalText('lineId', 80)
+        && validOptionalText('customerLineId', 80)
+        && validOptionalText('email', 120)
+        && validOptionalText('midpoints', 800)
+        && validOptionalText('passengers', 80)
+        && validOptionalText('luggage', 120)
+        && validOptionalText('flightNumber', 80)
+        && validOptionalText('shipSession', 120)
+        && validOptionalText('vehicleType', 100)
+        && validOptionalText('taxIdNumber', 20)
+        && validOptionalText('taxTitle', 120)
+        && validOptionalText('note', 1000)
+        && validOptionalText('customerNote', 1000)
+        && validUpdatedAt()
+        && isOptionalList('addons')
+        && isOptionalList('customerAddons')
+        && isOptionalBool('needReceipt')
+        && isOptionalBool('isRoundTrip')
+        && isOptionalNumber('price')
+        && isOptionalNumber('estimatedTotal');
+    }
+
+    function validOrderCreate() {
+      return request.resource.data.keys().hasOnly(orderCreateAllowedFields())
+        && hasRequiredOrderFields()
+        && validOrderOwnerForCreate()
+        && validOrderStatusForCreate()
+        && validPaymentStatusForCreate()
+        && validOrderTextFields();
+    }
+
+    function canReadOrder() {
+      return isStaff()
+        || (
+          signedIn()
+          && 'memberUid' in resource.data
+          && resource.data.memberUid == uid()
+        );
+    }
+
+    function validStaffOrderUpdate() {
+      return request.resource.data.keys().hasOnly(orderAllowedFields())
+        && validUpdatedAt()
+        && !request.resource.data.diff(resource.data).changedKeys().hasAny(['memberUid', 'guestId', 'createdAt']);
+    }
+
+    function driverApplicationAllowedFields() {
+      return [
+        'uid',
+        'guestId',
+        'name',
+        'phone',
+        'lineId',
+        'city',
+        'age',
+        'licenseType',
+        'plan',
+        'availableTime',
+        'experience',
+        'note',
+        'status',
+        'source',
+        'createdAt',
+        'updatedAt',
+        'reviewedAt',
+        'reviewedBy'
+      ];
+    }
+
+    function driverApplicationCreateFields() {
+      return [
+        'uid',
+        'guestId',
+        'name',
+        'phone',
+        'lineId',
+        'city',
+        'age',
+        'licenseType',
+        'plan',
+        'availableTime',
+        'experience',
+        'note',
+        'status',
+        'source',
+        'createdAt',
+        'updatedAt'
+      ];
+    }
+
+    function validDriverApplicationOwnerForCreate() {
+      return (
+          signedIn()
+          && 'uid' in request.resource.data
+          && request.resource.data.uid == uid()
+        )
+        || (
+          !signedIn()
+          && !('uid' in request.resource.data)
+        );
+    }
+
+    function validDriverApplicationCreate() {
+      return request.resource.data.keys().hasOnly(driverApplicationCreateFields())
+        && validDriverApplicationOwnerForCreate()
+        && request.resource.data.status in ['待審核', '已送出']
+        && validText('name', 80)
+        && validText('phone', 40)
+        && validText('city', 80)
+        && validText('licenseType', 80)
+        && validText('plan', 80)
+        && validOptionalText('uid', 160)
+        && validOptionalText('guestId', 160)
+        && validOptionalText('lineId', 80)
+        && validOptionalText('availableTime', 120)
+        && validOptionalText('experience', 120)
+        && validOptionalText('note', 1000)
+        && isOptionalNumber('age')
+        && validCreatedAt()
+        && validUpdatedAt();
+    }
+
+    function canReadDriverApplication() {
+      return isStaff()
+        || (
+          signedIn()
+          && 'uid' in resource.data
+          && resource.data.uid == uid()
+        );
+    }
+
+    function notificationAllowedFields() {
+      return [
+        'targetUid',
+        'title',
+        'message',
+        'type',
+        'read',
+        'url',
+        'createdAt',
+        'updatedAt'
+      ];
+    }
+
+    function validNotificationReadUpdate() {
+      return request.resource.data.diff(resource.data).changedKeys().hasOnly(['read', 'updatedAt'])
+        && request.resource.data.read is bool
+        && validUpdatedAt();
+    }
+
+    match /members/{userId} {
+      allow read: if isOwner(userId) || isStaff();
+      allow create: if validMemberCreate(userId);
+      allow update: if validMemberUpdate(userId) || (isStaff() && request.resource.data.keys().hasOnly(memberAllowedFields()));
+      allow delete: if isAdmin();
+
+      match /history/{historyId} {
+        allow read: if isOwner(userId) || isStaff();
+        allow create: if isOwner(userId) || isStaff();
+        allow update, delete: if isStaff();
+      }
+    }
+
+    match /orders/{orderId} {
+      allow read: if canReadOrder();
+      allow create: if validOrderCreate() || isStaff();
+      allow update: if isStaff() && validStaffOrderUpdate();
+      allow delete: if isAdmin();
+    }
+
+    match /driverApplications/{applicationId} {
+      allow read: if canReadDriverApplication();
+      allow create: if validDriverApplicationCreate() || isStaff();
+      allow update: if isStaff()
+        && request.resource.data.keys().hasOnly(driverApplicationAllowedFields())
+        && validUpdatedAt();
+      allow delete: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.targetUid == uid()
+        );
+      allow create: if isStaff()
+        && request.resource.data.keys().hasOnly(notificationAllowedFields())
+        && validText('targetUid', 160)
+        && validText('title', 120)
+        && validText('message', 1000)
+        && validOptionalText('type', 80)
+        && validOptionalText('url', 500)
+        && isOptionalBool('read')
+        && validCreatedAt();
+      allow update: if isStaff()
+        || (
+          signedIn()
+          && resource.data.targetUid == uid()
+          && validNotificationReadUpdate()
+        );
+      allow delete: if isAdmin();
+    }
+
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isStaff();
+      allow update, delete: if false;
+    }
+
+    match /admins/{adminId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    match /staff/{staffId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /publicSettings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /systemLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isStaff();
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

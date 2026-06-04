@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="../">
+  <title>API 正式串接｜玹翔旅遊 v8.0</title>
+  <meta name="description" content="玹翔旅遊 v8.0 Apps Script、Firebase、LINE 與 Cloudflare 新手串接說明。">
+  <link rel="canonical" href="https://xuanxiangtravel.com/docs/API正式串接_一步一步圖文教學.html">
+  <link rel="stylesheet" href="assets/css/xx-v8.css">
+  <style>
+    body{background:#080b10}.xx-doc{width:min(980px,calc(100% - 32px));margin:48px auto;padding:28px;border:1px solid rgba(216,181,109,.28);border-radius:24px;background:#111318}.xx-doc h1,.xx-doc h2{color:#fff0b8}.xx-doc code{padding:2px 7px;border-radius:8px;background:#232936;color:#fff0b8}.xx-doc li{margin:10px 0}.xx-doc a{color:#fff0b8}
+  </style>
+</head>
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main class="xx-doc">
+  <h1>API 正式串接｜新手一步一步操作</h1>
+  <p>本頁只列出需要在外部平台手動完成的操作。網站檔案已經串好，不需要逐頁修改。</p>
+  <h2>1. Apps Script</h2>
+  <ol>
+    <li>開啟 Apps Script 專案。</li>
+    <li>將網站壓縮包內 <code>apps-script/Code.gs</code> 的內容完整貼到 Apps Script。</li>
+    <li>左側齒輪「專案設定」→「指令碼屬性」。</li>
+    <li>新增 <code>ORDER_SHEET_ID</code>、<code>PRICE_SHEET_ID</code>、<code>LINE_ADMIN_IDS</code>、<code>LINE_CHANNEL_ACCESS_TOKEN</code>。LINE 群組通知可選填 <code>LINE_GROUP_IDS</code>。</li>
+    <li>右上角「部署」→「管理部署作業」→「編輯」→ 版本選「新版本」。</li>
+    <li>執行身分選「我」，存取權限選「任何人」，按「部署」。</li>
+    <li>開啟 <a href="https://script.google.com/macros/s/AKfycbzVDbRDPjhHpTiFDP-q4ISnixgWgJGAiQ9ZLYiyfWPztszU0kDL-7aADRC1A5_EM2I33A/exec?action=health" target="_blank" rel="noopener">API 健康檢查</a>，確認顯示 <code>ultimate-final-v8</code>，而且 <code>properties</code> 裡的四項狀態都是 <code>true</code>。</li>
+    <li>如果 Google 顯示新的 <code>/exec</code> 網址，只需替換 <code>assets/js/config.js</code> 裡的 <code>APPS_SCRIPT_URL</code>，不要逐頁修改 HTML。</li>
+  </ol>
+  <h2>2. Firebase</h2>
+  <ol>
+    <li>Firebase Console → Authentication → Sign-in method。</li>
+    <li>啟用 Email/Password 與 Google。</li>
+    <li>Authentication → Settings → Authorized domains。</li>
+    <li>加入 <code>xuanxiangtravel.com</code>、<code>xuanxiang-vip-f44.pages.dev</code>、<code>localhost</code>。</li>
+    <li>本專案使用命名 Firestore 資料庫 <code>xuanxiangtravel</code>，不要發布到不存在的 <code>(default)</code> 資料庫。</li>
+    <li>終端機進入網站資料夾，執行 <code>bash tools/deploy_firebase_rules.sh</code>。若尚未登入，先執行 <code>firebase login</code>。</li>
+    <li>Firebase Analytics 已由網站自動初始化，不需要逐頁貼上 Firebase 範例程式。</li>
+  </ol>
+  <h2>3. Cloudflare Pages</h2>
+  <ol>
+    <li>第一次在終端機執行 <code>npm_config_cache=/tmp/xuanxiang-npm-cache npx --yes wrangler@latest login</code>，並在瀏覽器完成 Cloudflare 授權。</li>
+    <li>回到網站資料夾執行 <code>bash tools/deploy_cloudflare_pages.sh</code>。腳本會自動建立 ZIP 並只上傳前端檔案。</li>
+    <li>部署後用手機開啟首頁，測試選單、價目表、登入與預約。</li>
+    <li>終端機執行 <code>python3 tools/check_live_deployment.py</code>，看到線上驗收全部通過才算完成。</li>
+  </ol>
+</main>
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

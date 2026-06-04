@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404｜頁面迷路了｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊 404 頁面，頁面可能已搬家或暫時不存在，可返回首頁、查詢價目表、預約專車或聯繫 LINE 官方客服。">
+<meta name="robots" content="noindex,follow">
+<meta property="og:title" content="404｜頁面迷路了｜玹翔旅遊">
+<meta property="og:description" content="網址可能迷路了，但玹翔旅遊的專車不會。返回首頁、預約專車或立即聯繫客服。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+<link rel="canonical" href="https://xuanxiangtravel.com/404.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+<style>
+:root{
+  --bg:#050505;
+  --gold:#d8b56d;
+  --gold2:#fff0b8;
+  --gold3:#b88935;
+  --text:#fff8e8;
+  --muted:#d7c9aa;
+  --line:rgba(216,181,109,.28);
+  --shadow:0 30px 90px rgba(0,0,0,.58);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-width:320px;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 20% 0%,rgba(216,181,109,.18),transparent 30%),
+    radial-gradient(circle at 86% 12%,rgba(255,240,184,.12),transparent 28%),
+    linear-gradient(180deg,#050505 0%,#0b0906 48%,#050505 100%);
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;height:auto;display:block}
+.wrap{width:min(1180px,92vw);margin:auto}
+.xx-404-hero{
+  position:relative;
+  isolation:isolate;
+  padding:clamp(76px,9vw,130px) 0 clamp(54px,7vw,86px);
+  min-height:78vh;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.xx-404-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.72),rgba(0,0,0,.42)),
+    radial-gradient(circle at 18% 18%,rgba(216,181,109,.25),transparent 32%),
+    url("images/logo.jpg") center/cover no-repeat;
+  opacity:.98;
+}
+.xx-404-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:160px;
+  z-index:-1;
+  background:linear-gradient(180deg,transparent,#050505);
+}
+.xx-404-card{
+  position:relative;
+  width:min(980px,100%);
+  border:1px solid rgba(216,181,109,.35);
+  border-radius:36px;
+  padding:clamp(30px,5vw,60px);
+  background:linear-gradient(145deg,rgba(24,18,9,.94),rgba(5,5,5,.9));
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.xx-404-card::after{
+  content:"";
+  position:absolute;
+  right:-120px;
+  top:-120px;
+  width:340px;
+  height:340px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,240,184,.2),transparent 70%);
+  pointer-events:none;
+}
+.xx-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 16px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(216,181,109,.09);
+  color:var(--gold2);
+  font-size:.92rem;
+  font-weight:950;
+  letter-spacing:.12em;
+}
+.xx-error-code{
+  margin:18px 0 0;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(5.8rem,16vw,12rem);
+  line-height:.9;
+  color:var(--gold2);
+  text-shadow:0 12px 45px rgba(0,0,0,.68);
+}
+.xx-404-card h1{
+  margin:12px 0 0;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(2.1rem,5vw,4.4rem);
+  line-height:1.16;
+  color:var(--gold2);
+  letter-spacing:.04em;
+}
+.xx-404-card p{
+  max-width:760px;
+  margin:18px 0 0;
+  color:#eadfca;
+  line-height:2;
+  font-size:clamp(1rem,1.7vw,1.18rem);
+}
+.xx-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+.xx-actions a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:13px 22px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  font-weight:950;
+  letter-spacing:.04em;
+}
+.xx-actions a.primary{
+  background:linear-gradient(135deg,var(--gold3),var(--gold2));
+  color:#130c04;
+  border-color:transparent;
+  box-shadow:0 14px 38px rgba(216,181,109,.24);
+}
+.xx-actions a.secondary{
+  background:rgba(255,255,255,.06);
+  color:var(--gold2);
+  backdrop-filter:blur(10px);
+}
+.xx-actions a:hover{transform:translateY(-2px)}
+.xx-quick-grid{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.xx-quick-grid a{
+  min-height:70px;
+  padding:14px;
+  border:1px solid rgba(216,181,109,.22);
+  border-radius:18px;
+  background:rgba(255,255,255,.045);
+  color:#f8eed7;
+  font-weight:900;
+  line-height:1.45;
+}
+.xx-quick-grid small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-weight:700;
+}
+section{padding:clamp(46px,7vw,82px) 0}
+.sectionTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  margin-bottom:26px;
+}
+.sectionTitle h2{
+  margin:0;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(1.8rem,3.8vw,3.15rem);
+  color:var(--gold2);
+}
+.sectionTitle .muted{color:var(--muted);line-height:1.8}
+.xx-card-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.xx-card{
+  position:relative;
+  min-height:190px;
+  padding:24px;
+  border:1px solid rgba(216,181,109,.26);
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(23,23,23,.94),rgba(20,15,8,.88));
+  box-shadow:0 24px 70px rgba(0,0,0,.38);
+  overflow:hidden;
+}
+.xx-card::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,240,184,.42),transparent);
+}
+.xx-card h3{
+  margin:0 0 10px;
+  color:var(--gold2);
+  font-size:1.24rem;
+  line-height:1.45;
+}
+.xx-card p,.xx-card li{
+  color:#e7dbc4;
+  line-height:1.9;
+  margin:0;
+}
+.xx-number{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  margin-bottom:14px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  color:#130c04;
+  font-weight:950;
+}
+.xx-scene{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.xx-scene .xx-card{min-height:210px}
+.xx-cta{
+  text-align:center;
+  padding:clamp(44px,6vw,78px) clamp(20px,4vw,36px);
+  border:1px solid var(--line);
+  border-radius:36px;
+  background:radial-gradient(circle at top,rgba(216,181,109,.2),transparent 36%),linear-gradient(135deg,#181208,#080705);
+  box-shadow:var(--shadow);
+}
+.xx-cta h2{
+  margin:0;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(2rem,5vw,4rem);
+  color:var(--gold2);
+}
+.xx-cta p{
+  max-width:760px;
+  margin:18px auto 0;
+  color:#eadfca;
+  line-height:2;
+}
+@media(max-width:980px){
+  .xx-card-grid,.xx-scene{grid-template-columns:1fr 1fr}
+  .xx-quick-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .xx-404-hero{min-height:auto;padding:48px 0 36px}
+  .xx-404-card{border-radius:26px;padding:26px}
+  .xx-actions{display:grid}
+  .xx-actions a{width:100%}
+  .xx-card-grid,.xx-scene,.xx-quick-grid{grid-template-columns:1fr}
+  .sectionTitle{display:grid;gap:10px}
+  section{padding:42px 0}
+}
+</style>
+</head>
+<body data-xx-layout="v8" data-page="404">
+
+<div id="xx-site-header"></div>
+
+<main>
+  <section class="xx-404-hero" aria-label="404 頁面不存在">
+    <div class="wrap">
+      <article class="xx-404-card">
+        <span class="xx-tag">404｜XUAN XIANG TRAVEL</span>
+        <div class="xx-error-code">404</div>
+        <h1>頁面迷路了，但您的行程不用迷路。</h1>
+        <p>您要找的頁面可能已搬家、改名，或暫時下車休息中。沒關係，玹翔旅遊已經幫您準備好回首頁、查價目表、預約專車與 LINE 客服入口。網址可以迷路，專車不能迷航。</p>
+        <div class="xx-actions">
+          <a class="primary" href="index.html">返回首頁</a>
+          <a class="secondary" href="booking.html">前往預約商城</a>
+          <a class="secondary" href="airport-pricing.html">查看機場價目表</a>
+          <a class="secondary" href="#" data-xx-line-link target="_blank" rel="noopener noreferrer">LINE 官方客服</a>
+        </div>
+        <div class="xx-quick-grid" aria-label="快速導覽">
+          <a href="airport-pricing.html">機場接送<small>桃園・松山・清泉岡・小港</small></a>
+          <a href="travel-one-day.html">旅遊包車<small>一日遊・多日遊・秘境行程</small></a>
+          <a href="business-transfer.html">商務接送<small>高隱私・高準時・高排面</small></a>
+          <a href="vehicles.html">車款介紹<small>五人座・九人座・明星保母車</small></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sectionTitle">
+        <h2>找不到頁面時，可以先這樣做</h2>
+        <span class="muted">比起原地懷疑人生，這六步比較有效。</span>
+      </div>
+      <div class="xx-card-grid">
+        <article class="xx-card"><div class="xx-number">01</div><h3>返回首頁重新導覽</h3><p>從首頁重新選擇機場接送、旅遊包車、商務包車或車款介紹，路線會比網址更清楚。</p></article>
+        <article class="xx-card"><div class="xx-number">02</div><h3>查看價目表</h3><p>機場、港口、登山、長途與旅遊包車可先看參考價，實際金額仍以客服確認為準。</p></article>
+        <article class="xx-card"><div class="xx-number">03</div><h3>直接預約專車</h3><p>提供日期、時間、上下車地點、人數與行李，客服會協助確認最適合的車款與報價。</p></article>
+        <article class="xx-card"><div class="xx-number">04</div><h3>LINE 詢問客服</h3><p>如果您正在趕航班、趕演唱會、趕行程，直接丟 LINE 最快，客服不是裝飾品。</p></article>
+        <article class="xx-card"><div class="xx-number">05</div><h3>確認網址拼字</h3><p>有時候只是多打一個符號，頁面就開始玩躲貓貓。確認網址後可再次重新整理。</p></article>
+        <article class="xx-card"><div class="xx-number">06</div><h3>保留截圖給客服</h3><p>若是連結失效或頁面異常，請截圖給客服，我們會協助修正，網站也需要保養。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sectionTitle">
+        <h2>玹翔旅遊熱門服務</h2>
+        <span class="muted">讓頁面回到正軌，也讓行程回到高端。</span>
+      </div>
+      <div class="xx-card-grid">
+        <article class="xx-card"><h3>✨ 機場接送</h3><p>桃園、松山、清泉岡、小港機場接送，到府專車服務，適合家庭旅遊、商務出差與長途轉乘。</p></article>
+        <article class="xx-card"><h3>✨ 旅遊包車</h3><p>一日遊、多日遊、秘境景點、親子旅遊與客製化行程，路線由客服協助規劃。</p></article>
+        <article class="xx-card"><h3>✨ 商務接送</h3><p>重視準時、隱私與乘坐質感，適合企業接待、貴賓接送、會議行程與長期配合。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sectionTitle">
+        <h2>車款與使用場景</h2>
+        <span class="muted">不同需求，搭配不同排面。</span>
+      </div>
+      <div class="xx-scene">
+        <article class="xx-card"><h3>舒適五人座</h3><p>適合小家庭、情侶、商務單人、輕行李機場接送。</p></article>
+        <article class="xx-card"><h3>九人座商務車</h3><p>適合多人同行、港口接駁、旅遊包車、演唱會專車。</p></article>
+        <article class="xx-card"><h3>Lexus LM / Alphard</h3><p>適合 VIP 接待、婚禮禮車、企業貴賓與高端商務。</p></article>
+        <article class="xx-card"><h3>Sprinter 明星保母車</h3><p>適合藝人行程、長途商務、高隱私接送與尊榮包車。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="xx-cta">
+        <h2>頁面雖然不見了，客服還在。</h2>
+        <p>把日期、時間、上下車地點、人數、行李與想搭的車型傳給我們，玹翔旅遊協助您把行程安排回正軌。</p>
+        <div class="xx-actions" style="justify-content:center">
+          <a class="primary" href="booking.html">立即預約專車</a>
+          <a class="secondary" href="#" data-xx-line-link target="_blank" rel="noopener noreferrer">LINE 詢問報價</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

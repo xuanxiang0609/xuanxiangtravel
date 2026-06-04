@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!--
+=========================================================
+玹翔旅遊｜加購項目頁
+版本：Addons FINAL Navigation Sync
+用途：安全座椅、增高墊、舉牌服務、寵物接送、行李搬運與加購說明頁
+
+維護重點：
+1. 本頁為純加購服務展示頁，不讀取 Google 試算表。
+2. 價目表即時同步功能請放在 airport-pricing.html、port-pricing.html、mountain-pricing.html、long-distance-pricing.html、tour-pricing.html 等價目表頁。
+3. 本頁導覽列需與全站一致。
+4. 手機版下拉選單採點擊展開，避免 hover 在手機上不好點。
+5. 若日後修改 LINE，請搜尋：{{XX_LINE_URL}}
+6. 若日後修改電話，請搜尋：tel:{{XX_PHONE_TEL}}
+7. 若日後修改 LOGO，請覆蓋：images/logo.jpg
+8. 聯絡方式統一維護：assets/js/config.js 的 CONTACT。
+9. 前端只讀取 Apps Script URL；Google Sheet ID、LINE Token、LINE 管理員 ID 都只能放 Apps Script 指令碼屬性。
+=========================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>加購項目｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊安全座椅、增高墊、舉牌服務、寵物接送、行李搬運。">
+<meta name="keywords" content="玹翔旅遊,機場接送,港口接送,旅遊包車,登山包車,商務包車,長途接送">
+<meta property="og:title" content="加購項目｜玹翔旅遊">
+<meta property="og:description" content="玹翔旅遊安全座椅、增高墊、舉牌服務、寵物接送、行李搬運。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo.jpg">
+<style>
+:root{
+  --xx-black:#050505;
+  --xx-black2:#10100f;
+  --xx-card:#15130f;
+  --xx-gold:#d8b56d;
+  --xx-gold2:#fff0b8;
+  --xx-line:rgba(216,181,109,.35);
+  --xx-text:#fff8e8;
+  --xx-muted:rgba(255,248,232,.76);
+}
+body{
+  background:
+    radial-gradient(circle at 50% -10%, rgba(216,181,109,.13), transparent 36%),
+    radial-gradient(circle at 8% 12%, rgba(255,240,184,.08), transparent 28%),
+    linear-gradient(180deg,#050505 0%,#0b0b0a 54%,#050505 100%);
+  color:var(--xx-text);
+}
+.addons-hero{
+  position:relative;
+  overflow:hidden;
+  padding:118px 20px 42px;
+  border-top:1px solid rgba(216,181,109,.22);
+  text-align:center;
+}
+.addons-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(216,181,109,.08),transparent);
+  pointer-events:none;
+}
+.addons-wrap{
+  width:min(1180px,92vw);
+  margin:auto;
+  position:relative;
+  z-index:1;
+}
+.addons-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 24px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#fff2bf,#d8b56d);
+  color:#12100b;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  box-shadow:0 16px 34px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.addons-title{
+  margin:34px 0 18px;
+  font-family:"Noto Serif TC",serif;
+  font-size:clamp(38px,5vw,66px);
+  line-height:1.08;
+  letter-spacing:.05em;
+  color:var(--xx-gold2);
+  text-shadow:0 16px 44px rgba(0,0,0,.55);
+}
+.addons-lead{
+  margin:0 auto;
+  max-width:940px;
+  color:var(--xx-muted);
+  font-size:clamp(16px,1.8vw,20px);
+  font-weight:700;
+  line-height:1.9;
+}
+.addons-section{
+  padding:32px 20px 72px;
+}
+.addons-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.addon-card{
+  overflow:hidden;
+  border:1px solid var(--xx-line);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(216,181,109,.055));
+  box-shadow:0 24px 44px rgba(0,0,0,.38);
+}
+.addon-media{
+  position:relative;
+  min-height:190px;
+  background:
+    linear-gradient(135deg,rgba(255,240,184,.94),rgba(255,255,255,.98) 45%,rgba(216,181,109,.54)),
+    radial-gradient(circle at 25% 25%,rgba(216,181,109,.45),transparent 34%);
+  display:flex;flex-wrap:wrap;
+  align-items:flex-start;
+  justify-content:flex-start;
+  color:rgba(255,248,232,.72);
+  font-weight:900;
+  letter-spacing:.04em;
+  padding:12px;
+}
+.addon-media img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .45s ease, filter .45s ease;
+}
+.addon-card:hover .addon-media img{
+  transform:scale(1.045);
+  filter:saturate(1.08) contrast(1.04);
+}
+.addon-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.28));
+  pointer-events:none;
+}
+.addon-body{
+  padding:22px 18px 20px;
+  background:linear-gradient(180deg,rgba(18,17,14,.94),rgba(10,10,9,.98));
+}
+.addon-body h2{
+  margin:0 0 10px;
+  color:var(--xx-gold2);
+  font-size:22px;
+  letter-spacing:.04em;
+}
+.addon-body p{
+  margin:0;
+  color:rgba(255,255,255,.82);
+  font-size:15.5px;
+  line-height:1.75;
+  font-weight:700;
+}
+.addon-body ul{
+  margin:16px 0 0;
+  padding-left:20px;
+  color:rgba(255,255,255,.86);
+  line-height:1.9;
+  font-size:15.5px;
+  font-weight:700;
+}
+.addons-note{
+  margin-top:26px;
+  border:1px solid var(--xx-line);
+  border-radius:24px;
+  padding:22px;
+  background:rgba(216,181,109,.07);
+  color:var(--xx-muted);
+  line-height:1.9;
+  font-weight:700;
+}
+.addons-cta{
+  display:flex;flex-wrap:wrap;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  margin-top:30px;
+}
+.addons-cta a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:0 22px;
+  border-radius:999px;
+  border:1px solid rgba(216,181,109,.45);
+  color:var(--xx-gold2);
+  text-decoration:none;
+  font-weight:900;
+}
+.addons-cta a:first-child{
+  background:linear-gradient(135deg,#fff2bf,#d8b56d);
+  color:#12100b;
+}
+
+/* ===== 玹翔旅遊｜聯絡方式高端卡片 ===== */
+.xx-contact-hub{
+  padding:18px 20px 78px;
+}
+.xx-contact-panel{
+  width:min(1180px,92vw);
+  margin:auto;
+  border:1px solid rgba(216,181,109,.32);
+  border-radius:30px;
+  padding:32px;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(216,181,109,.16),transparent 32%),
+    linear-gradient(180deg,rgba(255,255,255,.045),rgba(216,181,109,.055));
+  box-shadow:0 26px 70px rgba(0,0,0,.42);
+}
+.xx-contact-panel h2{
+  margin:0 0 10px;
+  color:var(--xx-gold2);
+  font-family:"Noto Serif TC",serif;
+  font-size:clamp(30px,4vw,46px);
+  letter-spacing:.05em;
+}
+.xx-contact-panel p{
+  margin:0 0 24px;
+  color:var(--xx-muted);
+  font-weight:700;
+  line-height:1.9;
+}
+.xx-contact-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.xx-contact-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  min-height:58px;
+  padding:14px 16px;
+  border:1px solid rgba(216,181,109,.20);
+  border-radius:18px;
+  background:rgba(255,255,255,.045);
+  color:#fff8e8;
+  text-decoration:none;
+  font-weight:850;
+  transition:.25s ease;
+}
+.xx-contact-item:hover{
+  transform:translateY(-3px);
+  border-color:rgba(255,240,184,.48);
+  background:rgba(216,181,109,.10);
+}
+.xx-contact-item small{
+  color:var(--xx-gold2);
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.xx-contact-item span{
+  text-align:right;
+  color:#fff8e8;
+}
+@media (max-width:960px){
+  .addons-grid{grid-template-columns:repeat(2,1fr);}
+  .addons-hero{padding-top:96px;}
+}
+@media (max-width:640px){
+  .addons-grid{grid-template-columns:1fr;}
+  .addons-hero{padding:86px 16px 28px;}
+  .addons-section{padding:24px 16px 54px;}
+  .addon-media{min-height:170px;}
+  .xx-contact-panel{padding:24px;}
+  .xx-contact-item{align-items:flex-start;flex-direction:column;}
+  .xx-contact-item span{text-align:left;}
+}
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{
+font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+::selection{
+background:#d8b56d;
+color:#111;
+}
+img{
+max-width:100%;
+height:auto;
+}
+a,button{
+transition:.28s ease;
+}
+a:hover{
+opacity:.92;
+}
+@media(max-width:768px){
+.container,
+.wrap,
+.content,
+.main{
+width:92% !important;
+max-width:92% !important;
+}
+h1{font-size:2.2rem !important;line-height:1.25 !important;}
+h2{font-size:1.7rem !important;}
+p,li,a,span{
+font-size:1rem !important;
+line-height:1.9 !important;
+}
+}
+</style>
+
+
+<link rel="canonical" href="https://xuanxiangtravel.com/addons.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+</head>
+
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main id="top">
+  <section class="addons-hero">
+    <div class="addons-wrap">
+      <span class="addons-pill">Add-on Service</span>
+      <h1 class="addons-title">加購服務與貼心設備</h1>
+      <p class="addons-lead">安全座椅、增高墊、寵物接送、舉牌、行李搬運、開立收據、開立統編、刷卡服務等，請於訂車前告知客服。</p>
+    </div>
+  </section>
+
+  <section class="addons-section" aria-label="加購服務項目列表">
+    <div class="addons-wrap">
+      <div class="addons-grid">
+        <article class="addon-card">
+          <div class="addon-media"><img src="images/addons/child-seat.png" alt="正向安全座椅｜玹翔旅遊兒童安全座椅加購服務"></div>
+          <div class="addon-body">
+            <h2>正向安全座椅</h2>
+            <p>適合較大幼童，依年齡、身高與體重協助安排。</p>
+            <ul>
+              <li>年齡：約 4～12 歲</li>
+              <li>身高：約 105～145 公分</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="addon-card">
+          <div class="addon-media"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅｜玹翔旅遊嬰幼兒安全座椅加購服務"></div>
+          <div class="addon-body">
+            <h2>反向安全座椅</h2>
+            <p>適合較小幼童，數量有限，建議提前預約。</p>
+            <ul>
+              <li>年齡：約 0～2 歲</li>
+              <li>體重：約 0～13 公斤</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="addon-card">
+          <div class="addon-media"><img src="images/addons/booster-seat.png" alt="增高墊｜玹翔旅遊兒童增高墊加購服務"></div>
+          <div class="addon-body">
+            <h2>增高墊</h2>
+            <p>讓安全帶高度更合適，提升兒童乘坐安全。</p>
+            <ul>
+              <li>年齡：約 4～12 歲</li>
+              <li>體重：約 15～36 公斤</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="addon-card">
+          <div class="addon-media"><img src="images/addons/pet-transfer.png" alt="寵物接送｜玹翔旅遊寵物專車加購服務"></div>
+          <div class="addon-body">
+            <h2>寵物接送</h2>
+            <p>寵物需使用外出籠或提袋，保持車內舒適整潔。寵物專車建議選購商務車型。</p>
+          </div>
+        </article>
+
+        <article class="addon-card">
+          <div class="addon-media"><img src="images/addons/sign-service.png" alt="舉牌服務｜玹翔旅遊機場接送舉牌加購服務"></div>
+          <div class="addon-body">
+            <h2>舉牌服務</h2>
+            <p>專人手持旅客姓名牌，協助聯繫司機並引導至上車位置，適合外國友人、商務人士與觀光旅客。</p>
+          </div>
+        </article>
+
+        <article class="addon-card">
+          <div class="addon-media"><img src="images/addons/luggage-carry.png" alt="行李搬運｜玹翔旅遊樓梯行李搬運加購服務"></div>
+          <div class="addon-body">
+            <h2>行李搬運</h2>
+            <p>大型行李、樓梯搬運與特殊協助，請提前告知客服。</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="addons-note">
+        <strong>費用提醒：</strong>正向安全座椅、反向安全座椅、增高墊 NT$200 / 張<br>舉牌服務 NT$200／次<br>行李搬運 1～2 樓每層 NT$100／趟，3 樓含以上每層 NT$200／趟<br>寵物接送（商務車款）NT$200／隻<br>加購內容與數量，以客服確認為準，別讓司機到場才開始玩「猜猜我需要什麼」的小遊戲。
+      </div>
+
+      <div class="addons-cta">
+        <a href="booking.html">立即預約專車 ✨加購</a>
+        <a href="#" data-xx-line-link rel="noopener" target="_blank">LINE 官方客服 詢問細節</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="seo-soft" aria-label="玹翔旅遊 SEO 語意補強">玹翔旅遊、機場接送、港口接送、長途接送、旅遊包車、登山包車、商務包車、寵物接送、演唱會專車、結婚禮車、明星保母車、Alphard、Lexus LM、VITO-2、Tesla、台中機場接送、桃園機場接送、24小時客服、公司行號長期配合、可統編、可收據。</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

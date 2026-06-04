@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!--
+=========================================================
+玹翔旅遊｜商務包車頁
+版本：Business Transfer Luxury Final v8.1
+用途：企業接待、主管行程、貴賓移動、商務專車服務介紹
+
+前端公開聯絡資訊統一由 assets/js/config.js 注入。
+Google Sheet ID、LINE Token、LINE 管理員 ID 請放 Apps Script 指令碼屬性，不可寫入 HTML / JS。
+=========================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商務包車｜企業接待・主管行程・高端專車｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊提供高端商務包車、企業接待、主管行程、貴賓移動、機場飯店多點接送，支援收據統編與長期配合。">
+<meta name="keywords" content="玹翔旅遊,商務包車,企業接待,主管接送,貴賓接送,高端專車,機場接送,商務車,VITO,Alphard,LM,明星保母車">
+<link rel="canonical" href="https://xuanxiangtravel.com/business-transfer.html">
+<meta property="og:title" content="商務包車｜玹翔旅遊">
+<meta property="og:description" content="企業接待、主管行程、貴賓移動，一台車把專業感撐起來。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+
+<style>
+:root{
+  --bg:#050505;
+  --bg2:#0b0b0b;
+  --card:#14110b;
+  --gold:#d8b56d;
+  --gold2:#fff0b8;
+  --gold3:#b88935;
+  --text:#fff8e8;
+  --muted:#d8ccb0;
+  --line:rgba(216,181,109,.26);
+  --shadow:0 26px 80px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif!important;
+  background:
+    radial-gradient(circle at 12% -8%,rgba(216,181,109,.19),transparent 34%),
+    radial-gradient(circle at 88% 8%,rgba(255,240,184,.08),transparent 30%),
+    linear-gradient(180deg,#050505,#090909 48%,#030303);
+  color:var(--text);
+  line-height:1.9;
+  letter-spacing:.035em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--gold);color:#111}
+a{text-decoration:none;color:inherit;transition:.28s ease}
+a:hover{opacity:.92;transform:translateY(-2px)}
+img{max-width:100%;height:auto;display:block}
+.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+
+.business-hero{
+  position:relative;
+  overflow:hidden;
+  padding:116px 0 78px;
+  border-bottom:1px solid rgba(216,181,109,.18);
+  isolation:isolate;
+  min-height:680px;
+  display:flex;
+  align-items:center;
+}
+.business-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.62),rgba(0,0,0,.38)),
+    radial-gradient(circle at 62% 10%,rgba(216,181,109,.22),transparent 38%);
+  pointer-events:none;
+}
+.business-hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+  background:#050505;
+}
+.business-hero-fallback{
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.90),rgba(0,0,0,.62)),
+    url("images/banner/business-hero.jpg") center/cover no-repeat;
+}
+.business-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:180px;
+  background:linear-gradient(180deg,transparent,#050505);
+  pointer-events:none;
+  z-index:1;
+}
+.hero-kpi{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:34px;
+}
+.hero-kpi-card{
+  padding:18px 16px;
+  border-radius:22px;
+  border:1px solid rgba(216,181,109,.22);
+  background:rgba(255,255,255,.055);
+  backdrop-filter:blur(12px);
+}
+.hero-kpi-card strong{
+  display:block;
+  color:var(--gold2);
+  font-size:clamp(24px,3vw,36px);
+  font-weight:950;
+  line-height:1.1;
+}
+.hero-kpi-card span{
+  display:block;
+  margin-top:8px;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:850;
+}
+.business-banner{
+  margin-top:26px;
+  padding:20px;
+  border-radius:24px;
+  border:1px solid rgba(216,181,109,.28);
+  background:linear-gradient(135deg,rgba(255,240,184,.13),rgba(216,181,109,.055));
+  color:#fff0b8;
+  font-weight:900;
+  line-height:1.9;
+}
+.fleet-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.fleet-card{
+  overflow:hidden;
+  border-radius:26px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  box-shadow:0 18px 52px rgba(0,0,0,.24);
+  transition:.28s ease;
+}
+.fleet-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,240,184,.54);
+}
+.fleet-card img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  background:#111;
+}
+.fleet-card-body{
+  padding:24px;
+}
+.fleet-card-body h3{
+  margin:0 0 10px;
+  color:var(--gold2);
+  font-size:24px;
+}
+.fleet-card-body p{
+  margin:0;
+  color:var(--muted);
+  font-weight:720;
+}
+.scene-mini-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:24px;
+}
+.scene-mini-card{
+  padding:18px;
+  border-radius:20px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(0,0,0,.22);
+}
+.scene-mini-card b{
+  display:block;
+  color:var(--gold2);
+  margin-bottom:6px;
+}
+.scene-mini-card span{
+  color:var(--muted);
+  font-size:14px;
+  font-weight:760;
+}
+@media (prefers-reduced-motion: reduce){
+  .business-hero-video{display:none!important;}
+}
+.hero-grid{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:48px;
+  align-items:center;
+}
+.xx-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 16px;
+  border:1px solid rgba(216,181,109,.36);
+  border-radius:999px;
+  color:var(--gold2);
+  background:rgba(216,181,109,.08);
+  font-size:13px;
+  font-weight:950;
+  letter-spacing:.16em;
+}
+.hero-copy h1{
+  margin:22px 0 18px;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  color:var(--gold2);
+  font-size:clamp(44px,6vw,78px);
+  line-height:1.08;
+  text-shadow:0 18px 50px rgba(0,0,0,.55);
+}
+.hero-copy p{
+  max-width:760px;
+  color:#eadfc6;
+  font-size:18px;
+  font-weight:650;
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.hero-actions a,
+.business-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:0 24px;
+  border-radius:999px;
+  border:1px solid rgba(216,181,109,.36);
+  color:var(--text);
+  font-weight:950;
+}
+.hero-actions a:first-child,
+.business-btn.primary{
+  color:#111;
+  background:linear-gradient(135deg,#fff0b8,#d8b56d);
+  box-shadow:0 16px 36px rgba(216,181,109,.18);
+}
+.hero-card{
+  border:1px solid rgba(216,181,109,.25);
+  border-radius:32px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+  box-shadow:var(--shadow);
+}
+.hero-card img{width:100%;height:430px;object-fit:cover;background:#111}
+.hero-card-body{padding:26px}
+.hero-card-body h2{margin:0 0 10px;color:var(--gold2);font-size:28px;font-family:"Noto Serif TC","Noto Sans TC",serif}
+.hero-card-body p{margin:0;color:var(--muted);font-weight:700}
+
+section{padding:68px 0}
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:28px}
+.section-title h2{margin:0;color:var(--gold2);font-size:clamp(30px,4vw,46px);font-family:"Noto Serif TC","Noto Sans TC",serif}
+.section-title .muted{color:var(--muted);font-weight:800}
+.business-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.business-card{
+  min-height:220px;
+  padding:28px;
+  border-radius:26px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 12% 0%,rgba(216,181,109,.13),transparent 34%),
+    linear-gradient(180deg,rgba(20,20,20,.96),rgba(7,7,7,.98));
+  box-shadow:0 18px 52px rgba(0,0,0,.24);
+  transition:.28s ease;
+}
+.business-card:hover{transform:translateY(-6px);border-color:rgba(255,240,184,.54)}
+.business-card .num{color:var(--gold);font-weight:950;font-size:13px;letter-spacing:.18em}
+.business-card h3{margin:10px 0 12px;color:var(--gold2);font-size:24px;line-height:1.35}
+.business-card p{margin:0;color:var(--muted);font-weight:700}
+
+.scene-panel{
+  display:grid;
+  grid-template-columns:.95fr 1.05fr;
+  gap:28px;
+  align-items:stretch;
+  border:1px solid var(--line);
+  border-radius:32px;
+  overflow:hidden;
+  background:rgba(255,255,255,.035);
+  box-shadow:var(--shadow);
+}
+.scene-panel img{width:100%;height:100%;min-height:420px;object-fit:cover;background:#111}
+.scene-content{padding:36px}
+.scene-content h2{margin:0 0 18px;color:var(--gold2);font-family:"Noto Serif TC","Noto Sans TC",serif;font-size:40px;line-height:1.25}
+.scene-content p{color:var(--muted);font-weight:750}
+.scene-list{display:grid;gap:12px;margin:24px 0 0;padding:0;list-style:none}
+.scene-list li{padding:14px 16px;border-radius:18px;border:1px solid rgba(216,181,109,.18);background:rgba(0,0,0,.22);color:#f4e8ca;font-weight:850}
+
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.process-step{padding:22px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.process-step b{display:block;color:var(--gold2);font-size:20px;margin-bottom:8px}.process-step p{margin:0;color:var(--muted);font-size:15px;font-weight:700}
+
+.cta-box{
+  text-align:center;
+  padding:44px 26px;
+  border-radius:32px;
+  border:1px solid rgba(216,181,109,.32);
+  background:linear-gradient(135deg,rgba(255,240,184,.14),rgba(216,181,109,.06));
+}
+.cta-box h2{margin:0 0 14px;color:var(--gold2);font-family:"Noto Serif TC","Noto Sans TC",serif;font-size:42px}
+.cta-box p{margin:0 auto 24px;max-width:760px;color:#eadfc6;font-weight:760}
+.cta-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+
+@media(max-width:980px){
+  .hero-grid,.scene-panel{grid-template-columns:1fr}
+  .business-grid,.process-grid,.fleet-grid,.scene-mini-grid{grid-template-columns:1fr 1fr}
+  .business-hero{min-height:auto}
+  .hero-kpi{grid-template-columns:1fr 1fr}
+  .hero-card img{height:360px}
+}
+@media(max-width:640px){
+  .wrap{width:calc(100% - 28px)}
+  .business-hero{padding:82px 0 54px}
+  section{padding:46px 0}
+  .hero-copy h1{font-size:2.35rem!important;line-height:1.22!important}
+  .hero-copy p,p,li,a,span{font-size:1rem!important;line-height:1.9!important}
+  .hero-actions a,.business-btn{width:100%}
+  .business-grid,.process-grid,.fleet-grid,.scene-mini-grid,.hero-kpi{grid-template-columns:1fr}
+  .section-title{display:block}
+  .scene-content{padding:24px}
+  .scene-content h2,.cta-box h2{font-size:1.8rem!important}
+  .hero-card img,.scene-panel img{height:280px;min-height:280px}
+}
+</style>
+</head>
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+
+<main>
+  <section class="business-hero business-hero-fallback">
+    <video class="business-hero-video" autoplay muted loop playsinline preload="metadata" poster="images/Unknown.jpg" aria-hidden="true" tabindex="-1">
+      <source src="videos/business-hero.mp4" type="video/mp4">
+    </video>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="xx-tag">BUSINESS TRANSFER｜高端商務專車</span>
+        <h1>商務包車<br>把專業感從車門打開</h1>
+        <p>企業接待、主管行程、貴賓移動、飯店會議多點接送，玹翔旅遊提供高隱私、準時、穩定且有質感的商務專車服務。車不只是交通工具，是客戶對公司第一眼的印象。</p>
+        <div class="hero-actions">
+          <a href="booking.html?service=business">立即預約專車 ✨</a>
+          <a href="#" data-xx-line-link target="_blank" rel="noopener">LINE 官方客服諮詢</a>
+        </div>
+        <div class="hero-kpi" aria-label="商務包車服務指標">
+          <div class="hero-kpi-card"><strong>24H</strong><span>全年客服支援</span></div>
+          <div class="hero-kpi-card"><strong>500萬+</strong><span>乘客保障</span></div>
+          <div class="hero-kpi-card"><strong>全台</strong><span>商務接待可諮詢</span></div>
+          <div class="hero-kpi-card"><strong>可統編</strong><span>企業流程更順</span></div>
+        </div>
+        <div class="business-banner">適合企業接待、主管行程、會議移動、機場飯店接送、VIP 貴賓與高端商務場景。不是炫，是規格本來就該到位。</div>
+      </div>
+      <article class="hero-card">
+        <img src="images/vehicles/sprinter.jpg" alt="玹翔旅遊商務包車" onerror="this.src='images/logo.jpg'">
+        <div class="hero-card-body">
+          <h2>不是把人載到，是把場面撐住。</h2>
+          <p>乾淨車況、專業司機、安靜車艙與準時抵達，讓重要行程少一點變數，多一點體面。</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-title">
+        <h2>服務亮點</h2>
+        <span class="muted">重點講清楚，預約不迷路。</span>
+      </div>
+      <div class="business-grid">
+        <article class="business-card"><span class="num">01</span><h3>企業長期配合</h3><p>支援公司行號長期配合，可開收據、可統編，行政流程清楚不拖泥帶水。</p></article>
+        <article class="business-card"><span class="num">02</span><h3>多點接送安排</h3><p>機場、飯店、會議中心、餐敘地點與客戶拜訪可彈性安排，行程銜接更順。</p></article>
+        <article class="business-card"><span class="num">03</span><h3>高端車型調度</h3><p>依人數、行李與接待層級安排五人座、九人座、VITO、LM、Alphard 或明星保母車。</p></article>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="wrap">
+      <div class="section-title">
+        <h2>商務車款陣容</h2>
+        <span class="muted">依接待層級、人數、行李與行程安排。</span>
+      </div>
+      <div class="fleet-grid">
+        <article class="fleet-card">
+          <img src="images/s400.png" alt="舒適五人座商務專車" onerror="this.src='images/logo.jpg'">
+          <div class="fleet-card-body">
+            <h3>舒適五人座</h3>
+            <p>適合主管接送、單人商務移動、機場飯店往返與短中程會議行程。</p>
+          </div>
+        </article>
+        <article class="fleet-card">
+          <img src="images/vehicles/vito.jpg" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+          <div class="fleet-card-body">
+            <h3>九人座商務車</h3>
+            <p>適合企業團隊、外賓接待、行李較多或多點移動的商務行程。</p>
+          </div>
+        </article>
+        <article class="fleet-card">
+          <img src="images/vehicles/sprinter.jpg" alt="明星保母車尊榮商務專車" onerror="this.src='images/logo.jpg'">
+          <div class="fleet-card-body">
+            <h3>尊榮專車</h3>
+            <p>Sprinter、Alphard、Lexus LM 等高端車款，適合 VIP 與重要客戶接待。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap scene-panel">
+      <img src="images/vehicles/sprinter.jpg" alt="企業接待商務專車" onerror="this.src='images/logo.jpg'">
+      <div class="scene-content">
+        <h2>適合哪些商務場合？</h2>
+        <p>商務包車最重要的是穩定與分寸。司機知道什麼時候該提醒，也知道什麼時候保持安靜；路線先確認，車況先整理，讓客戶上車後只需要安心抵達。</p>
+        <ul class="scene-list">
+          <li>國內外客戶接待｜機場 ⇄ 飯店 ⇄ 公司</li>
+          <li>主管行程｜會議、餐敘、拜訪客戶多點移動</li>
+          <li>企業活動｜論壇、展覽、教育訓練交通接駁</li>
+          <li>VIP 貴賓｜高隱私、高舒適、高準時專車安排</li>
+        </ul>
+        <div class="scene-mini-grid">
+          <div class="scene-mini-card"><b>機場飯店</b><span>航班接送與入住銜接</span></div>
+          <div class="scene-mini-card"><b>會議論壇</b><span>準時抵達不掉漆</span></div>
+          <div class="scene-mini-card"><b>客戶拜訪</b><span>多點移動更有效率</span></div>
+          <div class="scene-mini-card"><b>餐敘接待</b><span>禮貌接送體面到位</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-title">
+        <h2>預約流程</h2>
+        <span class="muted">流程越清楚，行程越高級。</span>
+      </div>
+      <div class="process-grid">
+        <div class="process-step"><b>1｜提供需求</b><p>告知日期、時間、人數、行李、地點與車型偏好。</p></div>
+        <div class="process-step"><b>2｜客服確認</b><p>確認路線、車款、是否多點停靠與是否需統編收據。</p></div>
+        <div class="process-step"><b>3｜完成訂金</b><p>依客服提供方式完成訂金或企業月結流程。</p></div>
+        <div class="process-step"><b>4｜正式派車</b><p>出發前提供司機資訊，準時接送，穩穩漂亮收工。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cta-box">
+      <h2>讓重要客戶，從上車那刻就感受到規格。</h2>
+      <p>商務接待不是比誰喊得大聲，是比誰安排得穩。預約前可先加 LINE 告知行程，客服會協助確認車款與報價。</p>
+      <div class="cta-actions">
+        <a class="business-btn primary" href="booking.html?service=business">填寫預約需求</a>
+        <a class="business-btn" href="#" data-xx-line-link target="_blank" rel="noopener">LINE 詢問商務包車</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+<script>
+(function(){
+  function ready(fn){
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, { once:true });
+    else fn();
+  }
+  ready(function(){
+    document.querySelectorAll('a[target="_blank"]').forEach(function(link){
+      link.setAttribute("rel", "noopener noreferrer");
+    });
+    document.querySelectorAll("img").forEach(function(img){
+      if(!img.getAttribute("loading")) img.setAttribute("loading", "lazy");
+      if(!img.getAttribute("decoding")) img.setAttribute("decoding", "async");
+      if(!img.getAttribute("alt")) img.setAttribute("alt", "玹翔旅遊商務包車服務");
+      img.addEventListener("error", function(){
+        if(!this.dataset.fallbackApplied){
+          this.dataset.fallbackApplied = "1";
+          this.src = "images/logo.jpg";
+        }
+      }, { once:true });
+    });
+    var video = document.querySelector(".business-hero-video");
+    var hero = document.querySelector(".business-hero");
+    if(video && hero){
+      video.addEventListener("loadeddata", function(){
+        hero.classList.remove("business-hero-fallback");
+      }, { once:true });
+      video.addEventListener("error", function(){
+        video.remove();
+        hero.classList.add("business-hero-fallback");
+      }, { once:true });
+      var promise = video.play();
+      if(promise && typeof promise.catch === "function"){
+        promise.catch(function(){
+          video.remove();
+          hero.classList.add("business-hero-fallback");
+        });
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>

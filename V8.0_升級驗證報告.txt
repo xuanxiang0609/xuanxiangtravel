@@ -1,0 +1,41 @@
+玹翔旅遊 Ultimate Final v8.0｜升級驗證報告
+============================================
+
+完成日期：2026-06-02
+
+已完成
+------
+1. 59 個根目錄 HTML 全部掛上共用架構。
+2. 每頁 Header 掛載點 1 個、Footer 掛載點 1 個、浮動 LINE／電話掛載點 1 個。
+3. Header、Footer、電話、LINE、服務項目、旅遊活動、手機選單集中到 assets/js/config.js 與 assets/js/site-layout.js。
+4. 預約商城服務項目會由 SERVICES 自動產生。
+5. 重複 Header、Footer、聯絡資訊注入腳本與舊 CSS 已移除。
+6. LINE 失效短網址已移除。
+7. 缺少圖片已補正常檔名映射，疑似亂碼檔名已清除。
+8. 合歡山頁面 style 結構已修正。
+9. 價目表已套用淺色表格與凍結樣式。
+10. Firebase Email、Google 登入、忘記密碼與會員綁定已統一讀取 config.js。
+11. Firestore Rules 已與 members 欄位對齊。
+12. Apps Script Code.gs 已升級：health、sheets、prices、booking、重複送單阻擋、Sheet 寫入、LINE 通知。
+13. Sitemap 與 Robots 已統一使用 https://xuanxiangtravel.com。
+14. 404.html 已保留 KLOOK 卡片版入口。
+15. 新增 API 教學、新手小白操作說明與靜態驗證器。
+
+本機驗證
+--------
+- python3 tools/upgrade_v8.py 連續執行兩次：通過，沒有重複插入。
+- python3 tools/validate_site.py：通過。
+- JavaScript 語法檢查：通過。
+- Apps Script Code.gs 語法檢查：通過。
+- 226 個點陣圖片可讀性檢查：通過。
+- 59 個根目錄 HTML 本機 HTTP 回應：全部 200。
+- 核心 JS、CSS、Logo、教學頁、Sitemap、Robots 本機 HTTP 回應：全部 200。
+
+需要手動完成
+------------
+1. Apps Script 目前線上仍是舊版。請依 API串接正式版_新手一步一步教學.txt 重新部署 apps-script/Code.gs。
+2. Firebase Console 需確認 Email/Password 與 Google 已啟用。
+3. Firebase Authorized domains 需加入 xuanxiangtravel.com、xuanxiang-vip-f44.pages.dev、localhost。
+4. Firestore Database Rules 需貼上根目錄 firestore.rules 並發布。
+5. Cloudflare Pages 需上傳本 v8.0 壓縮包。
+6. GitHub CLI 尚未安裝，且尚未指定 GitHub 倉庫。安裝登入後才能推送至 GitHub。

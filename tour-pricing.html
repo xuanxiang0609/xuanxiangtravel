@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>旅遊包車｜玹翔旅遊</title>
+
+<meta name="description" content="玹翔旅遊旅遊包車報價，一日遊、多日遊、家庭旅遊與客製化行程，提供清境、日月潭、阿里山、墾丁與花東等路線包車服務。">
+
+<meta name="keywords" content="玹翔旅遊,旅遊包車,一日遊包車,多日遊包車,家庭旅遊包車,客製化行程,清境包車,日月潭包車,阿里山包車,墾丁包車,花東包車,機場接送,港口接送,登山包車,長途接送">
+
+<meta property="og:title" content="旅遊包車｜玹翔旅遊">
+<meta property="og:description" content="玹翔旅遊旅遊包車，一日遊、多日遊、家庭旅遊、客製化行程。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo.jpg">
+
+<style>
+
+:root{
+  --xx-bg:#05070b;
+  --xx-panel:#0d141c;
+  --xx-panel2:#121b27;
+  --xx-gold:#d8b56d;
+  --xx-gold2:#f7df9b;
+  --xx-gold3:#fff3c2;
+  --xx-text:#f7f1e7;
+  --xx-muted:#b9c1cc;
+  --xx-line:rgba(216,181,109,.24);
+  --xx-shadow:0 24px 70px rgba(0,0,0,.46);
+  --xx-radius:28px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:
+    radial-gradient(circle at 16% -8%,rgba(216,181,109,.20),transparent 28%),
+    radial-gradient(circle at 88% 12%,rgba(247,223,155,.10),transparent 24%),
+    linear-gradient(180deg,#03050a 0%,#08101a 45%,#05070b 100%);
+  color:var(--xx-text);
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+}
+
+.wrap{
+  width:min(1180px,calc(100% - 40px));
+  margin:auto;
+}
+
+/* =========================
+Hero
+========================= */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:110px 0 70px;
+  text-align:center;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at center,rgba(216,181,109,.14),transparent 50%);
+  pointer-events:none;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 18px;
+  border-radius:999px;
+  border:1px solid var(--xx-line);
+  background:rgba(216,181,109,.08);
+  color:var(--xx-gold2);
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.15em;
+}
+
+.hero-title{
+  margin:26px auto 18px;
+  font-size:clamp(42px,8vw,82px);
+  line-height:1.08;
+  letter-spacing:.08em;
+  color:var(--xx-gold3);
+  text-shadow:0 0 38px rgba(216,181,109,.28);
+  font-family:'Noto Serif TC',serif;
+}
+
+.hero p{
+  max-width:900px;
+  margin:auto;
+  color:#d5dde8;
+  font-size:18px;
+  line-height:2;
+}
+
+.hero-actions{
+  display:flex;flex-wrap:wrap;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:34px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:14px 28px;
+  border-radius:999px;
+  border:1px solid var(--xx-line);
+  background:rgba(255,255,255,.05);
+  color:#fff3da;
+  font-weight:900;
+  transition:.3s;
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+  border-color:rgba(247,223,155,.55);
+}
+
+.btn-primary{
+  color:#161108;
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  border-color:rgba(247,223,155,.75);
+  box-shadow:0 16px 36px rgba(216,181,109,.28);
+}
+
+/* =========================
+Section
+========================= */
+
+.section{
+  padding:70px 0;
+}
+
+.section-head{
+  text-align:center;
+  margin-bottom:34px;
+}
+
+.section-head h2{
+  font-size:clamp(32px,5vw,54px);
+  color:var(--xx-gold3);
+  margin-bottom:14px;
+}
+
+.section-head p{
+  max-width:880px;
+  margin:auto;
+  line-height:2;
+  color:var(--xx-muted);
+}
+
+/* =========================
+Cards
+========================= */
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.card{
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid var(--xx-line);
+  background:linear-gradient(180deg,rgba(17,28,39,.92),rgba(10,15,21,.94));
+  box-shadow:0 18px 48px rgba(0,0,0,.26);
+}
+
+.card-body{
+  padding:28px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:48px;
+  height:36px;
+  border-radius:999px;
+  margin-bottom:16px;
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  color:#17120a;
+  font-size:13px;
+  font-weight:900;
+}
+
+.card h3{
+  margin-bottom:12px;
+  color:var(--xx-gold2);
+  font-size:24px;
+}
+
+.card p{
+  color:var(--xx-muted);
+  line-height:1.9;
+}
+
+/* =========================
+車型
+========================= */
+
+.tour-car-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:18px;
+  margin-bottom:30px;
+}
+
+.tour-car-card{
+  text-align:center;
+  padding:24px 18px;
+  border-radius:26px;
+  border:1px solid rgba(216,181,109,.22);
+  background:linear-gradient(145deg,rgba(216,181,109,.12),rgba(255,255,255,.03));
+  box-shadow:0 14px 36px rgba(0,0,0,.24);
+}
+
+.tour-car-card span{
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:52px;
+  margin:0 auto 12px;
+  border-radius:999px;
+  background:rgba(216,181,109,.14);
+  border:1px solid rgba(216,181,109,.24);
+  font-size:26px;
+}
+
+.tour-car-card h3{
+  margin-bottom:8px;
+  color:var(--xx-gold2);
+  font-size:19px;
+}
+
+.tour-car-card p{
+  color:var(--xx-muted);
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* =========================
+價目表
+========================= */
+
+.pricing-luxury-wrap{
+  border-radius:32px;
+  overflow:hidden;
+  border:1px solid var(--xx-line);
+  background:linear-gradient(180deg,rgba(13,20,28,.96),rgba(7,10,15,.96));
+  box-shadow:var(--xx-shadow);
+}
+
+.pricing-scroll{
+  overflow-x:auto;
+  padding:20px;
+  -webkit-overflow-scrolling:touch;
+}
+
+.pricing-scroll::before{
+  content:"手機可左右滑動查看完整價目表 →";
+  display:none;
+  margin-bottom:12px;
+  color:var(--xx-gold2);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
+.pricing-luxury-table{
+  width:100%;
+  min-width:980px;
+  border-collapse:separate;
+  border-spacing:0;
+  border-radius:24px;
+  overflow:hidden;
+}
+
+.pricing-luxury-table th,
+.pricing-luxury-table td{
+  padding:16px;
+  text-align:center;
+  border-right:1px solid rgba(216,181,109,.14);
+  border-bottom:1px solid rgba(216,181,109,.14);
+  white-space:nowrap;
+  line-height:1.7;
+}
+
+.pricing-luxury-table th:first-child,
+.pricing-luxury-table td:first-child{
+  text-align:left;
+  font-weight:900;
+}
+
+.pricing-luxury-table thead th{
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  color:#17120a;
+  font-weight:900;
+}
+
+.pricing-luxury-table tbody tr:nth-child(odd){
+  background:rgba(255,255,255,.035);
+}
+
+.pricing-luxury-table tbody tr:nth-child(even){
+  background:rgba(216,181,109,.045);
+}
+
+.pricing-luxury-table tbody tr:hover{
+  background:rgba(216,181,109,.12);
+}
+
+/* =========================
+注意事項
+========================= */
+
+.price-disclaimer{
+  margin-top:22px;
+  padding:22px;
+  border-radius:24px;
+  border:1px solid rgba(216,181,109,.24);
+  background:linear-gradient(180deg,rgba(216,181,109,.10),rgba(255,255,255,.03));
+  color:rgba(247,241,231,.84);
+  line-height:2;
+  font-size:14px;
+}
+
+.pricing-note-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:22px;
+}
+
+.pricing-note-card{
+  padding:22px;
+  border-radius:24px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(255,255,255,.035);
+}
+
+.pricing-note-card h3{
+  margin-bottom:10px;
+  color:var(--xx-gold2);
+  font-size:20px;
+}
+
+.pricing-note-card p{
+  color:var(--xx-muted);
+  line-height:1.9;
+}
+
+/* =========================
+SEO
+========================= */
+
+.seo-soft{
+  width:min(1180px,calc(100% - 40px));
+  margin:50px auto;
+  color:rgba(255,255,255,.32);
+  font-size:12px;
+  line-height:1.9;
+}
+
+/* =========================
+RWD
+========================= */
+
+@media(max-width:1080px){
+
+  .tour-car-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .pricing-note-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .xx-menu{
+    max-height:calc(100vh - 76px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .drop-list,
+  .xx-sub-list{
+    max-height:none;
+    overflow:visible;
+  }
+
+  body:has(#xx-nav-toggle:checked){
+    overflow:hidden;
+  }
+
+}
+
+@media(max-width:900px){
+
+  .grid-3{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:640px){
+
+  .tour-car-grid,
+  .pricing-note-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    padding:78px 0 52px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .wrap{
+    width:min(100% - 28px,1180px);
+  }
+
+  .hero-title{
+    letter-spacing:.04em;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .pricing-scroll{
+    padding:14px;
+  }
+
+  .pricing-scroll::before{
+    display:block;
+  }
+
+  .pricing-luxury-table{
+    min-width:860px;
+  }
+}
+
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{
+font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+::selection{
+background:#d8b56d;
+color:#111;
+}
+img{
+max-width:100%;
+height:auto;
+}
+a,button{
+transition:.28s ease;
+}
+a:hover{
+opacity:.92;
+}
+@media(max-width:768px){
+.container,
+.wrap,
+.content,
+.main{
+width:92% !important;
+max-width:92% !important;
+}
+h1{font-size:2.2rem !important;line-height:1.25 !important;}
+h2{font-size:1.7rem !important;}
+p,li,a,span{
+font-size:1rem !important;
+line-height:1.9 !important;
+}
+}
+</style>
+
+
+<link rel="canonical" href="https://xuanxiangtravel.com/tour-pricing.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+</head>
+
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+
+    <span class="eyebrow">
+      Private Tour｜玹翔旅遊
+    </span>
+
+    <h1 class="hero-title">
+      旅遊包車
+    </h1>
+
+    <p>
+      清境、日月潭、阿里山、墾丁與花東路線皆可客製安排。
+      行程不是罐頭，是玹翔旅遊替您現做的精緻便當。
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="booking.html">
+        立即預約專車 ✨
+      </a>
+
+      <a class="btn"
+      href="#" data-xx-line-link
+      target="_blank"
+      rel="noopener">
+        LINE 官方客服 詢價
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+
+  <div class="wrap">
+
+    <div class="section-head">
+      <h2>旅遊包車服務重點</h2>
+
+      <p>
+        提供日期、時間、上下車地點、人數、行李與車款需求，
+        客服即可協助確認最合適方案。
+      </p>
+    </div>
+
+    <div class="grid-3">
+
+      <article class="card">
+        <div class="card-body">
+          <span class="badge">01</span>
+          <h3>透明報價</h3>
+          <p>
+            依路線、車型、時間與需求確認費用，
+            讓預約不踩坑。
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-body">
+          <span class="badge">02</span>
+          <h3>專業安排</h3>
+          <p>
+            依人數與行李安排合適車款，
+            避免後車廂變成益智遊戲。
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-body">
+          <span class="badge">03</span>
+          <h3>客服確認</h3>
+          <p>
+            實際服務內容以客服確認為準，
+            特殊日期或偏遠地區另行報價。
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section" id="tour-price">
+
+  <div class="wrap">
+
+    <div class="section-head">
+      <h2>旅遊包車｜價目表</h2>
+
+      <p>
+        以下為旅遊包車參考報價，
+        實際金額仍依日期、停靠點、行李、人數、
+        車型與特殊需求由客服確認。
+      </p>
+    </div>
+
+    <div class="tour-car-grid">
+
+      <article class="tour-car-card">
+        <span>🚗</span>
+        <h3>舒適五人座</h3>
+        <p>3人＋2件28吋行李</p>
+      </article>
+
+      <article class="tour-car-card">
+        <span>🚙</span>
+        <h3>高級進口車</h3>
+        <p>3人＋2件28吋行李</p>
+      </article>
+
+      <article class="tour-car-card">
+        <span>🚐</span>
+        <h3>豪華商務車</h3>
+        <p>7人＋7件28吋行李</p>
+      </article>
+
+      <article class="tour-car-card">
+        <span>👑</span>
+        <h3>尊榮 Alphard</h3>
+        <p>最多6人</p>
+      </article>
+
+      <article class="tour-car-card">
+        <span>⭐</span>
+        <h3>明星保母車</h3>
+        <p>8人＋8件28吋行李</p>
+      </article>
+
+    </div>
+
+    <div class="pricing-luxury-wrap">
+
+      <div class="pricing-scroll">
+
+        <table class="pricing-luxury-table">
+
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>舒適五人座</th>
+              <th>高級進口車</th>
+              <th>豪華商務車</th>
+              <th>尊榮 Alphard</th>
+              <th>明星保母車</th>
+              <th>備註</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>一日包車（8H）</td>
+              <td>5500</td>
+              <td>6000</td>
+              <td>6500</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <td>一日包車（10H）</td>
+              <td>6000</td>
+              <td>6500</td>
+              <td>7000</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <td>司機小費（日）</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <td>司機過夜住宿補貼（日）</td>
+              <td>1500</td>
+              <td>1500</td>
+              <td>1500</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>如有提供住宿不額外收費</td>
+            </tr>
+
+            <tr>
+              <td>偏遠地區車資加成（日）</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <td>山區及偏遠地區司機住宿補貼</td>
+              <td>500</td>
+              <td>500</td>
+              <td>500</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>如有提供住宿不額外收費</td>
+            </tr>
+
+            <tr>
+              <td>連續假期車資加成（日）</td>
+              <td>1500</td>
+              <td>1500</td>
+              <td>1500</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <td>連續假期住宿補貼（日）</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>如有提供住宿不額外收費</td>
+            </tr>
+
+            <tr>
+              <td>司機餐費補貼（日）</td>
+              <td>300</td>
+              <td>300</td>
+              <td>300</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>有供餐不額外收費</td>
+            </tr>
+
+            <tr>
+              <td>超時加成（1H）</td>
+              <td>600</td>
+              <td>650</td>
+              <td>700</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <td>跨縣市費用加成</td>
+              <td>依客服報價</td>
+              <td>依客服報價</td>
+              <td>依客服報價</td>
+              <td>請洽客服</td>
+              <td>請洽客服</td>
+              <td>-</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <div class="price-disclaimer">
+
+      以上報價均為參考值，
+      實際報價以客服確認為主。
+
+      特殊連續假期、跨年、春節、228、清明、
+      國慶等期間請提早訂車。
+
+      安全座椅、增高墊租借 NT$200／張；
+      舉牌服務 NT$200／次；
+      增加停靠點依距離每點酌收 NT$100～200。
+
+    </div>
+
+    <div class="pricing-note-grid">
+
+      <article class="pricing-note-card">
+        <h3>🛡️ 安全座椅</h3>
+        <p>增高墊／安全座椅 NT$200／張。</p>
+      </article>
+
+      <article class="pricing-note-card">
+        <h3>🪧 舉牌服務</h3>
+        <p>舉牌服務 NT$200／次。</p>
+      </article>
+
+      <article class="pricing-note-card">
+        <h3>⛰️ 偏遠地區</h3>
+        <p>山區與偏遠地區依路線酌收加價。</p>
+      </article>
+
+      <article class="pricing-note-card">
+        <h3>🎉 特殊假日</h3>
+        <p>跨年、春節、228、清明、國慶等連假需另報價。</p>
+      </article>
+
+      <article class="pricing-note-card">
+        <h3>🧳 停靠點</h3>
+        <p>增加停靠點依距離酌收 NT$100～200。</p>
+      </article>
+
+      <article class="pricing-note-card">
+        <h3>💬 客服確認</h3>
+        <p>實際報價仍以客服最終確認為準。</p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<section class="seo-soft">
+
+玹翔旅遊、機場接送、港口接送、長途接送、
+旅遊包車、登山包車、商務包車、寵物接送、
+演唱會專車、結婚禮車、明星保母車、
+Alphard、Lexus LM、VITO-2、Tesla、
+台中機場接送、桃園機場接送、
+24小時客服、公司行號長期配合、可統編、可收據。
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/home / 301
+/index /  301
+/airport.htm /airport.html 301
+/faq.htm /faq.html 301
+/booking.htm /booking.html 301
+/apps-script/* /404.html 404
+/tools/* /404.html 404
+/docs/* /404.html 404
+/README.html /404.html 404
+/content-merged.html /404.html 404
+/*.txt /404.html 404
+/firebase.json /404.html 404
+/firestore.rules /404.html 404
+/firestore.indexes.json /404.html 404
+/* /404.html 404

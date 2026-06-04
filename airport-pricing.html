@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>機場接送價目表｜玹翔旅遊 Xuan Xiang Travel</title>
+<meta name="description" content="玹翔旅遊全台機場接送價目表，桃園機場、松山機場、清泉崗機場、小港機場即時查詢。">
+<meta name="keywords" content="玹翔旅遊,機場接送,桃園機場接送,松山機場接送,清泉崗機場接送,小港機場接送">
+<link rel="canonical" href="https://xuanxiangtravel.com/airport-pricing.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+<style>
+:root{
+--gold:#d8b56d;
+--gold2:#fff0b8;
+--bg:#050505;
+--card:#121212;
+--text:#f7f3ea;
+--muted:#cfd6df;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",sans-serif}
+.wrap{width:min(1280px,calc(100% - 32px));margin:auto}
+.hero{padding:90px 0;background:linear-gradient(135deg,#050505,#15110b)}
+.hero h1{font-size:clamp(38px,5vw,72px);margin:0;color:var(--gold2)}
+.hero p{color:var(--muted);max-width:760px;line-height:2}
+.price-search{margin:30px 0}
+.price-search input{width:100%;padding:16px 18px;border-radius:14px;border:1px solid rgba(216,181,109,.25);background:#111;color:#fff}
+.section{padding:70px 0}
+.card{background:var(--card);border:1px solid rgba(216,181,109,.18);border-radius:24px;padding:24px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+th{color:var(--gold2)}
+.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:980px){.notice-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main>
+<section class="hero">
+<div class="wrap">
+<h1>機場接送價目表</h1>
+<p>桃園機場、松山機場、清泉崗機場、小港機場即時查詢，價格透明，支援五人座、九人座與明星保母車。</p>
+<div class="price-search">
+<input type="search" id="priceSearch" placeholder="輸入地區、機場或關鍵字搜尋報價...">
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="card">
+<h2>即時價目表</h2>
+<div id="airport-price-table" class="table-wrap">
+<p>資料載入中...</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap notice-grid">
+<div class="card"><h3>24小時客服</h3><p>全年無休協助預約與派車。</p></div>
+<div class="card"><h3>價格透明</h3><p>報價公開，不額外隱藏加價。</p></div>
+<div class="card"><h3>準時接送</h3><p>專業司機與即時調度系統。</p></div>
+</div>
+</section>
+</main>
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>
