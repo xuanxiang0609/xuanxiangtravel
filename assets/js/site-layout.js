@@ -61,14 +61,36 @@
     return text;
   }
 
-  function sameOriginPath(path, fallback = "index.html") {
-    try {
-      const url = new URL(path || fallback, location.href);
-      return url.origin === location.origin ? url.pathname.split("/").pop() + url.search + url.hash : fallback;
-    } catch (_) {
-      return fallback;
-    }
+function fixBrokenInternalHref(rawHref) {
+  const href = String(rawHref || "").trim();
+  if (!href) return "";
+
+  const brokenIndexMatch = href.match(/^\/?index\.html([a-z0-9][a-z0-9-]*)(#.*)?$/i);
+  if (brokenIndexMatch) {
+    const slug = brokenIndexMatch[1].replace(/^\/+|\/+$/g, "");
+    const hash = brokenIndexMatch[2] || "";
+    return `${slug}.html${hash}`;
   }
+
+  return href;
+}
+
+function sameOriginPath(path, fallback = "index.html") {
+  const fixedPath = fixBrokenInternalHref(path || fallback);
+
+  if (fixedPath === "#" || fixedPath.startsWith("#")) return fixedPath;
+  if (/^(tel:|mailto:|sms:|line:|weixin:|whatsapp:)/i.test(fixedPath)) return fixedPath;
+
+  try {
+    const url = new URL(fixedPath, location.href);
+    if (url.origin !== location.origin) return fixedPath;
+
+    const fileName = url.pathname.split("/").filter(Boolean).pop() || "index.html";
+    return `${fileName}${url.search}${url.hash}`;
+  } catch (_) {
+    return fallback;
+  }
+}
 
   function currentPage() {
     return location.pathname.split("/").pop() || "index.html";
@@ -250,14 +272,25 @@
     });
   }
 
-  function normalizeExternalLink(anchor) {
-    const href = anchor.getAttribute("href") || "";
-    if (!href.trim()) anchor.setAttribute("href", "#");
-    if (/^https?:\/\//i.test(href) && !href.includes(location.hostname)) {
-      anchor.setAttribute("target", anchor.getAttribute("target") || "_blank");
-      anchor.setAttribute("rel", "noopener noreferrer");
-    }
+function normalizeExternalLink(anchor) {
+  const href = anchor.getAttribute("href") || "";
+
+  if (!href.trim()) {
+    anchor.setAttribute("href", "#");
+    return;
   }
+
+  const fixedHref = fixBrokenInternalHref(href);
+  if (fixedHref !== href) {
+    warn("已修正錯誤拼接連結", { before: href, after: fixedHref });
+    anchor.setAttribute("href", fixedHref);
+  }
+
+  if (/^https?:\/\//i.test(fixedHref) && !fixedHref.includes(location.hostname)) {
+    anchor.setAttribute("target", anchor.getAttribute("target") || "_blank");
+    anchor.setAttribute("rel", "noopener noreferrer");
+  }
+}
 
   function normalizePublicContactLinks(root = document) {
     root.querySelectorAll('[data-xx-line-link],a[href*="lin.ee"],a[href*="line.me/R/ti/p/"]').forEach((anchor) => {
@@ -364,8 +397,8 @@
   function ensureSeo() {
     if (state.seoReady) return;
     state.seoReady = true;
-
-    const pagePath = location.pathname.replace(/^\/+/, "") || "index.html";
+const pagePath = fixBrokenInternalHref(location.pathname.replace(/^\/+/, "") || "index.html");
+    
     const canonicalUrl = `${siteUrl()}/${pagePath === "index.html" ? "" : pagePath}`;
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
