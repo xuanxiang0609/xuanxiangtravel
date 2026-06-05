@@ -1,6 +1,6 @@
 /*
- * 玹翔旅遊 Ultimate Final v9.2｜Google Maps API 即時報價
- * 功能：地址提示、距離計算、車型倍率、夜間加價、行李提醒、LINE 一鍵送出、GA4 事件。
+ * 玹翔旅遊 Ultimate Final v9.3｜Google Maps API 即時報價引擎
+ * 功能：輸入框防遮罩、地址提示、距離計算、車型倍率、夜間加價、行李提醒、LINE 一鍵送出、GA4 事件。
  */
 (function () {
   "use strict";
@@ -39,7 +39,8 @@
     pickupAutocomplete: null,
     dropoffAutocomplete: null,
     mapsLoaded: false,
-    eventsBound: false
+    eventsBound: false,
+    styleReady: false
   };
 
   function byId(id) {
@@ -110,6 +111,79 @@
     if (typeof window.gtag === "function") {
       window.gtag("event", eventName, params);
     }
+  }
+
+  function injectQuoteSafetyStyle() {
+    if (state.styleReady || document.getElementById("xx-quote-safety-style")) return;
+    state.styleReady = true;
+
+    const style = document.createElement("style");
+    style.id = "xx-quote-safety-style";
+    style.textContent = `
+      .quote-page,
+      .quote-panel,
+      #quoteForm,
+      #quoteForm label{
+        position:relative !important;
+      }
+      #quoteForm{
+        z-index:3 !important;
+      }
+      #quoteForm label{
+        z-index:6 !important;
+      }
+      #quotePickup,
+      #quoteDropoff,
+      #quoteDate,
+      #quoteTime,
+      #quoteVehicle,
+      #quoteLuggage{
+        position:relative !important;
+        z-index:20 !important;
+        pointer-events:auto !important;
+        user-select:text !important;
+        -webkit-user-select:text !important;
+        touch-action:manipulation !important;
+        background:rgba(0,0,0,.78) !important;
+      }
+      #quoteVehicle{
+        user-select:auto !important;
+        -webkit-user-select:auto !important;
+      }
+      .quote-panel::before,
+      .quote-panel::after,
+      .card::before,
+      .card::after,
+      .hero::before,
+      .hero::after{
+        pointer-events:none !important;
+      }
+      .pac-container{
+        z-index:999999 !important;
+        border-radius:16px !important;
+        overflow:hidden !important;
+        border:1px solid rgba(216,181,109,.32) !important;
+        box-shadow:0 18px 52px rgba(0,0,0,.46) !important;
+        font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function ensureInputsInteractive() {
+    ["quotePickup", "quoteDropoff", "quoteDate", "quoteTime", "quoteVehicle", "quoteLuggage"].forEach(function (id) {
+      const el = byId(id);
+      if (!el) return;
+      el.disabled = false;
+      el.readOnly = false;
+      el.removeAttribute("disabled");
+      el.removeAttribute("readonly");
+      el.style.pointerEvents = "auto";
+      el.style.userSelect = id === "quoteVehicle" ? "auto" : "text";
+      el.style.webkitUserSelect = id === "quoteVehicle" ? "auto" : "text";
+      el.style.position = "relative";
+      el.style.zIndex = "20";
+    });
   }
 
   function renderLoading() {
@@ -225,6 +299,8 @@
   }
 
   function calculateQuote() {
+    ensureInputsInteractive();
+
     const pickup = getValue("quotePickup");
     const dropoff = getValue("quoteDropoff");
     const time = getValue("quoteTime");
@@ -293,9 +369,21 @@
     });
   }
 
+  function bindPlaceToInput(autocomplete, input) {
+    if (!autocomplete || !input) return;
+
+    autocomplete.addListener("place_changed", function () {
+      const place = autocomplete.getPlace();
+      const text = place?.formatted_address || place?.name || input.value;
+      if (text) input.value = text;
+    });
+  }
+
   function initAutocomplete() {
     const pickup = byId("quotePickup");
     const dropoff = byId("quoteDropoff");
+
+    ensureInputsInteractive();
 
     if (!pickup || !dropoff || !window.google?.maps?.places?.Autocomplete) return;
 
@@ -306,6 +394,9 @@
 
     state.pickupAutocomplete = new google.maps.places.Autocomplete(pickup, options);
     state.dropoffAutocomplete = new google.maps.places.Autocomplete(dropoff, options);
+
+    bindPlaceToInput(state.pickupAutocomplete, pickup);
+    bindPlaceToInput(state.dropoffAutocomplete, dropoff);
   }
 
   function loadGoogleMaps() {
@@ -354,6 +445,7 @@
       setValue("quoteLuggage", "2");
       const box = byId("quoteResult");
       if (box) box.innerHTML = "";
+      ensureInputsInteractive();
     });
 
     ["quotePickup", "quoteDropoff"].forEach(function (id) {
@@ -367,9 +459,13 @@
   }
 
   function init() {
+    injectQuoteSafetyStyle();
+    ensureInputsInteractive();
     initDefaults();
     initEvents();
     loadGoogleMaps();
+    window.setTimeout(ensureInputsInteractive, 500);
+    window.setTimeout(ensureInputsInteractive, 1500);
   }
 
   if (document.readyState === "loading") {
@@ -381,6 +477,7 @@
   window.XXQuote = {
     calculateQuote,
     loadGoogleMaps,
-    buildQuote
+    buildQuote,
+    ensureInputsInteractive
   };
 })();
