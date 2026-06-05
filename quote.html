@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>即時報價｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊即時報價系統，可依上車地點、下車地點、車型與時間快速估算機場接送、長途接送與包車費用。">
+<link rel="canonical" href="https://xuanxiangtravel.com/quote.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+</head>
+
+<body data-xx-layout="v9">
+<div id="xx-site-header"></div>
+
+<main class="quote-page">
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">🚘 Google Maps 即時估價</span>
+      <h1>輸入上下車地點，<br>先抓個漂亮報價。</h1>
+      <p>系統會依 Google Maps 距離、車型、夜間時段與基本費用估算。正式價格仍以客服確認為準，不會讓客人被數字偷襲。</p>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding:40px 0 80px;">
+    <div class="card" style="padding:28px;border-radius:28px;">
+      <div class="form-grid">
+        <label>
+          上車地點
+          <input id="quotePickup" type="text" placeholder="例如：台中市西屯區、台中高鐵站">
+        </label>
+
+        <label>
+          下車地點
+          <input id="quoteDropoff" type="text" placeholder="例如：桃園機場、清泉崗機場">
+        </label>
+
+        <label>
+          用車日期
+          <input id="quoteDate" type="date">
+        </label>
+
+        <label>
+          用車時間
+          <input id="quoteTime" type="time">
+        </label>
+
+        <label>
+          車型
+          <select id="quoteVehicle">
+            <option value="sedan">舒適五人座</option>
+            <option value="van">九人座商務車</option>
+            <option value="vip">尊榮專車｜Alphard / Lexus LM</option>
+            <option value="sprinter">明星保母車｜Sprinter</option>
+          </select>
+        </label>
+
+        <label>
+          行李數量
+          <input id="quoteLuggage" type="number" min="0" value="2">
+        </label>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+        <button class="btn primary" id="quoteBtn" type="button">立即估價</button>
+        <a class="btn" href="#" data-xx-line-link target="_blank" rel="noopener">LINE 詢問客服</a>
+      </div>
+
+      <div id="quoteResult" style="margin-top:26px;"></div>
+    </div>
+  </section>
+</main>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/quote.js" defer></script>
+</body>
+</html>

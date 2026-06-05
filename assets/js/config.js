@@ -7,7 +7,7 @@
 
   const config = {
     VERSION: "Ultimate Final v9.1 Enterprise Agency UI",
-
+    GOOGLE_MAPS_API_KEY: "AIzaSyDMoC4SEpieCF7xYtdi9PUnGP_pvRP_K8s",
     SITE_URL: "https://xuanxiangtravel.com",
     APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzVDbRDPjhHpTiFDP-q4ISnixgWgJGAiQ9ZLYiyfWPztszU0kDL-7aADRC1A5_EM2I33A/exec",
 
@@ -42,7 +42,10 @@
       beginCheckout: "begin_checkout",
       purchase: "purchase",
       copyLink: "copy_link",
-      apiHealth: "api_health_check"
+      apiHealth: "api_health_check",
+      quoteStart: "quote_start",
+      quoteCalculated: "quote_calculated",
+      quoteSendLine: "quote_send_line",
     },
 
     CONTACT: {
@@ -83,6 +86,7 @@
 
     SERVICES: [
       ["機場接送", "airport-pricing.html"],
+      ["即時報價", "quote.html"],
       ["港口接送", "port-pricing.html"],
       ["旅遊包車", "tour-pricing.html"],
       ["登山包車", "mountain-pricing.html"],

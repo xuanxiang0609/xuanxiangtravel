@@ -61,36 +61,37 @@
     return text;
   }
 
-function fixBrokenInternalHref(rawHref) {
-  const href = String(rawHref || "").trim();
-  if (!href) return "";
+  function fixBrokenInternalHref(rawHref) {
+    const href = String(rawHref || "").trim();
+    if (!href) return "";
 
-  const brokenIndexMatch = href.match(/^\/?index\.html([a-z0-9][a-z0-9-]*)(#.*)?$/i);
-  if (brokenIndexMatch) {
-    const slug = brokenIndexMatch[1].replace(/^\/+|\/+$/g, "");
-    const hash = brokenIndexMatch[2] || "";
-    return `${slug}.html${hash}`;
+    // 修正 AI / 搜尋引擎曾抓到的錯誤拼接網址：index.htmlprivacy、/index.htmlbusiness-transfer。
+    const brokenIndexMatch = href.match(/^\/?index\.html([a-z0-9][a-z0-9-]*)(#.*)?$/i);
+    if (brokenIndexMatch) {
+      const slug = brokenIndexMatch[1].replace(/^\/+|\/+$/g, "");
+      const hash = brokenIndexMatch[2] || "";
+      return `${slug}.html${hash}`;
+    }
+
+    return href;
   }
 
-  return href;
-}
+  function sameOriginPath(path, fallback = "index.html") {
+    const fixedPath = fixBrokenInternalHref(path || fallback);
 
-function sameOriginPath(path, fallback = "index.html") {
-  const fixedPath = fixBrokenInternalHref(path || fallback);
+    if (fixedPath === "#" || fixedPath.startsWith("#")) return fixedPath;
+    if (/^(tel:|mailto:|sms:|line:|weixin:|whatsapp:)/i.test(fixedPath)) return fixedPath;
 
-  if (fixedPath === "#" || fixedPath.startsWith("#")) return fixedPath;
-  if (/^(tel:|mailto:|sms:|line:|weixin:|whatsapp:)/i.test(fixedPath)) return fixedPath;
+    try {
+      const url = new URL(fixedPath, location.href);
+      if (url.origin !== location.origin) return fixedPath;
 
-  try {
-    const url = new URL(fixedPath, location.href);
-    if (url.origin !== location.origin) return fixedPath;
-
-    const fileName = url.pathname.split("/").filter(Boolean).pop() || "index.html";
-    return `${fileName}${url.search}${url.hash}`;
-  } catch (_) {
-    return fallback;
+      const fileName = url.pathname.split("/").filter(Boolean).pop() || "index.html";
+      return `${fileName}${url.search}${url.hash}`;
+    } catch (_) {
+      return fallback;
+    }
   }
-}
 
   function currentPage() {
     return location.pathname.split("/").pop() || "index.html";
@@ -272,25 +273,25 @@ function sameOriginPath(path, fallback = "index.html") {
     });
   }
 
-function normalizeExternalLink(anchor) {
-  const href = anchor.getAttribute("href") || "";
+  function normalizeExternalLink(anchor) {
+    const href = anchor.getAttribute("href") || "";
 
-  if (!href.trim()) {
-    anchor.setAttribute("href", "#");
-    return;
-  }
+    if (!href.trim()) {
+      anchor.setAttribute("href", "#");
+      return;
+    }
 
-  const fixedHref = fixBrokenInternalHref(href);
-  if (fixedHref !== href) {
-    warn("已修正錯誤拼接連結", { before: href, after: fixedHref });
-    anchor.setAttribute("href", fixedHref);
-  }
+    const fixedHref = fixBrokenInternalHref(href);
+    if (fixedHref !== href) {
+      warn("已修正錯誤拼接連結", { before: href, after: fixedHref });
+      anchor.setAttribute("href", fixedHref);
+    }
 
-  if (/^https?:\/\//i.test(fixedHref) && !fixedHref.includes(location.hostname)) {
-    anchor.setAttribute("target", anchor.getAttribute("target") || "_blank");
-    anchor.setAttribute("rel", "noopener noreferrer");
+    if (/^https?:\/\//i.test(fixedHref) && !fixedHref.includes(location.hostname)) {
+      anchor.setAttribute("target", anchor.getAttribute("target") || "_blank");
+      anchor.setAttribute("rel", "noopener noreferrer");
+    }
   }
-}
 
   function normalizePublicContactLinks(root = document) {
     root.querySelectorAll('[data-xx-line-link],a[href*="lin.ee"],a[href*="line.me/R/ti/p/"]').forEach((anchor) => {
@@ -344,20 +345,26 @@ function normalizeExternalLink(anchor) {
     if (state.schemaReady) return;
     state.schemaReady = true;
 
-    injectJsonLd("local-business", {
-      "@context": "https://schema.org",
-      "@type": "TravelAgency",
-      name: contact.brand || FALLBACKS.brand,
-      alternateName: "Xuan Xiang Travel",
-      url: siteUrl(),
-      telephone: contact.phoneDisplay || FALLBACKS.phoneDisplay,
-      email: contact.email || "",
-      image: cfg.SEO?.image || `${siteUrl()}/images/logo.jpg`,
-      priceRange: "$$",
-      areaServed: "Taiwan",
-      description: cfg.SEO?.defaultDescription || "玹翔旅遊提供機場接送、港口接送、旅遊包車、登山包車、商務專車與高端包車服務。",
-      sameAs: [lineUrl(), whatsappUrl(), contact.instagram, contact.facebook, contact.youtube, contact.tiktok].filter(Boolean)
-    });
+    // 若頁面本身已放完整 JSON-LD，保留頁面原生 Schema，避免重複灌資料。
+    const hasPageJsonLd = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
+      .some((script) => !script.dataset.xxSchema && safeText(script.textContent).length > 40);
+
+    if (!hasPageJsonLd) {
+      injectJsonLd("local-business", {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        name: contact.brand || FALLBACKS.brand,
+        alternateName: "Xuan Xiang Travel",
+        url: siteUrl(),
+        telephone: contact.phoneDisplay || FALLBACKS.phoneDisplay,
+        email: contact.email || "",
+        image: cfg.SEO?.image || `${siteUrl()}/images/logo.jpg`,
+        priceRange: "$$",
+        areaServed: "Taiwan",
+        description: cfg.SEO?.defaultDescription || "玹翔旅遊提供機場接送、港口接送、旅遊包車、登山包車、商務專車與高端包車服務。",
+        sameAs: [lineUrl(), whatsappUrl(), contact.instagram, contact.facebook, contact.youtube, contact.tiktok].filter(Boolean)
+      });
+    }
 
     if (currentPage() === "faq.html") {
       injectJsonLd("faq", {
@@ -397,7 +404,7 @@ function normalizeExternalLink(anchor) {
   function ensureSeo() {
     if (state.seoReady) return;
     state.seoReady = true;
-const pagePath = fixBrokenInternalHref(location.pathname.replace(/^\/+/, "") || "index.html");
+    const pagePath = fixBrokenInternalHref(location.pathname.replace(/^\/+/, "") || "index.html");
     
     const canonicalUrl = `${siteUrl()}/${pagePath === "index.html" ? "" : pagePath}`;
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -555,6 +562,8 @@ const pagePath = fixBrokenInternalHref(location.pathname.replace(/^\/+/, "") || 
     injectSchemas,
     ensureSeo,
     initImages,
-    loadGa4
+    loadGa4,
+    fixBrokenInternalHref,
+    sameOriginPath
   };
 })();
