@@ -1,6 +1,6 @@
 /*
- * 玹翔旅遊 Ultimate Final v9.3｜Google Maps API 即時報價引擎
- * 功能：輸入框防遮罩、地址提示、距離計算、車型倍率、夜間加價、行李提醒、LINE 一鍵送出、GA4 事件。
+ * 玹翔旅遊 Ultimate Final v9.4｜Enterprise Booking Platform Quote Engine
+ * 功能：輸入框防遮罩、地址提示、Google Maps 距離、機場固定價優先、夜間加價、偏遠地區加價、LINE 一鍵送出、GA4 事件。
  */
 (function () {
   "use strict";
@@ -27,6 +27,46 @@
     luggageExtra: 300,
     roundUnit: 100
   };
+
+  const AIRPORT_FIXED_PRICE = {
+    taoyuan: {
+      label: "桃園機場",
+      sedan: 2300,
+      van: 2800,
+      vip: 4500,
+      sprinter: 6500
+    },
+    songshan: {
+      label: "松山機場",
+      sedan: 3800,
+      van: 4500,
+      vip: 6500,
+      sprinter: 8500
+    },
+    taichung: {
+      label: "清泉崗機場",
+      sedan: 1000,
+      van: 1500,
+      vip: 2500,
+      sprinter: 3500
+    },
+    kaohsiung: {
+      label: "小港機場",
+      sedan: 4000,
+      van: 5000,
+      vip: 7000,
+      sprinter: 9000
+    }
+  };
+
+  const REMOTE_AREA_EXTRA = [
+    { keywords: ["司馬庫斯", "smangus"], label: "司馬庫斯", extra: 1500 },
+    { keywords: ["武陵", "武陵農場"], label: "武陵農場", extra: 1000 },
+    { keywords: ["合歡山", "清境", "昆陽", "武嶺"], label: "合歡山／清境山區", extra: 800 },
+    { keywords: ["塔塔加", "玉山"], label: "塔塔加／玉山", extra: 1500 },
+    { keywords: ["阿里山"], label: "阿里山", extra: 1000 },
+    { keywords: ["福壽山", "梨山"], label: "福壽山／梨山", extra: 1200 }
+  ];
 
   const VEHICLE_NAME = {
     sedan: "舒適五人座",
@@ -218,14 +258,67 @@
     return hour >= 22 || hour < 7;
   }
 
+  function getNightExtra(time) {
+    if (!time || !/^\d{2}:\d{2}$/.test(time)) return 0;
+    const hour = Number(time.split(":")[0]);
+    if (hour >= 0 && hour < 5) return 500;
+    if (hour >= 22 || hour < 7) return 300;
+    return 0;
+  }
+
+  function normalizeAirportKeyword(text) {
+    const raw = String(text || "").toLowerCase();
+    if (/桃園|桃機|tpe|taoyuan|第一航廈|第二航廈|一航|二航/.test(raw)) return "taoyuan";
+    if (/松山|tsa|songshan/.test(raw)) return "songshan";
+    if (/清泉崗|清泉岡|台中機場|臺中機場|rmq|taichung airport/.test(raw)) return "taichung";
+    if (/小港|高雄機場|高雄國際機場|khh|kaohsiung airport/.test(raw)) return "kaohsiung";
+    return "";
+  }
+
+  function isCentralTaiwan(text) {
+    return /台中|臺中|中市|西區|北區|南區|東區|西屯|南屯|北屯|烏日|高鐵台中|台中高鐵|台中火車站|臺中火車站|朝馬|水湳|彰化|員林/.test(String(text || ""));
+  }
+
+  function getAirportFixedQuote(pickup, dropoff, vehicle) {
+    const airportKey = normalizeAirportKeyword(dropoff) || normalizeAirportKeyword(pickup);
+    if (!airportKey || !AIRPORT_FIXED_PRICE[airportKey]) return null;
+    if (!isCentralTaiwan(pickup) && !isCentralTaiwan(dropoff)) return null;
+
+    const airport = AIRPORT_FIXED_PRICE[airportKey];
+    const price = airport[vehicle] || airport.sedan;
+    return {
+      airportKey,
+      airportLabel: airport.label,
+      fixedPrice: price
+    };
+  }
+
+  function getRemoteExtra(pickup, dropoff) {
+    const text = `${pickup || ""} ${dropoff || ""}`.toLowerCase();
+    const matched = REMOTE_AREA_EXTRA.find(function (item) {
+      return item.keywords.some(function (keyword) {
+        return text.includes(String(keyword).toLowerCase());
+      });
+    });
+    return matched || null;
+  }
+
   function buildQuote(data) {
     const vehicle = VEHICLE_NAME[data.vehicle] ? data.vehicle : "sedan";
     const perKm = PRICE.perKm[vehicle] || PRICE.perKm.sedan;
     const luggage = Number(data.luggage || 0);
-    const night = isNightTime(data.time) ? PRICE.nightExtra : 0;
+    const night = getNightExtra(data.time);
     const luggageExtra = luggage >= PRICE.luggageExtraThreshold ? PRICE.luggageExtra : 0;
-    const raw = PRICE.base + data.distanceKm * perKm + night + luggageExtra;
-    const estimated = Math.max(roundPrice(raw), PRICE.min[vehicle] || PRICE.min.sedan);
+    const airportQuote = getAirportFixedQuote(data.pickup, data.dropoff, vehicle);
+    const remoteQuote = getRemoteExtra(data.pickup, data.dropoff);
+    const remoteExtra = remoteQuote ? remoteQuote.extra : 0;
+
+    const mapsRaw = PRICE.base + data.distanceKm * perKm;
+    const basePrice = airportQuote ? airportQuote.fixedPrice : roundPrice(mapsRaw);
+    const estimated = Math.max(
+      roundPrice(basePrice + night + luggageExtra + remoteExtra),
+      PRICE.min[vehicle] || PRICE.min.sedan
+    );
 
     return {
       ...data,
@@ -236,9 +329,15 @@
       night,
       luggage,
       luggageExtra,
+      remoteExtra,
+      remoteLabel: remoteQuote ? remoteQuote.label : "",
+      airportFixed: Boolean(airportQuote),
+      airportLabel: airportQuote ? airportQuote.airportLabel : "",
+      fixedPrice: airportQuote ? airportQuote.fixedPrice : 0,
+      pricingMode: airportQuote ? "airport_fixed" : "distance_maps",
       estimated,
-      minPrice: Math.max(PRICE.min[vehicle] || PRICE.min.sedan, estimated - 300),
-      maxPrice: estimated + 500
+      minPrice: airportQuote ? estimated : Math.max(PRICE.min[vehicle] || PRICE.min.sedan, estimated - 300),
+      maxPrice: airportQuote ? estimated + 300 : estimated + 500
     };
   }
 
@@ -254,6 +353,7 @@
       `行李數：${q.luggage}`,
       `距離：約 ${q.distanceText}`,
       `車程：約 ${q.durationText}`,
+      `計價模式：${q.airportFixed ? `機場固定價｜${q.airportLabel}` : "Google Maps 距離估價"}`,
       `系統估價：${money(q.minPrice)} ～ ${money(q.maxPrice)}`,
       "請客服協助確認正式報價，謝謝。"
     ].join("\n");
@@ -269,15 +369,18 @@
 
     box.innerHTML = `
       <div class="card" style="padding:28px;border-radius:28px;">
-        <span class="eyebrow">📍 即時估價結果</span>
+        <span class="eyebrow">${q.airportFixed ? "⭐ 機場固定價優先" : "📍 Google Maps 即時估價"}</span>
         <h2 style="color:#fff3c2;margin:10px 0;font-size:clamp(32px,5vw,48px);line-height:1.15;">${money(q.minPrice)} ～ ${money(q.maxPrice)}</h2>
         <p style="color:#cfc3a8;line-height:1.9;">
           車型：<b style="color:#f7df9b;">${escapeHtml(q.vehicleName)}</b><br>
           距離：約 <b style="color:#f7df9b;">${escapeHtml(q.distanceText)}</b><br>
           車程：約 <b style="color:#f7df9b;">${escapeHtml(q.durationText)}</b><br>
+          計價模式：<b style="color:#f7df9b;">${q.airportFixed ? `${escapeHtml(q.airportLabel)}固定價` : "Google Maps 距離估價"}</b><br>
+          ${q.airportFixed ? `固定基準：<b style="color:#f7df9b;">${money(q.fixedPrice)}</b><br>` : ""}
           夜間加價：${money(q.night)}<br>
           行李加價：${money(q.luggageExtra)}<br>
-          計價基準：基本費 ${money(q.base)} ＋ 約 ${q.distanceKm.toFixed(1)} 公里 × ${money(q.perKm)}／公里
+          偏遠地區加價：${q.remoteExtra ? `${money(q.remoteExtra)}｜${escapeHtml(q.remoteLabel)}` : money(0)}<br>
+          ${q.airportFixed ? "計價基準：中部地區往返機場固定價＋加價項目" : `計價基準：基本費 ${money(q.base)} ＋ 約 ${q.distanceKm.toFixed(1)} 公里 × ${money(q.perKm)}／公里`}
         </p>
         <p style="color:#e8dcc2;line-height:1.9;">
           ※ 此為系統初估，正式價格仍依客服確認、車輛調度、上下車地址、等待時間與加購項目為準。
@@ -348,6 +451,8 @@
       }
 
       const quote = buildQuote({
+        pickup,
+        dropoff,
         distanceKm: element.distance.value / 1000,
         durationText: element.duration.text,
         distanceText: element.distance.text,
@@ -364,7 +469,10 @@
         distance_km: Number(quote.distanceKm.toFixed(1)),
         estimated_price: quote.estimated,
         night_extra: quote.night,
-        luggage_extra: quote.luggageExtra
+        luggage_extra: quote.luggageExtra,
+        remote_extra: quote.remoteExtra,
+        pricing_mode: quote.pricingMode,
+        airport_label: quote.airportLabel
       });
     });
   }
