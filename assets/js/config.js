@@ -7,7 +7,7 @@
 
   const config = {
     VERSION: "Ultimate Final v9.1 Enterprise Agency UI",
-    GOOGLE_MAPS_API_KEY: "你的 Google Maps API Key",
+    GOOGLE_MAPS_API_KEY: "AIzaSyDMoC4SEpieCF7xYtdi9PUnGP_pvRP_K8s",
     SITE_URL: "https://xuanxiangtravel.com",
     APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzVDbRDPjhHpTiFDP-q4ISnixgWgJGAiQ9ZLYiyfWPztszU0kDL-7aADRC1A5_EM2I33A/exec",
 
