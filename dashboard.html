@@ -1,0 +1,278 @@
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>玹翔旅遊 Enterprise Dashboard</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="./dashboard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="logo">
+            XX
+        </div>
+
+        <div>
+            <h1>玹翔旅遊</h1>
+            <p>Enterprise Platform</p>
+        </div>
+
+    </div>
+
+    <nav>
+
+        <a href="#" class="active">
+            📊 儀表板
+        </a>
+
+        <a href="#">
+            📦 訂單管理
+        </a>
+
+        <a href="#">
+            🚘 派車中心
+        </a>
+
+        <a href="#">
+            👨‍✈️ 司機管理
+        </a>
+
+        <a href="#">
+            🚐 車輛管理
+        </a>
+
+        <a href="#">
+            👥 會員中心
+        </a>
+
+        <a href="#">
+            💰 營收報表
+        </a>
+
+        <a href="#">
+            📢 LINE OA
+        </a>
+
+        <a href="#">
+            ⚙ 系統設定
+        </a>
+
+    </nav>
+
+</aside>
+
+<main class="main">
+
+    <header class="topbar">
+
+        <div>
+            <h2>Enterprise Dashboard</h2>
+            <p>即時營運總覽</p>
+        </div>
+
+        <div class="admin-user">
+            <span>
+                Super Admin
+            </span>
+        </div>
+
+        <div class="topbar-actions">
+            <button id="refreshDashboardBtn" class="gold-btn">🔄 即時刷新</button>
+            <button id="openDispatchBtn" class="gold-btn">🚘 快速派車</button>
+        </div>
+
+    </header>
+
+    <section class="kpi-grid">
+
+        <div class="kpi-card">
+            <span>今日訂單</span>
+            <h3 id="todayOrders">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>今日營收</span>
+            <h3 id="todayRevenue">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>會員總數</span>
+            <h3 id="memberCount">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>在線司機</span>
+            <h3 id="onlineDrivers">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>LINE好友</span>
+            <h3 id="lineFriends">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>完成率</span>
+            <h3 id="completionRate">0%</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>待派訂單</span>
+            <h3 id="pendingOrders">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>出車中</span>
+            <h3 id="runningTrips">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>可用車輛</span>
+            <h3 id="availableVehicles">0</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>本月營收</span>
+            <h3 id="monthlyRevenue">0</h3>
+        </div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="card revenue-card">
+
+            <div class="card-title">
+                📈 營收分析
+            </div>
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+        <div class="card fleet-card">
+
+            <div class="card-title">
+                🚐 車隊狀態
+            </div>
+
+            <div id="fleetStatus"></div>
+
+        </div>
+
+    </section>
+
+    <section class="card">
+
+        <div class="card-title">
+            🚘 派車日曆
+        </div>
+
+        <div id="dispatchCalendar"></div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="card">
+
+            <div class="card-title">
+                📦 最新訂單
+            </div>
+
+            <div id="latestOrders"></div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-title">
+                📢 LINE OA 推播中心
+            </div>
+
+            <input
+                id="lineTitle"
+                class="input"
+                placeholder="推播標題">
+
+            <textarea
+                id="lineContent"
+                class="textarea"
+                placeholder="推播內容"></textarea>
+
+            <button
+                id="sendLineBtn"
+                class="gold-btn">
+
+                立即推播
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <section class="card">
+
+        <div class="card-title">
+            🌍 Google Maps 即時派車地圖
+        </div>
+
+        <div id="dispatchMap"></div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="card">
+            <div class="card-title">🚐 車輛即時狀態</div>
+            <div id="vehicleStatusBoard"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">👥 會員成長趨勢</div>
+            <canvas id="memberChart"></canvas>
+        </div>
+
+    </section>
+
+    <section class="card">
+
+        <div class="card-title">
+            👨‍✈️ 司機排班
+        </div>
+
+        <div id="driverSchedule"></div>
+
+    </section>
+    <section class="card">
+
+        <div class="card-title">
+            🔐 Admin 權限管理
+        </div>
+
+        <div id="adminPermissionBoard"></div>
+
+    </section>
+
+</main></div>
+<script src="./dashboard.js"></script>
+<script src="./modules/kpi.js"></script>
+<script src="./modules/orders.js"></script>
+<script src="./modules/calendar.js"></script>
+<script src="./modules/revenue.js"></script>
+<script src="./modules/maps.js"></script>
+<script src="./modules/drivers.js"></script>
+<script src="./modules/members.js"></script>
+<script src="./modules/line-center.js"></script>
+</body>
+</html>

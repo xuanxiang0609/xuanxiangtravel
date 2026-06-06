@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玹翔旅遊｜S2O 三天兩夜行程規劃・音樂節包車接送</title>
+<meta name="description" content="玹翔旅遊 S2O 三天兩夜行程規劃，包含音樂節接送、住宿建議、台中景點、美食、散場包車與高端專車服務。">
+
+<style>
+:root{
+  --bg:#070707;
+  --card:#121212;
+  --gold:#d6b46a;
+  --gold2:#f5df9a;
+  --text:#f7f2e8;
+  --muted:#b9b1a3;
+  --line:rgba(214,180,106,.28);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(214,180,106,.22),transparent 32%),
+    linear-gradient(180deg,#050505,#111);
+  color:var(--text);
+}
+a{text-decoration:none;color:inherit}
+.wrap{width:min(1180px,92%);margin:auto}
+.header{
+  position:sticky;top:0;z-index:99;
+  background:rgba(5,5,5,.86);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  height:72px;display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-weight:900;letter-spacing:.08em;color:var(--gold2);
+}
+.nav a{
+  margin-left:18px;color:var(--muted);font-size:14px;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 22px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#16100a;font-weight:900;
+  box-shadow:0 12px 32px rgba(214,180,106,.25);
+}
+.btn.dark{
+  background:rgba(255,255,255,.06);
+  color:var(--gold2);
+  border:1px solid var(--line);
+}
+.hero{
+  padding:88px 0 64px;
+}
+.hero-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.02fr) minmax(320px,.98fr);
+  gap:34px;
+  align-items:center;
+}
+.hero-media{
+  position:relative;
+  min-height:470px;
+  border:1px solid var(--line);
+  border-radius:34px;
+  overflow:hidden;
+  background:#111;
+  box-shadow:0 28px 80px rgba(0,0,0,.48);
+}
+.hero-media img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  position:absolute;inset:0;
+  filter:saturate(1.08) contrast(1.04);
+}
+.hero-media::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.72));
+}
+.hero-caption{
+  position:absolute;left:22px;right:22px;bottom:22px;z-index:2;
+  padding:18px 20px;border:1px solid rgba(245,223,154,.26);
+  border-radius:22px;background:rgba(0,0,0,.48);backdrop-filter:blur(14px);
+}
+.hero-caption strong{display:block;color:var(--gold2);font-size:18px;margin-bottom:4px}
+.hero-caption span{display:block;color:var(--muted);font-size:14px;line-height:1.7}
+.badge{
+  display:inline-block;
+  padding:8px 14px;border:1px solid var(--line);
+  color:var(--gold2);border-radius:999px;
+  background:rgba(255,255,255,.04);
+  font-size:14px;
+}
+h1{
+  font-size:clamp(38px,6vw,78px);
+  line-height:1.06;margin:22px 0 18px;
+  letter-spacing:.03em;
+}
+.hero p{
+  max-width:760px;color:var(--muted);
+  font-size:18px;line-height:1.9;
+}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:26px;
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
+}
+.card-img{
+  width:100%;height:180px;object-fit:cover;display:block;
+  border-radius:20px;margin-bottom:18px;
+  border:1px solid rgba(214,180,106,.2);
+  background:#0f0f0f;
+}
+.gallery{
+  display:grid;
+  grid-template-columns:1.2fr .8fr .8fr;
+  gap:18px;
+}
+.gallery figure{
+  margin:0;position:relative;overflow:hidden;border-radius:26px;
+  border:1px solid var(--line);background:#111;min-height:260px;
+}
+.gallery figure:first-child{min-height:420px;grid-row:span 2}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.gallery figcaption{
+  position:absolute;left:16px;right:16px;bottom:16px;z-index:2;
+  padding:13px 15px;border-radius:16px;
+  background:rgba(0,0,0,.55);border:1px solid rgba(245,223,154,.22);
+  color:var(--gold2);font-weight:900;backdrop-filter:blur(12px);
+}
+.gallery figure::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.78));
+}
+.card h3{color:var(--gold2);margin:0 0 12px;font-size:22px}
+.card p,.card li{color:var(--muted);line-height:1.8}
+.section{padding:56px 0}
+.title{
+  display:flex;align-items:end;justify-content:space-between;gap:20px;
+  margin-bottom:24px;
+}
+.title h2{font-size:clamp(28px,4vw,46px);margin:0}
+.title span{color:var(--gold);font-weight:800}
+.timeline{
+  display:grid;gap:16px;
+}
+.trip-map{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin:24px 0 30px;
+}
+.trip-map::before{
+  content:"";
+  position:absolute;
+  left:8%;right:8%;top:58px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:.62;
+}
+.trip-node{
+  position:relative;
+  z-index:1;
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+  box-shadow:0 18px 48px rgba(0,0,0,.26);
+}
+.trip-node img{
+  width:100%;height:190px;object-fit:cover;display:block;
+  background:#101010;
+  filter:saturate(1.08) contrast(1.05);
+}
+.trip-node-body{padding:22px}
+.trip-dot{
+  width:42px;height:42px;border-radius:999px;
+  display:grid;place-items:center;
+  margin:-42px 0 14px;
+  position:relative;z-index:2;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#111;font-weight:1000;
+  box-shadow:0 12px 28px rgba(214,180,106,.32);
+}
+.trip-node h3{margin:0 0 8px;color:var(--gold2);font-size:21px}
+.trip-node p{margin:0;color:var(--muted);line-height:1.8}
+.route-poster{
+  margin-top:18px;
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:26px;
+  background:
+    radial-gradient(circle at top right,rgba(214,180,106,.16),transparent 34%),
+    linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+}
+.route-poster-head{
+  display:flex;justify-content:space-between;gap:16px;align-items:flex-start;
+  border-bottom:1px solid var(--line);
+  padding-bottom:18px;margin-bottom:18px;
+}
+.route-poster-head strong{display:block;color:var(--gold2);font-size:24px;letter-spacing:.04em}
+.route-poster-head span{color:var(--muted);line-height:1.7}
+.route-list{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.route-list li{
+  display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center;
+  padding:14px 16px;border:1px solid rgba(214,180,106,.18);
+  border-radius:18px;background:rgba(0,0,0,.24);
+}
+.route-list b{color:var(--gold2)}
+.route-list span{color:var(--muted);line-height:1.7}
+.day{
+  display:grid;grid-template-columns:120px 1fr;gap:18px;
+}
+.day .time{
+  color:#111;background:linear-gradient(135deg,var(--gold2),var(--gold));
+  border-radius:18px;padding:16px;text-align:center;font-weight:900;
+}
+.day .box{
+  border:1px solid var(--line);border-radius:22px;padding:22px;
+  background:rgba(255,255,255,.045);
+}
+.day h3{margin:0 0 8px;color:var(--gold2)}
+.day p{margin:0;color:var(--muted);line-height:1.8}
+.price{font-size:34px;font-weight:900;color:var(--gold2)}
+.notice{
+  border:1px dashed var(--line);
+  border-radius:22px;padding:22px;color:var(--muted);
+  background:rgba(214,180,106,.06);
+}
+.footer{
+  margin-top:60px;padding:40px 0;
+  border-top:1px solid var(--line);
+  color:var(--muted);font-size:14px;
+}
+.float{position:fixed;right:18px;bottom:18px;z-index:100}
+@media(max-width:860px){
+  .nav a:not(.btn){display:none}
+  .hero-layout{grid-template-columns:1fr}
+  .hero-media{min-height:360px}
+  .grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
+  .gallery figure,.gallery figure:first-child{min-height:260px;grid-row:auto}
+  .trip-map{grid-template-columns:1fr}
+  .trip-map::before{display:none}
+  .route-poster-head{display:block}
+  .route-list li{grid-template-columns:1fr}
+  .day{grid-template-columns:1fr}
+  .hero{padding:70px 0 44px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="wrap nav">
+    <div class="logo">玹翔旅遊｜三天兩夜專車企劃</div>
+    <nav>
+      <a href="#plan">行程</a>
+      <a href="#photos">照片</a>
+      <a href="#car">車款</a>
+      <a href="#notice">提醒</a>
+      <a class="btn" href="https://line.me/R/ti/p/@sco20240609">LINE 詢問</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-layout">
+      <div>
+        <span class="badge">玹翔旅遊｜三天兩夜音樂節包車 × 台中輕旅行</span>
+        <h1>白天輕旅行，晚上直接濕身開炸。</h1>
+        <p>
+          S2O 三天兩夜行程，專為朋友揪團、情侶出遊、粉絲團體與 VIP 包車設計。
+          從住宿、景點、美食到音樂節散場接送一次規劃，讓你負責嗨，玹翔負責把你安全送回去。
+        </p>
+        <div class="cta">
+          <a class="btn" href="tel:0972268295">立即預約：0972-268295</a>
+          <a class="btn dark" href="#plan">查看三天行程</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="Images/S2O三天兩夜/玹翔旅遊 S2O 音樂節接送與三天兩夜包車行程主視覺.png" alt="玹翔旅遊 S2O 音樂節接送與三天兩夜包車行程主視覺" loading="eager">
+        <div class="hero-caption">
+          <strong>玹翔旅遊｜S2O 專車接送企劃</strong>
+          <span>飯店、會場、景點、散場上車點一次安排，濕身開炸也要優雅回飯店。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap grid">
+    <div class="card">
+      <img class="card-img" src="Images/S2O三天兩夜/S2o散唱專車接送.png" alt="S2O 音樂節散場專車接送" loading="lazy">
+      <h3>🎧 音樂節接送</h3>
+      <p>飯店往返會場、散場包車、多人分攤更輕鬆，不用半夜跟叫車平台互相傷害。</p>
+    </div>
+    <div class="card">
+      <img class="card-img" src="Images/S2O三天兩夜/S2O 三天兩夜住宿與台中飯店動線.png" alt="S2O 三天兩夜住宿與台中飯店動線" loading="lazy">
+      <h3>🏨 住宿動線</h3>
+      <p>建議入住七期、逢甲、高鐵台中站周邊，吃喝方便、接送動線也漂亮。</p>
+    </div>
+    <div class="card">
+      <img class="card-img" src="Images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊 S2O 高端包車車款" loading="lazy">
+      <h3>🚐 高端專車</h3>
+      <p>五人座、九人座、Mercedes-Benz Sprinter 明星保母車，依人數與行李安排。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="photos">
+  <div class="wrap">
+    <div class="title">
+      <h2>玹翔旅遊｜S2O 行程照片</h2>
+      <span>Xuan Xiang Gallery</span>
+    </div>
+    <div class="gallery">
+      <figure><img src="Images/S2O三天兩夜/音樂節現場｜晚上直接開炸.png" alt="玹翔旅遊音樂節主視覺與活動現場" loading="lazy"><figcaption>玹翔旅遊｜音樂節現場｜晚上直接開炸</figcaption></figure>
+      <figure><img src="Images/S2O三天兩夜/住宿與台中飯店動線.png" alt="玹翔旅遊三天兩夜住宿與台中飯店動線" loading="lazy"><figcaption>玹翔旅遊｜飯店接送舒服回房間</figcaption></figure>
+      <figure><img src="Images/S2O三天兩夜/台中美食｜先吃飽再濕身.png" alt="玹翔旅遊台中美食與三天兩夜美食安排" loading="lazy"><figcaption>玹翔旅遊｜台中美食｜先吃飽再濕身</figcaption></figure>
+      <figure><img src="Images/S2O三天兩夜/輕旅行｜收心不狼狽.png" alt="玹翔旅遊台中輕旅行與高美濕地" loading="lazy"><figcaption>玹翔旅遊｜輕旅行｜收心不狼狽</figcaption></figure>
+      <figure><img src="Images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊多人包車與散場接送" loading="lazy"><figcaption>玹翔旅遊｜多人包車｜散場不用搶車</figcaption></figure>
+      <figure><img src="Images/S2O三天兩夜/玹翔旅遊｜完整行程圖｜三天兩夜一次看懂.png" alt="玹翔旅遊三天兩夜完整行程圖" loading="lazy"><figcaption>玹翔旅遊｜完整行程圖｜三天兩夜一次看懂</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="plan">
+  <div class="wrap">
+    <div class="title">
+      <h2>玹翔旅遊｜S2O 三天兩夜行程規劃</h2>
+      <span>含行程圖｜3 Days 2 Nights</span>
+    </div>
+
+    <div class="trip-map" aria-label="S2O 三天兩夜行程圖">
+      <article class="trip-node">
+        <img src="Images/S2O三天兩夜/S2O 三天兩夜 Day 1 台中美食與住宿行程.png" alt="玹翔旅遊 Day 1 台中美食與住宿行程圖" loading="lazy">
+        <div class="trip-node-body">
+          <div class="trip-dot">1</div>
+          <h3>Day 1｜抵達台中</h3>
+          <p>接送報到、飯店 Check-in、審計新村、草悟道、逢甲夜市，美食暖身先把戰鬥力補滿。</p>
+        </div>
+      </article>
+      <article class="trip-node">
+        <img src="Images/S2O三天兩夜/S2O 三天兩夜 Day 2 音樂節與會場接送行程圖.png" alt="玹翔旅遊 Day 2 音樂節與會場接送行程圖" loading="lazy">
+        <div class="trip-node-body">
+          <div class="trip-dot">2</div>
+          <h3>Day 2｜玹翔旅遊 S2O 主活動接送</h3>
+          <p>飯店出發、會場入場、音樂節狂歡、散場專車接回飯店，濕身也要濕得很尊榮。</p>
+        </div>
+      </article>
+      <article class="trip-node">
+        <img src="Images/S2O三天兩夜/S2O 三天兩夜 Day 3 台中輕旅行與返程行程圖.png" alt="玹翔旅遊 Day 3 台中輕旅行與返程行程圖" loading="lazy">
+        <div class="trip-node-body">
+          <div class="trip-dot">3</div>
+          <h3>Day 3｜輕旅行返程</h3>
+          <p>高美濕地、彩虹眷村、伴手禮採買，再送回高鐵、機場或指定地點，完美收工。</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="route-poster">
+      <div class="route-poster-head">
+        <div>
+          <strong>玹翔旅遊｜三天兩夜行程圖</strong>
+          <span>玹翔旅遊專車接送 × 飯店住宿 × 音樂節散場 × 台中輕旅行</span>
+        </div>
+        <a class="btn dark" href="Images/玹翔旅遊｜完整行程圖｜三天兩夜一次看懂.png" target="_blank" rel="noopener">查看行程圖大圖</a>
+      </div>
+      <ul class="route-list">
+        <li><b>DAY 1</b><span>抵達台中 → 飯店 Check-in → 審計新村／草悟道 → 逢甲夜市</span></li>
+        <li><b>DAY 2</b><span>飯店出發 → S2O 會場 → 音樂節狂歡 → 散場專車接回飯店</span></li>
+        <li><b>DAY 3</b><span>飯店早餐 → 高美濕地／彩虹眷村 → 伴手禮 → 高鐵／機場／指定地點</span></li>
+      </ul>
+    </div>
+
+    <div class="timeline">
+      <div class="day"><div class="time">DAY 1</div><div class="box"><h3>抵達台中・美食暖身・住宿 Check-in</h3><p>高鐵／機場／指定地點接送 → 飯店放行李 → 審計新村、草悟道、勤美商圈 → 晚上逢甲夜市自由覓食。第一天先不要太拼，畢竟後面還有水戰硬仗。</p></div></div>
+      <div class="day"><div class="time">DAY 2</div><div class="box"><h3>S2O 主活動日・飯店往返會場</h3><p>睡到自然醒 → 午餐／早午餐 → 專車前往 S2O 會場 → 音樂節狂歡 → 散場專車接回飯店。重點是不用濕答答站路邊等車，尊榮感直接拉滿。</p></div></div>
+      <div class="day"><div class="time">DAY 3</div><div class="box"><h3>收心輕旅行・高美濕地／彩虹眷村／伴手禮</h3><p>飯店早餐 → 彩虹眷村或高美濕地 → 伴手禮採買 → 送回高鐵站、機場或指定地點。玩完不狼狽，回家還能保持一點體面。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="car">
+  <div class="wrap">
+    <div class="title"><h2>推薦車款</h2><span>依人數安排</span></div>
+    <div class="grid">
+      <div class="card"><img class="card-img" src="Images/car-5seats.jpg" alt="玹翔旅遊舒適五人座 S2O 接送車款" loading="lazy"><h3>舒適五人座</h3><p>適合 1–4 人，小團輕旅行、情侶、朋友雙人出遊。</p></div>
+      <div class="card"><img class="card-img" src="Images/car-9seats.jpg" alt="玹翔旅遊商務九人座 S2O 包車車款" loading="lazy"><h3>商務九人座</h3><p>適合 5–8 人，S2O 揪團、朋友包車、行李較多最實用。</p></div>
+      <div class="card"><img class="card-img" src="Images/car-sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車 S2O 尊榮接送" loading="lazy"><h3>明星保母車</h3><p>適合 VIP、網紅、藝人、公司團體，空間與尊榮感一次到位。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="notice">
+  <div class="wrap">
+    <div class="title"><h2>玹翔旅遊｜S2O 必帶提醒</h2><span>不要到了才說忘記</span></div>
+    <div class="grid">
+      <div class="card"><h3>必備物品</h3><ul><li>防水手機套</li><li>行動電源</li><li>毛巾與替換衣物</li><li>拖鞋或防滑鞋</li></ul></div>
+      <div class="card"><h3>接送建議</h3><ul><li>散場時間提前約定</li><li>上車點避開人潮核心</li><li>多人同行建議包車</li><li>濕衣物請自備袋子</li></ul></div>
+      <div class="card"><h3>報價方式</h3><p class="price">依路線報價</p><p>請提供日期、人數、住宿地點、會場、是否來回接送，客服會協助安排最適合車型。</p></div>
+    </div>
+    <div class="notice" style="margin-top:22px">本行程可依 S2O 實際會場、活動時間、住宿位置與團體人數客製調整。若遇活動散場交通管制，司機會提前協調最佳上車點。</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap card" style="text-align:center">
+    <h2 style="margin-top:0;color:var(--gold2)">S2O 玩到滿身水，回程交給玹翔旅遊。</h2>
+    <p style="color:var(--muted);line-height:1.8">機場接送、飯店接送、散場包車、台中周邊旅遊，一次安排。</p>
+    <div class="cta" style="justify-content:center">
+      <a class="btn" href="https://line.me/R/ti/p/@sco20240609">LINE 立即詢問</a>
+      <a class="btn dark" href="https://wa.me/886972268295">WhatsApp 詢問</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <strong style="color:var(--gold2)">玹翔旅遊｜三天兩夜音樂節包車專車</strong><br>
+    電話：0972-268295｜LINE：@sco20240609｜WhatsApp：(+886)972268295<br>
+    機場接送｜旅遊包車｜商務接送｜演唱會專車｜S2O 活動接送
+  </div>
+</footer>
+
+<div class="float"><a class="btn" href="https://line.me/R/ti/p/@sco20240609">LINE 預約</a></div>
+
+</body>
+</html>
