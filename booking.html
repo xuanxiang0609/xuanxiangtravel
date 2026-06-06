@@ -157,6 +157,7 @@
   .estimate-total{font-size:16px}
 }
 </style>
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
 </head>
 <body data-xx-layout="v8">
 <div id="xx-site-header"></div>
@@ -181,7 +182,13 @@
 <form class="card form-grid" id="bookingForm" onsubmit="submitBooking(event)">
 <label>服務項目
   <select name="service" class="select" required>
-    <option value="">載入服務項目中...</option>
+    <option value="">請選擇服務項目</option>
+    <option value="機場接送">機場接送</option>
+    <option value="港口接送">港口接送</option>
+    <option value="旅遊包車">旅遊包車</option>
+    <option value="登山包車">登山包車</option>
+    <option value="演唱會接送">演唱會接送</option>
+    <option value="長途接送">長途接送</option>
   </select>
 </label>
 <label>服務細項
@@ -222,6 +229,12 @@
 <input type="hidden" name="customerAddons">
 <label>日期<input type="date" name="date" class="input" required></label>
 <label>時間<input type="time" name="time" class="input" required></label>
+<label class="conditional-field" data-show-when="tour">包車天數
+  <input name="days" type="number" min="1" max="30" class="input" placeholder="例：1、2、3">
+</label>
+<label class="conditional-field" data-show-when="tour">用車時數
+  <input name="hours" type="number" min="1" max="24" class="input" placeholder="例：8、10、12">
+</label>
 <label>人數<input name="passengers" class="input" placeholder="例：3位大人＋1位小孩" oninput="suggestVehicle()"></label>
 <label class="conditional-field" data-show-when="roundtrip">回程日期
   <input type="date" name="returnDate" class="input">
@@ -229,16 +242,22 @@
 <label class="conditional-field" data-show-when="roundtrip">回程時間
   <input type="time" name="returnTime" class="input">
 </label>
-<label class="full conditional-field" data-show-when="tour">中途停靠點
-  <input name="midpoints" class="input" placeholder="旅遊包車才需填寫，可填多點，以逗號分隔">
+<label class="full conditional-field" data-show-when="tour">行程規劃（旁邊＋號可新增多點）
+  <input name="midpoints" class="input" placeholder="例：清境農場、日月潭、合歡山；可填多點，以逗號分隔">
 </label>
 <label class="conditional-field" data-show-when="airport">航班編號
   <input name="flight" class="input" placeholder="例：CI123、BR456">
+</label>
+<label class="conditional-field" data-show-when="port">航班編號
+  <input name="portFlight" class="input" placeholder="例：CI123、BR456；若無航班可填無">
 </label>
 <label class="conditional-field" data-show-when="port">船班梯次
   <input name="shipSession" class="input" placeholder="例：第一梯、09:30 船班">
 </label>
 <label>行李數量<input name="luggage" class="input" placeholder="例：29吋3件＋登機箱2件" oninput="suggestVehicle()"></label>
+<label class="conditional-field" data-show-when="concert">活動名稱
+  <input name="eventName" class="input" placeholder="例：BTS、BLACKPINK、五月天、S2O 音樂節">
+</label>
 <label>車款偏好
   <select name="vehicle" class="select" id="vehicleSelect">
     <option value="舒適五人座" data-vehicle-kind="comfort5">舒適五人座</option>
@@ -332,8 +351,7 @@
 </main>
 <div id="xx-site-footer"></div>
 <div id="xx-site-floating"></div>
-<script src="assets/js/site-layout.js" defer></script>
-<script src="assets/js/site.js" defer></script>
+
 <script src="assets/js/pricing-freeze.js" defer></script>
 <script type="module" src="assets/js/member.js"></script>
 <script>
@@ -519,16 +537,19 @@
     ].join(" ");
     const v = normalize(serviceText);
     if(type === "tour"){
-      return v.includes("旅遊") || v.includes("包車行程");
+      return v.includes("旅遊") || v.includes("登山") || v.includes("百岳") || v.includes("包車行程");
     }
     if(type === "airport"){
       return v.includes("機場") || AIRPORT_SHEETS.some(name=>v.includes(normalize(name)));
     }
     if(type === "port"){
-      return v.includes("港") || v.includes("船") || PORT_SHEETS.some(name=>v.includes(normalize(name)));
+      return v.includes("港口") || v.includes("郵輪") || v.includes("碼頭") || v.includes("船") || PORT_SHEETS.some(name=>v.includes(normalize(name)));
     }
     if(type === "roundtrip"){
       return v.includes("來回");
+    }
+    if(type === "concert"){
+      return v.includes("演唱會") || v.includes("音樂祭") || v.includes("音樂節") || v.includes("活動接送") || v.includes("s2o");
     }
     return false;
   }
@@ -544,6 +565,17 @@
     const taxCheck = $('[data-addon-check="taxId"]');
     const taxFields = $("[data-tax-fields]");
     taxFields?.classList.toggle("is-hidden", !taxCheck?.checked);
+
+    // 顯示規則：所有服務保留日期、時間、上下車地址；只有旅遊／登山包車顯示行程規劃。
+    const pickupBlocks = document.querySelectorAll('[data-dynamic-group="pickups"]');
+    const dropoffBlocks = document.querySelectorAll('[data-dynamic-group="dropoffs"]');
+    pickupBlocks.forEach(el=>el.classList.remove('is-hidden'));
+    dropoffBlocks.forEach(el=>el.classList.remove('is-hidden'));
+
+    const midpointsField = document.querySelector('[name="midpoints"]')?.closest('label');
+    if(midpointsField){
+      midpointsField.classList.toggle('is-hidden', !isService('tour'));
+    }
   }
   function clampQty(input){
     let n = parseInt(input.value || "0", 10);
@@ -705,7 +737,13 @@
     if(!luggage) errors.push("請填寫行李數量，沒有行李也可填：無。");
     if(isService("airport") && !text($('[name="flight"]'))) errors.push("機場接送請填航班編號，例：CI123、BR456。");
     if(isService("port") && !text($('[name="shipSession"]'))) errors.push("港口接送請填船班梯次或船班時間。");
-    if(isService("tour") && !text($('[name="midpoints"]'))) errors.push("旅遊包車請填中途停靠點或預計行程。");
+    if(isService("tour") && !text($('[name="midpoints"]'))) {
+      errors.push("旅遊包車／登山包車請填寫行程規劃。");
+    }
+    if(isService("tour") && !text($('[name="days"]'))) errors.push("旅遊包車／登山包車請填寫包車天數。");
+    if(isService("tour") && !text($('[name="hours"]'))) errors.push("旅遊包車／登山包車請填寫用車時數。");
+    if(isService("concert") && !text($('[name="eventName"]'))) errors.push("演唱會接送請填寫活動名稱。");
+    if(isService("port") && !text($('[name="portFlight"]'))) errors.push("港口接送請填寫航班編號；若無航班請填無。");
     if(petChecked && !BUSINESS_CARS.some(car=>vehicle.includes(car))) errors.push("寵物接送只可選商務車型，請改選豪華九人座、VITO、LM、Alphard 或明星保母車。");
     if(taxChecked && (!text($('[name="taxIdNumber"]')) || !text($('[name="taxTitle"]')))) errors.push("已勾選開立統編，請填寫統一編號與公司抬頭。");
     if(!agreeTerms) errors.push("請勾選同意條款政策與訂金／取消規範。");
@@ -760,5 +798,14 @@
   });
 })();
 </script>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site-layout.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/xx-enterprise-v10.js"></script>
+
 </body>
 </html>

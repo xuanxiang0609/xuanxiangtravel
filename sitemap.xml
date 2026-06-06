@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://xuanxiangtravel.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://xuanxiangtravel.com/404.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/S2O.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://xuanxiangtravel.com/about.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/addons.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/airport-pricing.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://xuanxiangtravel.com/airport.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/airport-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/port.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/port-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/charter.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/travel-charter.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/tour-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/mountain.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/mountain-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/long-distance.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/long-distance-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/business.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/booking-success.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/booking.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://xuanxiangtravel.com/business-transfer.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/concert.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/concert-transfer.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/pet-transfer.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/wedding-car.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/car-rental.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/price.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/product.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/booking.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/fleet.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/vehicles.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/faq.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/terms.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/charter-policy.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/transfer-policy.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/privacy.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/ocba.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/travel-one-day.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/travel-two-days.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/travel-three-days.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/smangus-day.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/charter.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/concert-transfer.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/driver-recruit.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/faq.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/fleet.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/forgot-password.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/hehuanshan-day.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/login.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/long-distance-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/long-distance.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/member-center.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/mountain-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/mountain.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/ocba.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/pet-transfer.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/port-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/port.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/price.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/privacy.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/product.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/qingjing-sunmoonlake-day.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/travel-region.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/quote.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/register.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/school-airport.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/school-tour.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/school-hiking.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/school-mountain.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/school-secret.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/school-hiking.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/driver-recruit.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/school-tour.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/smangus-day.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://xuanxiangtravel.com/store-cooperation.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://xuanxiangtravel.com/addons.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/terms.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/tour-pricing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/transfer-policy.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-charter.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-hehuanshan.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-one-day.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-region.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-smangus.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-sunmoonlake.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-three-days.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/travel-two-days.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/vehicles.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://xuanxiangtravel.com/wedding-car.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
