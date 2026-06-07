@@ -177,14 +177,6 @@ function routeRequest_(e, method) {
         result = debugHeadersResult_();
         break;
 
-      case 'cleanuporders':
-        result = cleanupOrders();
-        break;
-
-      case 'normalizeorders':
-        result = normalizeHistoricalOrders();
-        break;
-
       case 'linewebhook':
       case 'webhook':
         result = handleLineWebhook_(e);
@@ -211,8 +203,6 @@ function routeRequest_(e, method) {
             'repairHeaders',
             'debugHeaders',
             'verifyHeaders',
-            'cleanupOrders',
-            'normalizeOrders',
             'webhook'
           ]
         };
@@ -476,24 +466,36 @@ function createOrder_(params) {
     const sheet = openOrderSheet_();
     ensureOrderHeaders_(sheet);
 
-    const order = normalizeIncomingOrder_(params);
-    const row = ORDER_HEADERS.map(function(header) {
-      return order[header] !== undefined ? order[header] : '';
+    const orders = buildOrdersFromIncomingParams_(params);
+    const createdOrders = [];
+
+    orders.forEach(function(order) {
+      const row = ORDER_HEADERS.map(function(header) {
+        return order[header] !== undefined ? order[header] : '';
+      });
+
+      sheet.appendRow(row);
+      createdOrders.push(order);
     });
 
-    sheet.appendRow(row);
     SpreadsheetApp.flush();
 
-    const lineResult = notifyNewOrder_(order);
+    const lineResults = createdOrders.map(function(order) {
+      return notifyNewOrder_(order);
+    });
 
     return {
       ok: true,
-      message: '訂單已建立',
-      orderNo: order['訂單編號'],
-      status: order['狀態'],
-      estimatedTotal: order['預估小計'],
-      line: lineResult,
-      createdAt: order['建立時間']
+      message: createdOrders.length > 1 ? '來回訂單已建立' : '訂單已建立',
+      orderNo: createdOrders[0]['訂單編號'],
+      orderNos: createdOrders.map(function(order) {
+        return order['訂單編號'];
+      }),
+      count: createdOrders.length,
+      status: createdOrders[0]['狀態'],
+      estimatedTotal: createdOrders[0]['預估小計'],
+      line: lineResults,
+      createdAt: createdOrders[0]['建立時間']
     };
 
   } catch (err) {
@@ -511,6 +513,73 @@ function createOrder_(params) {
   }
 }
 
+function buildOrdersFromIncomingParams_(params) {
+  const baseOrder = normalizeIncomingOrder_(params);
+  const service = baseOrder['服務項目'];
+  const serviceDetail = baseOrder['服務細項'];
+
+  if (!shouldSplitRoundTrip_(service, serviceDetail)) {
+    return [baseOrder];
+  }
+
+  const outboundOrder = cloneObject_(baseOrder);
+  outboundOrder['訂單編號'] = generateOrderNo_();
+  outboundOrder['服務細項'] = getOutboundDetail_(service, serviceDetail);
+  outboundOrder['客服備註'] = appendMemo_(outboundOrder['客服備註'], '系統自動拆單：去程訂單');
+
+  const returnOrder = cloneObject_(baseOrder);
+  returnOrder['訂單編號'] = generateOrderNo_();
+  returnOrder['服務細項'] = getReturnDetail_(service, serviceDetail);
+  returnOrder['預約日期'] = dateKey_(getValueByKeys_(params, ['回程日期', 'returnDate', 'return_date'], baseOrder['預約日期']));
+  returnOrder['搭車時間'] = clean_(getValueByKeys_(params, ['回程時間', 'returnTime', 'return_time'], baseOrder['搭車時間']));
+  returnOrder['航班編號'] = clean_(getValueByKeys_(params, ['回程航班編號', 'returnFlightNo', 'returnFlight', 'return_flight_no'], ''));
+  returnOrder['船班編號 / 船班梯次'] = clean_(getValueByKeys_(params, ['回程船班梯次', '回程船班編號', 'returnShipSession', 'returnShipNo', 'return_ship_session'], ''));
+  returnOrder['上車地址'] = clean_(getValueByKeys_(params, ['回程上車地址', 'returnFrom', 'returnPickup'], baseOrder['下車地址']));
+  returnOrder['下車地址'] = clean_(getValueByKeys_(params, ['回程下車地址', 'returnTo', 'returnDropoff'], baseOrder['上車地址']));
+  returnOrder['客服備註'] = appendMemo_(returnOrder['客服備註'], '系統自動拆單：回程訂單；原始服務細項：' + serviceDetail);
+
+  return [outboundOrder, returnOrder];
+}
+
+function shouldSplitRoundTrip_(service, detail) {
+  return (service === '機場接送' && detail === '接送機') ||
+    (service === '港口接送' && detail === '來回') ||
+    (service === '長途接送' && detail === '來回') ||
+    (service === '演唱會接送' && detail === '來回');
+}
+
+function getOutboundDetail_(service, detail) {
+  if (service === '機場接送' && detail === '接送機') return '送機';
+  if (service === '港口接送' && detail === '來回') return '送港';
+  if (service === '長途接送' && detail === '來回') return '去程';
+  if (service === '演唱會接送' && detail === '來回') return '去程';
+  return detail;
+}
+
+function getReturnDetail_(service, detail) {
+  if (service === '機場接送' && detail === '接送機') return '接機';
+  if (service === '港口接送' && detail === '來回') return '接船';
+  if (service === '長途接送' && detail === '來回') return '回程';
+  if (service === '演唱會接送' && detail === '來回') return '回程';
+  return detail;
+}
+
+function cloneObject_(item) {
+  const result = {};
+  Object.keys(item || {}).forEach(function(key) {
+    result[key] = item[key];
+  });
+  return result;
+}
+
+function appendMemo_(memo, text) {
+  const base = clean_(memo);
+  const extra = clean_(text);
+  if (!base) return extra;
+  if (!extra) return base;
+  return base + '｜' + extra;
+}
+
 function normalizeIncomingOrder_(params) {
   const service = clean_(getValueByKeys_(params, ['服務項目', 'service', 'serviceName', 'type'], '未填服務'));
   const serviceDetail = clean_(getValueByKeys_(params, ['服務細項', 'serviceDetail', 'detail', 'subService'], ''));
@@ -520,15 +589,15 @@ function normalizeIncomingOrder_(params) {
   const date = dateKey_(getValueByKeys_(params, ['預約日期', '日期', '用車日期', 'pickupDate', 'date'], ''));
   const time = clean_(getValueByKeys_(params, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], ''));
   const pickup = clean_(getValueByKeys_(params, ['上車地址', 'pickup', 'from', 'start', 'origin'], ''));
-  const midpoints = stringifyList_(getValueByKeys_(params, ['中途點', 'routePoints', 'midpoints', 'stops'], ''));
+  const midpoints = stringifyList_(getValueByKeys_(params, ['中途點', '行程', '行程規劃', 'routePoints', 'midpoints', 'stops', 'itinerary'], ''));
   const dropoff = clean_(getValueByKeys_(params, ['下車地址', 'dropoff', 'to', 'destination'], ''));
   const people = clean_(getValueByKeys_(params, ['人數', 'people', 'passengers', 'pax'], ''));
-  const bags = clean_(getValueByKeys_(params, ['行李', 'bags', 'luggage'], ''));
+  const bags = clean_(getValueByKeys_(params, ['行李', '行李數', 'bags', 'luggage', 'luggageCount'], ''));
   const flight = clean_(getValueByKeys_(params, ['航班編號', 'flightNo', 'flight', 'flightNumber'], ''));
-  const shipSession = clean_(getValueByKeys_(params, ['船班編號 / 船班梯次', '船班梯次', 'shipSession', 'shipNo'], ''));
+  const shipSession = clean_(getValueByKeys_(params, ['船班編號 / 船班梯次', '船班梯次', '船班編號', 'shipSession', 'shipNo'], ''));
   const days = clean_(getValueByKeys_(params, ['用車天數', '包車天數', 'days'], ''));
-  const hours = clean_(getValueByKeys_(params, ['包車時數', '用車時數', 'hours'], ''));
-  const addons = stringifyList_(getValueByKeys_(params, ['加購項目', 'addons', 'customerAddons'], ''));
+  const hours = clean_(getValueByKeys_(params, ['包車時數', '用車時數', 'hours', 'carHours'], ''));
+  const addons = stringifyList_(getValueByKeys_(params, ['加購項目', '加購服務', 'addons', 'customerAddons'], ''));
   const vehicle = clean_(getValueByKeys_(params, ['車款', '車型', 'vehicle', 'car'], '未指定車款'));
   const sheetPrice = parseAmount_(getValueByKeys_(params, ['試算表報價', 'sheetPrice', 'quotedPrice', 'price'], 0));
   const basePrice = parseAmount_(getValueByKeys_(params, ['價錢（未稅）', 'basePrice', 'untaxedPrice'], sheetPrice));
@@ -1129,173 +1198,6 @@ function getWebhook(e) {
   return handleLineWebhook_(e);
 }
 
-
-/************************************************
- * Data Cleanup v10.1
- ************************************************/
-
-function cleanupOrders() {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return {
-      ok: true,
-      message: '沒有可清理的訂單資料',
-      removed: 0,
-      kept: values ? values.length : 0,
-      time: now_()
-    };
-  }
-
-  const headers = values[0];
-  const kept = [headers];
-  let removed = 0;
-
-  values.slice(1).forEach(function(row) {
-    const item = rowToObjectByHeaders_(headers, row);
-
-    const service = clean_(item['服務項目']);
-    const customer = clean_(item['乘客姓名']);
-    const phone = clean_(item['聯絡電話']);
-    const pickup = clean_(item['上車地址']);
-    const dropoff = clean_(item['下車地址']);
-    const amount = getOrderAmount_(item);
-
-    const isGarbage =
-      service === '未填服務' &&
-      customer === '未填姓名' &&
-      !phone &&
-      (!pickup || pickup === '未填上車地址') &&
-      (dropoff.indexOf('U') === 0 || dropoff === '未填下車地址' || !dropoff) &&
-      amount === 0;
-
-    if (isGarbage) {
-      removed += 1;
-    } else {
-      kept.push(row);
-    }
-  });
-
-  if (removed > 0) {
-    sheet.clearContents();
-    sheet.getRange(1, 1, kept.length, headers.length).setValues(kept);
-    sheet.setFrozenRows(1);
-    SpreadsheetApp.flush();
-  }
-
-  return {
-    ok: true,
-    message: '測試空訂單清理完成',
-    removed: removed,
-    kept: kept.length - 1,
-    time: now_()
-  };
-}
-
-function normalizeHistoricalOrders() {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return {
-      ok: true,
-      message: '沒有可標準化的訂單資料',
-      updated: 0,
-      time: now_()
-    };
-  }
-
-  const headers = values[0];
-  const col = buildHeaderIndex_(headers);
-  let updated = 0;
-
-  for (let r = 1; r < values.length; r += 1) {
-    const row = values[r];
-
-    const priceIndex = col['價錢（未稅）'];
-    const totalIndex = col['預估小計'];
-    const timeIndex = col['搭車時間'];
-    const statusIndex = col['狀態'];
-
-    if (priceIndex !== undefined) {
-      const original = row[priceIndex];
-      const parsed = parseAmount_(original);
-
-      if (parsed > 0 && String(original) !== String(parsed)) {
-        row[priceIndex] = parsed;
-        updated += 1;
-      }
-    }
-
-    if (totalIndex !== undefined) {
-      const total = parseAmount_(row[totalIndex]);
-      const base = priceIndex !== undefined ? parseAmount_(row[priceIndex]) : 0;
-
-      if ((!total || total === 0) && base > 0) {
-        row[totalIndex] = base;
-        updated += 1;
-      } else if (total > 999999) {
-        row[totalIndex] = base || total;
-        updated += 1;
-      }
-    }
-
-    if (timeIndex !== undefined) {
-      const originalTime = row[timeIndex];
-      const normalized = normalizeTime_(originalTime);
-
-      if (normalized && String(originalTime) !== normalized) {
-        row[timeIndex] = normalized;
-        updated += 1;
-      }
-    }
-
-    if (statusIndex !== undefined && !clean_(row[statusIndex])) {
-      row[statusIndex] = '已確認';
-      updated += 1;
-    }
-  }
-
-  sheet.getRange(1, 1, values.length, headers.length).setValues(values);
-  SpreadsheetApp.flush();
-
-  return {
-    ok: true,
-    message: '歷史訂單資料標準化完成',
-    updated: updated,
-    rows: values.length - 1,
-    time: now_()
-  };
-}
-
-function buildHeaderIndex_(headers) {
-  const result = {};
-
-  headers.forEach(function(header, index) {
-    const name = clean_(header);
-    if (name) result[name] = index;
-  });
-
-  return result;
-}
-
-function rowToObjectByHeaders_(headers, row) {
-  const item = {};
-
-  headers.forEach(function(header, index) {
-    const name = clean_(header);
-    if (name) item[name] = row[index];
-  });
-
-  return item;
-}
-
-
 /************************************************
  * Sheet Helpers / Headers
  ************************************************/
@@ -1486,7 +1388,7 @@ function normalizeOrder_(order, index) {
     phone: clean_(getValueByKeys_(order, ['聯絡電話', '聯絡方式', '電話', 'phone', 'contact'], '')),
     line: clean_(getValueByKeys_(order, ['LINE / WhatsApp', 'LINE', 'line', 'whatsapp'], '')),
     date: getOrderDate_(order),
-    time: normalizeTime_(getValueByKeys_(order, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], '')),
+    time: clean_(getValueByKeys_(order, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], '')),
     pickup: clean_(getValueByKeys_(order, ['上車地址', 'pickup', 'from'], '未填上車地址')),
     midpoints: clean_(getValueByKeys_(order, ['中途點', 'midpoints', 'routePoints'], '')),
     dropoff: clean_(getValueByKeys_(order, ['下車地址', 'dropoff', 'to'], '未填下車地址')),
@@ -1541,23 +1443,7 @@ function normalizeStatus_(value) {
 }
 
 function parseAmount_(value) {
-  if (value === undefined || value === null || value === '') return 0;
-
-  if (typeof value === 'number') {
-    return Number.isFinite(value) ? value : 0;
-  }
-
-  const text = String(value).trim();
-
-  if (!text) return 0;
-
-  // 例如：8400/6400、$3000/300，只取第一個金額，避免變成 84006400 或 3000300。
-  const firstNumber = text.match(/[0-9]+(?:\.[0-9]+)?/);
-
-  if (!firstNumber) return 0;
-
-  const amount = Number(firstNumber[0]);
-
+  const amount = Number(String(value || '').replace(/[^0-9.-]/g, ''));
   return Number.isFinite(amount) ? amount : 0;
 }
 
@@ -1610,28 +1496,6 @@ function dateTimeKey_(date) {
   }
 
   return String(date || '').trim();
-}
-
-
-function normalizeTime_(value) {
-  if (!value) return '';
-
-  if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
-    return Utilities.formatDate(value, CONFIG.TIMEZONE, 'HH:mm');
-  }
-
-  const text = String(value || '').trim();
-
-  if (!text) return '';
-
-  if (text.indexOf('1899') > -1 || text.indexOf('GMT') > -1) {
-    const d = new Date(text);
-    if (!isNaN(d.getTime())) {
-      return Utilities.formatDate(d, CONFIG.TIMEZONE, 'HH:mm');
-    }
-  }
-
-  return text;
 }
 
 function clean_(value) {
