@@ -1,0 +1,10 @@
+airport-pricing.html:7:<meta name="description" content="玹翔旅遊全台機場接送價目表，桃園機場、松山機場、清泉崗機場、小港機場即時查詢。">
+airport-pricing.html:8:<meta name="keywords" content="玹翔旅遊,機場接送,桃園機場接送,松山機場接送,清泉崗機場接送,小港機場接送">
+airport-pricing.html:47:<p>桃園機場、松山機場、清泉崗機場、小港機場即時查詢，價格透明，支援五人座、九人座與明星保母車。</p>
+tour-pricing.html:851:台中機場接送、桃園機場接送、
+price.html:616:            <input id="priceSearch" class="input" type="search" placeholder="例：台中、北屯、鹿港、桃園機場">
+price.html:675:        <article class="price-route-card"><h3>機場接送</h3><p>桃園、松山、清泉岡、小港機場，適合紅眼班機、親子行李與商務接待。</p></article>
+price.html:741:        ["台中市","西屯區 ⇄ 桃園機場","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+price.html:742:        ["台中市","北屯區 ⇄ 清泉岡機場","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"],
+price.html:743:        ["彰化縣","鹿港鎮 ⇄ 桃園機場","請洽客服","請洽客服","請洽客服","請洽客服","請洽客服"]
+price.html:815:      airport:["桃園機場"],

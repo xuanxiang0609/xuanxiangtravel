@@ -1,0 +1,12 @@
+charter-policy.html: images/fleet/five-seat.jpg
+charter-policy.html: images/fleet/vito.jpg
+charter-policy.html: images/fleet/sprinter.jpg
+travel-smangus.html: ./images/sprinter.jpg
+index.html: /favicon.ico
+index.html: /images/logo.jpg
+hehuanshan-day.html: ./images/sprinter.jpg
+dashboard.html: dashboard.css
+travel-two-days.html: images/sunmoonlake-sunset.jpg
+qingjing-sunmoonlake-day.html: ./images/sprinter.jpg
+S2O.html: images/sprinter.jpg
+smangus-day.html: ./images/sprinter.jpg

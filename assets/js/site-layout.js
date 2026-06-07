@@ -143,7 +143,7 @@
         <nav class="nav-links xx-menu" aria-label="玹翔旅遊主導覽列">
           <a href="index.html">主頁</a>
           <a href="about.html">關於玹翔</a>
-          ${dropdown("服務項目", cfg.SERVICES)}
+          ${dropdown("服務介紹", cfg.SERVICES)}
           ${dropdown("價目表", cfg.PRICE_LINKS)}
           <a href="booking.html">VIP 預約商城</a>
           <a href="vehicles.html">車款介紹</a>
@@ -164,7 +164,7 @@
         <section class="xx-footer-col">
           <h3>${brand}</h3>
           <p>秉持「用心、貼心、深得你心」的服務品質，讓每一次移動都穩、準、舒適。</p>
-          <div class="xx-footer-actions"><a href="booking.html">立即預約</a><a href="airport-pricing.html">查價目表</a></div>
+          <div class="xx-footer-actions"><a href="booking.html">立即預約</a><a href="#">查價目表</a></div>
         </section>
         <section class="xx-footer-col"><h3>聯絡方式</h3><ul>
           <li><a href="${esc(telHref())}" data-xx-phone-link>電話：${esc(contact.phoneDisplay || FALLBACKS.phoneDisplay)}</a></li>
