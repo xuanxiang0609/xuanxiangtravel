@@ -46,6 +46,9 @@
     <loc>https://xuanxiangtravel.com/concert.html</loc>
   </url>
   <url>
+    <loc>https://xuanxiangtravel.com/dashboard.html</loc>
+  </url>
+  <url>
     <loc>https://xuanxiangtravel.com/driver-recruit.html</loc>
   </url>
   <url>
@@ -74,9 +77,6 @@
   </url>
   <url>
     <loc>https://xuanxiangtravel.com/member-center.html</loc>
-  </url>
-  <url>
-    <loc>https://xuanxiangtravel.com/member-login.html</loc>
   </url>
   <url>
     <loc>https://xuanxiangtravel.com/member.html</loc>
