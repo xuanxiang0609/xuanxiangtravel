@@ -13,7 +13,7 @@
 
 const CONFIG = {
   SERVICE_NAME: '玹翔旅遊 API',
-  VERSION: 'Ultimate Final v9.1 Enterprise Dispatch Core',
+  VERSION: 'Ultimate Final v10.1 Data Cleanup Engine',
   ORDER_SHEET_NAME: '訂單',
   ERROR_SHEET_NAME: '系統錯誤紀錄',
   DRIVER_SHEET_NAME: '司機資料',
