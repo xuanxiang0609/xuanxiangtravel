@@ -1,1 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#050505"/><circle cx="32" cy="32" r="24" fill="none" stroke="#d8b56d" stroke-width="3"/><text x="32" y="39" font-size="24" text-anchor="middle" fill="#fff0b8" font-family="serif">翔</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<rect width="64" height="64" rx="16" fill="#050505"/>
+<text x="32" y="41" text-anchor="middle" font-size="26" fill="#d8b35a" font-family="Arial">玹</text>
+</svg>

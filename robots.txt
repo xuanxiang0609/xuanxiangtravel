@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xuanxiang-travel.web.app/sitemap.xml
+Sitemap: https://xuanxiangtravel.com/sitemap.xml
