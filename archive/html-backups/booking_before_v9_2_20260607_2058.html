@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>預約商城｜機場接送・包車旅遊線上預約｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊預約商城，線上填寫機場接送、港口接送、旅遊包車、登山包車、長途接送與商務包車需求，由客服確認報價。">
+<meta name="keywords" content="玹翔旅遊,機場接送,包車旅遊,港口接送,演唱會專車,商務包車,登山包車,長途接送">
+<link rel="canonical" href="https://xuanxiangtravel.com/booking.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="玹翔旅遊">
+<meta property="og:title" content="預約商城｜機場接送・包車旅遊線上預約｜玹翔旅遊">
+<meta property="og:description" content="玹翔旅遊預約商城，線上填寫機場接送、港口接送、旅遊包車、登山包車、長途接送與商務包車需求，由客服確認報價。">
+<meta property="og:url" content="https://xuanxiangtravel.com/booking.html">
+<meta property="og:image" content="https://xuanxiangtravel.com/assets/img/og/og-booking.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<style>
+:root{
+  --booking-gold:#d8b56d;
+  --booking-gold-2:#fff0b8;
+  --booking-cream:#fff8e8;
+  --booking-muted:#d8ccb0;
+}
+#bookingForm.card{
+  border:1px solid rgba(216,181,109,.34);
+  border-radius:30px;
+  background:radial-gradient(circle at 12% 0%,rgba(216,181,109,.13),transparent 34%),linear-gradient(180deg,rgba(20,20,20,.98),rgba(7,7,7,.98));
+  box-shadow:0 30px 90px rgba(0,0,0,.42);
+}
+#bookingForm label,#bookingForm legend{
+  color:var(--booking-gold-2);
+  font-size:15px;
+  font-weight:950;
+  letter-spacing:.04em;
+}
+#bookingForm .input,#bookingForm .select,#bookingForm textarea,.dynamic-row .input,.tax-fields .input{
+  min-height:54px;
+  border-radius:16px;
+  border:1px solid rgba(216,181,109,.3);
+  background:rgba(255,255,255,.065);
+  color:var(--booking-cream);
+  font-size:16px;
+  font-weight:760;
+  padding:0 16px;
+  outline:none;
+}
+#bookingForm textarea{padding:14px 16px;line-height:1.8}
+#bookingForm .input:focus,#bookingForm .select:focus,#bookingForm textarea:focus,.dynamic-row .input:focus,.tax-fields .input:focus{
+  border-color:rgba(255,240,184,.72);
+  box-shadow:0 0 0 4px rgba(216,181,109,.13);
+}
+#bookingForm input::placeholder,#bookingForm textarea::placeholder{color:rgba(255,248,232,.46)}
+.booking-tools{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  padding:18px;
+  border:1px solid rgba(216,181,109,.22);
+  border-radius:24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+}
+.dynamic-block{
+  display:grid;
+  gap:12px;
+  padding:16px;
+  border-radius:20px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(216,181,109,.14);
+}
+.dynamic-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dynamic-head b{color:var(--booking-gold-2);font-size:17px;letter-spacing:.05em}
+.dynamic-list{display:grid;gap:10px}
+.dynamic-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.mini-btn{
+  min-height:42px;
+  padding:0 16px;
+  border-radius:999px;
+  border:1px solid rgba(216,181,109,.42);
+  background:linear-gradient(135deg,rgba(255,240,184,.13),rgba(216,181,109,.08));
+  color:var(--booking-gold-2);
+  font-size:14px;
+  font-weight:950;
+  cursor:pointer;
+  transition:.22s ease;
+}
+.mini-btn:hover{transform:translateY(-2px);border-color:rgba(255,240,184,.72)}
+.mini-btn.danger{color:#ffd6d6;border-color:rgba(255,120,120,.38);background:rgba(120,20,20,.18)}
+.conditional-field.is-hidden,.tax-fields.is-hidden{display:none!important}
+.addon-box.addon-upgrade{
+  display:grid;
+  gap:14px;
+  padding:22px;
+  border-radius:26px;
+  border:1px solid rgba(216,181,109,.28);
+  background:radial-gradient(circle at 90% 0%,rgba(255,240,184,.1),transparent 32%),rgba(255,255,255,.035);
+}
+.addon-box legend{padding:0 10px;font-size:20px;color:var(--booking-gold-2)}
+.addon-row{
+  display:grid;
+  grid-template-columns:1fr 96px;
+  gap:14px;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid rgba(216,181,109,.14);
+}
+.addon-row label{display:flex;align-items:center;gap:10px;margin:0;color:var(--booking-cream)}
+.addon-row input[type="checkbox"]{width:18px;height:18px;accent-color:#d8b56d}
+.addon-row small{display:block;color:var(--booking-muted);margin-top:5px;line-height:1.55;font-size:13px;font-weight:700}
+.addon-qty{
+  width:96px;
+  min-height:46px;
+  border-radius:14px;
+  border:1px solid rgba(216,181,109,.32);
+  background:rgba(255,255,255,.07);
+  color:var(--booking-cream);
+  text-align:center;
+  font-size:17px;
+  font-weight:950;
+}
+.tax-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.estimate-box{
+  border:1px solid rgba(216,181,109,.36);
+  border-radius:26px;
+  padding:22px;
+  background:radial-gradient(circle at 12% 0%,rgba(216,181,109,.16),transparent 34%),linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+  display:grid;
+  gap:12px;
+  box-shadow:0 22px 62px rgba(0,0,0,.28);
+}
+.estimate-box h3{margin:0;color:var(--booking-gold-2);font-size:24px;font-family:"Noto Serif TC","Noto Sans TC",serif}
+.estimate-line{display:flex;justify-content:space-between;gap:12px;color:#eadfc6;border-bottom:1px solid rgba(216,181,109,.16);padding-bottom:9px;font-size:15px}
+.estimate-line strong{color:#fff0b8;font-size:16px}
+.estimate-total{display:flex;justify-content:space-between;gap:12px;margin-top:4px;padding:18px;border-radius:18px;background:linear-gradient(135deg,#fff0b8,#d8b56d);color:#111;font-weight:950;font-size:18px}
+.estimate-note{font-size:13px;color:var(--booking-muted);line-height:1.9}
+#vehicleSuggest{
+  border:1px solid rgba(216,181,109,.24);
+  border-radius:18px;
+  padding:14px 16px;
+  background:rgba(216,181,109,.08);
+  color:#fff0b8;
+  font-weight:900;
+  line-height:1.8;
+}
+@media(max-width:900px){.booking-tools{grid-template-columns:1fr}}
+@media(max-width:720px){
+  #bookingForm.card{border-radius:22px}
+  .dynamic-row,.addon-row,.tax-fields{grid-template-columns:1fr}
+  .addon-qty{width:100%}
+  .estimate-total{font-size:16px}
+}
+</style>
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+<link rel="stylesheet" href="assets/css/s2o-upgrade.css">
+<link rel="stylesheet" href="assets/css/layout-width-fix.css">
+  <link rel="stylesheet" href="assets/css/xx-v92-s2o-fix.css">
+</head>
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main>
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <div class="kicker">BOOKING MALL</div>
+      <h1>預約商城</h1>
+      <p class="lead">資料填越完整，客服報價越快，司機也越不會在城市裡上演尋人啟事。送出後會寫入訂單系統並通知管理員。</p>
+      <div class="actions">
+        <a class="btn primary" href="booking.html">立即預約</a>
+        <a class="btn" href="airport-pricing.html">查詢價目表</a>
+        <a class="btn ghost" href="faq.html">常見問題</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section">
+<div class="container">
+<div id="bookingMemberGate" class="member-gate"></div>
+<form class="card form-grid" id="bookingForm" onsubmit="submitBooking(event)">
+<label>服務項目
+  <select name="service" class="select" required>
+    <option value="">請選擇服務項目</option>
+    <option value="機場接送">機場接送</option>
+    <option value="港口接送">港口接送</option>
+    <option value="旅遊包車">旅遊包車</option>
+    <option value="登山包車">登山包車</option>
+    <option value="演唱會接送">演唱會接送</option>
+    <option value="長途接送">長途接送</option>
+  </select>
+</label>
+<label>服務細項
+  <select name="serviceDetail" class="select" required>
+    <option>接機／接船</option>
+    <option>送機／送港</option>
+    <option>來回接送</option>
+    <option>包車行程</option>
+  </select>
+</label>
+<div class="full booking-tools">
+  <div class="dynamic-block" data-dynamic-group="passengerNames" data-target-name="passengerNames" data-placeholder="乘客姓名">
+    <div class="dynamic-head"><b>乘客姓名</b><button class="mini-btn" type="button" data-add-dynamic>＋新增</button></div>
+    <div class="dynamic-list" data-dynamic-list></div>
+  </div>
+  <div class="dynamic-block" data-dynamic-group="contacts" data-target-name="contacts" data-placeholder="聯絡方式／電話／LINE／WhatsApp">
+    <div class="dynamic-head"><b>聯絡方式</b><button class="mini-btn" type="button" data-add-dynamic>＋新增</button></div>
+    <div class="dynamic-list" data-dynamic-list></div>
+  </div>
+  <div class="dynamic-block" data-dynamic-group="pickups" data-target-name="pickups" data-placeholder="上車地點">
+    <div class="dynamic-head"><b>上車地點</b><button class="mini-btn" type="button" data-add-dynamic>＋新增</button></div>
+    <div class="dynamic-list" data-dynamic-list></div>
+  </div>
+  <div class="dynamic-block" data-dynamic-group="dropoffs" data-target-name="dropoffs" data-placeholder="下車地點">
+    <div class="dynamic-head"><b>下車地點</b><button class="mini-btn" type="button" data-add-dynamic>＋新增</button></div>
+    <div class="dynamic-list" data-dynamic-list></div>
+  </div>
+</div>
+<input type="hidden" name="name">
+<input type="hidden" name="phone">
+<input type="hidden" name="contactApp">
+<input type="hidden" name="pickup">
+<input type="hidden" name="dropoff">
+<input type="hidden" name="addonTotal">
+<input type="hidden" name="baseFare">
+<input type="hidden" name="cardFee">
+<input type="hidden" name="estimatedTotal">
+<input type="hidden" name="customerAddons">
+<label>日期<input type="date" name="date" class="input" required></label>
+<label>時間<input type="time" name="time" class="input" required></label>
+<label class="conditional-field" data-show-when="tour">包車天數
+  <input name="days" type="number" min="1" max="30" class="input" placeholder="例：1、2、3">
+</label>
+<label class="conditional-field" data-show-when="tour">用車時數
+  <input name="hours" type="number" min="1" max="24" class="input" placeholder="例：8、10、12">
+</label>
+<label>人數<input name="passengers" class="input" placeholder="例：3位大人＋1位小孩" oninput="suggestVehicle()"></label>
+<label class="conditional-field" data-show-when="roundtrip">回程日期
+  <input type="date" name="returnDate" class="input">
+</label>
+<label class="conditional-field" data-show-when="roundtrip">回程時間
+  <input type="time" name="returnTime" class="input">
+</label>
+<label class="full conditional-field" data-show-when="tour">行程規劃（旁邊＋號可新增多點）
+  <input name="midpoints" class="input" placeholder="例：清境農場、日月潭、合歡山；可填多點，以逗號分隔">
+</label>
+<label class="conditional-field" data-show-when="airport">航班編號
+  <input name="flight" class="input" placeholder="例：CI123、BR456">
+</label>
+<label class="conditional-field" data-show-when="port">航班編號
+  <input name="portFlight" class="input" placeholder="例：CI123、BR456；若無航班可填無">
+</label>
+<label class="conditional-field" data-show-when="port">船班梯次
+  <input name="shipSession" class="input" placeholder="例：第一梯、09:30 船班">
+</label>
+<label>行李數量<input name="luggage" class="input" placeholder="例：29吋3件＋登機箱2件" oninput="suggestVehicle()"></label>
+<label class="conditional-field" data-show-when="concert">活動名稱
+  <input name="eventName" class="input" placeholder="例：BTS、BLACKPINK、五月天、S2O 音樂節">
+</label>
+<label>車款偏好
+  <select name="vehicle" class="select" id="vehicleSelect">
+    <option value="舒適五人座" data-vehicle-kind="comfort5">舒適五人座</option>
+    <option value="進口車" data-vehicle-kind="import">進口車</option>
+    <option value="Benz S-Class" data-vehicle-kind="sclass">Benz S-Class</option>
+    <option value="豪華九人座" data-vehicle-kind="van9">豪華九人座</option>
+    <option value="VITO" data-vehicle-kind="vito">VITO</option>
+    <option value="Lexus LM" data-vehicle-kind="lm">Lexus LM</option>
+    <option value="Toyota Alphard" data-vehicle-kind="alphard">Toyota Alphard</option>
+    <option value="明星保母車" data-vehicle-kind="sprinter">明星保母車</option>
+  </select>
+</label>
+<label>訂金欄位<input name="depositNote" class="input" placeholder="例：需客服提供匯款資訊／公司月結"></label>
+<label>付款方式偏好
+  <select name="paymentMethod" class="select">
+    <option>客服確認後付款</option>
+    <option>匯款訂金</option>
+    <option>現金付款</option>
+    <option>公司月結／長期配合</option>
+    <option>需統編／收據</option>
+    <option>刷信用卡</option>
+  </select>
+</label>
+<label>預算／報價備註<input name="budgetNote" class="input" placeholder="例：希望控制在 3000 內／需報價單"></label>
+<label>寵物資訊<input name="petInfo" class="input" placeholder="例：小型犬1隻、有外出籠"></label>
+<label>加購補充<input name="addonNote" class="input" placeholder="其他需求"></label>
+<fieldset class="full addon-box addon-upgrade">
+  <legend>加購項目</legend>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="forwardSeat" value="正向安全座椅"> <span>正向安全座椅 <small>+NT$200／張</small></span></label>
+    <input class="addon-qty" data-addon-qty="forwardSeat" name="forwardSeatQty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="rearSeat" value="反向安全座椅"> <span>反向安全座椅 <small>+NT$200／張</small></span></label>
+    <input class="addon-qty" data-addon-qty="rearSeat" name="rearSeatQty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="booster" value="增高墊"> <span>增高墊 <small>+NT$200／張</small></span></label>
+    <input class="addon-qty" data-addon-qty="booster" name="boosterQty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="sign" value="舉牌服務"> <span>舉牌服務 <small>+NT$200／次</small></span></label>
+    <input class="addon-qty" data-addon-qty="sign" name="signQty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="luggage12" value="行李搬運1~2樓"> <span>行李搬運 1～2樓 <small>+NT$100／件</small></span></label>
+    <input class="addon-qty" data-addon-qty="luggage12" name="luggageCarry12Qty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="luggage3" value="行李搬運3樓以上"> <span>行李搬運 3樓以上 <small>+NT$200／件</small></span></label>
+    <input class="addon-qty" data-addon-qty="luggage3" name="luggageCarry3Qty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="pet" value="寵物接送"> <span>寵物接送 <small>只可選商務車型，+NT$200／隻</small></span></label>
+    <input class="addon-qty" data-addon-qty="pet" name="petQty" type="number" min="0" max="9" value="0">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="receipt" value="開立收據"> <span>開立收據</span></label>
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="taxId" value="開立統編"> <span>開立統編</span></label>
+  </div>
+  <div class="tax-fields is-hidden" data-tax-fields>
+    <input class="input" name="taxIdNumber" placeholder="統一編號">
+    <input class="input" name="taxTitle" placeholder="公司抬頭">
+  </div>
+  <div class="addon-row">
+    <label><input type="checkbox" data-addon-check="creditCard" value="刷信用卡"> <span>刷信用卡 <small>勾選後估價加收 6% 手續費</small></span></label>
+  </div>
+</fieldset>
+<div class="full estimate-box" id="estimateBox">
+  <h3>即時估價</h3>
+  <div class="estimate-line"><span>價目表車資</span><strong id="baseFareText">待填地址／車款</strong></div>
+  <div class="estimate-line"><span>加購小計</span><strong id="addonTotalText">NT$0</strong></div>
+  <div class="estimate-line"><span>刷卡 6% 手續費</span><strong id="cardFeeText">NT$0</strong></div>
+  <div class="estimate-total"><span>預估總額</span><strong id="estimatedTotalText">待客服確認</strong></div>
+  <div class="estimate-note" id="estimateNote">系統會依價目表與加購項目試算；實際金額仍以客服確認為準。價格不是拿來嚇客人的，是拿來把服務講清楚的。</div>
+</div>
+<div class="full recommendation" id="vehicleSuggest">填入人數與行李後，系統會先給車款建議；最後仍以客服確認為準。</div>
+<label class="full">備註
+  <textarea name="note" rows="4" placeholder="特殊需求、停靠點、寵物、長輩行動需求都可以寫。"></textarea>
+</label>
+<label class="full policy-check"><input type="checkbox" name="agreeTerms" required> 我已閱讀並同意 <a href="terms.html" target="_blank">條款政策</a> 與訂金／取消規範。</label>
+<label class="full policy-check"><input type="checkbox" name="agreePrivacy" required> 我已閱讀並同意 <a href="privacy.html" target="_blank">隱私權政策</a>。</label>
+<div class="full notice">線上送出為需求登記，需客服確認車輛、報價與訂金後，訂單才正式成立。</div>
+<div class="full"><button class="btn primary" type="submit">送出預約</button></div>
+<div class="full" id="bookingResult"></div>
+</form>
+</div>
+</section>
+</main><script src="assets/js/pricing-freeze.js" defer></script>
+<script type="module" src="assets/js/member.js"></script>
+<script>
+(function(){
+  const form = document.getElementById("bookingForm");
+  if(!form) return;
+  const AIRPORT_SHEETS = ["桃園機場","松山機場","清泉岡機場","小港機場"];
+  const PORT_SHEETS = ["平安港","台北郵輪港","台中港","高雄香蕉碼頭","基隆港","東港碼頭","布袋港碼頭","富岡漁港","後壁湖碼頭"];
+  const ADDON_PRICES = {
+    forwardSeat:200,
+    rearSeat:200,
+    booster:200,
+    sign:200,
+    luggage12:100,
+    luggage3:200,
+    pet:200
+  };
+  const BUSINESS_CARS = [
+    "豪華九人座",
+    "九人座",
+    "VITO",
+    "VITO-2",
+    "尊榮商務車",
+    "Lexus LM",
+    "Toyota Alphard",
+    "明星保母車"
+  ];
+
+  const VEHICLE_RULES = {
+    smallGroup: ["comfort5", "import", "sclass", "van9", "vito", "lm", "alphard", "sprinter"],
+    noFiveSeat: ["van9", "vito", "lm", "alphard", "sprinter"],
+    sevenPlus: ["van9", "vito", "sprinter"],
+    sprinterOnly: ["sprinter"]
+  };
+  const priceCache = new Map();
+  const $ = (s, root=form) => root.querySelector(s);
+  const $$ = (s, root=form) => Array.from(root.querySelectorAll(s));
+  const money = n => Number.isFinite(Number(n))
+    ? "NT$" + Math.round(Number(n)).toLocaleString("zh-TW")
+    : "待客服確認";
+  const text = el => String(el?.value || "").trim();
+  const normalize = v => String(v || "")
+    .replace(/\s+/g,"")
+    .replace(/臺/g,"台")
+    .toLowerCase();
+  const parseMoney = v => {
+    const n = Number(String(v || "").replace(/[^0-9]/g,""));
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  };
+
+  function parsePeopleCount(){
+    const value = text($('[name="passengers"]'));
+    const numbers = value.match(/\d+/g) || [];
+    if(!numbers.length) return 0;
+    return numbers.map(Number).reduce((sum, n)=>sum + n, 0);
+  }
+
+  function parseLargeLuggageCount(){
+    const value = text($('[name="luggage"]'));
+    const matches = Array.from(value.matchAll(/(\d+)\s*(?:件|咖|個)?\s*(?:29|２９|28|２８)\s*(?:吋|寸)?/g));
+
+    if(matches.length){
+      return matches.reduce((sum, match)=>sum + Number(match[1] || 0), 0);
+    }
+
+    const allNumbers = value.match(/\d+/g) || [];
+    return allNumbers.length ? Number(allNumbers[0]) : 0;
+  }
+
+  function getAllowedVehicleKinds(){
+  const people = parsePeopleCount();
+  const largeLuggage = parseLargeLuggageCount();
+
+  if(people >= 7 && people <= 8 && largeLuggage > 8){
+    return {
+      allowed: VEHICLE_RULES.sprinterOnly,
+      reason: "7～8人且 28／29 吋大型行李超過 8 件，只可選明星保母車。"
+    };
+  }
+
+  if(people >= 7 || largeLuggage > 7){
+    return {
+      allowed: VEHICLE_RULES.sevenPlus,
+      reason: "7人以上或 28／29 吋大型行李超過 7 件，只可選豪華九人座、VITO 或明星保母車。"
+    };
+  }
+
+  if(people >= 4 || largeLuggage > 3){
+    return {
+      allowed: VEHICLE_RULES.noFiveSeat,
+      reason: "4人以上或 28／29 吋大型行李超過 3 件，不可選舒適五人座、進口車或 S-Class。"
+    };
+  }
+
+  return {
+    allowed: VEHICLE_RULES.smallGroup,
+    reason: "1～3人且 28／29 吋大型行李 3 件內，可選全部車型。"
+  };
+}
+
+  function updateVehicleAvailability(){
+    const select = $('#vehicleSelect');
+    if(!select) return;
+
+    const { allowed, reason } = getAllowedVehicleKinds();
+    const options = Array.from(select.options);
+
+    options.forEach(option=>{
+      const kind = option.dataset.vehicleKind;
+      const canUse = allowed.includes(kind);
+      option.disabled = !canUse;
+      option.textContent = option.value + (canUse ? "" : "（不適用）");
+    });
+
+    if(select.selectedOptions[0]?.disabled){
+      const firstAllowed = options.find(option=>!option.disabled);
+      if(firstAllowed) select.value = firstAllowed.value;
+    }
+
+    const suggest = $('#vehicleSuggest');
+    if(suggest){
+      suggest.textContent = reason;
+    }
+  }
+  function escapeAttr(value){
+    return String(value || "").replace(/"/g,"&quot;");
+  }
+  function makeDynamicRow(group, value=""){
+    const name = group.dataset.targetName;
+    const placeholder = group.dataset.placeholder || "";
+    const row = document.createElement("div");
+    row.className = "dynamic-row";
+    row.innerHTML = `
+      <input class="input" name="${name}[]" value="${escapeAttr(value)}" placeholder="${placeholder}">
+      <button class="mini-btn danger" type="button" data-remove-dynamic>刪除</button>
+    `;
+    row.querySelector("[data-remove-dynamic]").addEventListener("click",()=>{
+      const list = group.querySelector("[data-dynamic-list]");
+      if(list.querySelectorAll(".dynamic-row").length > 1){
+        row.remove();
+      }
+      syncPrimaryFields();
+      updateEstimate();
+    });
+    row.querySelector("input").addEventListener("input",()=>{
+      syncPrimaryFields();
+      updateEstimate();
+    });
+    return row;
+  }
+  function initDynamic(){
+    $$("[data-dynamic-group]").forEach(group=>{
+      const list = group.querySelector("[data-dynamic-list]");
+      const btn = group.querySelector("[data-add-dynamic]");
+      if(!list.children.length){
+        list.appendChild(makeDynamicRow(group));
+      }
+      btn?.addEventListener("click",()=>{
+        list.appendChild(makeDynamicRow(group));
+      });
+    });
+  }
+  function collectArray(name){
+    return $$(`[name="${name}[]"]`)
+      .map(input=>input.value.trim())
+      .filter(Boolean);
+  }
+  function syncPrimaryFields(){
+    const names = collectArray("passengerNames");
+    const contacts = collectArray("contacts");
+    const pickups = collectArray("pickups");
+    const dropoffs = collectArray("dropoffs");
+    $('[name="name"]').value = names.join("、");
+    $('[name="phone"]').value = contacts[0] || "";
+    $('[name="contactApp"]').value = contacts.join("、");
+    $('[name="pickup"]').value = pickups.join("、");
+    $('[name="dropoff"]').value = dropoffs.join("、");
+  }
+  function isService(type){
+    const serviceText = [
+      text($('[name="service"]')),
+      text($('[name="serviceDetail"]'))
+    ].join(" ");
+    const v = normalize(serviceText);
+    if(type === "tour"){
+      return v.includes("旅遊") || v.includes("登山") || v.includes("百岳") || v.includes("包車行程");
+    }
+    if(type === "airport"){
+      return v.includes("機場") || AIRPORT_SHEETS.some(name=>v.includes(normalize(name)));
+    }
+    if(type === "port"){
+      return v.includes("港口") || v.includes("郵輪") || v.includes("碼頭") || v.includes("船") || PORT_SHEETS.some(name=>v.includes(normalize(name)));
+    }
+    if(type === "roundtrip"){
+      return v.includes("來回");
+    }
+    if(type === "concert"){
+      return v.includes("演唱會") || v.includes("音樂祭") || v.includes("音樂節") || v.includes("活動接送") || v.includes("s2o");
+    }
+    return false;
+  }
+  function updateConditional(){
+    $$("[data-show-when]").forEach(field=>{
+      const show = isService(field.dataset.showWhen);
+      field.classList.toggle("is-hidden", !show);
+      $$("input,select,textarea", field).forEach(input=>{
+        input.disabled = !show;
+        if(!show) input.value = "";
+      });
+    });
+    const taxCheck = $('[data-addon-check="taxId"]');
+    const taxFields = $("[data-tax-fields]");
+    taxFields?.classList.toggle("is-hidden", !taxCheck?.checked);
+
+    // 顯示規則：所有服務保留日期、時間、上下車地址；只有旅遊／登山包車顯示行程規劃。
+    const pickupBlocks = document.querySelectorAll('[data-dynamic-group="pickups"]');
+    const dropoffBlocks = document.querySelectorAll('[data-dynamic-group="dropoffs"]');
+    pickupBlocks.forEach(el=>el.classList.remove('is-hidden'));
+    dropoffBlocks.forEach(el=>el.classList.remove('is-hidden'));
+
+    const midpointsField = document.querySelector('[name="midpoints"]')?.closest('label');
+    if(midpointsField){
+      midpointsField.classList.toggle('is-hidden', !isService('tour'));
+    }
+  }
+  function clampQty(input){
+    let n = parseInt(input.value || "0", 10);
+    if(!Number.isFinite(n)) n = 0;
+    n = Math.max(0, Math.min(9, n));
+    input.value = String(n);
+    const key = input.dataset.addonQty;
+    const check = $(`[data-addon-check="${key}"]`);
+    if(check) check.checked = n > 0;
+  }
+  function addonSummary(){
+    const items = [];
+    let total = 0;
+    Object.keys(ADDON_PRICES).forEach(key=>{
+      const check = $(`[data-addon-check="${key}"]`);
+      const qtyInput = $(`[data-addon-qty="${key}"]`);
+      const qty = Math.max(0, Math.min(9, Number(qtyInput?.value || 0)));
+      if(check?.checked && qty > 0){
+        const amount = ADDON_PRICES[key] * qty;
+        total += amount;
+        items.push(`${check.value} x${qty}（${money(amount)}）`);
+      }
+    });
+    ["receipt","taxId","creditCard"].forEach(key=>{
+      const check = $(`[data-addon-check="${key}"]`);
+      if(check?.checked) items.push(check.value);
+    });
+    return { total, items };
+  }
+  function findSheetName(){
+    const haystack = normalize([
+      text($('[name="service"]')),
+      text($('[name="serviceDetail"]')),
+      collectArray("pickups").join(" "),
+      collectArray("dropoffs").join(" ")
+    ].join(" "));
+    const list = isService("port") ? PORT_SHEETS : AIRPORT_SHEETS;
+    return list.find(name=>haystack.includes(normalize(name))) ||
+      (isService("airport") ? "桃園機場" : "");
+  }
+  async function fetchPrice(sheetName){
+    if(!sheetName || !window.XXPricing?.fetchSheet) return null;
+    if(priceCache.has(sheetName)) return priceCache.get(sheetName);
+    const data = await window.XXPricing.fetchSheet(sheetName);
+    priceCache.set(sheetName, data);
+    return data;
+  }
+  function vehicleIndex(headers){
+    const vehicle = normalize(text($("#vehicleSelect")));
+    const fallback =
+      vehicle.includes("五人") || vehicle.includes("豪華") ? 2 :
+      vehicle.includes("vito") ? 4 :
+      vehicle.includes("alphard") || vehicle.includes("阿法") ? 5 :
+      vehicle.includes("明星") ? 6 :
+      vehicle.includes("商務") || vehicle.includes("lm") || vehicle.includes("九人") ? 3 :
+      -1;
+    if(!headers?.length) return fallback;
+    const idx = headers.findIndex(header=>{
+      const h = normalize(header);
+      return h && (h.includes(vehicle) || vehicle.includes(h));
+    });
+    return idx >= 2 ? idx : fallback;
+  }
+  function addressForPrice(){
+    const pickups = collectArray("pickups").join(" ");
+    const dropoffs = collectArray("dropoffs").join(" ");
+    const sheetName = findSheetName();
+    const sheetNorm = normalize(sheetName);
+    return normalize(pickups).includes(sheetNorm)
+      ? dropoffs
+      : pickups || dropoffs;
+  }
+  async function getBaseFare(){
+    const sheetName = findSheetName();
+    if(!sheetName || isService("tour")){
+      return 0;
+    }
+    const data = await fetchPrice(sheetName);
+    if(!data?.rows?.length){
+      return 0;
+    }
+    const headers = data.headers || [];
+    const idx = vehicleIndex(headers);
+    if(idx < 2){
+      return 0;
+    }
+    const addr = addressForPrice();
+    const row =
+      data.rows.find(r=>addr.includes(normalize(r[0])) && addr.includes(normalize(r[1]))) ||
+      data.rows.find(r=>addr.includes(normalize(r[1]))) ||
+      null;
+    return row ? parseMoney(row[idx]) : 0;
+  }
+  async function updateEstimate(){
+    syncPrimaryFields();
+    updateConditional();
+    updateVehicleAvailability();
+    $$("[data-addon-qty]").forEach(clampQty);
+    const petChecked = $('[data-addon-check="pet"]')?.checked;
+    const vehicle = text($("#vehicleSelect"));
+    if(petChecked && !BUSINESS_CARS.some(car=>vehicle.includes(car))){
+      $("#vehicleSuggest").textContent = "提醒：寵物接送只可選商務車型，請改選豪華九人座、VITO、LM、Alphard 或明星保母車。";
+      const petCheck = $('[data-addon-check="pet"]');
+      const petQty = $('[data-addon-qty="pet"]');
+      if(petCheck) petCheck.checked = false;
+      if(petQty) petQty.value = "0";
+    }
+    const baseFare = await getBaseFare();
+    const addons = addonSummary();
+    const subtotal = baseFare + addons.total;
+    const creditCard = $('[data-addon-check="creditCard"]')?.checked || text($('[name="paymentMethod"]')).includes("刷");
+    const cardFee = creditCard && subtotal > 0 ? Math.round(subtotal * 0.06) : 0;
+    const total = subtotal + cardFee;
+    $("#baseFareText").textContent = baseFare ? money(baseFare) : "待客服確認";
+    $("#addonTotalText").textContent = money(addons.total);
+    $("#cardFeeText").textContent = money(cardFee);
+    $("#estimatedTotalText").textContent = total ? money(total) : "待客服確認";
+    $('[name="baseFare"]').value = baseFare || "";
+    $('[name="addonTotal"]').value = addons.total || 0;
+    $('[name="cardFee"]').value = cardFee || 0;
+    $('[name="estimatedTotal"]').value = total || "";
+    $('[name="customerAddons"]').value = addons.items.join("、");
+  }
+  function setBookingResult(message, type="warn"){
+    const box = document.getElementById("bookingResult");
+    if(!box) return;
+    const bg = type === "ok" ? "rgba(60,180,120,.14)" : "rgba(216,181,109,.12)";
+    const border = type === "ok" ? "rgba(90,220,150,.35)" : "rgba(216,181,109,.32)";
+    box.innerHTML = `<div style="padding:14px 16px;border:1px solid ${border};border-radius:16px;background:${bg};color:#fff0b8;font-weight:950;line-height:1.8">${message}</div>`;
+  }
+
+  function validateBookingBeforeSubmit(){
+    syncPrimaryFields();
+    updateVehicleAvailability();
+    const errors = [];
+    const passengerNames = collectArray("passengerNames");
+    const contacts = collectArray("contacts");
+    const pickups = collectArray("pickups");
+    const dropoffs = collectArray("dropoffs");
+    const service = text($('[name="service"]'));
+    const date = text($('[name="date"]'));
+    const time = text($('[name="time"]'));
+    const passengers = text($('[name="passengers"]'));
+    const luggage = text($('[name="luggage"]'));
+    const vehicle = text($("#vehicleSelect"));
+    const agreeTerms = $('[name="agreeTerms"]')?.checked;
+    const agreePrivacy = $('[name="agreePrivacy"]')?.checked;
+    const petChecked = $('[data-addon-check="pet"]')?.checked;
+    const taxChecked = $('[data-addon-check="taxId"]')?.checked;
+
+    if(!service) errors.push("請選擇服務項目。");
+    if(!passengerNames.length) errors.push("請至少填寫一位乘客姓名。");
+    if(!contacts.length) errors.push("請至少填寫一組聯絡方式，電話或 LINE 都可以，但不要讓客服通靈。");
+    if(!date) errors.push("請填寫用車日期。");
+    if(!time) errors.push("請填寫用車時間。");
+    if(!pickups.length) errors.push("請至少填寫一個上車地點。");
+    if(!dropoffs.length) errors.push("請至少填寫一個下車地點。");
+    if(!passengers) errors.push("請填寫人數，例：2位大人＋1位小孩。");
+    if(!luggage) errors.push("請填寫行李數量，沒有行李也可填：無。");
+    if(isService("airport") && !text($('[name="flight"]'))) errors.push("機場接送請填航班編號，例：CI123、BR456。");
+    if(isService("port") && !text($('[name="shipSession"]'))) errors.push("港口接送請填船班梯次或船班時間。");
+    if(isService("tour") && !text($('[name="midpoints"]'))) {
+      errors.push("旅遊包車／登山包車請填寫行程規劃。");
+    }
+    if(isService("tour") && !text($('[name="days"]'))) errors.push("旅遊包車／登山包車請填寫包車天數。");
+    if(isService("tour") && !text($('[name="hours"]'))) errors.push("旅遊包車／登山包車請填寫用車時數。");
+    if(isService("concert") && !text($('[name="eventName"]'))) errors.push("演唱會接送請填寫活動名稱。");
+    if(isService("port") && !text($('[name="portFlight"]'))) errors.push("港口接送請填寫航班編號；若無航班請填無。");
+    if(petChecked && !BUSINESS_CARS.some(car=>vehicle.includes(car))) errors.push("寵物接送只可選商務車型，請改選豪華九人座、VITO、LM、Alphard 或明星保母車。");
+    if(taxChecked && (!text($('[name="taxIdNumber"]')) || !text($('[name="taxTitle"]')))) errors.push("已勾選開立統編，請填寫統一編號與公司抬頭。");
+    if(!agreeTerms) errors.push("請勾選同意條款政策與訂金／取消規範。");
+    if(!agreePrivacy) errors.push("請勾選同意隱私權政策。");
+
+    if(errors.length){
+      setBookingResult("請先補齊以下資料：<br>・" + errors.join("<br>・"));
+      const firstInvalid = form.querySelector(":invalid") || document.getElementById("bookingResult");
+      firstInvalid?.scrollIntoView({ behavior:"smooth", block:"center" });
+      return false;
+    }
+    return true;
+  }
+
+  const oldSubmit=window.submitBooking;
+  window.submitBooking=function(event){
+    if(!validateBookingBeforeSubmit()){
+      event.preventDefault();
+      return false;
+    }
+    syncPrimaryFields();
+    const addons=addonSummary();
+    $('[name="customerAddons"]').value=addons.items.join("、");
+    setBookingResult("資料檢查完成，正在送出預約需求，請勿重複點擊。", "ok");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if(submitBtn){
+      submitBtn.disabled = true;
+      submitBtn.textContent = "送出中...";
+      setTimeout(()=>{ submitBtn.disabled = false; submitBtn.textContent = "送出預約"; }, 9000);
+    }
+    if(window.XXAnalytics&&typeof window.XXAnalytics.trackEvent==="function"){
+      window.XXAnalytics.trackEvent("booking_submit_click",{
+        service:text($('[name="service"]')),
+        vehicle:text($("#vehicleSelect")),
+        estimated_total:$('[name="estimatedTotal"]').value||"not_estimated"
+      });
+    }
+    if(typeof oldSubmit==="function") return oldSubmit(event);
+  };
+  window.suggestVehicle = updateVehicleAvailability;
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    initDynamic();
+    updateConditional();
+    updateVehicleAvailability();
+    updateEstimate();
+    form.addEventListener("input",()=>updateEstimate());
+    form.addEventListener("change",()=>updateEstimate());
+    form.querySelectorAll('a[target="_blank"]').forEach(link=>{
+      link.setAttribute("rel", "noopener noreferrer");
+    });
+  });
+})();
+</script>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site-layout.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/xx-enterprise-v10.js"></script>
+
+<script src="assets/js/s2o-lightbox.js"></script>
+
+
+
+<style id="xx-booking-service-visibility-css">
+.xx-service-hidden{display:none!important}
+.xx-return-mini,.xx-day-plan{
+  margin:18px 0;padding:18px;border:1px solid rgba(212,175,55,.35);
+  border-radius:20px;background:rgba(255,255,255,.045)
+}
+.xx-return-mini h3,.xx-day-plan h3{margin:0 0 14px;color:#f8e7a1}
+.xx-mini-grid,.xx-day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.xx-mini-grid label,.xx-day-grid label{display:grid;gap:6px;color:#f8e7a1;font-weight:900}
+.xx-mini-grid input,.xx-day-grid input{
+  width:100%;box-sizing:border-box;border:1px solid rgba(212,175,55,.35);
+  border-radius:12px;background:#151515;color:#fff;padding:12px
+}
+.xx-add-day{
+  margin-top:12px;border:0;border-radius:999px;padding:12px 18px;
+  background:linear-gradient(135deg,#fff1a8,#d4af37);font-weight:950;color:#080808
+}
+@media(max-width:760px){.xx-mini-grid,.xx-day-grid{grid-template-columns:1fr}}
+</style>
+
+<script id="xx-booking-service-visibility-js">
+(function(){
+  const SERVICES=["機場接送","港口接送","長途接送","旅遊包車","登山包車","演唱會接送"];
+
+  const DETAILS={
+    "機場接送":["送機","接機","接送機"],
+    "港口接送":["送港","接船","來回"],
+    "長途接送":["去程","回程","來回"],
+    "旅遊包車":["一日包車","兩天一夜","三天兩夜"],
+    "登山包車":["去程","回程","一日包車","兩天一夜","三天兩夜"],
+    "演唱會接送":["去程","回程","來回","一日包車","兩天一夜","三天兩夜"]
+  };
+
+  const RULES={
+    "機場接送":["日期","時間","上車地址","下車地址","人數","行李","航班編號","加購項目"],
+    "港口接送":["日期","時間","上車地址","下車地址","人數","行李","航班編號","船班梯次","船班編號","加購項目"],
+    "長途接送":["日期","時間","上車地址","下車地址","人數","行李","加購項目"],
+    "旅遊包車":["日期","時間","包車天數","用車天數","用車時數","包車時數","上車地址","行程","中途點","下車地址","人數","行李","加購項目"],
+    "登山包車":["預約日期","日期","時間","加購項目"],
+    "演唱會接送":["日期","時間","上車地址","下車地址","活動名稱","加購項目"]
+  };
+
+  const ALWAYS=["服務項目","服務細項","乘客姓名","聯絡方式","聯絡電話","LINE","WhatsApp","車款","備註","送出","確認"];
+
+  function t(el){return (el?.innerText||el?.textContent||"").replace(/\s+/g,"").trim()}
+  function esc(v){return String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+
+  function serviceSelect(){
+    return Array.from(document.querySelectorAll("select")).find(sel=>{
+      const text=t(sel.closest("label")||sel.closest("div")||sel.parentElement||sel);
+      const id=((sel.id||"")+" "+(sel.name||"")).toLowerCase();
+      return text.includes("服務項目")||id.includes("service");
+    })||document.querySelector("select");
+  }
+
+  function detailSelect(){
+    const ss=serviceSelect();
+    return Array.from(document.querySelectorAll("select")).find(sel=>{
+      if(sel===ss)return false;
+      return t(sel.closest("label")||sel.closest("div")||sel.parentElement||sel).includes("服務細項");
+    })||Array.from(document.querySelectorAll("select")).find(sel=>sel!==ss);
+  }
+
+  function setOptions(sel,arr,ph){
+    if(!sel)return;
+    const old=sel.value;
+    sel.innerHTML=`<option value="">${ph}</option>`+arr.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+    if(arr.includes(old))sel.value=old;
+  }
+
+  function box(el){
+    return el.closest(".form-row,.form-group,.field,.input-group,.booking-field,.xx-field,label")||el.closest("div")||el.parentElement;
+  }
+
+  function boxes(){
+    const set=new Set();
+    document.querySelectorAll("label,input,select,textarea").forEach(el=>{const b=box(el);if(b)set.add(b)});
+    return Array.from(set);
+  }
+
+  function isVisible(b,service){
+    const text=t(b);
+    if(!text)return true;
+    if(ALWAYS.some(k=>text.includes(k)))return true;
+    return (RULES[service]||[]).some(k=>text.includes(k));
+  }
+
+  function ensureReturnMini(){
+    let card=document.getElementById("xx-return-mini");
+    if(card)return card;
+    card=document.createElement("div");
+    card.id="xx-return-mini";
+    card.className="xx-return-mini xx-service-hidden";
+    card.innerHTML=`
+      <h3>回程資訊</h3>
+      <div class="xx-mini-grid">
+        <label>回程日期<input name="returnDate" type="date"></label>
+        <label>回程時間<input name="returnTime" type="time"></label>
+        <label class="xx-return-flight">回程航班編號<input name="returnFlightNo" placeholder="例：CI123"></label>
+        <label class="xx-return-ship">回程船班梯次<input name="returnShipSession" placeholder="例：第 2 梯／船班時間"></label>
+      </div>`;
+    const target=box(detailSelect())||box(serviceSelect())||document.querySelector("form");
+    target.insertAdjacentElement("afterend",card);
+    return card;
+  }
+
+  function ensureDayPlan(){
+    let card=document.getElementById("xx-day-plan");
+    if(card)return card;
+    card=document.createElement("div");
+    card.id="xx-day-plan";
+    card.className="xx-day-plan xx-service-hidden";
+    card.innerHTML=`
+      <h3>登山包車每日行程</h3>
+      <div id="xx-day-list"></div>
+      <button type="button" class="xx-add-day" id="xx-add-day">＋ 新增一日</button>`;
+    const form=document.querySelector("form");
+    form.appendChild(card);
+    document.getElementById("xx-add-day").onclick=()=>addDay();
+    addDay();
+    return card;
+  }
+
+  function addDay(){
+    const list=document.getElementById("xx-day-list");
+    if(!list)return;
+    const n=list.children.length+1;
+    const row=document.createElement("div");
+    row.className="xx-day-grid";
+    row.style.marginTop="12px";
+    row.innerHTML=`
+      <label>第 ${n} 日用車時數<input name="day${n}Hours" placeholder="例：10 小時"></label>
+      <label>第 ${n} 日上車地址<input name="day${n}From" placeholder="可填多個上車點"></label>
+      <label>第 ${n} 日下車地址<input name="day${n}To" placeholder="可填多個下車點"></label>
+      <label>第 ${n} 日備註<input name="day${n}Memo" placeholder="路線／登山口／住宿點"></label>`;
+    list.appendChild(row);
+  }
+
+  function needReturn(service,detail){
+    return (service==="機場接送"&&detail==="接送機")||
+           (service==="港口接送"&&detail==="來回")||
+           (service==="長途接送"&&detail==="來回")||
+           (service==="演唱會接送"&&detail==="來回");
+  }
+
+  function apply(){
+    const ss=serviceSelect(); if(!ss)return;
+    setOptions(ss,SERVICES,"請選擇服務項目");
+    const service=ss.value||"機場接送";
+    const ds=detailSelect();
+    setOptions(ds,DETAILS[service]||[],"請選擇服務細項");
+    const detail=ds?ds.value:"";
+
+    boxes().forEach(b=>{
+      if(b.contains(ss)||(ds&&b.contains(ds)))return;
+      b.classList.toggle("xx-service-hidden",!isVisible(b,service));
+    });
+
+    const ret=ensureReturnMini();
+    ret.classList.toggle("xx-service-hidden",!needReturn(service,detail));
+    ret.querySelector(".xx-return-flight").classList.toggle("xx-service-hidden",service!=="機場接送"&&service!=="港口接送");
+    ret.querySelector(".xx-return-ship").classList.toggle("xx-service-hidden",service!=="港口接送");
+
+    const day=ensureDayPlan();
+    day.classList.toggle("xx-service-hidden",service!=="登山包車");
+  }
+
+  function bind(){
+    const ss=serviceSelect(); const ds=detailSelect();
+    if(!ss)return;
+    ss.onchange=apply;
+    if(ds)ds.onchange=apply;
+    apply();
+  }
+
+  document.addEventListener("DOMContentLoaded",bind);
+  window.addEventListener("load",bind);
+  setTimeout(bind,500);
+})();
+</script>
+
+</body>
+</html>
