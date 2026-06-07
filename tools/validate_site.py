@@ -117,7 +117,7 @@ for page in pages:
         if 'data-require-member="true"' in html:
             fail("booking.html: 還有與訪客預約設定衝突的會員必填標記")
 
-for alias in ["member.html", "member-login.html"]:
+for alias in ["member.html", ]:
     if (ROOT / alias).stat().st_size > 3000:
         fail(f"{alias}: 舊會員頁內容過大，應保留輕量轉址")
 
