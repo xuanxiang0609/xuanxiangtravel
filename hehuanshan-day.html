@@ -328,6 +328,20 @@ section{padding:48px 0}
 <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
 <link rel="stylesheet" href="assets/css/s2o-upgrade.css">
   <link rel="stylesheet" href="assets/css/xx-v92-s2o-fix.css">
+
+<style id="xx-travel-activity-upgrade">
+body{background:#050505;color:#fff8e8}
+.xx-travel-polish{max-width:1180px;margin:34px auto;padding:0 18px}
+.xx-travel-polish .xx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.xx-travel-polish .xx-card{border:1px solid rgba(216,181,109,.28);border-radius:24px;background:linear-gradient(145deg,rgba(20,16,9,.96),rgba(5,5,5,.92));padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.35)}
+.xx-travel-polish h2{font-size:clamp(1.8rem,3vw,2.7rem);color:#fff0b8;margin:0 0 14px;font-family:"Noto Serif TC","Noto Sans TC",serif}
+.xx-travel-polish h3{color:#fff0b8;margin:0 0 10px}
+.xx-travel-polish p{color:#e7dbc4;line-height:1.9}
+.xx-travel-polish .xx-cta{margin-top:22px;text-align:center;border:1px solid rgba(216,181,109,.32);border-radius:28px;padding:28px;background:radial-gradient(circle at top,rgba(216,181,109,.18),transparent 38%),#090806}
+.xx-travel-polish .xx-btn{display:inline-flex;margin:8px;padding:13px 22px;border-radius:999px;font-weight:900;background:linear-gradient(135deg,#b88935,#fff0b8);color:#120c04;text-decoration:none}
+@media(max-width:900px){.xx-travel-polish .xx-grid{grid-template-columns:1fr}}
+</style>
+
 </head>
 
 <body data-xx-layout="v8">
@@ -532,6 +546,22 @@ hehuanshan01.jpg、hehuanshan03.jpg、hehuanshan04.jpg、hehuanshan05.jpg、hehu
     </div>
   </div>
 </section>
+
+<section class="xx-travel-polish" aria-label="旅遊活動升級說明">
+  <h2>玹翔旅遊｜旅遊活動專車服務</h2>
+  <div class="xx-grid">
+    <article class="xx-card"><h3>行程彈性安排</h3><p>一日遊、兩天一夜、三天兩夜、司馬庫斯、合歡山、日月潭清境皆可依人數、行李與停留時間客製。</p></article>
+    <article class="xx-card"><h3>高端車款選擇</h3><p>舒適五人座、九人座商務車、明星保母車，依照旅程強度與舒適需求安排。</p></article>
+    <article class="xx-card"><h3>專業司機服務</h3><p>熟悉山區、景點、休息點與回程動線，讓旅遊不是趕路，是舒服抵達。</p></article>
+  </div>
+  <div class="xx-cta">
+    <h3>想安排旅遊包車？</h3>
+    <p>把日期、人數、上車地點、想去景點傳給我們，客服協助規劃最順路線。</p>
+    <a class="xx-btn" href="booking.html">立即預約</a>
+    <a class="xx-btn" href="#" data-xx-line-link>LINE 詢問</a>
+  </div>
+</section>
+
 </main>
 
 <div class="cartBox" onclick="openCart()">🛒 <span id="cartCount">0</span>｜立即預訂</div>
