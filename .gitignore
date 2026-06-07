@@ -3,3 +3,16 @@
 __pycache__/
 *.pyc
 .firebase/
+
+# 玹翔旅遊｜本機備份與大型檔案不上傳 GitHub
+backup/
+backup-local/
+*.zip
+*.rar
+*.7z
+*.dmg
+*.mov
+*.mp4
+.DS_Store
+Thumbs.db
+desktop.ini

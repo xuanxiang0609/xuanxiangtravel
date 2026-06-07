@@ -5,7 +5,7 @@
 =========================================================
 玹翔旅遊｜合歡山雲海星空・百岳縱走體驗
 版本：Hehuanshan Trip Navigation / Contact / Booking Guard Final
-用途：合歡山包車、九人座專車、明星保母車、LINE 預約與表單防呆
+用途：合歡山包車、九人座專車、明星保母車、LINE客服與表單防呆
 
 前端可放：LINE 官方客服公開連結、電話、Gmail、社群公開資訊、Apps Script 公開 Web App URL。
 禁止放前端：LINE_CHANNEL_ACCESS_TOKEN_請放後端_請放後端、LINE_ADMIN_IDS_請放後端_請放後端。
@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <title>玹翔旅遊 Trips｜合歡山雲海星空・百岳縱走體驗</title>
-<meta name="description" content="玹翔旅遊 Trips｜合歡山雲海星空・百岳縱走體驗，台中、彰化、南投出發，高端九人座與明星保母車包車／拼車預約，支援購物車、LINE預約與Firebase下單。">
+<meta name="description" content="玹翔旅遊 Trips｜合歡山雲海星空・百岳縱走體驗，台中、彰化、南投出發，高端九人座與明星保母車包車／拼車預約，支援購物車、LINE客服與Firebase下單。">
 <meta name="keywords" content="玹翔旅遊,合歡山,合歡山一日遊,合歡山包車,武嶺,清境,南投仁愛,雲海,星空,旅遊包車,九人座包車,明星保母車">
 <meta property="og:title" content="玹翔旅遊 Trips｜合歡山雲海星空・百岳縱走體驗">
 <meta property="og:description" content="不用自己硬開高山路，合歡山雲海、武嶺、清境山景一次收藏。高端包車，安全抵達。">
@@ -326,6 +326,8 @@ section{padding:48px 0}
 <meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
 <link rel="stylesheet" href="assets/css/xx-v8.css">
 <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+<link rel="stylesheet" href="assets/css/s2o-upgrade.css">
+  <link rel="stylesheet" href="assets/css/xx-v92-s2o-fix.css">
 </head>
 
 <body data-xx-layout="v8">
@@ -533,7 +535,7 @@ hehuanshan01.jpg、hehuanshan03.jpg、hehuanshan04.jpg、hehuanshan05.jpg、hehu
 </main>
 
 <div class="cartBox" onclick="openCart()">🛒 <span id="cartCount">0</span>｜立即預訂</div>
-<a class="floatLine" href="#" data-xx-line-link target="_blank" rel="noopener">LINE 預約</a>
+<a class="floatLine" href="#" data-xx-line-link target="_blank" rel="noopener">LINE客服</a>
 
 <div class="drawer" id="drawer">
   <div class="overlay" onclick="closeCart()"></div>
@@ -677,5 +679,6 @@ renderOptions();
 <script src="assets/js/site.js"></script>
 <script src="assets/js/xx-enterprise-v10.js"></script>
 
+<script src="assets/js/s2o-lightbox.js"></script>
 </body>
 </html>
