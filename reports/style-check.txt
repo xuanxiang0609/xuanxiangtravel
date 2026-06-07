@@ -1628,7 +1628,7 @@ S2O.html:493:    <div class="card">
 S2O.html:494:      <img class="card-img" src="images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊 S2O 高端包車車款" loading="lazy">
 S2O.html:579:      <div class="card"><img class="card-img" src="images/rav4.jpg" alt="玹翔旅遊舒適五人座 S2O 接送車款" loading="lazy"><h3>舒適五人座</h3><p>適合 1–4 人，小團輕旅行、情侶、朋友雙人出遊。</p></div>
 S2O.html:580:      <div class="card"><img class="card-img" src="images/VITO.jpg" alt="玹翔旅遊商務九人座 S2O 包車車款" loading="lazy"><h3>商務九人座</h3><p>適合 5–8 人，S2O 揪團、朋友包車、行李較多最實用。</p></div>
-S2O.html:581:      <div class="card"><img class="card-img" src="images/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車 S2O 尊榮接送" loading="lazy"><h3>明星保母車</h3><p>適合 VIP、網紅、藝人、公司團體，空間與尊榮感一次到位。</p></div>
+S2O.html:581:      <div class="card"><img class="card-img" src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車 S2O 尊榮接送" loading="lazy"><h3>明星保母車</h3><p>適合 VIP、網紅、藝人、公司團體，空間與尊榮感一次到位。</p></div>
 S2O.html:590:      <div class="card"><h3>必備物品</h3><ul><li>防水手機套</li><li>行動電源</li><li>毛巾與替換衣物</li><li>拖鞋或防滑鞋</li></ul></div>
 S2O.html:591:      <div class="card"><h3>接送建議</h3><ul><li>散場時間提前約定</li><li>上車點避開人潮核心</li><li>多人同行建議包車</li><li>濕衣物請自備袋子</li></ul></div>
 S2O.html:592:      <div class="card"><h3>報價方式</h3><p class="price">依路線報價</p><p>請提供日期、人數、住宿地點、會場、是否來回接送，客服會協助安排最適合車型。</p></div>

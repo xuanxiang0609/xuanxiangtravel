@@ -76,7 +76,7 @@ ASSET_COPY = {
     "images/index/airport.png": "images/機場接送.png",
     "images/index/concert.png": "images/演唱會接送.png",
     "images/uploads/concert.jpg": "images/upload-001.jpg",
-    "images/vehicles/sprinter.jpg": "images/sprinter.jpg",
+    "images/vehicles/sprinter.jpg": "images/vehicles/sprinter.jpg",
     "images/vehicles/vito.jpg": "images/VITO.jpg",
     "images/vehicles/camry.jpg": "images/車照/CAMRY/comfort-cover.jpg",
     "images/vehicles/rav4.png": "images/車照/RAV4/251222_ToyotaRAV4_026_PhotoChen.png",
