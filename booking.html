@@ -807,101 +807,138 @@
 
 <script src="assets/js/s2o-lightbox.js"></script>
 
+
 <style id="xx-booking-service-visibility-css">
-.xx-service-hidden{
-  display:none !important;
-}
+.xx-service-hidden{display:none!important}
+.xx-return-card{margin:18px 0;padding:18px;border:1px solid rgba(212,175,55,.35);border-radius:18px;background:rgba(255,255,255,.04)}
+.xx-return-card h3{margin:0 0 12px;color:#f8e7a1;font-size:18px}
+.xx-return-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.xx-return-grid label{display:grid;gap:6px;color:#f8e7a1;font-weight:900}
+.xx-return-grid input{width:100%;box-sizing:border-box;border:1px solid rgba(212,175,55,.35);border-radius:12px;background:#151515;color:#fff;padding:12px}
+@media(max-width:760px){.xx-return-grid{grid-template-columns:1fr}}
 </style>
 
 <script id="xx-booking-service-visibility-js">
 (function(){
-  const SERVICE_OPTIONS = [
-    "機場接送",
-    "港口接送",
-    "長途接送",
-    "旅遊包車",
-    "登山包車",
-    "演唱會接送",
-    "商城（一日遊、三天兩夜）"
-  ];
+  const SERVICES = ["機場接送","港口接送","長途接送","旅遊包車","登山包車","演唱會接送"];
 
-  const FIELD_RULES = {
-    "機場接送": ["日期","時間","上車地址","下車地址","航班編號"],
-    "港口接送": ["日期","時間","上車地址","下車地址","航班編號","船班梯次","船班編號"],
-    "長途接送": ["日期","時間","上車地址","下車地址"],
-    "旅遊包車": ["日期","時間","包車天數","用車天數","用車時數","包車時數","上車地址","行程","中途點","下車地址"],
-    "登山包車": ["日期","時間","包車天數","用車天數","用車時數","包車時數","上車地址","行程","中途點","下車地址"],
-    "演唱會接送": ["日期","時間","上車地址","下車地址","活動名稱"],
-    "商城（一日遊、三天兩夜）": ["日期","時間","上車地址","下車地址","人數","行李","備註","加購項目"]
+  const DETAILS = {
+    "機場接送":["送機","接機","接送機"],
+    "港口接送":["送港","接船","來回"],
+    "長途接送":["去程","回程","來回"],
+    "旅遊包車":["一日包車","兩天一夜","三天兩夜"],
+    "登山包車":["去程","回程","一日包車","兩天一夜","三天兩夜"],
+    "演唱會接送":["去程","回程","來回","一日包車","兩天一夜","三天兩夜"]
   };
 
-  const ALWAYS_SHOW = ["服務項目","服務細項","乘客姓名","聯絡方式","聯絡電話","LINE","WhatsApp","車款","付款方式","備註","加購項目","加購服務","預估總額","送出","確認"];
+  const RULES = {
+    "機場接送":["日期","時間","上車地址","下車地址","人數","行李","行李數","航班編號","加購項目","加購服務"],
+    "港口接送":["日期","時間","上車地址","下車地址","人數","行李","行李數","航班編號","船班梯次","船班編號","加購項目","加購服務"],
+    "長途接送":["日期","時間","上車地址","下車地址","人數","行李","行李數","加購項目","加購服務"],
+    "旅遊包車":["日期","時間","包車天數","用車天數","用車時數","包車時數","上車地址","行程","中途點","下車地址","人數","行李","行李數","加購項目","加購服務"],
+    "登山包車":["日期","時間","包車天數","用車天數","用車時數","包車時數","上車地址","下車地址","加購項目","加購服務"],
+    "演唱會接送":["日期","時間","上車地址","下車地址","活動名稱","加購項目","加購服務"]
+  };
 
-  function textOf(el){
-    return (el.innerText || el.textContent || "").replace(/\s+/g,"").trim();
+  const ALWAYS = ["服務項目","服務細項","乘客姓名","聯絡方式","聯絡電話","LINE","WhatsApp","車款","付款方式","付款","備註","預估","總額","送出","確認"];
+
+  function txt(el){return (el?.innerText||el?.textContent||"").replace(/\s+/g,"").trim();}
+  function esc(v){return String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+
+  function selectByText(keyword){
+    return Array.from(document.querySelectorAll("select")).find(sel=>{
+      const t = txt(sel.closest("label")||sel.closest("div")||sel.parentElement||sel);
+      const id = ((sel.id||"")+" "+(sel.name||"")).toLowerCase();
+      return t.includes(keyword) || id.includes(keyword.toLowerCase()) || (keyword==="服務項目" && id.includes("service"));
+    });
   }
 
-  function findServiceSelect(){
-    const selects = Array.from(document.querySelectorAll("select"));
-    return selects.find(sel=>{
-      const wrapText = textOf(sel.closest("label") || sel.closest("div") || sel.parentElement || sel);
-      const idName = ((sel.id||"") + " " + (sel.name||"")).toLowerCase();
-      return wrapText.includes("服務項目") || idName.includes("service");
-    }) || selects[0];
+  function serviceSelect(){return selectByText("服務項目") || document.querySelector("select");}
+  function detailSelect(){
+    const all = Array.from(document.querySelectorAll("select"));
+    const ss = serviceSelect();
+    return all.find(x=>x!==ss && txt(x.closest("label")||x.closest("div")||x.parentElement||x).includes("服務細項")) || all.find(x=>x!==ss);
   }
 
-  function resetServiceOptions(sel){
-    if(!sel) return;
+  function setOptions(sel, arr, placeholder){
+    if(!sel)return;
     const old = sel.value;
-    sel.innerHTML = '<option value="">請選擇服務項目</option>' + SERVICE_OPTIONS.map(v=>`<option value="${v}">${v}</option>`).join("");
-    if(SERVICE_OPTIONS.includes(old)) sel.value = old;
+    sel.innerHTML = `<option value="">${placeholder}</option>` + arr.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+    if(arr.includes(old)) sel.value = old;
   }
 
-  function fieldBox(el){
-    return el.closest(".form-row,.form-group,.field,.input-group,.booking-field,.xx-field,label") || el.closest("div") || el.parentElement;
-  }
-
-  function allCandidateFields(){
-    const nodes = Array.from(document.querySelectorAll("label,input,select,textarea"));
-    const boxes = new Set();
-    nodes.forEach(n=>{
-      const box = fieldBox(n);
-      if(box) boxes.add(box);
+  function box(el){return el.closest(".form-row,.form-group,.field,.input-group,.booking-field,.xx-field,label") || el.closest("div") || el.parentElement;}
+  function boxes(){
+    const set = new Set();
+    document.querySelectorAll("label,input,select,textarea").forEach(el=>{
+      const b = box(el);
+      if(b) set.add(b);
     });
-    return Array.from(boxes);
+    return Array.from(set);
   }
 
-  function shouldShowField(box, service){
-    const t = textOf(box);
-    if(!t) return true;
-    if(ALWAYS_SHOW.some(k=>t.includes(k))) return true;
-    const rules = FIELD_RULES[service] || [];
-    return rules.some(k=>t.includes(k));
+  function visible(b, service){
+    const t = txt(b);
+    if(!t)return true;
+    if(ALWAYS.some(k=>t.includes(k)))return true;
+    return (RULES[service]||[]).some(k=>t.includes(k));
   }
 
-  function applyVisibility(){
-    const sel = findServiceSelect();
-    if(!sel) return;
-    resetServiceOptions(sel);
-    const service = sel.value || "機場接送";
+  function needReturn(service, detail){
+    if(service==="機場接送" && detail==="接送機")return true;
+    if(["港口接送","長途接送","演唱會接送"].includes(service) && detail==="來回")return true;
+    return false;
+  }
 
-    allCandidateFields().forEach(box=>{
-      if(!box || box.contains(sel)) return;
-      if(shouldShowField(box, service)){
-        box.classList.remove("xx-service-hidden");
-      }else{
-        box.classList.add("xx-service-hidden");
-      }
+  function ensureReturnCard(){
+    let card = document.getElementById("xx-return-order-card");
+    if(card)return card;
+    card = document.createElement("div");
+    card.id = "xx-return-order-card";
+    card.className = "xx-return-card xx-service-hidden";
+    card.innerHTML = `
+      <h3>回程訂單資訊</h3>
+      <div class="xx-return-grid">
+        <label>回程日期<input name="returnDate" type="date"></label>
+        <label>回程時間<input name="returnTime" type="time"></label>
+        <label>回程上車地址<input name="returnFrom" placeholder="請輸入回程上車地址"></label>
+        <label>回程下車地址<input name="returnTo" placeholder="請輸入回程下車地址"></label>
+        <label>回程航班／船班／活動備註<input name="returnNo" placeholder="例如：航班、船班梯次、活動散場時間"></label>
+        <label>回程備註<input name="returnMemo" placeholder="其他回程需求"></label>
+      </div>`;
+    const ds = detailSelect();
+    const target = box(ds) || box(serviceSelect()) || document.querySelector("form");
+    target.insertAdjacentElement("afterend", card);
+    return card;
+  }
+
+  function apply(){
+    const ss = serviceSelect();
+    if(!ss)return;
+    setOptions(ss, SERVICES, "請選擇服務項目");
+    const service = ss.value || "機場接送";
+    const ds = detailSelect();
+    setOptions(ds, DETAILS[service] || [], "請選擇服務細項");
+    const detail = ds ? ds.value : "";
+
+    boxes().forEach(b=>{
+      if(b.contains(ss) || (ds && b.contains(ds)))return;
+      if(visible(b, service)) b.classList.remove("xx-service-hidden");
+      else b.classList.add("xx-service-hidden");
     });
+
+    const card = ensureReturnCard();
+    if(needReturn(service, detail)) card.classList.remove("xx-service-hidden");
+    else card.classList.add("xx-service-hidden");
   }
 
   function bind(){
-    const sel = findServiceSelect();
-    if(!sel) return;
-    resetServiceOptions(sel);
-    sel.removeEventListener("change", applyVisibility);
-    sel.addEventListener("change", applyVisibility);
-    applyVisibility();
+    const ss = serviceSelect();
+    const ds = detailSelect();
+    if(!ss)return;
+    ss.onchange = apply;
+    if(ds) ds.onchange = apply;
+    apply();
   }
 
   document.addEventListener("DOMContentLoaded", bind);
