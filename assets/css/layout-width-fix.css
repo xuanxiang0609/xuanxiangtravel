@@ -647,3 +647,121 @@ form [class*="Addon"]{
     font-size:16px;
   }
 }
+
+/* 玹翔旅遊｜首頁 Hero 版型急救修復 */
+body,
+html{
+  overflow-x:hidden;
+}
+
+body{
+  writing-mode:horizontal-tb !important;
+}
+
+#top.hero,
+.hero{
+  position:relative;
+  width:100% !important;
+  min-height:calc(100vh - 86px);
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+
+#top .hero-grid,
+.hero .hero-grid,
+.wrap.hero-grid{
+  width:min(1280px, calc(100% - 64px)) !important;
+  max-width:1280px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr) !important;
+  gap:clamp(28px,4vw,64px) !important;
+  align-items:center !important;
+}
+
+.hero-card,
+.hero-content,
+.hero-left,
+.hero-copy{
+  width:100% !important;
+  max-width:720px !important;
+  min-width:0 !important;
+  writing-mode:horizontal-tb !important;
+  text-orientation:mixed !important;
+}
+
+.hero h1,
+.hero-title,
+.hero-card h1,
+#top h1{
+  writing-mode:horizontal-tb !important;
+  text-orientation:mixed !important;
+  white-space:normal !important;
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+  max-width:720px !important;
+  font-size:clamp(44px,5.2vw,86px) !important;
+  line-height:1.12 !important;
+  letter-spacing:-.04em !important;
+}
+
+.hero p,
+.hero-card p,
+.hero-copy p{
+  writing-mode:horizontal-tb !important;
+  white-space:normal !important;
+  max-width:680px !important;
+  line-height:1.9 !important;
+}
+
+.hero-visual,
+.hero-right,
+.hero-media,
+.hero-image{
+  width:100% !important;
+  min-width:0 !important;
+}
+
+.hero-visual img,
+.hero-right img,
+.hero-media img,
+.hero-image img,
+.hero img{
+  max-width:100% !important;
+  height:auto !important;
+  object-fit:cover !important;
+}
+
+@media(max-width:980px){
+  #top.hero,
+  .hero{
+    min-height:auto;
+    padding:54px 0 40px !important;
+  }
+
+  #top .hero-grid,
+  .hero .hero-grid,
+  .wrap.hero-grid{
+    width:calc(100% - 28px) !important;
+    grid-template-columns:1fr !important;
+    gap:28px !important;
+  }
+
+  .hero-card,
+  .hero-content,
+  .hero-left,
+  .hero-copy{
+    max-width:none !important;
+  }
+
+  .hero h1,
+  .hero-title,
+  .hero-card h1,
+  #top h1{
+    max-width:none !important;
+    font-size:clamp(36px,11vw,58px) !important;
+    line-height:1.15 !important;
+  }
+}
