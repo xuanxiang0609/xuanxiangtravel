@@ -199,3 +199,86 @@
 
   document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", init) : init();
 })();
+
+
+(function(){
+  function mergeAddonPayload(form){
+    if(!form || !window.XX_BOOKING_ADDONS) return;
+
+    const data = window.XX_BOOKING_ADDONS;
+    const fields = {
+      "加購項目": data.addonsText || "無",
+      "addons": data.addonsText || "無",
+      "customerAddons": data.addonsText || "無",
+      "加購金額": data.addonAmount || 0,
+      "addonAmount": data.addonAmount || 0,
+      "addonsAmount": data.addonAmount || 0,
+      "系統加價": data.rateAmount || 0,
+      "systemExtra": data.rateAmount || 0,
+      "預估小計": data.estimatedTotal || 0,
+      "estimatedTotal": data.estimatedTotal || 0,
+      "total": data.estimatedTotal || 0
+    };
+
+    Object.keys(fields).forEach(function(name){
+      let input = form.querySelector(`[name="${name}"]`);
+      if(!input){
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        form.appendChild(input);
+      }
+      input.value = fields[name];
+    });
+  }
+
+  document.addEventListener("submit", function(e){
+    mergeAddonPayload(e.target);
+  }, true);
+
+  const oldFetch = window.fetch;
+  window.fetch = function(input, init){
+    try{
+      if(init && init.body && window.XX_BOOKING_ADDONS){
+        const data = window.XX_BOOKING_ADDONS;
+
+        if(init.body instanceof FormData){
+          init.body.set("加購項目", data.addonsText || "無");
+          init.body.set("addons", data.addonsText || "無");
+          init.body.set("customerAddons", data.addonsText || "無");
+          init.body.set("加購金額", data.addonAmount || 0);
+          init.body.set("addonAmount", data.addonAmount || 0);
+          init.body.set("addonsAmount", data.addonAmount || 0);
+          init.body.set("系統加價", data.rateAmount || 0);
+          init.body.set("systemExtra", data.rateAmount || 0);
+          init.body.set("預估小計", data.estimatedTotal || 0);
+          init.body.set("estimatedTotal", data.estimatedTotal || 0);
+          init.body.set("total", data.estimatedTotal || 0);
+        }
+
+        if(typeof init.body === "string" && init.headers && String(init.headers["Content-Type"] || init.headers["content-type"] || "").includes("application/json")){
+          const obj = JSON.parse(init.body || "{}");
+          Object.assign(obj, {
+            "加購項目": data.addonsText || "無",
+            "addons": data.addonsText || "無",
+            "customerAddons": data.addonsText || "無",
+            "加購金額": data.addonAmount || 0,
+            "addonAmount": data.addonAmount || 0,
+            "addonsAmount": data.addonAmount || 0,
+            "系統加價": data.rateAmount || 0,
+            "systemExtra": data.rateAmount || 0,
+            "預估小計": data.estimatedTotal || 0,
+            "estimatedTotal": data.estimatedTotal || 0,
+            "total": data.estimatedTotal || 0
+          });
+          init.body = JSON.stringify(obj);
+        }
+      }
+    }catch(err){
+      console.warn("XX addon API merge skipped", err);
+    }
+
+    return oldFetch.apply(this, arguments);
+  };
+})();
+
