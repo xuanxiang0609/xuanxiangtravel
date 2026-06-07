@@ -16,3 +16,4 @@ backup-local/
 .DS_Store
 Thumbs.db
 desktop.ini
+.firebase/
