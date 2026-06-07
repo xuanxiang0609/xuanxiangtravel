@@ -177,14 +177,6 @@ function routeRequest_(e, method) {
         result = debugHeadersResult_();
         break;
 
-      case 'cleanuporders':
-        result = cleanupOrders();
-        break;
-
-      case 'normalizeorders':
-        result = normalizeHistoricalOrders();
-        break;
-
       case 'linewebhook':
       case 'webhook':
         result = handleLineWebhook_(e);
@@ -211,8 +203,6 @@ function routeRequest_(e, method) {
             'repairHeaders',
             'debugHeaders',
             'verifyHeaders',
-            'cleanupOrders',
-            'normalizeOrders',
             'webhook'
           ]
         };
@@ -1129,173 +1119,6 @@ function getWebhook(e) {
   return handleLineWebhook_(e);
 }
 
-
-/************************************************
- * Data Cleanup v10.1
- ************************************************/
-
-function cleanupOrders() {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return {
-      ok: true,
-      message: '沒有可清理的訂單資料',
-      removed: 0,
-      kept: values ? values.length : 0,
-      time: now_()
-    };
-  }
-
-  const headers = values[0];
-  const kept = [headers];
-  let removed = 0;
-
-  values.slice(1).forEach(function(row) {
-    const item = rowToObjectByHeaders_(headers, row);
-
-    const service = clean_(item['服務項目']);
-    const customer = clean_(item['乘客姓名']);
-    const phone = clean_(item['聯絡電話']);
-    const pickup = clean_(item['上車地址']);
-    const dropoff = clean_(item['下車地址']);
-    const amount = getOrderAmount_(item);
-
-    const isGarbage =
-      service === '未填服務' &&
-      customer === '未填姓名' &&
-      !phone &&
-      (!pickup || pickup === '未填上車地址') &&
-      (dropoff.indexOf('U') === 0 || dropoff === '未填下車地址' || !dropoff) &&
-      amount === 0;
-
-    if (isGarbage) {
-      removed += 1;
-    } else {
-      kept.push(row);
-    }
-  });
-
-  if (removed > 0) {
-    sheet.clearContents();
-    sheet.getRange(1, 1, kept.length, headers.length).setValues(kept);
-    sheet.setFrozenRows(1);
-    SpreadsheetApp.flush();
-  }
-
-  return {
-    ok: true,
-    message: '測試空訂單清理完成',
-    removed: removed,
-    kept: kept.length - 1,
-    time: now_()
-  };
-}
-
-function normalizeHistoricalOrders() {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return {
-      ok: true,
-      message: '沒有可標準化的訂單資料',
-      updated: 0,
-      time: now_()
-    };
-  }
-
-  const headers = values[0];
-  const col = buildHeaderIndex_(headers);
-  let updated = 0;
-
-  for (let r = 1; r < values.length; r += 1) {
-    const row = values[r];
-
-    const priceIndex = col['價錢（未稅）'];
-    const totalIndex = col['預估小計'];
-    const timeIndex = col['搭車時間'];
-    const statusIndex = col['狀態'];
-
-    if (priceIndex !== undefined) {
-      const original = row[priceIndex];
-      const parsed = parseAmount_(original);
-
-      if (parsed > 0 && String(original) !== String(parsed)) {
-        row[priceIndex] = parsed;
-        updated += 1;
-      }
-    }
-
-    if (totalIndex !== undefined) {
-      const total = parseAmount_(row[totalIndex]);
-      const base = priceIndex !== undefined ? parseAmount_(row[priceIndex]) : 0;
-
-      if ((!total || total === 0) && base > 0) {
-        row[totalIndex] = base;
-        updated += 1;
-      } else if (total > 999999) {
-        row[totalIndex] = base || total;
-        updated += 1;
-      }
-    }
-
-    if (timeIndex !== undefined) {
-      const originalTime = row[timeIndex];
-      const normalized = normalizeTime_(originalTime);
-
-      if (normalized && String(originalTime) !== normalized) {
-        row[timeIndex] = normalized;
-        updated += 1;
-      }
-    }
-
-    if (statusIndex !== undefined && !clean_(row[statusIndex])) {
-      row[statusIndex] = '已確認';
-      updated += 1;
-    }
-  }
-
-  sheet.getRange(1, 1, values.length, headers.length).setValues(values);
-  SpreadsheetApp.flush();
-
-  return {
-    ok: true,
-    message: '歷史訂單資料標準化完成',
-    updated: updated,
-    rows: values.length - 1,
-    time: now_()
-  };
-}
-
-function buildHeaderIndex_(headers) {
-  const result = {};
-
-  headers.forEach(function(header, index) {
-    const name = clean_(header);
-    if (name) result[name] = index;
-  });
-
-  return result;
-}
-
-function rowToObjectByHeaders_(headers, row) {
-  const item = {};
-
-  headers.forEach(function(header, index) {
-    const name = clean_(header);
-    if (name) item[name] = row[index];
-  });
-
-  return item;
-}
-
-
 /************************************************
  * Sheet Helpers / Headers
  ************************************************/
@@ -1486,7 +1309,7 @@ function normalizeOrder_(order, index) {
     phone: clean_(getValueByKeys_(order, ['聯絡電話', '聯絡方式', '電話', 'phone', 'contact'], '')),
     line: clean_(getValueByKeys_(order, ['LINE / WhatsApp', 'LINE', 'line', 'whatsapp'], '')),
     date: getOrderDate_(order),
-    time: normalizeTime_(getValueByKeys_(order, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], '')),
+    time: clean_(getValueByKeys_(order, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], '')),
     pickup: clean_(getValueByKeys_(order, ['上車地址', 'pickup', 'from'], '未填上車地址')),
     midpoints: clean_(getValueByKeys_(order, ['中途點', 'midpoints', 'routePoints'], '')),
     dropoff: clean_(getValueByKeys_(order, ['下車地址', 'dropoff', 'to'], '未填下車地址')),
@@ -1541,23 +1364,7 @@ function normalizeStatus_(value) {
 }
 
 function parseAmount_(value) {
-  if (value === undefined || value === null || value === '') return 0;
-
-  if (typeof value === 'number') {
-    return Number.isFinite(value) ? value : 0;
-  }
-
-  const text = String(value).trim();
-
-  if (!text) return 0;
-
-  // 例如：8400/6400、$3000/300，只取第一個金額，避免變成 84006400 或 3000300。
-  const firstNumber = text.match(/[0-9]+(?:\.[0-9]+)?/);
-
-  if (!firstNumber) return 0;
-
-  const amount = Number(firstNumber[0]);
-
+  const amount = Number(String(value || '').replace(/[^0-9.-]/g, ''));
   return Number.isFinite(amount) ? amount : 0;
 }
 
@@ -1610,28 +1417,6 @@ function dateTimeKey_(date) {
   }
 
   return String(date || '').trim();
-}
-
-
-function normalizeTime_(value) {
-  if (!value) return '';
-
-  if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
-    return Utilities.formatDate(value, CONFIG.TIMEZONE, 'HH:mm');
-  }
-
-  const text = String(value || '').trim();
-
-  if (!text) return '';
-
-  if (text.indexOf('1899') > -1 || text.indexOf('GMT') > -1) {
-    const d = new Date(text);
-    if (!isNaN(d.getTime())) {
-      return Utilities.formatDate(d, CONFIG.TIMEZONE, 'HH:mm');
-    }
-  }
-
-  return text;
 }
 
 function clean_(value) {
