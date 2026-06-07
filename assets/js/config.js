@@ -9,8 +9,8 @@
     VERSION: "Ultimate Final v9.1 Enterprise Agency UI",
     GOOGLE_MAPS_API_KEY: "AIzaSyDMoC4SEpieCF7xYtdi9PUnGP_pvRP_K8s",
     SITE_URL: "https://xuanxiangtravel.com",
-    APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwNvXi74HaE8uL9D2inti3bxgYAI97Jw707qHaVRtWXy2oxOff_FkpcfLJnEVtPJvq2jA/exec",
-    BOOKING_API: "https://script.google.com/macros/s/AKfycbwNvXi74HaE8uL9D2inti3bxgYAI97Jw707qHaVRtWXy2oxOff_FkpcfLJnEVtPJvq2jA/exec",
+    APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxhJwNMozVbWicICC8Ah0s3_siojCNF8xuhLgzOrM2PvD1crKEDy5wL46hvRynsFvrE/exec",
+    BOOKING_API: "https://script.google.com/macros/s/AKfycbxhJwNMozVbWicICC8Ah0s3_siojCNF8xuhLgzOrM2PvD1crKEDy5wL46hvRynsFvrE/exec",
 
     LINE_CHANNEL_ID: "2007571152",
     LINE_AUTH_API: "https://script.google.com/macros/s/AKfycbzVDbRDPjhHpTiFDP-q4ISnixgWgJGAiQ9ZLYiyfWPztszU0kDL-7aADRC1A5_EM2I33A/exec",
