@@ -1,5 +1,5 @@
 /************************************************
- * 玹翔旅遊 Ultimate Final v10.2 Production API
+ * 玹翔旅遊 Ultimate Final v9.1 Enterprise
  * Dispatch Core API｜系統環境檢查＋訂單接收＋後台儀表板
  * ------------------------------------------------
  * 特色：
@@ -13,7 +13,7 @@
 
 const CONFIG = {
   SERVICE_NAME: '玹翔旅遊 API',
-  VERSION: 'Ultimate Final v10.2 Production API',
+  VERSION: 'Ultimate Final v10.1 Data Cleanup Engine',
   ORDER_SHEET_NAME: '訂單',
   ERROR_SHEET_NAME: '系統錯誤紀錄',
   DRIVER_SHEET_NAME: '司機資料',
@@ -177,30 +177,6 @@ function routeRequest_(e, method) {
         result = debugHeadersResult_();
         break;
 
-      case 'cleanuporders':
-        result = cleanupOrders();
-        break;
-
-      case 'normalizeorders':
-        result = normalizeHistoricalOrders();
-        break;
-
-      case 'dispatchorder':
-        result = dispatchOrder_(params);
-        break;
-
-      case 'assigndriver':
-        result = assignDriver_(params);
-        break;
-
-      case 'memberlookup':
-        result = memberLookup_(params);
-        break;
-
-      case 'orderlookup':
-        result = orderLookup_(params);
-        break;
-
       case 'linewebhook':
       case 'webhook':
         result = handleLineWebhook_(e);
@@ -227,12 +203,6 @@ function routeRequest_(e, method) {
             'repairHeaders',
             'debugHeaders',
             'verifyHeaders',
-            'cleanupOrders',
-            'normalizeOrders',
-            'dispatchOrder',
-            'assignDriver',
-            'memberLookup',
-            'orderLookup',
             'webhook'
           ]
         };
@@ -980,103 +950,6 @@ function getKpi_() {
   };
 }
 
-
-/************************************************
- * Production v10.2｜Dispatch / Lookup Actions
- ************************************************/
-
-function dispatchOrder_(params) {
-  const orderNo = clean_(getValueByKeys_(params, ['orderNo', 'orderId', '訂單編號'], ''));
-  const status = normalizeStatus_(getValueByKeys_(params, ['status', '狀態'], '已派車'));
-
-  if (!orderNo) {
-    return buildResult_(false, '缺少訂單編號', { action: 'dispatchorder' });
-  }
-
-  const updated = updateOrderByNo_(orderNo, {
-    '狀態': status
-  });
-
-  return buildResult_(updated.ok, updated.message, updated);
-}
-
-function assignDriver_(params) {
-  const orderNo = clean_(getValueByKeys_(params, ['orderNo', 'orderId', '訂單編號'], ''));
-
-  if (!orderNo) {
-    return buildResult_(false, '缺少訂單編號', { action: 'assigndriver' });
-  }
-
-  const payload = {
-    '司機': clean_(getValueByKeys_(params, ['driver', '司機'], '')),
-    '車牌': clean_(getValueByKeys_(params, ['plate', '車牌'], '')),
-    '車型': clean_(getValueByKeys_(params, ['model', '車型', 'vehicle'], '')),
-    '車色': clean_(getValueByKeys_(params, ['color', '車色'], '')),
-    '司機手機': clean_(getValueByKeys_(params, ['driverPhone', '司機手機'], '')),
-    '狀態': normalizeStatus_(getValueByKeys_(params, ['status', '狀態'], '已派車'))
-  };
-
-  const updated = updateOrderByNo_(orderNo, payload);
-
-  if (updated.ok) {
-    pushLine_([
-      '🚐 玹翔旅遊派車更新',
-      '',
-      '訂單編號：' + orderNo,
-      '司機：' + (payload['司機'] || '未填'),
-      '車牌：' + (payload['車牌'] || '未填'),
-      '車型：' + (payload['車型'] || '未填'),
-      '狀態：' + payload['狀態'],
-      '',
-      '時間：' + now_()
-    ].join('\n'));
-  }
-
-  return buildResult_(updated.ok, updated.message, updated);
-}
-
-function memberLookup_(params) {
-  const keyword = clean_(getValueByKeys_(params, ['keyword', 'phone', '聯絡電話', 'line', 'LINE'], ''));
-
-  if (!keyword) {
-    return buildResult_(false, '請提供會員查詢關鍵字', { members: [] });
-  }
-
-  const ordersData = getOrders_({ limit: 1000 });
-  const orders = ordersData.ok ? ordersData.orders : [];
-
-  const matched = orders.filter(function(order) {
-    return [order.customer, order.phone, order.line].join(' ').indexOf(keyword) !== -1;
-  });
-
-  return buildResult_(true, '會員訂單查詢完成', {
-    keyword: keyword,
-    count: matched.length,
-    orders: matched.slice(0, 50)
-  });
-}
-
-function orderLookup_(params) {
-  const keyword = clean_(getValueByKeys_(params, ['keyword', 'orderNo', 'orderId', '訂單編號', 'phone', '聯絡電話'], ''));
-
-  if (!keyword) {
-    return buildResult_(false, '請提供訂單編號或電話', { orders: [] });
-  }
-
-  const ordersData = getOrders_({ limit: 1000 });
-  const orders = ordersData.ok ? ordersData.orders : [];
-
-  const matched = orders.filter(function(order) {
-    return [order.id, order.customer, order.phone, order.line].join(' ').indexOf(keyword) !== -1;
-  });
-
-  return buildResult_(true, '訂單查詢完成', {
-    keyword: keyword,
-    count: matched.length,
-    orders: matched.slice(0, 50)
-  });
-}
-
 /************************************************
  * Price Sheet / Estimate
  ************************************************/
@@ -1325,132 +1198,6 @@ function getWebhook(e) {
   return handleLineWebhook_(e);
 }
 
-
-/************************************************
- * Production v10.2｜Data Cleanup Actions
- ************************************************/
-
-function cleanupOrders() {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return buildResult_(true, '沒有可清理的訂單資料', { removed: 0, kept: 0 });
-  }
-
-  const headers = values[0];
-  const kept = [headers];
-  let removed = 0;
-
-  values.slice(1).forEach(function(row) {
-    const item = rowToObjectByHeaders_(headers, row);
-    const service = clean_(item['服務項目']);
-    const customer = clean_(item['乘客姓名']);
-    const phone = clean_(item['聯絡電話']);
-    const pickup = clean_(item['上車地址']);
-    const dropoff = clean_(item['下車地址']);
-    const amount = getOrderAmount_(item);
-
-    const isWebhookGarbage =
-      service === '未填服務' &&
-      customer === '未填姓名' &&
-      !phone &&
-      (!pickup || pickup === '未填上車地址') &&
-      (dropoff.indexOf('U') === 0 || dropoff === '未填下車地址' || !dropoff) &&
-      amount === 0;
-
-    if (isWebhookGarbage) {
-      removed += 1;
-    } else {
-      kept.push(row);
-    }
-  });
-
-  if (removed > 0) {
-    sheet.clearContents();
-    sheet.getRange(1, 1, kept.length, headers.length).setValues(kept);
-    sheet.setFrozenRows(1);
-    SpreadsheetApp.flush();
-  }
-
-  return buildResult_(true, '測試空訂單清理完成', {
-    removed: removed,
-    kept: kept.length - 1
-  });
-}
-
-function normalizeHistoricalOrders() {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return buildResult_(true, '沒有可標準化的訂單資料', { updated: 0, rows: 0 });
-  }
-
-  const headers = values[0];
-  const col = buildHeaderIndex_(headers);
-  let updated = 0;
-
-  for (let r = 1; r < values.length; r += 1) {
-    const row = values[r];
-
-    const priceIndex = col['價錢（未稅）'];
-    const totalIndex = col['預估小計'];
-    const timeIndex = col['搭車時間'];
-    const statusIndex = col['狀態'];
-
-    if (priceIndex !== undefined) {
-      const original = row[priceIndex];
-      const parsed = parseAmount_(original);
-
-      if (parsed > 0 && String(original) !== String(parsed)) {
-        row[priceIndex] = parsed;
-        updated += 1;
-      }
-    }
-
-    if (totalIndex !== undefined) {
-      const total = parseAmount_(row[totalIndex]);
-      const base = priceIndex !== undefined ? parseAmount_(row[priceIndex]) : 0;
-
-      if ((!total || total === 0) && base > 0) {
-        row[totalIndex] = base;
-        updated += 1;
-      } else if (total > 999999) {
-        row[totalIndex] = base || total;
-        updated += 1;
-      }
-    }
-
-    if (timeIndex !== undefined) {
-      const originalTime = row[timeIndex];
-      const normalized = normalizeTime_(originalTime);
-
-      if (normalized && String(originalTime) !== normalized) {
-        row[timeIndex] = normalized;
-        updated += 1;
-      }
-    }
-
-    if (statusIndex !== undefined && !clean_(row[statusIndex])) {
-      row[statusIndex] = '已確認';
-      updated += 1;
-    }
-  }
-
-  sheet.getRange(1, 1, values.length, headers.length).setValues(values);
-  SpreadsheetApp.flush();
-
-  return buildResult_(true, '歷史訂單資料標準化完成', {
-    updated: updated,
-    rows: values.length - 1
-  });
-}
-
 /************************************************
  * Sheet Helpers / Headers
  ************************************************/
@@ -1620,63 +1367,6 @@ function sheetToObjects_(sheet) {
   });
 }
 
-
-function updateOrderByNo_(orderNo, updates) {
-  const sheet = openOrderSheet_();
-  ensureOrderHeaders_(sheet);
-
-  const values = sheet.getDataRange().getValues();
-
-  if (!values || values.length <= 1) {
-    return { ok: false, message: '目前沒有訂單資料', orderNo: orderNo };
-  }
-
-  const headers = values[0];
-  const col = buildHeaderIndex_(headers);
-  const orderNoIndex = col['訂單編號'];
-
-  if (orderNoIndex === undefined) {
-    return { ok: false, message: '找不到訂單編號欄位', orderNo: orderNo };
-  }
-
-  for (let r = 1; r < values.length; r += 1) {
-    if (clean_(values[r][orderNoIndex]) === orderNo) {
-      Object.keys(updates || {}).forEach(function(header) {
-        if (col[header] !== undefined) {
-          sheet.getRange(r + 1, col[header] + 1).setValue(updates[header]);
-        }
-      });
-
-      SpreadsheetApp.flush();
-      return { ok: true, message: '訂單已更新', orderNo: orderNo };
-    }
-  }
-
-  return { ok: false, message: '找不到指定訂單', orderNo: orderNo };
-}
-
-function buildHeaderIndex_(headers) {
-  const result = {};
-
-  headers.forEach(function(header, index) {
-    const name = clean_(header);
-    if (name) result[name] = index;
-  });
-
-  return result;
-}
-
-function rowToObjectByHeaders_(headers, row) {
-  const item = {};
-
-  headers.forEach(function(header, index) {
-    const name = clean_(header);
-    if (name) item[name] = row[index];
-  });
-
-  return item;
-}
-
 /************************************************
  * Normalizers
  ************************************************/
@@ -1698,7 +1388,7 @@ function normalizeOrder_(order, index) {
     phone: clean_(getValueByKeys_(order, ['聯絡電話', '聯絡方式', '電話', 'phone', 'contact'], '')),
     line: clean_(getValueByKeys_(order, ['LINE / WhatsApp', 'LINE', 'line', 'whatsapp'], '')),
     date: getOrderDate_(order),
-    time: normalizeTime_(getValueByKeys_(order, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], '')),
+    time: clean_(getValueByKeys_(order, ['搭車時間', '時間', '用車時間', 'pickupTime', 'time'], '')),
     pickup: clean_(getValueByKeys_(order, ['上車地址', 'pickup', 'from'], '未填上車地址')),
     midpoints: clean_(getValueByKeys_(order, ['中途點', 'midpoints', 'routePoints'], '')),
     dropoff: clean_(getValueByKeys_(order, ['下車地址', 'dropoff', 'to'], '未填下車地址')),
@@ -1753,20 +1443,7 @@ function normalizeStatus_(value) {
 }
 
 function parseAmount_(value) {
-  if (value === undefined || value === null || value === '') return 0;
-
-  if (typeof value === 'number') {
-    return Number.isFinite(value) ? value : 0;
-  }
-
-  const text = String(value).trim();
-  if (!text) return 0;
-
-  // 8400/6400、$3000/300 只取第一個金額，避免 Dashboard 營收爆表。
-  const firstNumber = text.match(/[0-9]+(?:\.[0-9]+)?/);
-  if (!firstNumber) return 0;
-
-  const amount = Number(firstNumber[0]);
+  const amount = Number(String(value || '').replace(/[^0-9.-]/g, ''));
   return Number.isFinite(amount) ? amount : 0;
 }
 
@@ -1819,27 +1496,6 @@ function dateTimeKey_(date) {
   }
 
   return String(date || '').trim();
-}
-
-
-function normalizeTime_(value) {
-  if (!value) return '';
-
-  if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
-    return Utilities.formatDate(value, CONFIG.TIMEZONE, 'HH:mm');
-  }
-
-  const text = String(value || '').trim();
-  if (!text) return '';
-
-  if (text.indexOf('1899') > -1 || text.indexOf('GMT') > -1) {
-    const parsed = new Date(text);
-    if (!isNaN(parsed.getTime())) {
-      return Utilities.formatDate(parsed, CONFIG.TIMEZONE, 'HH:mm');
-    }
-  }
-
-  return text;
 }
 
 function clean_(value) {
@@ -1947,22 +1603,6 @@ function parseRawBody_(raw) {
     const key = decodeURIComponent(parts[0] || '').trim();
     const value = decodeURIComponent((parts[1] || '').replace(/\+/g, ' ')).trim();
     if (key) result[key] = value;
-  });
-
-  return result;
-}
-
-
-function buildResult_(ok, message, data) {
-  const result = {
-    ok: Boolean(ok),
-    message: message || '',
-    version: CONFIG.VERSION,
-    timestamp: now_()
-  };
-
-  Object.keys(data || {}).forEach(function(key) {
-    result[key] = data[key];
   });
 
   return result;
