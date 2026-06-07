@@ -492,3 +492,158 @@ main,
     font-size:10px;
   }
 }
+
+/* 玹翔旅遊｜booking.html 高端排版修飾 */
+body:has(form) .booking-page,
+body:has(form) main,
+body:has(form) .page,
+body:has(form) .container{
+  max-width:1180px;
+}
+
+form{
+  width:min(100%, 980px);
+  margin:0 auto 80px;
+  padding:28px;
+  border:1px solid rgba(212,175,55,.28);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(212,175,55,.14), transparent 36%),
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+  box-shadow:0 28px 90px rgba(0,0,0,.45);
+}
+
+form label{
+  color:#f8e7a1;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.03em;
+}
+
+form input,
+form select,
+form textarea{
+  width:100%;
+  min-height:44px;
+  box-sizing:border-box;
+  border:1px solid rgba(212,175,55,.28);
+  border-radius:14px;
+  background:rgba(10,10,10,.72);
+  color:#fff;
+  padding:12px 14px;
+  outline:none;
+  transition:.18s ease;
+}
+
+form textarea{
+  min-height:96px;
+  resize:vertical;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus{
+  border-color:#f8e7a1;
+  box-shadow:0 0 0 4px rgba(212,175,55,.14);
+}
+
+form input::placeholder,
+form textarea::placeholder{
+  color:rgba(255,255,255,.42);
+}
+
+form button,
+form [type="submit"],
+form .btn,
+form .button{
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(135deg,#fff1a8,#d4af37);
+  color:#080808;
+  font-weight:950;
+  padding:13px 22px;
+  cursor:pointer;
+  box-shadow:0 14px 34px rgba(212,175,55,.22);
+}
+
+form button:hover,
+form [type="submit"]:hover,
+form .btn:hover,
+form .button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.04);
+}
+
+form .form-row,
+form .form-group,
+form .field,
+form .input-group,
+form .booking-field,
+form .xx-field{
+  min-width:0;
+}
+
+form > div,
+form .form-grid,
+form .booking-grid,
+form .grid{
+  gap:14px;
+}
+
+form .addon,
+form .addons,
+form [class*="addon"],
+form [class*="Addon"]{
+  border-color:rgba(212,175,55,.22)!important;
+}
+
+.xx-return-card{
+  width:min(100%, 980px);
+  margin:18px auto;
+  padding:22px;
+  border:1px solid rgba(212,175,55,.34);
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(212,175,55,.12), transparent 36%),
+    rgba(255,255,255,.045);
+}
+
+.xx-return-card h3{
+  color:#f8e7a1;
+  font-size:20px;
+  margin-bottom:16px;
+}
+
+.xx-return-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.xx-return-grid label{
+  display:grid;
+  gap:7px;
+}
+
+@media(max-width:760px){
+  form{
+    width:calc(100% - 24px);
+    padding:18px;
+    border-radius:22px;
+  }
+
+  .xx-return-card{
+    width:calc(100% - 24px);
+    padding:18px;
+  }
+
+  .xx-return-grid{
+    grid-template-columns:1fr;
+  }
+
+  form input,
+  form select,
+  form textarea{
+    font-size:16px;
+  }
+}
