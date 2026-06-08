@@ -140,19 +140,46 @@ async function bindLineProfileToCurrentUser(lineProfile = {}) {
 }
 
 async function googleLogin(options = {}) {
-  if (!ready || !auth) return show("Firebase 尚未設定完成，請先依照新手說明操作。", "error");
+  if (!ready || !auth) {
+    return show("Firebase 尚未設定完成，請先依照新手說明操作。", "error");
+  }
+
   const isBind = Boolean(options.bindOnly);
+
   try {
-  const result = await signInWithPopup(auth, provider);
-  console.log(result);
-} catch (e) {
-  console.error("Firebase Full Error:", e);
-  alert(JSON.stringify({
-    code: e.code,
-    message: e.message
-  }, null, 2));
+    const provider = new GoogleAuthProvider();
+
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
+
+    const result = await signInWithPopup(auth, provider);
+
+    console.log("Google Login Success", result);
+
+    if (result?.user) {
+      await upsertMember(result.user, {});
+    }
+
+    if (!isBind) {
+      show("Google 登入成功，正在前往會員中心。", "success");
+      redirectAfterLogin();
+    } else {
+      show("Google 帳號綁定完成。", "success");
+    }
+
+  } catch (error) {
+    console.error("Firebase Full Error:", error);
+
+    alert(JSON.stringify({
+      code: error.code || "unknown",
+      message: error.message || String(error)
+    }, null, 2));
+
+    show(errorText(error), "error");
+  }
 }
-}
+
 
 function lineLogin(options = {}) {
   if (!LINE_CHANNEL_ID) return show("LINE Channel ID 尚未設定，請先到 config.js 填入 LINE_CHANNEL_ID。", "error");
