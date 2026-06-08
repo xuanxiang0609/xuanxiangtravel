@@ -1,1 +1,1 @@
-document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('lineBoard');if(el)el.innerHTML='<p class="module-note">LINE OA 推播中心：訂單成立、派車完成、付款提醒、行前提醒。</p><div class="line-actions"><button>傳送行前提醒</button><button>付款提醒</button><button>散場上車點通知</button></div>';});
+document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('lineBoard');if(el)el.innerHTML='<p class="module-note">LINE OA 推播中心：訂單成立、客服確認完成、付款提醒、行前提醒。</p><div class="line-actions"><button>傳送行前提醒</button><button>付款提醒</button><button>散場上車點通知</button></div>';});

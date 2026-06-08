@@ -757,7 +757,7 @@ function getDashboardData_() {
     }).length;
 
     result.pendingDispatch = orders.filter(function(order) {
-      return /待客服確認|待確認|已確認/.test(order.status);
+      return /待派車|待確認|已確認/.test(order.status);
     }).length;
 
     result.confirmedOrders = orders.filter(function(order) {
@@ -784,7 +784,7 @@ function getDashboardData_() {
 
     result.activeDrivers = driversData.ok
       ? driversData.drivers.filter(function(driver) {
-          return /可派|出車中|已確認|正常/.test(String(driver.status || ''));
+          return /可派|出車中|已派車|正常/.test(String(driver.status || ''));
         }).length
       : 0;
 
@@ -987,7 +987,7 @@ function getKpi_() {
 
 function dispatchOrder_(params) {
   const orderNo = clean_(getValueByKeys_(params, ['orderNo', 'orderId', '訂單編號'], ''));
-  const status = normalizeStatus_(getValueByKeys_(params, ['status', '狀態'], '已確認'));
+  const status = normalizeStatus_(getValueByKeys_(params, ['status', '狀態'], '已派車'));
 
   if (!orderNo) {
     return buildResult_(false, '缺少訂單編號', { action: 'dispatchorder' });
@@ -1013,14 +1013,14 @@ function assignDriver_(params) {
     '車型': clean_(getValueByKeys_(params, ['model', '車型', 'vehicle'], '')),
     '車色': clean_(getValueByKeys_(params, ['color', '車色'], '')),
     '司機手機': clean_(getValueByKeys_(params, ['driverPhone', '司機手機'], '')),
-    '狀態': normalizeStatus_(getValueByKeys_(params, ['status', '狀態'], '已確認'))
+    '狀態': normalizeStatus_(getValueByKeys_(params, ['status', '狀態'], '已派車'))
   };
 
   const updated = updateOrderByNo_(orderNo, payload);
 
   if (updated.ok) {
     pushLine_([
-      '🚐 玹翔旅遊客服確認更新',
+      '🚐 玹翔旅遊派車更新',
       '',
       '訂單編號：' + orderNo,
       '司機：' + (payload['司機'] || '未填'),
@@ -1745,8 +1745,8 @@ function normalizeStatus_(value) {
   if (/取消|cancel/i.test(text)) return '已取消';
   if (/完成|completed|finish|done/i.test(text)) return '已完成';
   if (/出車|執行|running|trip/i.test(text)) return '出車中';
-  if (/已派|司機已排|assigned/i.test(text)) return '已確認';
-  if (/客服確認|待派|dispatch/i.test(text)) return '待客服確認';
+  if (/已派|司機已排|assigned/i.test(text)) return '已派車';
+  if (/派車|待派|dispatch/i.test(text)) return '待派車';
   if (/確認|confirmed/i.test(text)) return '已確認';
 
   return text;

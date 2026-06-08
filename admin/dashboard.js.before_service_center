@@ -94,7 +94,7 @@ function renderKPI(data) {
     </div>
 
     <div class="kpi-card">
-      <span>待客服確認</span>
+      <span>待派車</span>
       <strong>${data.pendingDispatch || 0}</strong>
     </div>
 
@@ -165,7 +165,7 @@ function renderExtraBoards(data) {
     kpiStatus.innerHTML = `
       <div class="module-note">
         <p>今日訂單：${data.todayOrders || 0}</p>
-        <p>待客服確認：${data.pendingDispatch || 0}</p>
+        <p>待派車：${data.pendingDispatch || 0}</p>
         <p>本月營收：NT$ ${Number(data.monthRevenue || 0).toLocaleString('zh-TW')}</p>
       </div>
     `;
