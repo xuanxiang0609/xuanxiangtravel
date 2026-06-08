@@ -139,13 +139,13 @@ async function bindLineProfileToCurrentUser(lineProfile = {}) {
   return true;
 }
     async function googleLogin(options = {}) {
-
   if (!ready || !auth) {
-    return show("Firebase 尚未設定完成", "error");
+    return show("Firebase 尚未設定完成，請先依照新手說明操作。", "error");
   }
 
-  try {
+  const isBind = Boolean(options.bindOnly);
 
+  try {
     const provider = new GoogleAuthProvider();
 
     provider.setCustomParameters({
@@ -156,19 +156,9 @@ async function bindLineProfileToCurrentUser(lineProfile = {}) {
 
     console.log("Google Login Success", result);
 
-    return result;
-
-  } catch (e) {
-
-    console.error("Firebase Full Error:", e);
-
-    alert(JSON.stringify({
-      code: e.code,
-      message: e.message
-    }, null, 2));
-
-  }
-}
+    if (result?.user) {
+      await upsertMember(result.user, {});
+    }
 
     if (!isBind) {
       show("Google 登入成功，正在前往會員中心。", "success");
