@@ -143,19 +143,15 @@ async function googleLogin(options = {}) {
   if (!ready || !auth) return show("Firebase 尚未設定完成，請先依照新手說明操作。", "error");
   const isBind = Boolean(options.bindOnly);
   try {
-    show(isBind ? "正在開啟 Google 綁定…" : "Google 登入中，請稍候。");
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    const result = await signInWithPopup(auth, provider);
-    await upsertMember(result.user);
-    setBindStatus(`Google 綁定成功：${result.user.displayName || result.user.email || "玹翔會員"}`, "success");
-    if (!isBind) redirectAfterLogin();
-  } catch (error) {
-    console.error(error);
-    const message = isBind ? "Google 綁定失敗，請稍後再試。" : errorText(error);
-    show(message, "error");
-    setBindStatus(message, "error");
-  }
+  const result = await signInWithPopup(auth, provider);
+  console.log(result);
+} catch (e) {
+  console.error("Firebase Full Error:", e);
+  alert(JSON.stringify({
+    code: e.code,
+    message: e.message
+  }, null, 2));
+}
 }
 
 function lineLogin(options = {}) {
