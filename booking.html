@@ -993,5 +993,53 @@
 </script>
 
 <script src="assets/js/booking-addons-v10.js"></script>
+
+<script id="xx-google-maps-loader">
+(function(){
+  const cfg = window.XUANXIANG_CONFIG || {};
+  const key = cfg.GOOGLE_MAPS_API_KEY || window.GOOGLE_MAPS_API_KEY || "";
+  if (!key || document.getElementById("xx-google-maps-api")) return;
+
+  window.xxInitBookingPlaces = function(){
+    if (!window.google || !google.maps || !google.maps.places) return;
+
+    document.querySelectorAll(
+      'input[name="pickups"], input[name="dropoffs"], input[name="midpoints"], input[data-google-place]'
+    ).forEach(function(input){
+      if (input.dataset.placeReady === "1") return;
+
+      const ac = new google.maps.places.Autocomplete(input, {
+        componentRestrictions: { country: "tw" },
+        fields: ["formatted_address", "name", "geometry"]
+      });
+
+      ac.addListener("place_changed", function(){
+        const place = ac.getPlace();
+        input.value = place.formatted_address || place.name || input.value;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+
+      input.dataset.placeReady = "1";
+    });
+  };
+
+  const script = document.createElement("script");
+  script.id = "xx-google-maps-api";
+  script.async = true;
+  script.defer = true;
+  script.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&libraries=places&callback=xxInitBookingPlaces";
+  document.head.appendChild(script);
+
+  document.addEventListener("click", function(){
+    setTimeout(window.xxInitBookingPlaces, 300);
+  });
+
+  document.addEventListener("input", function(){
+    setTimeout(window.xxInitBookingPlaces, 300);
+  });
+})();
+</script>
+
 </body>
 </html>
