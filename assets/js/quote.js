@@ -387,7 +387,7 @@
         </p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;">
           <a class="btn primary" href="${escapeHtml(lineUrl)}" data-quote-send-line target="_blank" rel="noopener">LINE 傳送報價給客服</a>
-          <a class="btn" href="booking.html">前往預約商城</a>
+          <a class="btn" href="booking.html?v=10.6">前往預約商城</a>
         </div>
       </div>
     `;
