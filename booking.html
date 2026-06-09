@@ -228,6 +228,8 @@
 <input type="hidden" name="baseFare">
 <input type="hidden" name="cardFee">
 <input type="hidden" name="estimatedTotal">
+<input type="hidden" name="distanceKm">
+<input type="hidden" name="durationMin">
 <input type="hidden" name="customerAddons">
 <label>日期<input type="date" name="date" class="input" required></label>
 <label>時間<input type="time" name="time" class="input" required></label>
@@ -485,7 +487,7 @@
     const row = document.createElement("div");
     row.className = "dynamic-row";
     row.innerHTML = `
-      <input class="input" name="${name}[]" value="${escapeAttr(value)}" placeholder="${placeholder}">
+      <input class="input" data-google-place="1" name="${name}[]" value="${escapeAttr(value)}" placeholder="${placeholder}">
       <button class="mini-btn danger" type="button" data-remove-dynamic>刪除</button>
     `;
     row.querySelector("[data-remove-dynamic]").addEventListener("click",()=>{
@@ -669,6 +671,47 @@
       null;
     return row ? parseMoney(row[idx]) : 0;
   }
+
+  async function getDistanceMatrixQuote(){
+    const cfg = window.XUANXIANG_CONFIG || {};
+    const api = cfg.APPS_SCRIPT_URL || cfg.BOOKING_API || "";
+    const pickup = collectArray("pickups")[0] || "";
+    const dropoff = collectArray("dropoffs")[0] || "";
+    const service = text($('[name="service"]'));
+    const serviceDetail = text($('[name="serviceDetail"]'));
+    const vehicle = text($("#vehicleSelect"));
+
+    if(!api || !pickup || !dropoff){
+      return null;
+    }
+
+    try{
+      const response = await fetch(`${api}?action=estimate`, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "estimate",
+          service,
+          serviceDetail,
+          pickup,
+          dropoff,
+          vehicle,
+          passengers: text($('[name="passengers"]')),
+          luggage: text($('[name="luggage"]'))
+        })
+      });
+
+      const data = await response.json();
+      if(!data || data.ok === false){
+        return null;
+      }
+
+      return data;
+    }catch(err){
+      console.warn("Distance quote failed", err);
+      return null;
+    }
+  }
   async function updateEstimate(){
     syncPrimaryFields();
     updateConditional();
@@ -683,7 +726,23 @@
       if(petCheck) petCheck.checked = false;
       if(petQty) petQty.value = "0";
     }
-    const baseFare = await getBaseFare();
+    const routeQuote = await getDistanceMatrixQuote();
+    const fallbackFare = await getBaseFare();
+    const baseFare = parseMoney(routeQuote?.baseFare || routeQuote?.price || routeQuote?.fare) || fallbackFare;
+
+    if(routeQuote){
+      $('[name="distanceKm"]').value = routeQuote.distanceKm || "";
+      $('[name="durationMin"]').value = routeQuote.durationMin || "";
+      if(routeQuote.distanceKm || routeQuote.durationText){
+        const distanceText = routeQuote.distanceKm ? `${routeQuote.distanceKm} 公里` : "距離待確認";
+        const durationText = routeQuote.durationText || (routeQuote.durationMin ? `${routeQuote.durationMin} 分鐘` : "時間待確認");
+        const note = document.getElementById("estimateNote");
+        if(note){
+          note.textContent = `系統已依 Google Maps 試算距離：${distanceText}，預估車程：${durationText}。實際金額仍以客服確認為準。`;
+        }
+      }
+    }
+
     const addons = addonSummary();
     const subtotal = baseFare + addons.total;
     const creditCard = $('[data-addon-check="creditCard"]')?.checked || text($('[name="paymentMethod"]')).includes("刷");
@@ -733,6 +792,7 @@
     if(!time) errors.push("請填寫用車時間。");
     if(!pickups.length) errors.push("請至少填寫一個上車地點。");
     if(!dropoffs.length) errors.push("請至少填寫一個下車地點。");
+    if(pickups[0] && dropoffs[0] && normalize(pickups[0]) === normalize(dropoffs[0])) errors.push("上車地點與下車地點不可相同，除非真的要原地高級巡航。");
     if(!passengers) errors.push("請填寫人數，例：2位大人＋1位小孩。");
     if(!luggage) errors.push("請填寫行李數量，沒有行李也可填：無。");
     if(isService("airport") && !text($('[name="flight"]'))) errors.push("機場接送請填航班編號，例：CI123、BR456。");
@@ -1004,8 +1064,9 @@
     if (!window.google || !google.maps || !google.maps.places) return;
 
     document.querySelectorAll(
-      'input[name="pickups"], input[name="dropoffs"], input[name="midpoints"], input[data-google-place]'
+      'input[name="pickups[]"], input[name="dropoffs[]"], input[name="midpoints"], input[data-google-place], [data-dynamic-group="pickups"] input, [data-dynamic-group="dropoffs"] input'
     ).forEach(function(input){
+      if (!input || input.disabled) return;
       if (input.dataset.placeReady === "1") return;
 
       const ac = new google.maps.places.Autocomplete(input, {
@@ -1031,12 +1092,18 @@
   script.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&libraries=places&callback=xxInitBookingPlaces";
   document.head.appendChild(script);
 
-  document.addEventListener("click", function(){
-    setTimeout(window.xxInitBookingPlaces, 300);
+  document.addEventListener("click", function(e){
+    if (e.target && (e.target.matches('[data-add-dynamic]') || e.target.matches('.mini-btn'))) {
+      setTimeout(window.xxInitBookingPlaces, 500);
+    }
   });
 
   document.addEventListener("input", function(){
     setTimeout(window.xxInitBookingPlaces, 300);
+  });
+
+  document.addEventListener("DOMContentLoaded", function(){
+    setTimeout(window.xxInitBookingPlaces, 800);
   });
 })();
 </script>
