@@ -155,6 +155,7 @@ function routeRequest_(e, method) {
         result = getPriceSheetData_(params);
         break;
 
+      case 'quote':
       case 'estimate':
         result = estimatePrice_(params);
         break;
@@ -1123,6 +1124,139 @@ function getPriceSheetData_(params) {
 
   return result;
 }
+
+
+function estimateRoutePrice_(params) {
+
+  const fallback = estimatePrice_(params || {});
+
+  const pickup =
+    clean_(getValueByKeys_(params,['pickup','上車地址','from','origin'], ''));
+
+  const dropoff =
+    clean_(getValueByKeys_(params,['dropoff','下車地址','to','destination'], ''));
+
+  const vehicle =
+    clean_(getValueByKeys_(params,['vehicle','車款','car'], ''));
+
+  const service =
+    clean_(getValueByKeys_(params,['service','服務項目'], ''));
+
+  const serviceDetail =
+    clean_(getValueByKeys_(params,['serviceDetail','服務細項'], ''));
+
+  if (!pickup || !dropoff) {
+    fallback.note = '缺少地址';
+    return fallback;
+  }
+
+  try {
+
+    const directions = Maps.newDirectionFinder()
+      .setOrigin(pickup)
+      .setDestination(dropoff)
+      .setMode(Maps.DirectionFinder.Mode.DRIVING)
+      .getDirections();
+
+    const route = directions.routes[0];
+    const leg = route.legs[0];
+
+    const distanceKm =
+      Math.round((leg.distance.value || 0) / 1000);
+
+    const durationMin =
+      Math.round((leg.duration.value || 0) / 60);
+
+    const mapFare =
+      calculateDistanceFare_(
+        distanceKm,
+        vehicle,
+        service,
+        serviceDetail
+      );
+
+    const fallbackPrice =
+      parseAmount_(
+        fallback.price ||
+        fallback.baseFare ||
+        0
+      );
+
+    const finalFare =
+      Math.max(mapFare, fallbackPrice);
+
+    return {
+      ok:true,
+      distanceKm:distanceKm,
+      durationMin:durationMin,
+      distanceText:leg.distance.text,
+      durationText:leg.duration.text,
+      mapFare:mapFare,
+      fallbackPrice:fallbackPrice,
+      baseFare:finalFare,
+      price:finalFare,
+      updatedAt:new Date().toISOString()
+    };
+
+  } catch(err){
+
+    fallback.note =
+      'Google Maps失敗：'+
+      String(err);
+
+    return fallback;
+  }
+}
+
+function calculateDistanceFare_(
+  distanceKm,
+  vehicle,
+  service,
+  serviceDetail
+){
+
+  const txt =
+    String(vehicle || '').toLowerCase();
+
+  let rate = 22;
+  let minimum = 1000;
+
+  if (
+    txt.includes('sprinter') ||
+    txt.includes('明星')
+  ){
+    rate = 38;
+    minimum = 6000;
+  }
+  else if(txt.includes('vito')){
+    rate = 30;
+    minimum = 3500;
+  }
+  else if(
+    txt.includes('alphard') ||
+    txt.includes('lm')
+  ){
+    rate = 34;
+    minimum = 4500;
+  }
+  else if(
+    txt.includes('九人')
+  ){
+    rate = 28;
+    minimum = 2800;
+  }
+
+  const fare =
+    Math.round(
+      (distanceKm * rate) / 100
+    ) * 100;
+
+  return Math.max(
+    fare,
+    minimum
+  );
+}
+
 
 function estimatePrice_(params) {
   const serviceDetail = clean_(getValueByKeys_(params, ['serviceDetail', '服務細項', 'sheet', 'airport'], ''));
