@@ -1,0 +1,37 @@
+{
+  "sedan":{
+    "name":"五人座轎車",
+    "maxPassenger":4,
+    "maxLuggage":2
+  },
+  "suv":{
+    "name":"五人座休旅車",
+    "maxPassenger":4,
+    "maxLuggage":3
+  },
+  "nine":{
+    "name":"九人座商務車",
+    "maxPassenger":8,
+    "maxLuggage":7
+  },
+  "vito":{
+    "name":"Mercedes-Benz VITO",
+    "maxPassenger":8,
+    "maxLuggage":7
+  },
+  "alphard":{
+    "name":"Toyota Alphard",
+    "maxPassenger":6,
+    "maxLuggage":4
+  },
+  "lm":{
+    "name":"Lexus LM",
+    "maxPassenger":6,
+    "maxLuggage":4
+  },
+  "sprinter":{
+    "name":"Mercedes-Benz Sprinter",
+    "maxPassenger":8,
+    "maxLuggage":10
+  }
+}

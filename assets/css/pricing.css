@@ -1,0 +1,53 @@
+:root{
+ --gold:#d4af37;
+ --black:#0b0b0b;
+ --card:#141414;
+}
+
+body{
+ background:#0b0b0b;
+ color:#fff;
+ font-family:'Noto Sans TC',sans-serif;
+}
+
+.xx-pricing-search{
+ max-width:1200px;
+ margin:auto;
+ padding:40px 20px;
+}
+
+.xx-pricing-search select,
+.xx-pricing-search button{
+ width:100%;
+ margin-bottom:15px;
+ padding:15px;
+ border-radius:12px;
+}
+
+.xx-pricing-search select{
+ background:#1a1a1a;
+ color:#fff;
+ border:1px solid var(--gold);
+}
+
+.xx-pricing-search button{
+ background:var(--gold);
+ color:#000;
+ font-weight:700;
+ border:none;
+}
+
+.price-card{
+ margin-top:20px;
+ background:var(--card);
+ border:1px solid var(--gold);
+ border-radius:20px;
+ padding:30px;
+ text-align:center;
+}
+
+.price-card .amount{
+ color:var(--gold);
+ font-size:42px;
+ font-weight:800;
+}
