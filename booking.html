@@ -678,8 +678,22 @@
     const pickup = collectArray("pickups")[0] || "";
     const dropoff = collectArray("dropoffs")[0] || "";
     const service = text($('[name="service"]'));
-    const serviceDetail = text($('[name="serviceDetail"]'));
+    let serviceDetail = text($('[name="serviceDetail"]'));
     const vehicle = text($("#vehicleSelect"));
+
+    const airportSheets = ["桃園機場","松山機場","清泉岡機場","小港機場"];
+    const portSheets = ["平安港","台北郵輪港","台中港","高雄香蕉碼頭","基隆港","東港碼頭","布袋港碼頭","富岡漁港","後壁湖碼頭"];
+    const haystack = `${pickup} ${dropoff} ${serviceDetail}`;
+    const matchedAirport = airportSheets.find(name => haystack.includes(name.replace("清泉岡","清泉崗")) || haystack.includes(name));
+    const matchedPort = portSheets.find(name => haystack.includes(name));
+
+    if(service.includes("機場") && matchedAirport){
+      serviceDetail = matchedAirport;
+    }
+
+    if(service.includes("港口") && matchedPort){
+      serviceDetail = matchedPort;
+    }
 
     if(!api || !pickup || !dropoff){
       return null;
