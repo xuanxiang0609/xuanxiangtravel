@@ -184,22 +184,22 @@ font-size:34px;
 
 <div>
 <label>貴賓姓名 *</label>
-<input type="text">
+<input name="guestName" type="text" required>
 </div>
 
 <div>
 <label>手機 *</label>
-<input type="tel">
+<input name="phone" type="tel" required>
 </div>
 
 <div>
 <label>預約日期 *</label>
-<input type="date">
+<input name="bookingDate" type="date" required>
 </div>
 
 <div>
 <label>上車時間 / 落地時間 *</label>
-<input type="time">
+<input name="bookingTime" type="time" required>
 </div>
 
 </div>
@@ -212,52 +212,79 @@ font-size:34px;
 
 <div>
 <label>上車地點 *</label>
-<input id="pickup">
+<input id="pickup" name="pickup" class="google-place" required>
 </div>
 
 <div>
 <label>下車地點 *</label>
-<input id="dropoff">
+<input id="dropoff" name="dropoff" class="google-place" required>
 </div>
 
 <div>
 <label>航班編號</label>
-<input>
-</div>
-
-<div>
-<label>船班梯次</label>
-<input>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>乘車資訊</h2>
+<input name="flightNo">\n</div>\n\n<div>\n<label>船班梯次</label>
+<input name="shipNo">\n</div>\n\n</div>\n\n<div id="routeDays"></div>\n<div id="midpointBox"></div>\n\n</div>\n\n<div class="card">\n\n<h2>乘車資訊</h2>
 
 <div class="grid">
 
 <div>
 <label>人數 *</label>
-<input id="people" type="number" min="1" max="20">
+<input id="people" name="people" type="number" min="1" max="20" required>
 </div>
 
 <div>
 <label>行李數 *</label>
-<input id="bags" type="number" min="0" max="20">
+<input id="bags" name="bags" type="number" min="0" max="20" required>
 </div>
 
 </div>
 
+</div>
+
+
+<div class="card">
+<h2>加購項目</h2>
+<div class="grid3">
+<div><label>正向安全座椅 +200/張</label><select class="addon" data-price="200" name="forwardSeat"></select></div>
+<div><label>反向安全座椅 +200/張</label><select class="addon" data-price="200" name="rearSeat"></select></div>
+<div><label>增高墊 +200/張</label><select class="addon" data-price="200" name="booster"></select></div>
+<div><label>舉牌服務 +200/次</label><select class="addon" data-price="200" name="signBoard"></select></div>
+<div><label>行李搬運2樓以下 +100/趟</label><select class="addon" data-price="100" name="luggage2F"></select></div>
+<div><label>行李搬運3樓以上 +200/趟</label><select class="addon" data-price="200" name="luggage3F"></select></div>
+<div><label>寵物接送 +100/隻</label><select class="addon" data-price="100" name="pet"></select></div>
+<div><label>開立收據</label><select class="addon" data-price="0" name="receipt"></select></div>
+</div>
+
+<br>
+
+<label>
+<input type="checkbox" id="taxCheck" name="needTaxId">
+開立統編
+</label>
+
+<div id="taxFields" class="grid hidden">
+<div>
+<label>公司抬頭</label>
+<input name="companyTitle">
+</div>
+<div>
+<label>統一編號</label>
+<input name="taxId" maxlength="8">
+</div>
+</div>
+
+<br>
+
+<label>
+<input type="checkbox" id="cardCheck" name="needCard">
+需刷卡
+</label>
 </div>
 
 <div class="card">
 <h2>車型選擇</h2>
 
-<select id="carType">
+<select id="carType" name="vehicle">
 
 <option>舒適五人座</option>
 <option>豪華九人座</option>
@@ -273,7 +300,7 @@ font-size:34px;
 
 <div class="card">
 <h2>備註</h2>
-<textarea></textarea>
+<textarea name="note"></textarea>
 </div>
 
 <div class="price-box">
@@ -296,58 +323,351 @@ $0
 
 </div>
 
+
 <script>
+const CONFIG = window.XUANXIANG_CONFIG || {};
+const API = CONFIG.APPS_SCRIPT_URL || CONFIG.BOOKING_API || "";
 
-const serviceMap={
-
-"機場接送":["送機","接機","來回接送"],
-
-"港口接送":["送港","接船","來回接送"],
-
-"旅遊包車":[
-"一日遊",
-"兩天一夜",
-"三天兩夜",
-"四天三夜",
-"五天四夜"
-],
-
-"登山包車":[
-"去程",
-"回程",
-"一日縱走",
-"兩天一夜",
-"三天兩夜"
-],
-
-"演唱會接送":[
-"去程",
-"回程",
-"來回",
-"包車"
-]
-
+const serviceMap = {
+  "機場接送":["送機","接機","接送"],
+  "港口接送":["送港","接船","接送"],
+  "旅遊包車":["一日遊","兩天一夜","三天兩夜","四天三夜","五天四夜"],
+  "登山包車":["去程","回程","一日縱走","兩天一夜","三天兩夜"],
+  "演唱會接送":["去程","回程","來回","包車"]
 };
 
-const service=document.getElementById("service");
-const detail=document.getElementById("serviceDetail");
+const airportSheets = ["桃園機場","松山機場","清泉岡機場","小港機場"];
+const portSheets = ["平安港","台北郵輪港","台中港","高雄香蕉碼頭","基隆港","東港碼頭","布袋港碼頭","富岡漁港","後壁湖碼頭"];
 
-service.addEventListener("change",()=>{
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const money = n => n ? "NT$" + Number(n).toLocaleString("zh-TW") : "$0";
 
-detail.innerHTML="";
+function fillQty(){
+  $$(".addon").forEach(sel=>{
+    sel.innerHTML = Array.from({length:10},(_,i)=>`<option value="${i}">${i}</option>`).join("");
+  });
+}
 
-(serviceMap[service.value]||[])
-.forEach(item=>{
+function addMidpoint(value=""){
+  const box = $("#midpointBox");
+  box.insertAdjacentHTML("beforeend",`
+    <div class="grid midpoint-row">
+      <div>
+        <label>中途點</label>
+        <input class="google-place midpoint" name="midpoints[]" value="${value}" placeholder="可輸入景點、飯店、地址">
+      </div>
+      <div style="display:flex;align-items:end">
+        <button class="btn" type="button" onclick="this.closest('.midpoint-row').remove();calc();">刪除中途點</button>
+      </div>
+    </div>
+  `);
+  initPlaces();
+}
 
-detail.innerHTML+=`
-<option>${item}</option>
-`;
+function renderDays(){
+  const service = $("#service").value;
+  const detail = $("#serviceDetail").value;
+  const box = $("#routeDays");
+  box.innerHTML = "";
 
+  const dayMap = {"一日遊":1,"一日縱走":1,"兩天一夜":2,"三天兩夜":3,"四天三夜":4,"五天四夜":5};
+
+  if(service !== "旅遊包車" && service !== "登山包車"){
+    $("#midpointBox").innerHTML = `
+      <br>
+      <button class="btn" type="button" onclick="addMidpoint()">＋新增中途點</button>
+    `;
+    return;
+  }
+
+  const days = dayMap[detail] || 1;
+  $("#midpointBox").innerHTML = "";
+
+  for(let i=1;i<=days;i++){
+    box.insertAdjacentHTML("beforeend",`
+      <div class="card">
+        <h2>第 ${i} 日行程</h2>
+        <div class="grid">
+          <div>
+            <label>第 ${i} 日上車地點</label>
+            <input class="google-place day-pickup" name="day${i}_pickup">
+          </div>
+          <div>
+            <label>第 ${i} 日下車地點</label>
+            <input class="google-place day-dropoff" name="day${i}_dropoff">
+          </div>
+        </div>
+        <div id="day${i}_midpoints"></div>
+        <br>
+        <button class="btn" type="button" onclick="addDayMidpoint(${i})">＋新增第 ${i} 日中途點</button>
+      </div>
+    `);
+  }
+  initPlaces();
+}
+
+function addDayMidpoint(day){
+  const box = document.getElementById(`day${day}_midpoints`);
+  box.insertAdjacentHTML("beforeend",`
+    <div class="grid midpoint-row">
+      <div>
+        <label>第 ${day} 日中途點</label>
+        <input class="google-place" name="day${day}_midpoints[]">
+      </div>
+      <div style="display:flex;align-items:end">
+        <button class="btn" type="button" onclick="this.closest('.midpoint-row').remove();calc();">刪除</button>
+      </div>
+    </div>
+  `);
+  initPlaces();
+}
+
+function updateDetails(){
+  const service = $("#service").value;
+  const detail = $("#serviceDetail");
+  detail.innerHTML = '<option value="">請選擇</option>';
+  (serviceMap[service] || []).forEach(item=>{
+    detail.innerHTML += `<option>${item}</option>`;
+  });
+  renderDays();
+  calc();
+}
+
+function vehicleFilter(){
+  const people = Number($("#people").value || 0);
+  const bags = Number($("#bags").value || 0);
+  const pet = Number(document.querySelector('[name="pet"]')?.value || 0);
+  const car = $("#carType");
+
+  const all = ["舒適五人座","豪華九人座","VITO","阿法","Lexus LM","明星保母車","依客服派車"];
+  let allow = all;
+
+  if(pet > 0){
+    allow = ["豪華九人座","VITO","明星保母車","依客服派車"];
+  }else if(people <= 3 && bags <= 3){
+    allow = all;
+  }else if(people <= 6 && bags <= 6){
+    allow = ["豪華九人座","VITO","阿法","Lexus LM","明星保母車","依客服派車"];
+  }else if(people <= 8 && bags <= 8){
+    allow = ["豪華九人座","VITO","明星保母車","依客服派車"];
+  }else{
+    allow = ["明星保母車","依客服派車"];
+  }
+
+  car.innerHTML = allow.map(v=>`<option>${v}</option>`).join("");
+}
+
+function detectSheet(){
+  const service = $("#service").value;
+  const detail = $("#serviceDetail").value;
+  const text = `${$("#pickup").value} ${$("#dropoff").value} ${detail}`;
+
+  if(service === "機場接送"){
+    return airportSheets.find(x=>text.includes(x) || (x==="清泉岡機場" && text.includes("清泉崗"))) || "";
+  }
+  if(service === "港口接送"){
+    return portSheets.find(x=>text.includes(x)) || "";
+  }
+  if(service === "旅遊包車") return "旅遊包車";
+  if(service === "登山包車") return "百岳報價";
+  return detail;
+}
+
+async function getBaseFare(){
+  if(!API) return 0;
+
+  const service = $("#service").value;
+  const pickup = $("#pickup").value;
+  const dropoff = $("#dropoff").value;
+  const vehicle = $("#carType").value;
+  const sheet = detectSheet();
+
+  if(!service || !pickup || !dropoff) return 0;
+  if((service === "機場接送" || service === "港口接送") && !sheet) return 0;
+
+  try{
+    const params = new URLSearchParams({
+      action:"estimate",
+      service,
+      serviceDetail:sheet,
+      sheet,
+      pickup,
+      dropoff,
+      vehicle
+    });
+
+    const res = await fetch(`${API}?${params.toString()}`);
+    const data = await res.json();
+
+    if(data.ok && Number(data.price)){
+      return Number(data.price);
+    }
+  }catch(e){
+    console.warn(e);
+  }
+
+  return 0;
+}
+
+let timer = null;
+
+function calc(){
+  vehicleFilter();
+
+  clearTimeout(timer);
+  timer = setTimeout(async()=>{
+    const base = await getBaseFare();
+
+    let addons = 0;
+    $$(".addon").forEach(sel=>{
+      addons += Number(sel.value || 0) * Number(sel.dataset.price || 0);
+    });
+
+    let total = base + addons;
+
+    if($("#taxCheck").checked) total = Math.round(total * 1.1);
+    if($("#cardCheck").checked) total = Math.round(total * 1.06);
+
+    $("#price").textContent = money(total);
+  },250);
+}
+
+function initPlaces(){
+  if(!window.google || !google.maps || !google.maps.places) return;
+
+  $$(".google-place").forEach(input=>{
+    if(input.dataset.placeReady) return;
+
+    const ac = new google.maps.places.Autocomplete(input,{
+      componentRestrictions:{country:"tw"},
+      fields:["formatted_address","name","geometry"]
+    });
+
+    ac.addListener("place_changed",()=>{
+      const place = ac.getPlace();
+      input.value = place.formatted_address || place.name || input.value;
+      calc();
+    });
+
+    input.dataset.placeReady = "1";
+  });
+}
+
+window.xxInitBookingPlaces = initPlaces;
+
+function loadMaps(){
+  const key = CONFIG.GOOGLE_MAPS_API_KEY || "";
+  if(!key) return;
+
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&libraries=places&callback=xxInitBookingPlaces`;
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+}
+
+function collectPayload(){
+  const form = document.getElementById("bookingForm");
+  const fd = new FormData(form);
+  const data = Object.fromEntries(fd.entries());
+
+  data.action = "createOrder";
+  data.service = $("#service").value;
+  data.serviceDetail = $("#serviceDetail").value;
+  data.pickup = $("#pickup").value;
+  data.dropoff = $("#dropoff").value;
+  data.people = $("#people").value;
+  data.bags = $("#bags").value;
+  data.vehicle = $("#carType").value;
+  data.estimatedTotal = $("#price").textContent;
+
+  data["服務項目"] = data.service;
+  data["服務細項"] = data.serviceDetail;
+  data["乘客姓名"] = data.guestName || "";
+  data["貴賓姓名"] = data.guestName || "";
+  data["聯絡電話"] = data.phone || "";
+  data["手機"] = data.phone || "";
+  data["預約日期"] = data.bookingDate || "";
+  data["搭車時間"] = data.bookingTime || "";
+  data["上車地址"] = data.pickup;
+  data["下車地址"] = data.dropoff;
+  data["人數"] = data.people;
+  data["行李數"] = data.bags;
+  data["航班編號"] = data.flightNo || "";
+  data["船班編號 / 船班梯次"] = data.shipNo || "";
+  data["車款"] = data.vehicle;
+  data["試算表報價"] = data.estimatedTotal;
+  data["備註"] = data.note || "";
+  data.status = "待客服確認";
+
+  return data;
+}
+
+async function submitForm(e){
+  e.preventDefault();
+
+  if(!API){
+    alert("API 尚未設定");
+    return;
+  }
+
+  const btn = document.querySelector(".btn.primary");
+  btn.disabled = true;
+  btn.textContent = "送出中...";
+
+  try{
+    const res = await fetch(`${API}?action=createOrder`,{
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(collectPayload())
+    });
+
+    const data = await res.json();
+
+    if(data.ok !== false){
+      sessionStorage.setItem("xx_last_booking",JSON.stringify(data));
+      location.href = "booking-success.html";
+    }else{
+      alert(data.message || "送出失敗");
+    }
+  }catch(err){
+    console.error(err);
+    alert("送出失敗，請改用 LINE 客服");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "立即送出預約";
+  }
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  fillQty();
+  updateDetails();
+  renderDays();
+  vehicleFilter();
+  loadMaps();
+
+  $("#service").addEventListener("change",updateDetails);
+  $("#serviceDetail").addEventListener("change",()=>{renderDays();calc();});
+  $("#people").addEventListener("input",calc);
+  $("#bags").addEventListener("input",calc);
+  $("#carType").addEventListener("change",calc);
+  $("#pickup").addEventListener("input",calc);
+  $("#dropoff").addEventListener("input",calc);
+  $("#taxCheck").addEventListener("change",()=>{
+    $("#taxFields").classList.toggle("hidden",!$("#taxCheck").checked);
+    calc();
+  });
+  $("#cardCheck").addEventListener("change",calc);
+  $$(".addon").forEach(x=>x.addEventListener("change",calc));
+  $("#bookingForm").addEventListener("submit",submitForm);
 });
-
-});
-
 </script>
 
+
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site-layout.js"></script>
 </body>
+
 </html>
