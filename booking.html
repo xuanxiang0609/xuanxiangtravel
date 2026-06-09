@@ -686,19 +686,19 @@
     }
 
     try{
-      const response = await fetch(`${api}?action=estimate`, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          action: "estimate",
-          service,
-          serviceDetail,
-          pickup,
-          dropoff,
-          vehicle,
-          passengers: text($('[name="passengers"]')),
-          luggage: text($('[name="luggage"]'))
-        })
+      const params = new URLSearchParams({
+        action: "estimate",
+        service,
+        serviceDetail,
+        pickup,
+        dropoff,
+        vehicle,
+        passengers: text($('[name="passengers"]')),
+        luggage: text($('[name="luggage"]'))
+      });
+
+      const response = await fetch(`${api}?${params.toString()}`, {
+        method: "GET"
       });
 
       const data = await response.json();
