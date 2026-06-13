@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+
+<meta charset="utf-8">
+
+<title>
+玹翔旅遊 Enterprise Control Tower
+</title>
+
+<link rel="stylesheet"
+href="../../assets/css/enterprise/core.css">
+
+<link rel="stylesheet"
+href="../../assets/css/enterprise/control-tower.css">
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>
+🏆 Enterprise Control Tower
+</h1>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>今日訂單</h3>
+<div id="todayOrders">0</div>
+</div>
+
+<div class="card">
+<h3>待派訂單</h3>
+<div id="pendingDispatch">0</div>
+</div>
+
+<div class="card">
+<h3>今日營收</h3>
+<div id="todayRevenue">0</div>
+</div>
+
+<div class="card">
+<h3>本月營收</h3>
+<div id="monthRevenue">0</div>
+</div>
+
+<div class="card">
+<h3>活躍司機</h3>
+<div id="activeDrivers">0</div>
+</div>
+
+<div class="card">
+<h3>車隊數量</h3>
+<div id="activeVehicles">0</div>
+</div>
+
+</div>
+
+<div id="map"></div>
+
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/enterprise/control-tower.js"></script>
+
+<script async
+src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_KEY&callback=initTower">
+</script>
+
+</body>
+</html>

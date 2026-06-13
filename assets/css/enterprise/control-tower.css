@@ -1,0 +1,33 @@
+
+#map{
+height:650px;
+margin-top:30px;
+border-radius:20px;
+overflow:hidden;
+}
+
+.grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:#141414;
+border:1px solid #d4af37;
+border-radius:18px;
+padding:20px;
+}
+
+.card h3{
+color:#d4af37;
+margin:0;
+}
+
+.card div{
+font-size:34px;
+font-weight:700;
+margin-top:10px;
+}
+
