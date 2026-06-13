@@ -1,0 +1,316 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "database.rules.json",
+      "storage.rules",
+      "apps-script/**",
+      "tools/**",
+      "docs/**",
+      "backups/**",
+      "backup/**",
+      "tmp/**",
+      "temp/**",
+      "node_modules/**",
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.github/**",
+      "**/.vscode/**",
+      "**/.idea/**",
+      "**/.DS_Store",
+      ".DS_Store",
+      "**/Thumbs.db",
+      "**/*.log",
+      "**/*.map",
+      "**/*.bak",
+      "**/*.old",
+      "**/*.tmp",
+      "**/*.zip",
+      "**/*.rar",
+      "**/*.7z",
+      "**/*.psd",
+      "**/*.ai",
+      "**/*.sketch",
+      "**/*.fig",
+      "README.md",
+      "README.html",
+      "content-merged.html",
+      "css-list.txt",
+      "css-list 2.txt",
+      "html-list.txt",
+      "html-list 2.txt",
+      "js-list.txt",
+      "js-list 2.txt",
+      "FINAL_CHECK_REPORT.txt",
+      "FINAL_ONLINE_REPORT.txt",
+      "README.txt",
+      "reports/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/home",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/vehicles",
+        "destination": "/fleet",
+        "type": 301
+      },
+      {
+        "source": "/business-transfer",
+        "destination": "/business",
+        "type": 301
+      },
+      {
+        "source": "/concert-transfer",
+        "destination": "/concert",
+        "type": 301
+      },
+      {
+        "source": "/travel-charter",
+        "destination": "/charter",
+        "type": 301
+      },
+      {
+        "source": "/smangus-day.html",
+        "destination": "/smangus-day",
+        "type": 301
+      },
+      {
+        "source": "/hehuanshan-day.html",
+        "destination": "/hehuanshan-day",
+        "type": 301
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|mjs)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "assets/js/config.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|png|gif|webp|svg|ico|avif)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(mp4|webm|ogg|mp3|wav)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(woff|woff2|ttf|otf)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/404.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex,follow"
+          }
+        ]
+      },
+      {
+        "source": "/robots.txt",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=3600,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/sitemap.xml",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=3600,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/manifest.json",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=86400,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "accelerometer=(), autoplay=(self), camera=(), clipboard-read=(), clipboard-write=(self), display-capture=(), encrypted-media=(self), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self), publickey-credentials-get=(self), usb=(), xr-spatial-tracking=()"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains; preload"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-site"
+          },
+          {
+            "key": "X-DNS-Prefetch-Control",
+            "value": "on"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; img-src 'self' data: blob: https: https://www.facebook.com https://web.facebook.com https://*.fbcdn.net https://*.fbsbx.com; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://script.google.com https://script.googleusercontent.com https://static.line-scdn.net https://connect.facebook.net https://www.facebook.com https://web.facebook.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebasedatabase.app https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://firebaselogging-pa.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://script.google.com https://script.googleusercontent.com https://api.line.me https://liff.line.me https://line.me https://wa.me https://www.facebook.com https://web.facebook.com https://connect.facebook.net; frame-src 'self' https://liff.line.me https://www.youtube.com https://www.youtube-nocookie.com https://accounts.google.com https://www.google.com https://www.facebook.com https://web.facebook.com https://www.facebook.com/plugins/page.php; form-action 'self' https://script.google.com https://script.googleusercontent.com; worker-src 'self' blob:; manifest-src 'self'; media-src 'self' blob: data:; upgrade-insecure-requests "
+          }
+        ]
+      }
+    ]
+  },
+  "firestore": [
+    {
+      "database": "xuanxiangtravel",
+      "rules": "firestore.rules",
+      "indexes": "firestore.indexes.json"
+    }
+  ]
+}

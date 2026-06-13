@@ -1,0 +1,888 @@
+===== HTML 檔案數 =====
+      65
+
+===== CSS 檔案 =====
+./admin/dashboard.css
+./assets/css/dashboard.css
+./assets/css/style.css
+./assets/css/xx-enterprise-v10.css
+./assets/css/xx-v8.css
+
+===== JS 檔案 =====
+./admin/dashboard.js
+./admin/modules/calendar.js
+./admin/modules/dispatch.js
+./admin/modules/drivers.js
+./admin/modules/kpi.js
+./admin/modules/line-center.js
+./admin/modules/maps.js
+./admin/modules/members.js
+./admin/modules/orders.js
+./admin/modules/revenue.js
+./admin/modules/vehicles.js
+./assets/js/config.js
+./assets/js/member.js
+./assets/js/pricing-freeze.js
+./assets/js/quote.js
+./assets/js/site-layout.js
+./assets/js/site.js
+./assets/js/trip-booking.js
+./assets/js/xx-enterprise-v10.js
+./dashboard.js
+
+===== JS 語法檢查 =====
+CHECK ./admin/dashboard.js
+CHECK ./admin/modules/calendar.js
+CHECK ./admin/modules/dispatch.js
+CHECK ./admin/modules/drivers.js
+CHECK ./admin/modules/kpi.js
+CHECK ./admin/modules/line-center.js
+CHECK ./admin/modules/maps.js
+CHECK ./admin/modules/members.js
+CHECK ./admin/modules/orders.js
+CHECK ./admin/modules/revenue.js
+CHECK ./admin/modules/vehicles.js
+CHECK ./assets/js/config.js
+CHECK ./assets/js/member.js
+CHECK ./assets/js/pricing-freeze.js
+CHECK ./assets/js/quote.js
+CHECK ./assets/js/site-layout.js
+CHECK ./assets/js/site.js
+CHECK ./assets/js/trip-booking.js
+CHECK ./assets/js/xx-enterprise-v10.js
+CHECK ./dashboard.js
+
+===== 缺少 canonical 的 HTML =====
+dashboard.html
+dispatch.html
+orders.html
+dashboard.html
+dispatch.html
+orders.html
+
+===== 缺少 og:image 的 HTML =====
+airport-pricing.html
+dashboard.html
+dispatch.html
+member-login.html
+member.html
+orders.html
+quote.html
+airport-pricing.html
+dashboard.html
+dispatch.html
+member-login.html
+member.html
+orders.html
+quote.html
+
+===== 重複 canonical =====
+index.html :        2
+index.html :        2
+
+===== 重複 og:image =====
+index.html :        2
+index.html :        2
+
+===== 檢查 video/ 錯誤路徑 =====
+
+===== 檢查 Images 大小寫錯誤 =====
+./school-hiking.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-hiking.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="百岳縱走" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>路很長，夢很大，接駁要可靠。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./charter-policy.html:12:<meta property="og:image" content="images/logo.jpg">
+./charter-policy.html:487:        <div class="fleet-card"><img src="images/fleet/five-seat.jpg" alt="舒適五人座"><h3>舒適五人座</h3><p>RAV4、Camry 等級車款，適合商務與機場接送。</p></div>
+./charter-policy.html:488:        <div class="fleet-card"><img src="images/fleet/vito.jpg" alt="九人座商務車"><h3>九人座商務車</h3><p>VITO、福斯商旅，適合家庭與團體旅遊。</p></div>
+./charter-policy.html:489:        <div class="fleet-card"><img src="images/fleet/sprinter.jpg" alt="明星保母車"><h3>明星保母車</h3><p>Sprinter、Alphard、Lexus LM 尊榮體驗。</p></div>
+./charter-policy.html:566:  <article class="addon-media-card"><img src="images/addons/child-seat.png" alt="正向安全座椅"><b>正向安全座椅</b><p>適合較大幼童，乘坐更穩。不是小王座，是安全第一排。</p></article>
+./charter-policy.html:567:  <article class="addon-media-card"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅"><b>反向安全座椅</b><p>適合嬰幼兒與較小寶寶，請提前預約，數量有限。</p></article>
+./charter-policy.html:568:  <article class="addon-media-card"><img src="images/addons/booster-seat.png" alt="兒童增高墊"><b>兒童增高墊</b><p>讓安全帶位置更合適，孩子坐得穩，大人心也穩。</p></article>
+./charter-policy.html:569:  <article class="addon-media-card"><img src="images/addons/pet-transfer.png" alt="寵物接送"><b>寵物接送</b><p>毛孩也能一起出門，請使用寵物袋、籠或箱，車廂更友善。</p></article>
+./charter-policy.html:570:  <article class="addon-media-card"><img src="images/addons/sign-service.png" alt="舉牌服務"><b>舉牌服務</b><p>接貴賓、接家人、接迷路靈魂都清楚，遠遠一看就知道找誰。</p></article>
+./charter-policy.html:571:  <article class="addon-media-card"><img src="images/addons/luggage-carry.png" alt="行李搬運"><b>行李搬運</b><p>樓梯不是健身房，需搬運請先告知，客服協助安排。</p></article>
+./fleet.html:42:            <img src="images/車照/CAMRY/camry.png" alt="五人座轎車">
+./fleet.html:49:            <img src="images/車照/rav4/rav4.png" alt="五人座休旅車">
+./fleet.html:56:            <img src="images/車照/STARIA/Staria.png" alt="九人座">
+./fleet.html:63:            <img src="images/車照/VITO/vito.png" alt="Mercedes-Benz VITO-2">
+./fleet.html:70:            <img src="images/S400.png" alt="Lexus LM">
+./fleet.html:77:            <img src="images/車照/ALPHARD/alphard.png" alt="Toyota Alphard">
+./fleet.html:84:            <img src="images/車照/sprinter.png" alt="明星保母車">
+./business-transfer.html:23:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./business-transfer.html:96:    url("images/banner/business-hero.jpg") center/cover no-repeat;
+./business-transfer.html:356:    <video class="business-hero-video" autoplay muted loop playsinline preload="metadata" poster="images/Unknown.jpg" aria-hidden="true" tabindex="-1">
+./business-transfer.html:377:        <img src="images/vehicles/sprinter.jpg" alt="玹翔旅遊商務包車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:407:          <img src="images/s400.png" alt="舒適五人座商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:414:          <img src="images/vehicles/vito.jpg" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:421:          <img src="images/vehicles/sprinter.jpg" alt="明星保母車尊榮商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:433:      <img src="images/vehicles/sprinter.jpg" alt="企業接待商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:502:          this.src = "images/logo.jpg";
+./driver-recruit.html:12:<meta property="og:image" content="images/logo.jpg">
+./driver-recruit.html:106:    url("Images/招聘圖.png") center/cover;
+./store-cooperation.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./store-cooperation.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/logo.jpg" alt="店家合作" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>把客人送到你店門口，也把合作做到心坎裡。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./travel-smangus.html:147:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/smangus01.jpg');
+./travel-smangus.html:149:.p2{background-image:url('./images/smangus02.jpg')}
+./travel-smangus.html:150:.p3{background-image:url('./images/smangus03.jpg')}
+./travel-smangus.html:247:.g1{background-image:url('./images/smangus04.jpg')}
+./travel-smangus.html:248:.g2{background-image:url('./images/smangus05.jpg')}
+./travel-smangus.html:249:.g3{background-image:url('./images/smangus06.jpg')}
+./travel-smangus.html:250:.g4{background-image:url('./images/smangus07.jpg')}
+./travel-smangus.html:251:.g5{background-image:url('./images/smangus01.jpg')}
+./travel-smangus.html:252:.g6{background-image:url('./images/smangus02.jpg')}
+./travel-smangus.html:328:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-smangus.html:462:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./travel-smangus.html:470:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./car-rental.html:12:3. 圖片若失效會自動換成 images/logo.jpg，避免正式頁面破圖。
+./car-rental.html:29:<meta property="og:image" content="https://xuanxiangtravel.com/images/vehicles/sprinter.jpg">
+./car-rental.html:73:    url("images/vehicles/sprinter.jpg") center/cover no-repeat;
+./car-rental.html:444:          <img src="images/vehicles/camry.jpg" alt="舒適五人座租車服務" loading="lazy" decoding="async">
+./car-rental.html:449:          <img src="images/vehicles/vito.jpg" alt="九人座商務車租車服務" loading="lazy" decoding="async">
+./car-rental.html:454:          <img src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車租車服務" loading="lazy" decoding="async">
+./car-rental.html:489:            <tr><td>舒適五人座</td><td>1-4人</td><td>機場接送、商務單人、小家庭、輕行李</td><td>圖片可改 images/vehicles/camry.jpg 或 rav4.png。</td></tr>
+./car-rental.html:490:            <tr><td>九人座商務車 / VITO</td><td>4-8人</td><td>多人同行、家庭旅遊、港口接送、中大型行李</td><td>若新增車照，請放 images/vehicles/ 並更新圖片 src。</td></tr>
+./car-rental.html:569:        this.src = "images/logo.jpg";
+./member-center.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./index.html:20:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./index.html:27:<meta name="twitter:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./index.html:32:<link rel="apple-touch-icon" href="/images/logo.jpg">
+./index.html:40: "logo":"https://xuanxiangtravel.com/images/logo.jpg",
+./index.html:41: "image":"https://xuanxiangtravel.com/images/logo.jpg",
+./index.html:86:<meta property="og:image" content="images/logo.jpg">
+./index.html:770:<img alt="玹翔旅遊高端專車" src="images/upload-062.jpg"/>
+./index.html:820:        <video controls playsinline preload="metadata" poster="images/upload-062.jpg">
+./index.html:941:<img alt="機場接送" src="images/index/airport.png"/>
+./index.html:956:<img alt="旅遊包車" src="images/客製化包車.png"/>
+./index.html:970:<img alt="明星保母車" src="images/index/concert.png"/>
+./mountain-pricing.html:12:<meta property="og:image" content="images/logo.jpg">
+./forgot-password.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./port-pricing.html:12:<meta property="og:image" content="images/logo.jpg">
+./about.html:15:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./about.html:36:.about-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.72),rgba(0,0,0,.42)),radial-gradient(circle at 18% 18%,rgba(216,181,109,.26),transparent 33%),url("images/logo.jpg") center/cover no-repeat;opacity:.98}
+./about.html:120:      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="images/upload-062.jpg">
+./about.html:147:        <img src="images/24小時客服.png" alt="24小時客服" loading="lazy" decoding="async" onerror="this.src='images/logo.jpg'">
+./about.html:151:        <img src="images/車款介紹.png" alt="高端車款" loading="lazy" decoding="async" onerror="this.src='images/logo.jpg'">
+./about.html:155:        <img src="images/客製化包車.png" alt="客製化包車" loading="lazy" decoding="async" onerror="this.src='images/logo.jpg'">
+./wedding-car.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./wedding-car.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/vehicles/s400-wedding.jpg" alt="結婚禮車" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>人生大日子，車子不能像臨時路過。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./pet-transfer.html:382:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./pet-transfer.html:402:    <img src="images/車照/rav4/rav4.png" alt="舒適五人座" onerror="this.src='images/logo.jpg'">
+./pet-transfer.html:404:    <img src="images/車照/STARIA/Staria.png" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+./pet-transfer.html:407:    <img src="images/車照/Sprinter.png" alt="明星保母車／尊榮專車" onerror="this.src='images/logo.jpg'">
+./pet-transfer.html:429:    <img src="images/寵物家人.jpg" alt="毛孩也是重要家人" onerror="this.src='images/logo.jpg'">
+./travel-three-days.html:47:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-three-days.html:54:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>三天兩夜</h1><p>行程排得剛剛好，人才不會玩到需要回家休假。</p><div class="hero-actions"><a href="booking.html">立即預約專車 ✨</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/sunmoonlake00.jpg" alt="中部山湖深度旅遊"><div class="xx-card-body"><h3>中部山湖深度旅遊</h3><p>清境、日月潭、合歡山自由搭配</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="台東海岸慢旅行"><div class="xx-card-body"><h3>台東海岸慢旅行</h3><p>山海線、秘境、美食安排</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="墾丁海線放鬆版"><div class="xx-card-body"><h3>墾丁海線放鬆版</h3><p>海景、落日、南國路線</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./price.html:85:    url("images/upload-062.jpg") center/cover no-repeat;
+./register.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-charter.html:58:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./404.html:12:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./404.html:63:    url("images/logo.jpg") center/cover no-repeat;
+./travel-region.html:47:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-region.html:54:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>各地區搜尋</h1><p>北中南東想去哪，先講地區，我們幫你把路線變順。</p><div class="hero-actions"><a href="booking.html">立即預約專車 ✨</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/sunmoonlake01.jpg" alt="北部地區"><div class="xx-card-body"><h3>北部地區</h3><p>台北、新北、基隆、宜蘭</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="中部地區"><div class="xx-card-body"><h3>中部地區</h3><p>台中、南投、彰化、苗栗</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="南部與東部"><div class="xx-card-body"><h3>南部與東部</h3><p>嘉義、台南、高雄、屏東、花東</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./login.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./concert-transfer.html:12:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./concert-transfer.html:420:      <img src="images/index/concert.png" alt="玹翔旅遊演唱會專車" onerror="this.src='images/vehicles/sprinter.jpg'">
+./hehuanshan-day.html:113:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/hehuanshan04.jpg');
+./hehuanshan-day.html:115:.p2{background-image:url('./images/hehuanshan08.jpg')}
+./hehuanshan-day.html:116:.p3{background-image:url('./images/hehuanshan01.jpg')}
+./hehuanshan-day.html:213:.g1{background-image:url('./images/hehuanshan05.jpg')}
+./hehuanshan-day.html:214:.g2{background-image:url('./images/hehuanshan01.jpg')}
+./hehuanshan-day.html:215:.g3{background-image:url('./images/hehuanshan03.jpg')}
+./hehuanshan-day.html:216:.g4{background-image:url('./images/hehuanshan06.jpg')}
+./hehuanshan-day.html:217:.g5{background-image:url('./images/hehuanshan07.jpg')}
+./hehuanshan-day.html:218:.g6{background-image:url('./images/hehuanshan08.jpg')}
+./hehuanshan-day.html:326:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./hehuanshan-day.html:461:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./hehuanshan-day.html:469:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./travel-two-days.html:7:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-two-days.html:14:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>兩天一夜</h1><p>不要急著回家，讓風景多陪你一下。</p><div class="hero-actions"><a href="booking.html">立即預約</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/sunmoonlake-sunset.jpg" alt="清境・日月潭慢旅行"><div class="xx-card-body"><h3>清境・日月潭慢旅行</h3><p>高山草原與湖景夜色</p><div class="hero-actions"><a href="qingjing-sunmoonlake-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="合歡山星空兩日版"><div class="xx-card-body"><h3>合歡山星空兩日版</h3><p>夕陽、星空與雲海一次收藏</p><div class="hero-actions"><a href="hehuanshan-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="司馬庫斯森林深度版"><div class="xx-card-body"><h3>司馬庫斯森林深度版</h3><p>巨木、部落與山中夜色</p><div class="hero-actions"><a href="smangus-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./ocba.html:12:<meta property="og:image" content="images/logo.jpg">
+./long-distance-pricing.html:14:<meta property="og:image" content="images/logo.jpg">
+./long-distance-pricing.html:931:          <div class="xx-vehicle-img" style="--img:url('images/vehicle-rav4.jpg')"></div>
+./long-distance-pricing.html:939:          <div class="xx-vehicle-img" style="--img:url('images/vehicle-vito.jpg')"></div>
+./long-distance-pricing.html:947:          <div class="xx-vehicle-img" style="--img:url('images/vehicle-sprinter.jpg')"></div>
+./school-mountain.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-mountain.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/hehuanshan-road.jpg" alt="登山包車小學堂" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>登山很硬，交通不要再硬撐。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./travel-hehuanshan.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./tour-pricing.html:16:<meta property="og:image" content="images/logo.jpg">
+./vehicles.html:13:<meta property="og:image" content="images/logo.jpg">
+./vehicles.html:323:          <img src="images/vehicles/camry.jpg" alt="舒適五人座轎車" onerror="this.style.display='none'">
+./vehicles.html:340:          <img src="images/車照/RAV4/251222_ToyotaRAV4_026_PhotoChen.png" alt="五人座休旅車" onerror="this.style.display='none'">
+./vehicles.html:357:          <img src="images/vehicles/vito.jpg" alt="豪華九人座商務車" onerror="this.style.display='none'">
+./vehicles.html:374:          <img src="images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 商務車" onerror="this.style.display='none'">
+./vehicles.html:391:          <img src="images/車照/ALPHARD/alphard.png" alt="Toyota Alphard 尊榮專車" onerror="this.style.display='none'">
+./vehicles.html:408:          <img src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter-2 明星保母車" onerror="this.style.display='none'">
+./travel-one-day.html:7:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-one-day.html:14:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>一日遊</h1><p>一天也能玩得像樣，不用把自己操到像跑外送。</p><div class="hero-actions"><a href="booking.html">立即預約</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/hehuanshan04.jpg" alt="合歡山雲海星空・百岳縱走體驗"><div class="xx-card-body"><h3>合歡山雲海星空・百岳縱走體驗</h3><p>高山公路、武嶺、雲海視野</p><div class="hero-actions"><a href="hehuanshan-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="日月潭・清境農場一日遊"><div class="xx-card-body"><h3>日月潭・清境農場一日遊</h3><p>湖景、青青草原、綿羊秀、騎馬術</p><div class="hero-actions"><a href="qingjing-sunmoonlake-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="司馬庫斯神木群・巨木森林一日遊"><div class="xx-card-body"><h3>司馬庫斯神木群・巨木森林一日遊</h3><p>巨木步道、部落秘境、山林避暑</p><div class="hero-actions"><a href="smangus-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./transfer-policy.html:12:<meta property="og:image" content="images/logo.jpg">
+./transfer-policy.html:123:  <article class="addon-media-card"><img src="images/addons/child-seat.png" alt="正向安全座椅"><b>正向安全座椅</b><p>適合較大幼童，乘坐更穩。不是小王座，是安全第一排。</p></article>
+./transfer-policy.html:124:  <article class="addon-media-card"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅"><b>反向安全座椅</b><p>適合嬰幼兒與較小寶寶，請提前預約，數量有限。</p></article>
+./transfer-policy.html:125:  <article class="addon-media-card"><img src="images/addons/booster-seat.png" alt="兒童增高墊"><b>兒童增高墊</b><p>讓安全帶位置更合適，孩子坐得穩，大人心也穩。</p></article>
+./transfer-policy.html:126:  <article class="addon-media-card"><img src="images/addons/pet-transfer.png" alt="寵物接送"><b>寵物接送</b><p>毛孩也能一起出門，請使用寵物袋、籠或箱，車廂更友善。</p></article>
+./transfer-policy.html:127:  <article class="addon-media-card"><img src="images/addons/sign-service.png" alt="舉牌服務"><b>舉牌服務</b><p>接貴賓、接家人、接迷路靈魂都清楚，遠遠一看就知道找誰。</p></article>
+./transfer-policy.html:128:  <article class="addon-media-card"><img src="images/addons/luggage-carry.png" alt="行李搬運"><b>行李搬運</b><p>樓梯不是健身房，需搬運請先告知，客服協助安排。</p></article>
+./business-transfer.html:23:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./business-transfer.html:96:    url("images/banner/business-hero.jpg") center/cover no-repeat;
+./business-transfer.html:356:    <video class="business-hero-video" autoplay muted loop playsinline preload="metadata" poster="images/Unknown.jpg" aria-hidden="true" tabindex="-1">
+./business-transfer.html:377:        <img src="images/vehicles/sprinter.jpg" alt="玹翔旅遊商務包車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:407:          <img src="images/s400.png" alt="舒適五人座商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:414:          <img src="images/vehicles/vito.jpg" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:421:          <img src="images/vehicles/sprinter.jpg" alt="明星保母車尊榮商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:433:      <img src="images/vehicles/sprinter.jpg" alt="企業接待商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:502:          this.src = "images/logo.jpg";
+./school-airport.html:12:<meta property="og:image" content="images/logo.jpg">
+./school-airport.html:189:<img alt="航班資訊填寫範例" src="images/接機示意圖.png"/>
+./school-airport.html:201:<img alt="桃園機場 T1 T2 上車位置指引" src="images/接送機流程.png"/>
+./school-airport.html:216:<img alt="胖胖箱與一般行李箱比較" src="images/接機示意圖.png"/>
+./school-airport.html:242:<img alt="行李箱尺寸與車型提醒" src="images/胖胖箱.png"/>
+./school-airport.html:271:        <img src="images/addons/child-seat.png" alt="正向安全座椅｜玹翔旅遊兒童安全座椅加購服務">
+./school-airport.html:281:        <img src="images/addons/rear-facing-seat.png" alt="反向安全座椅｜玹翔旅遊嬰幼兒安全座椅加購服務">
+./school-airport.html:291:        <img src="images/addons/booster-seat.png" alt="增高墊｜玹翔旅遊兒童增高墊加購服務">
+./school-airport.html:301:        <img src="images/addons/pet-transfer.png" alt="寵物接送｜玹翔旅遊寵物專車加購服務">
+./school-airport.html:307:        <img src="images/addons/sign-service.png" alt="舉牌服務｜玹翔旅遊機場接送舉牌加購服務">
+./school-airport.html:313:        <img src="images/addons/luggage-carry.png" alt="行李搬運｜玹翔旅遊樓梯行李搬運加購服務">
+./travel-sunmoonlake.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./qingjing-sunmoonlake-day.html:102:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/sunmoonlake-sunset.jpg');
+./qingjing-sunmoonlake-day.html:104:.p2{background-image:url('./images/qingjing03.jpg')}
+./qingjing-sunmoonlake-day.html:105:.p3{background-image:url('./images/qingjing04.jpg')}
+./qingjing-sunmoonlake-day.html:202:.g1{background-image:url('./images/sunmoonlake-sunset.jpg')}
+./qingjing-sunmoonlake-day.html:203:.g2{background-image:url('./images/qingjing02.jpg')}
+./qingjing-sunmoonlake-day.html:204:.g3{background-image:url('./images/qingjing03.jpg')}
+./qingjing-sunmoonlake-day.html:205:.g4{background-image:url('./images/qingjing04.jpg')}
+./qingjing-sunmoonlake-day.html:206:.g5{background-image:url('./images/sunmoonlake01.jpg')}
+./qingjing-sunmoonlake-day.html:207:.g6{background-image:url('./images/sunmoonlake04.jpg')}
+./qingjing-sunmoonlake-day.html:208:.g7{background-image:url('./images/sunmoonlake05.jpg')}
+./qingjing-sunmoonlake-day.html:209:.g8{background-image:url('./images/sunmoonlake06.jpg')}
+./qingjing-sunmoonlake-day.html:210:.g9{background-image:url('./images/sunmoonlake07.jpg')}
+./qingjing-sunmoonlake-day.html:211:.g10{background-image:url('./images/sunmoonlake02.jpg')}
+./qingjing-sunmoonlake-day.html:289:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./qingjing-sunmoonlake-day.html:427:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./qingjing-sunmoonlake-day.html:435:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./addons.html:17:7. 若日後修改 LOGO，請覆蓋：images/logo.jpg
+./addons.html:30:<meta property="og:image" content="images/logo.jpg">
+./addons.html:351:          <div class="addon-media"><img src="images/addons/child-seat.png" alt="正向安全座椅｜玹翔旅遊兒童安全座椅加購服務"></div>
+./addons.html:363:          <div class="addon-media"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅｜玹翔旅遊嬰幼兒安全座椅加購服務"></div>
+./addons.html:375:          <div class="addon-media"><img src="images/addons/booster-seat.png" alt="增高墊｜玹翔旅遊兒童增高墊加購服務"></div>
+./addons.html:387:          <div class="addon-media"><img src="images/addons/pet-transfer.png" alt="寵物接送｜玹翔旅遊寵物專車加購服務"></div>
+./addons.html:395:          <div class="addon-media"><img src="images/addons/sign-service.png" alt="舉牌服務｜玹翔旅遊機場接送舉牌加購服務"></div>
+./addons.html:403:          <div class="addon-media"><img src="images/addons/luggage-carry.png" alt="行李搬運｜玹翔旅遊樓梯行李搬運加購服務"></div>
+./content-merged.html:9:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./assets/css/xx-enterprise-v10.css:146:  url("../images/hero-business.jpg");
+./assets/js/site-layout.js:18:    logo: "images/logo.jpg",
+./assets/js/site-layout.js:19:    fallbackImage: guard.safeFallbackImage || "images/logo.jpg",
+./assets/js/site-layout.js:361:        image: cfg.SEO?.image || `${siteUrl()}/images/logo.jpg`,
+./assets/js/site-layout.js:426:      ["og:image", cfg.SEO?.image || `${siteUrl()}/images/logo.jpg`],
+./assets/js/config.js:147:      image: "https://xuanxiangtravel.com/images/logo.jpg"
+./assets/js/config.js:153:      safeFallbackImage: "images/logo.jpg",
+./assets/js/site.js:20:    logo: "https://xuanxiangtravel.com/images/logo.jpg",
+./assets/js/site.js:21:    localLogo: "images/logo.jpg",
+./assets/js/xx-enterprise-v10.js:20:    fallbackImage: "images/logo.jpg"
+./faq.html:14:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./faq.html:70:    url("images/logo.jpg") center/cover no-repeat;
+./faq.html:465:      <img src="images/logo.jpg" alt="玹翔旅遊常見問題" onerror="this.src='images/logo.jpg'">
+./concert-transfer.html:12:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./concert-transfer.html:420:      <img src="images/index/concert.png" alt="玹翔旅遊演唱會專車" onerror="this.src='images/vehicles/sprinter.jpg'">
+./school-secret.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-secret.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="旅遊秘境" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>不是每個景點都要人擠人，人生偶爾也該開隱藏關卡。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./school-tour.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-tour.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/sunmoonlake00.jpg" alt="旅遊包車小學堂" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>包車不是越便宜越好，是越清楚越安心。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./S2O.html:17:<meta property="og:image" content="https://xuanxiangtravel.com/images/S2O三天兩夜/玹翔旅遊%20S2O%20音樂節接送與三天兩夜包車行程主視覺.png">
+./S2O.html:21:<meta name="twitter:image" content="https://xuanxiangtravel.com/images/S2O三天兩夜/玹翔旅遊%20S2O%20音樂節接送與三天兩夜包車行程主視覺.png">
+./S2O.html:28:  "image":"https://xuanxiangtravel.com/images/logo.jpg",
+./S2O.html:338:        <img src="images/S2O三天兩夜/玹翔旅遊 S2O 音樂節接送與三天兩夜包車行程主視覺.png" alt="玹翔旅遊 S2O 音樂節接送與三天兩夜包車行程主視覺" loading="eager">
+./S2O.html:351:      <img class="card-img" src="images/S2O三天兩夜/S2o散唱專車接送.png" alt="S2O 音樂節散場專車接送" loading="lazy">
+./S2O.html:356:      <img class="card-img" src="images/S2O三天兩夜/S2O 三天兩夜住宿與台中飯店動線.png" alt="S2O 三天兩夜住宿與台中飯店動線" loading="lazy">
+./S2O.html:361:      <img class="card-img" src="images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊 S2O 高端包車車款" loading="lazy">
+./S2O.html:375:      <figure><img src="images/S2O三天兩夜/音樂節現場｜晚上直接開炸.png" alt="玹翔旅遊音樂節主視覺與活動現場" loading="lazy"><figcaption>玹翔旅遊｜音樂節現場｜晚上直接開炸</figcaption></figure>
+./S2O.html:376:      <figure><img src="images/S2O三天兩夜/S2O 三天兩夜住宿與台中飯店動線.png" alt="玹翔旅遊三天兩夜住宿與台中飯店動線" loading="lazy"><figcaption>玹翔旅遊｜飯店接送舒服回房間</figcaption></figure>
+./S2O.html:377:      <figure><img src="images/S2O三天兩夜/台中美食｜先吃飽再濕身.png" alt="玹翔旅遊台中美食與三天兩夜美食安排" loading="lazy"><figcaption>玹翔旅遊｜台中美食｜先吃飽再濕身</figcaption></figure>
+./S2O.html:378:      <figure><img src="images/S2O三天兩夜/輕旅行｜收心不狼狽.png" alt="玹翔旅遊台中輕旅行與高美濕地" loading="lazy"><figcaption>玹翔旅遊｜輕旅行｜收心不狼狽</figcaption></figure>
+./S2O.html:379:      <figure><img src="images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊多人包車與散場接送" loading="lazy"><figcaption>玹翔旅遊｜多人包車｜散場不用搶車</figcaption></figure>
+./S2O.html:380:      <figure><img src="images/S2O三天兩夜/玹翔旅遊｜完整行程圖｜三天兩夜一次看懂.png" alt="玹翔旅遊三天兩夜完整行程圖" loading="lazy"><figcaption>玹翔旅遊｜完整行程圖｜三天兩夜一次看懂</figcaption></figure>
+./S2O.html:394:        <img src="images/S2O三天兩夜/S2O 三天兩夜 Day 1 台中美食與住宿行程.png" alt="玹翔旅遊 Day 1 台中美食與住宿行程圖" loading="lazy">
+./S2O.html:402:        <img src="images/S2O三天兩夜/S2O 三天兩夜 Day 2 音樂節與會場接送行程圖.png" alt="玹翔旅遊 Day 2 音樂節與會場接送行程圖" loading="lazy">
+./S2O.html:410:        <img src="images/S2O三天兩夜/S2O 三天兩夜 Day 3 台中輕旅行與返程行程圖.png" alt="玹翔旅遊 Day 3 台中輕旅行與返程行程圖" loading="lazy">
+./S2O.html:425:        <a class="btn dark" href="images/S2O三天兩夜/玹翔旅遊｜完整行程圖｜三天兩夜一次看懂.png" target="_blank" rel="noopener">查看行程圖大圖</a>
+./S2O.html:446:      <div class="card"><img class="card-img" src="images/rav4.jpg" alt="玹翔旅遊舒適五人座 S2O 接送車款" loading="lazy"><h3>舒適五人座</h3><p>適合 1–4 人，小團輕旅行、情侶、朋友雙人出遊。</p></div>
+./S2O.html:447:      <div class="card"><img class="card-img" src="images/vehicles/vito.jpg" alt="玹翔旅遊商務九人座 S2O 包車車款" loading="lazy"><h3>商務九人座</h3><p>適合 5–8 人，S2O 揪團、朋友包車、行李較多最實用。</p></div>
+./S2O.html:448:      <div class="card"><img class="card-img" src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車 S2O 尊榮接送" loading="lazy"><h3>明星保母車</h3><p>適合 VIP、網紅、藝人、公司團體，空間與尊榮感一次到位。</p></div>
+./privacy.html:14:<meta property="og:image" content="images/logo.jpg">
+./smangus-day.html:107:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/smangus01.jpg');
+./smangus-day.html:109:.p2{background-image:url('./images/smangus02.jpg')}
+./smangus-day.html:110:.p3{background-image:url('./images/smangus03.jpg')}
+./smangus-day.html:207:.g1{background-image:url('./images/smangus04.jpg')}
+./smangus-day.html:208:.g2{background-image:url('./images/smangus05.jpg')}
+./smangus-day.html:209:.g3{background-image:url('./images/smangus06.jpg')}
+./smangus-day.html:210:.g4{background-image:url('./images/smangus07.jpg')}
+./smangus-day.html:211:.g5{background-image:url('./images/smangus01.jpg')}
+./smangus-day.html:212:.g6{background-image:url('./images/smangus02.jpg')}
+./smangus-day.html:290:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./smangus-day.html:424:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./smangus-day.html:432:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./school-hiking.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-hiking.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="百岳縱走" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>路很長，夢很大，接駁要可靠。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./charter-policy.html:12:<meta property="og:image" content="images/logo.jpg">
+./charter-policy.html:487:        <div class="fleet-card"><img src="images/fleet/five-seat.jpg" alt="舒適五人座"><h3>舒適五人座</h3><p>RAV4、Camry 等級車款，適合商務與機場接送。</p></div>
+./charter-policy.html:488:        <div class="fleet-card"><img src="images/fleet/vito.jpg" alt="九人座商務車"><h3>九人座商務車</h3><p>VITO、福斯商旅，適合家庭與團體旅遊。</p></div>
+./charter-policy.html:489:        <div class="fleet-card"><img src="images/fleet/sprinter.jpg" alt="明星保母車"><h3>明星保母車</h3><p>Sprinter、Alphard、Lexus LM 尊榮體驗。</p></div>
+./charter-policy.html:566:  <article class="addon-media-card"><img src="images/addons/child-seat.png" alt="正向安全座椅"><b>正向安全座椅</b><p>適合較大幼童，乘坐更穩。不是小王座，是安全第一排。</p></article>
+./charter-policy.html:567:  <article class="addon-media-card"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅"><b>反向安全座椅</b><p>適合嬰幼兒與較小寶寶，請提前預約，數量有限。</p></article>
+./charter-policy.html:568:  <article class="addon-media-card"><img src="images/addons/booster-seat.png" alt="兒童增高墊"><b>兒童增高墊</b><p>讓安全帶位置更合適，孩子坐得穩，大人心也穩。</p></article>
+./charter-policy.html:569:  <article class="addon-media-card"><img src="images/addons/pet-transfer.png" alt="寵物接送"><b>寵物接送</b><p>毛孩也能一起出門，請使用寵物袋、籠或箱，車廂更友善。</p></article>
+./charter-policy.html:570:  <article class="addon-media-card"><img src="images/addons/sign-service.png" alt="舉牌服務"><b>舉牌服務</b><p>接貴賓、接家人、接迷路靈魂都清楚，遠遠一看就知道找誰。</p></article>
+./charter-policy.html:571:  <article class="addon-media-card"><img src="images/addons/luggage-carry.png" alt="行李搬運"><b>行李搬運</b><p>樓梯不是健身房，需搬運請先告知，客服協助安排。</p></article>
+./fleet.html:42:            <img src="images/車照/CAMRY/camry.png" alt="五人座轎車">
+./fleet.html:49:            <img src="images/車照/rav4/rav4.png" alt="五人座休旅車">
+./fleet.html:56:            <img src="images/車照/STARIA/Staria.png" alt="九人座">
+./fleet.html:63:            <img src="images/車照/VITO/vito.png" alt="Mercedes-Benz VITO-2">
+./fleet.html:70:            <img src="images/S400.png" alt="Lexus LM">
+./fleet.html:77:            <img src="images/車照/ALPHARD/alphard.png" alt="Toyota Alphard">
+./fleet.html:84:            <img src="images/車照/sprinter.png" alt="明星保母車">
+./business-transfer.html:23:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./business-transfer.html:96:    url("images/banner/business-hero.jpg") center/cover no-repeat;
+./business-transfer.html:356:    <video class="business-hero-video" autoplay muted loop playsinline preload="metadata" poster="images/Unknown.jpg" aria-hidden="true" tabindex="-1">
+./business-transfer.html:377:        <img src="images/vehicles/sprinter.jpg" alt="玹翔旅遊商務包車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:407:          <img src="images/s400.png" alt="舒適五人座商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:414:          <img src="images/vehicles/vito.jpg" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:421:          <img src="images/vehicles/sprinter.jpg" alt="明星保母車尊榮商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:433:      <img src="images/vehicles/sprinter.jpg" alt="企業接待商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:502:          this.src = "images/logo.jpg";
+./driver-recruit.html:12:<meta property="og:image" content="images/logo.jpg">
+./driver-recruit.html:106:    url("Images/招聘圖.png") center/cover;
+./store-cooperation.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./store-cooperation.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/logo.jpg" alt="店家合作" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>把客人送到你店門口，也把合作做到心坎裡。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./travel-smangus.html:147:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/smangus01.jpg');
+./travel-smangus.html:149:.p2{background-image:url('./images/smangus02.jpg')}
+./travel-smangus.html:150:.p3{background-image:url('./images/smangus03.jpg')}
+./travel-smangus.html:247:.g1{background-image:url('./images/smangus04.jpg')}
+./travel-smangus.html:248:.g2{background-image:url('./images/smangus05.jpg')}
+./travel-smangus.html:249:.g3{background-image:url('./images/smangus06.jpg')}
+./travel-smangus.html:250:.g4{background-image:url('./images/smangus07.jpg')}
+./travel-smangus.html:251:.g5{background-image:url('./images/smangus01.jpg')}
+./travel-smangus.html:252:.g6{background-image:url('./images/smangus02.jpg')}
+./travel-smangus.html:328:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-smangus.html:462:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./travel-smangus.html:470:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./car-rental.html:12:3. 圖片若失效會自動換成 images/logo.jpg，避免正式頁面破圖。
+./car-rental.html:29:<meta property="og:image" content="https://xuanxiangtravel.com/images/vehicles/sprinter.jpg">
+./car-rental.html:73:    url("images/vehicles/sprinter.jpg") center/cover no-repeat;
+./car-rental.html:444:          <img src="images/vehicles/camry.jpg" alt="舒適五人座租車服務" loading="lazy" decoding="async">
+./car-rental.html:449:          <img src="images/vehicles/vito.jpg" alt="九人座商務車租車服務" loading="lazy" decoding="async">
+./car-rental.html:454:          <img src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車租車服務" loading="lazy" decoding="async">
+./car-rental.html:489:            <tr><td>舒適五人座</td><td>1-4人</td><td>機場接送、商務單人、小家庭、輕行李</td><td>圖片可改 images/vehicles/camry.jpg 或 rav4.png。</td></tr>
+./car-rental.html:490:            <tr><td>九人座商務車 / VITO</td><td>4-8人</td><td>多人同行、家庭旅遊、港口接送、中大型行李</td><td>若新增車照，請放 images/vehicles/ 並更新圖片 src。</td></tr>
+./car-rental.html:569:        this.src = "images/logo.jpg";
+./member-center.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./index.html:20:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./index.html:27:<meta name="twitter:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./index.html:32:<link rel="apple-touch-icon" href="/images/logo.jpg">
+./index.html:40: "logo":"https://xuanxiangtravel.com/images/logo.jpg",
+./index.html:41: "image":"https://xuanxiangtravel.com/images/logo.jpg",
+./index.html:86:<meta property="og:image" content="images/logo.jpg">
+./index.html:770:<img alt="玹翔旅遊高端專車" src="images/upload-062.jpg"/>
+./index.html:820:        <video controls playsinline preload="metadata" poster="images/upload-062.jpg">
+./index.html:941:<img alt="機場接送" src="images/index/airport.png"/>
+./index.html:956:<img alt="旅遊包車" src="images/客製化包車.png"/>
+./index.html:970:<img alt="明星保母車" src="images/index/concert.png"/>
+./mountain-pricing.html:12:<meta property="og:image" content="images/logo.jpg">
+./forgot-password.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./port-pricing.html:12:<meta property="og:image" content="images/logo.jpg">
+./about.html:15:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./about.html:36:.about-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.72),rgba(0,0,0,.42)),radial-gradient(circle at 18% 18%,rgba(216,181,109,.26),transparent 33%),url("images/logo.jpg") center/cover no-repeat;opacity:.98}
+./about.html:120:      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="images/upload-062.jpg">
+./about.html:147:        <img src="images/24小時客服.png" alt="24小時客服" loading="lazy" decoding="async" onerror="this.src='images/logo.jpg'">
+./about.html:151:        <img src="images/車款介紹.png" alt="高端車款" loading="lazy" decoding="async" onerror="this.src='images/logo.jpg'">
+./about.html:155:        <img src="images/客製化包車.png" alt="客製化包車" loading="lazy" decoding="async" onerror="this.src='images/logo.jpg'">
+./wedding-car.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./wedding-car.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/vehicles/s400-wedding.jpg" alt="結婚禮車" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>人生大日子，車子不能像臨時路過。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./pet-transfer.html:382:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./pet-transfer.html:402:    <img src="images/車照/rav4/rav4.png" alt="舒適五人座" onerror="this.src='images/logo.jpg'">
+./pet-transfer.html:404:    <img src="images/車照/STARIA/Staria.png" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+./pet-transfer.html:407:    <img src="images/車照/Sprinter.png" alt="明星保母車／尊榮專車" onerror="this.src='images/logo.jpg'">
+./pet-transfer.html:429:    <img src="images/寵物家人.jpg" alt="毛孩也是重要家人" onerror="this.src='images/logo.jpg'">
+./travel-three-days.html:47:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-three-days.html:54:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>三天兩夜</h1><p>行程排得剛剛好，人才不會玩到需要回家休假。</p><div class="hero-actions"><a href="booking.html">立即預約專車 ✨</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/sunmoonlake00.jpg" alt="中部山湖深度旅遊"><div class="xx-card-body"><h3>中部山湖深度旅遊</h3><p>清境、日月潭、合歡山自由搭配</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="台東海岸慢旅行"><div class="xx-card-body"><h3>台東海岸慢旅行</h3><p>山海線、秘境、美食安排</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="墾丁海線放鬆版"><div class="xx-card-body"><h3>墾丁海線放鬆版</h3><p>海景、落日、南國路線</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./price.html:85:    url("images/upload-062.jpg") center/cover no-repeat;
+./register.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-charter.html:58:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./404.html:12:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./404.html:63:    url("images/logo.jpg") center/cover no-repeat;
+./travel-region.html:47:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-region.html:54:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>各地區搜尋</h1><p>北中南東想去哪，先講地區，我們幫你把路線變順。</p><div class="hero-actions"><a href="booking.html">立即預約專車 ✨</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/sunmoonlake01.jpg" alt="北部地區"><div class="xx-card-body"><h3>北部地區</h3><p>台北、新北、基隆、宜蘭</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="中部地區"><div class="xx-card-body"><h3>中部地區</h3><p>台中、南投、彰化、苗栗</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="南部與東部"><div class="xx-card-body"><h3>南部與東部</h3><p>嘉義、台南、高雄、屏東、花東</p><div class="hero-actions"><a href="tour-pricing.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./login.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./concert-transfer.html:12:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./concert-transfer.html:420:      <img src="images/index/concert.png" alt="玹翔旅遊演唱會專車" onerror="this.src='images/vehicles/sprinter.jpg'">
+./hehuanshan-day.html:113:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/hehuanshan04.jpg');
+./hehuanshan-day.html:115:.p2{background-image:url('./images/hehuanshan08.jpg')}
+./hehuanshan-day.html:116:.p3{background-image:url('./images/hehuanshan01.jpg')}
+./hehuanshan-day.html:213:.g1{background-image:url('./images/hehuanshan05.jpg')}
+./hehuanshan-day.html:214:.g2{background-image:url('./images/hehuanshan01.jpg')}
+./hehuanshan-day.html:215:.g3{background-image:url('./images/hehuanshan03.jpg')}
+./hehuanshan-day.html:216:.g4{background-image:url('./images/hehuanshan06.jpg')}
+./hehuanshan-day.html:217:.g5{background-image:url('./images/hehuanshan07.jpg')}
+./hehuanshan-day.html:218:.g6{background-image:url('./images/hehuanshan08.jpg')}
+./hehuanshan-day.html:326:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./hehuanshan-day.html:461:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./hehuanshan-day.html:469:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./travel-two-days.html:7:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-two-days.html:14:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>兩天一夜</h1><p>不要急著回家，讓風景多陪你一下。</p><div class="hero-actions"><a href="booking.html">立即預約</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/sunmoonlake-sunset.jpg" alt="清境・日月潭慢旅行"><div class="xx-card-body"><h3>清境・日月潭慢旅行</h3><p>高山草原與湖景夜色</p><div class="hero-actions"><a href="qingjing-sunmoonlake-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="合歡山星空兩日版"><div class="xx-card-body"><h3>合歡山星空兩日版</h3><p>夕陽、星空與雲海一次收藏</p><div class="hero-actions"><a href="hehuanshan-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="司馬庫斯森林深度版"><div class="xx-card-body"><h3>司馬庫斯森林深度版</h3><p>巨木、部落與山中夜色</p><div class="hero-actions"><a href="smangus-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./ocba.html:12:<meta property="og:image" content="images/logo.jpg">
+./long-distance-pricing.html:14:<meta property="og:image" content="images/logo.jpg">
+./long-distance-pricing.html:931:          <div class="xx-vehicle-img" style="--img:url('images/vehicle-rav4.jpg')"></div>
+./long-distance-pricing.html:939:          <div class="xx-vehicle-img" style="--img:url('images/vehicle-vito.jpg')"></div>
+./long-distance-pricing.html:947:          <div class="xx-vehicle-img" style="--img:url('images/vehicle-sprinter.jpg')"></div>
+./school-mountain.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-mountain.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/hehuanshan-road.jpg" alt="登山包車小學堂" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>登山很硬，交通不要再硬撐。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./travel-hehuanshan.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./tour-pricing.html:16:<meta property="og:image" content="images/logo.jpg">
+./vehicles.html:13:<meta property="og:image" content="images/logo.jpg">
+./vehicles.html:323:          <img src="images/vehicles/camry.jpg" alt="舒適五人座轎車" onerror="this.style.display='none'">
+./vehicles.html:340:          <img src="images/車照/RAV4/251222_ToyotaRAV4_026_PhotoChen.png" alt="五人座休旅車" onerror="this.style.display='none'">
+./vehicles.html:357:          <img src="images/vehicles/vito.jpg" alt="豪華九人座商務車" onerror="this.style.display='none'">
+./vehicles.html:374:          <img src="images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 商務車" onerror="this.style.display='none'">
+./vehicles.html:391:          <img src="images/車照/ALPHARD/alphard.png" alt="Toyota Alphard 尊榮專車" onerror="this.style.display='none'">
+./vehicles.html:408:          <img src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter-2 明星保母車" onerror="this.style.display='none'">
+./travel-one-day.html:7:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./travel-one-day.html:14:<main><section class="xx-page-hero"><div class="wrap"><span class="xx-tag">高端旅遊平台｜旅遊包車分類</span><h1>一日遊</h1><p>一天也能玩得像樣，不用把自己操到像跑外送。</p><div class="hero-actions"><a href="booking.html">立即預約</a><a href="tour-pricing.html">包車服務</a></div></div></section><section><div class="wrap"><div class="sectionTitle"><h2>熱門推薦</h2><span class="muted">挑一個方向，剩下交給玹翔安排。</span></div><div class="xx-card-grid"><article class="xx-card xx-image-card"><img src="images/hehuanshan04.jpg" alt="合歡山雲海星空・百岳縱走體驗"><div class="xx-card-body"><h3>合歡山雲海星空・百岳縱走體驗</h3><p>高山公路、武嶺、雲海視野</p><div class="hero-actions"><a href="hehuanshan-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="日月潭・清境農場一日遊"><div class="xx-card-body"><h3>日月潭・清境農場一日遊</h3><p>湖景、青青草原、綿羊秀、騎馬術</p><div class="hero-actions"><a href="qingjing-sunmoonlake-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article><article class="xx-card xx-image-card"><img src="images/hehuanshan05.jpg" alt="司馬庫斯神木群・巨木森林一日遊"><div class="xx-card-body"><h3>司馬庫斯神木群・巨木森林一日遊</h3><p>巨木步道、部落秘境、山林避暑</p><div class="hero-actions"><a href="smangus-day.html">查看行程</a><a href="booking.html">我要預約</a></div></div></article></div></div></section><section><div class="wrap"><div class="xx-note">預約提醒：實際報價會依日期、出發地、乘客人數、行李、停靠點、車型與加購服務調整。先問不會少一塊肉，臨時才問可能少一台車。😎</div></div></section></main>
+./transfer-policy.html:12:<meta property="og:image" content="images/logo.jpg">
+./transfer-policy.html:123:  <article class="addon-media-card"><img src="images/addons/child-seat.png" alt="正向安全座椅"><b>正向安全座椅</b><p>適合較大幼童，乘坐更穩。不是小王座，是安全第一排。</p></article>
+./transfer-policy.html:124:  <article class="addon-media-card"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅"><b>反向安全座椅</b><p>適合嬰幼兒與較小寶寶，請提前預約，數量有限。</p></article>
+./transfer-policy.html:125:  <article class="addon-media-card"><img src="images/addons/booster-seat.png" alt="兒童增高墊"><b>兒童增高墊</b><p>讓安全帶位置更合適，孩子坐得穩，大人心也穩。</p></article>
+./transfer-policy.html:126:  <article class="addon-media-card"><img src="images/addons/pet-transfer.png" alt="寵物接送"><b>寵物接送</b><p>毛孩也能一起出門，請使用寵物袋、籠或箱，車廂更友善。</p></article>
+./transfer-policy.html:127:  <article class="addon-media-card"><img src="images/addons/sign-service.png" alt="舉牌服務"><b>舉牌服務</b><p>接貴賓、接家人、接迷路靈魂都清楚，遠遠一看就知道找誰。</p></article>
+./transfer-policy.html:128:  <article class="addon-media-card"><img src="images/addons/luggage-carry.png" alt="行李搬運"><b>行李搬運</b><p>樓梯不是健身房，需搬運請先告知，客服協助安排。</p></article>
+./business-transfer.html:23:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./business-transfer.html:96:    url("images/banner/business-hero.jpg") center/cover no-repeat;
+./business-transfer.html:356:    <video class="business-hero-video" autoplay muted loop playsinline preload="metadata" poster="images/Unknown.jpg" aria-hidden="true" tabindex="-1">
+./business-transfer.html:377:        <img src="images/vehicles/sprinter.jpg" alt="玹翔旅遊商務包車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:407:          <img src="images/s400.png" alt="舒適五人座商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:414:          <img src="images/vehicles/vito.jpg" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:421:          <img src="images/vehicles/sprinter.jpg" alt="明星保母車尊榮商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:433:      <img src="images/vehicles/sprinter.jpg" alt="企業接待商務專車" onerror="this.src='images/logo.jpg'">
+./business-transfer.html:502:          this.src = "images/logo.jpg";
+./school-airport.html:12:<meta property="og:image" content="images/logo.jpg">
+./school-airport.html:189:<img alt="航班資訊填寫範例" src="images/接機示意圖.png"/>
+./school-airport.html:201:<img alt="桃園機場 T1 T2 上車位置指引" src="images/接送機流程.png"/>
+./school-airport.html:216:<img alt="胖胖箱與一般行李箱比較" src="images/接機示意圖.png"/>
+./school-airport.html:242:<img alt="行李箱尺寸與車型提醒" src="images/胖胖箱.png"/>
+./school-airport.html:271:        <img src="images/addons/child-seat.png" alt="正向安全座椅｜玹翔旅遊兒童安全座椅加購服務">
+./school-airport.html:281:        <img src="images/addons/rear-facing-seat.png" alt="反向安全座椅｜玹翔旅遊嬰幼兒安全座椅加購服務">
+./school-airport.html:291:        <img src="images/addons/booster-seat.png" alt="增高墊｜玹翔旅遊兒童增高墊加購服務">
+./school-airport.html:301:        <img src="images/addons/pet-transfer.png" alt="寵物接送｜玹翔旅遊寵物專車加購服務">
+./school-airport.html:307:        <img src="images/addons/sign-service.png" alt="舉牌服務｜玹翔旅遊機場接送舉牌加購服務">
+./school-airport.html:313:        <img src="images/addons/luggage-carry.png" alt="行李搬運｜玹翔旅遊樓梯行李搬運加購服務">
+./travel-sunmoonlake.html:5:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./qingjing-sunmoonlake-day.html:102:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/sunmoonlake-sunset.jpg');
+./qingjing-sunmoonlake-day.html:104:.p2{background-image:url('./images/qingjing03.jpg')}
+./qingjing-sunmoonlake-day.html:105:.p3{background-image:url('./images/qingjing04.jpg')}
+./qingjing-sunmoonlake-day.html:202:.g1{background-image:url('./images/sunmoonlake-sunset.jpg')}
+./qingjing-sunmoonlake-day.html:203:.g2{background-image:url('./images/qingjing02.jpg')}
+./qingjing-sunmoonlake-day.html:204:.g3{background-image:url('./images/qingjing03.jpg')}
+./qingjing-sunmoonlake-day.html:205:.g4{background-image:url('./images/qingjing04.jpg')}
+./qingjing-sunmoonlake-day.html:206:.g5{background-image:url('./images/sunmoonlake01.jpg')}
+./qingjing-sunmoonlake-day.html:207:.g6{background-image:url('./images/sunmoonlake04.jpg')}
+./qingjing-sunmoonlake-day.html:208:.g7{background-image:url('./images/sunmoonlake05.jpg')}
+./qingjing-sunmoonlake-day.html:209:.g8{background-image:url('./images/sunmoonlake06.jpg')}
+./qingjing-sunmoonlake-day.html:210:.g9{background-image:url('./images/sunmoonlake07.jpg')}
+./qingjing-sunmoonlake-day.html:211:.g10{background-image:url('./images/sunmoonlake02.jpg')}
+./qingjing-sunmoonlake-day.html:289:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./qingjing-sunmoonlake-day.html:427:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./qingjing-sunmoonlake-day.html:435:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+./addons.html:17:7. 若日後修改 LOGO，請覆蓋：images/logo.jpg
+./addons.html:30:<meta property="og:image" content="images/logo.jpg">
+./addons.html:351:          <div class="addon-media"><img src="images/addons/child-seat.png" alt="正向安全座椅｜玹翔旅遊兒童安全座椅加購服務"></div>
+./addons.html:363:          <div class="addon-media"><img src="images/addons/rear-facing-seat.png" alt="反向安全座椅｜玹翔旅遊嬰幼兒安全座椅加購服務"></div>
+./addons.html:375:          <div class="addon-media"><img src="images/addons/booster-seat.png" alt="增高墊｜玹翔旅遊兒童增高墊加購服務"></div>
+./addons.html:387:          <div class="addon-media"><img src="images/addons/pet-transfer.png" alt="寵物接送｜玹翔旅遊寵物專車加購服務"></div>
+./addons.html:395:          <div class="addon-media"><img src="images/addons/sign-service.png" alt="舉牌服務｜玹翔旅遊機場接送舉牌加購服務"></div>
+./addons.html:403:          <div class="addon-media"><img src="images/addons/luggage-carry.png" alt="行李搬運｜玹翔旅遊樓梯行李搬運加購服務"></div>
+./content-merged.html:9:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./assets/css/xx-enterprise-v10.css:146:  url("../images/hero-business.jpg");
+./assets/js/site-layout.js:18:    logo: "images/logo.jpg",
+./assets/js/site-layout.js:19:    fallbackImage: guard.safeFallbackImage || "images/logo.jpg",
+./assets/js/site-layout.js:361:        image: cfg.SEO?.image || `${siteUrl()}/images/logo.jpg`,
+./assets/js/site-layout.js:426:      ["og:image", cfg.SEO?.image || `${siteUrl()}/images/logo.jpg`],
+./assets/js/config.js:147:      image: "https://xuanxiangtravel.com/images/logo.jpg"
+./assets/js/config.js:153:      safeFallbackImage: "images/logo.jpg",
+./assets/js/site.js:20:    logo: "https://xuanxiangtravel.com/images/logo.jpg",
+./assets/js/site.js:21:    localLogo: "images/logo.jpg",
+./assets/js/xx-enterprise-v10.js:20:    fallbackImage: "images/logo.jpg"
+./faq.html:14:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./faq.html:70:    url("images/logo.jpg") center/cover no-repeat;
+./faq.html:465:      <img src="images/logo.jpg" alt="玹翔旅遊常見問題" onerror="this.src='images/logo.jpg'">
+./concert-transfer.html:12:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./concert-transfer.html:420:      <img src="images/index/concert.png" alt="玹翔旅遊演唱會專車" onerror="this.src='images/vehicles/sprinter.jpg'">
+./school-secret.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-secret.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/qingjing02.jpg" alt="旅遊秘境" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>不是每個景點都要人擠人，人生偶爾也該開隱藏關卡。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./school-tour.html:55:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./school-tour.html:67:<section><div class="wrap"><article class="xx-card xx-image-card"><img src="images/sunmoonlake00.jpg" alt="旅遊包車小學堂" onerror="this.src='images/logo.jpg'"><div class="xx-card-body"><h3>包車不是越便宜越好，是越清楚越安心。</h3><p>若需指定車型、特殊時間、行李較多或臨時多點停靠，請先與客服確認。價錢不是拿來比心酸，是讓你覺得整趟安排值得。</p></div></article></div></section>
+./S2O.html:17:<meta property="og:image" content="https://xuanxiangtravel.com/images/S2O三天兩夜/玹翔旅遊%20S2O%20音樂節接送與三天兩夜包車行程主視覺.png">
+./S2O.html:21:<meta name="twitter:image" content="https://xuanxiangtravel.com/images/S2O三天兩夜/玹翔旅遊%20S2O%20音樂節接送與三天兩夜包車行程主視覺.png">
+./S2O.html:28:  "image":"https://xuanxiangtravel.com/images/logo.jpg",
+./S2O.html:338:        <img src="images/S2O三天兩夜/玹翔旅遊 S2O 音樂節接送與三天兩夜包車行程主視覺.png" alt="玹翔旅遊 S2O 音樂節接送與三天兩夜包車行程主視覺" loading="eager">
+./S2O.html:351:      <img class="card-img" src="images/S2O三天兩夜/S2o散唱專車接送.png" alt="S2O 音樂節散場專車接送" loading="lazy">
+./S2O.html:356:      <img class="card-img" src="images/S2O三天兩夜/S2O 三天兩夜住宿與台中飯店動線.png" alt="S2O 三天兩夜住宿與台中飯店動線" loading="lazy">
+./S2O.html:361:      <img class="card-img" src="images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊 S2O 高端包車車款" loading="lazy">
+./S2O.html:375:      <figure><img src="images/S2O三天兩夜/音樂節現場｜晚上直接開炸.png" alt="玹翔旅遊音樂節主視覺與活動現場" loading="lazy"><figcaption>玹翔旅遊｜音樂節現場｜晚上直接開炸</figcaption></figure>
+./S2O.html:376:      <figure><img src="images/S2O三天兩夜/S2O 三天兩夜住宿與台中飯店動線.png" alt="玹翔旅遊三天兩夜住宿與台中飯店動線" loading="lazy"><figcaption>玹翔旅遊｜飯店接送舒服回房間</figcaption></figure>
+./S2O.html:377:      <figure><img src="images/S2O三天兩夜/台中美食｜先吃飽再濕身.png" alt="玹翔旅遊台中美食與三天兩夜美食安排" loading="lazy"><figcaption>玹翔旅遊｜台中美食｜先吃飽再濕身</figcaption></figure>
+./S2O.html:378:      <figure><img src="images/S2O三天兩夜/輕旅行｜收心不狼狽.png" alt="玹翔旅遊台中輕旅行與高美濕地" loading="lazy"><figcaption>玹翔旅遊｜輕旅行｜收心不狼狽</figcaption></figure>
+./S2O.html:379:      <figure><img src="images/S2O三天兩夜/多人包車｜散場不用搶車.png" alt="玹翔旅遊多人包車與散場接送" loading="lazy"><figcaption>玹翔旅遊｜多人包車｜散場不用搶車</figcaption></figure>
+./S2O.html:380:      <figure><img src="images/S2O三天兩夜/玹翔旅遊｜完整行程圖｜三天兩夜一次看懂.png" alt="玹翔旅遊三天兩夜完整行程圖" loading="lazy"><figcaption>玹翔旅遊｜完整行程圖｜三天兩夜一次看懂</figcaption></figure>
+./S2O.html:394:        <img src="images/S2O三天兩夜/S2O 三天兩夜 Day 1 台中美食與住宿行程.png" alt="玹翔旅遊 Day 1 台中美食與住宿行程圖" loading="lazy">
+./S2O.html:402:        <img src="images/S2O三天兩夜/S2O 三天兩夜 Day 2 音樂節與會場接送行程圖.png" alt="玹翔旅遊 Day 2 音樂節與會場接送行程圖" loading="lazy">
+./S2O.html:410:        <img src="images/S2O三天兩夜/S2O 三天兩夜 Day 3 台中輕旅行與返程行程圖.png" alt="玹翔旅遊 Day 3 台中輕旅行與返程行程圖" loading="lazy">
+./S2O.html:425:        <a class="btn dark" href="images/S2O三天兩夜/玹翔旅遊｜完整行程圖｜三天兩夜一次看懂.png" target="_blank" rel="noopener">查看行程圖大圖</a>
+./S2O.html:446:      <div class="card"><img class="card-img" src="images/rav4.jpg" alt="玹翔旅遊舒適五人座 S2O 接送車款" loading="lazy"><h3>舒適五人座</h3><p>適合 1–4 人，小團輕旅行、情侶、朋友雙人出遊。</p></div>
+./S2O.html:447:      <div class="card"><img class="card-img" src="images/vehicles/vito.jpg" alt="玹翔旅遊商務九人座 S2O 包車車款" loading="lazy"><h3>商務九人座</h3><p>適合 5–8 人，S2O 揪團、朋友包車、行李較多最實用。</p></div>
+./S2O.html:448:      <div class="card"><img class="card-img" src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車 S2O 尊榮接送" loading="lazy"><h3>明星保母車</h3><p>適合 VIP、網紅、藝人、公司團體，空間與尊榮感一次到位。</p></div>
+./privacy.html:14:<meta property="og:image" content="images/logo.jpg">
+./smangus-day.html:107:  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/smangus01.jpg');
+./smangus-day.html:109:.p2{background-image:url('./images/smangus02.jpg')}
+./smangus-day.html:110:.p3{background-image:url('./images/smangus03.jpg')}
+./smangus-day.html:207:.g1{background-image:url('./images/smangus04.jpg')}
+./smangus-day.html:208:.g2{background-image:url('./images/smangus05.jpg')}
+./smangus-day.html:209:.g3{background-image:url('./images/smangus06.jpg')}
+./smangus-day.html:210:.g4{background-image:url('./images/smangus07.jpg')}
+./smangus-day.html:211:.g5{background-image:url('./images/smangus01.jpg')}
+./smangus-day.html:212:.g6{background-image:url('./images/smangus02.jpg')}
+./smangus-day.html:290:<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+./smangus-day.html:424:        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+./smangus-day.html:432:        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+
+===== 檢查本機圖片引用 =====
+
+===== Firebase 設定 =====
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "database.rules.json",
+      "storage.rules",
+      "apps-script/**",
+      "tools/**",
+      "docs/**",
+      "backups/**",
+      "backup/**",
+      "tmp/**",
+      "temp/**",
+      "node_modules/**",
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.github/**",
+      "**/.vscode/**",
+      "**/.idea/**",
+      "**/.DS_Store",
+      ".DS_Store",
+      "**/Thumbs.db",
+      "**/*.log",
+      "**/*.map",
+      "**/*.bak",
+      "**/*.old",
+      "**/*.tmp",
+      "**/*.zip",
+      "**/*.rar",
+      "**/*.7z",
+      "**/*.psd",
+      "**/*.ai",
+      "**/*.sketch",
+      "**/*.fig",
+      "**/*.txt",
+      "README.md",
+      "README.html",
+      "content-merged.html"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/home",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/vehicles",
+        "destination": "/fleet",
+        "type": 301
+      },
+      {
+        "source": "/business-transfer",
+        "destination": "/business",
+        "type": 301
+      },
+      {
+        "source": "/concert-transfer",
+        "destination": "/concert",
+        "type": 301
+      },
+      {
+        "source": "/travel-charter",
+        "destination": "/charter",
+        "type": 301
+      },
+      {
+        "source": "/smangus-day.html",
+        "destination": "/smangus-day",
+        "type": 301
+      },
+      {
+        "source": "/hehuanshan-day.html",
+        "destination": "/hehuanshan-day",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/404.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|mjs)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "assets/js/config.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|png|gif|webp|svg|ico|avif)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(mp4|webm|ogg|mp3|wav)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(woff|woff2|ttf|otf)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/404.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex,follow"
+          }
+        ]
+      },
+      {
+        "source": "/robots.txt",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=3600,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/sitemap.xml",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=3600,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/manifest.json",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=86400,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "accelerometer=(), autoplay=(self), camera=(), clipboard-read=(), clipboard-write=(self), display-capture=(), encrypted-media=(self), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self), publickey-credentials-get=(self), usb=(), xr-spatial-tracking=()"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains; preload"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-site"
+          },
+          {
+            "key": "X-DNS-Prefetch-Control",
+            "value": "on"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://script.google.com https://script.googleusercontent.com https://static.line-scdn.net; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebasedatabase.app https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://firebaselogging-pa.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://script.google.com https://script.googleusercontent.com https://api.line.me https://liff.line.me https://line.me https://wa.me; frame-src 'self' https://liff.line.me https://www.youtube.com https://www.youtube-nocookie.com https://accounts.google.com https://www.google.com; form-action 'self' https://script.google.com https://script.googleusercontent.com; worker-src 'self' blob:; manifest-src 'self'; media-src 'self' blob: data:; upgrade-insecure-requests"
+          }
+        ]
+      }
+    ]
+  },
+  "firestore": [
+    {
+      "database": "xuanxiangtravel",
+      "rules": "firestore.rules",
+      "indexes": "firestore.indexes.json"
+    }
+  ]
+}
+
+===== robots / sitemap =====
+-rw-r--r--  1 xuanxiangtravelxianglvyou  staff    72B  6月  9 15:55 robots.txt
+-rw-r--r--  1 xuanxiangtravelxianglvyou  staff   6.8K  6月  6 14:51 sitemap.xml
+
+===== 後台模組 JS 對應檢查 =====
+可能缺頁面：calendar.html / admin/calendar.html 對應 admin/modules/calendar.js
+可能缺頁面：drivers.html / admin/drivers.html 對應 admin/modules/drivers.js
+可能缺頁面：kpi.html / admin/kpi.html 對應 admin/modules/kpi.js
+可能缺頁面：line-center.html / admin/line-center.html 對應 admin/modules/line-center.js
+可能缺頁面：maps.html / admin/maps.html 對應 admin/modules/maps.js
+可能缺頁面：members.html / admin/members.html 對應 admin/modules/members.js
+可能缺頁面：revenue.html / admin/revenue.html 對應 admin/modules/revenue.js
+可能缺頁面：calendar.html / admin/calendar.html 對應 admin/modules/calendar.js
+可能缺頁面：drivers.html / admin/drivers.html 對應 admin/modules/drivers.js
+可能缺頁面：kpi.html / admin/kpi.html 對應 admin/modules/kpi.js
+可能缺頁面：line-center.html / admin/line-center.html 對應 admin/modules/line-center.js
+可能缺頁面：maps.html / admin/maps.html 對應 admin/modules/maps.js
+可能缺頁面：members.html / admin/members.html 對應 admin/modules/members.js
+可能缺頁面：revenue.html / admin/revenue.html 對應 admin/modules/revenue.js
+
+===== 掃描完成 =====

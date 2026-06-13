@@ -1,0 +1,81 @@
+# 玹翔旅遊｜Ultimate Final v3.2 Conversion Upgrade
+
+本版完成：assets/img 圖檔補強、每頁 OG 分享圖、LINE／電話／WhatsApp 三合一浮動客服、表單完成頁、首頁轉換率提升、機場／演唱會／FAQ／隱私權補強、Apps Script 黑名單／防刷／錯誤紀錄方向升級。
+
+## 目錄重點
+- `assets/img/logo.png`：網站 LOGO 圖檔
+- `assets/img/og/`：每頁高端黑金 OG 分享圖
+- `assets/img/fleet/`：車款示意圖
+- `booking-success.html`：表單送出後下一步流程頁
+- `sitemap.xml` / `robots.txt`：目前使用 Cloudflare Pages 範例網域，正式網域確認後請全站替換
+
+## Cloudflare Pages 圖文式上線流程
+1. 登入 Cloudflare → Workers & Pages → Create application → Pages。
+2. 選擇 Upload assets。
+3. 將本壓縮包解壓後，進入資料夾內層，確認看得到 `index.html`。
+4. 上傳整個資料夾內容，不要只上傳 zip。
+5. 部署完成後打開 Pages 預覽網址。
+6. 測試：首頁、價目表、預約商城、FAQ、手機版選單。
+7. 正式網域設定完成後，替換 HTML、sitemap.xml、robots.txt 內的 `https://xuanxiang-travel.pages.dev`。
+
+## Apps Script 部署提醒
+1. 將 `apps-script/Code.gs` 貼到 Apps Script。
+2. Script Properties 設定 `LINE_CHANNEL_ACCESS_TOKEN`。
+3. 部署 Web App：執行身分選「我」，存取權選「任何人」。
+4. 將部署網址貼回 `assets/js/config.js` 的 `API_URL`。
+5. 測試 `?action=health` 與 `?action=prices&sheet=桃園機場`。
+
+## LINE 設定
+- 管理員 userId 放在 `LINE_ADMIN_IDS`。
+- 群組或多人管理可填 `LINE_GROUP_IDS`。
+- 黑名單電話可填 `BLACKLIST_PHONES`。
+- 發生錯誤時會寫入 Google Sheet 的 `系統錯誤紀錄`。
+
+## 驗收
+- 手機版三合一浮動客服正常
+- 預約送出成功會顯示下一步付款／客服確認流程
+- FAQ 可搜尋
+- fleet.html 顯示車款圖與乘坐／行李建議
+- OG 圖路徑可開啟
+
+
+==============================
+Ultimate Final v3.3 Operation Upgrade
+==============================
+本版修正與新增：
+1. fleet.html：清理重複車款圖片，避免卡片雙圖跑版。
+2. booking.html + site.js：表單送出中鎖定按鈕，防止客人連點造成重複訂單。
+3. booking-success.html：支援網址參數 orderId，送出後顯示訂單編號與下一步付款／客服確認流程。
+4. Cloudflare Pages：新增 _headers、_redirects、404.html、manifest.json、favicon.svg。
+5. SEO：補 404 頁、manifest、favicon 與成功頁 BreadcrumbList 結構化資料。
+
+Cloudflare Pages 上線注意：
+- 上傳整個 xuanxiang_ultimate_final_v3_3_operation_upgrade 資料夾內容。
+- 若有正式網域，請將 sitemap.xml、robots.txt 與各頁 canonical/og:url 的 xuanxiang-travel.pages.dev 替換為正式網域。
+- _redirects 已補常見錯字轉址：airport.htm1、faq.htm1、booking.htm。
+- _headers 已加入基本安全標頭與靜態資源快取規則。
+
+驗收流程：
+1. 開啟 index.html 確認導覽列、Footer、三合一客服正常。
+2. 開啟 fleet.html 確認每張車款卡片只顯示一張主圖。
+3. 測試 booking.html，送出後按鈕會顯示「送出中」並鎖定，成功後跳轉 booking-success.html?orderId=...。
+4. 開啟 booking-success.html?orderId=TEST123，確認頁面顯示 TEST123。
+5. 開啟 /404.html、/manifest.json、/_headers、/_redirects 檢查存在。
+
+
+==============================
+V3.4 KLOOK-like Upgrade
+==============================
+本版新增 product.html 精選方案商品詳情頁，包含：
+1. 方案卡片：機場接送、旅遊包車、演唱會專車、商務尊榮。
+2. 商品頁亮點、費用包含／不包含、預約流程、信任元素。
+3. LINE 分享／複製連結功能。
+4. GA4 / Meta Pixel 轉換追蹤預留：site.js 內 xxTrack()。
+5. Product / BreadcrumbList schema。
+6. sitemap.xml 已納入 product.html。
+
+正式上線前建議：
+- 將 https://xuanxiang-travel.pages.dev 全站替換成正式網域。
+- 將示意評論改成真實 Google 商家評論或截圖。
+- 若有 GA4 或 Meta Pixel，將代碼放入每頁 head 或透過 GTM 管理。
+- product.html 的價格仍為參考價，正式成交以客服確認為準。

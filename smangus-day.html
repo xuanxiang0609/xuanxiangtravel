@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>玹翔旅遊 Trips｜司馬庫斯神木群・巨木森林一日遊</title>
+<meta name="description" content="玹翔旅遊 Trips｜司馬庫斯神木群・巨木森林一日遊，台中、彰化、南投出發，高端九人座與明星保母車包車／拼車預約，支援購物車、LINE預約與Firebase下單。">
+<meta name="keywords" content="玹翔旅遊,司馬庫斯,司馬庫斯一日遊,司馬庫斯包車,新竹尖石,巨木群步道,巨木森林,旅遊包車,九人座包車,明星保母車,台中出發,彰化出發,南投出發">
+<meta property="og:title" content="玹翔旅遊 Trips｜司馬庫斯神木群・巨木森林一日遊">
+<meta property="og:description" content="不用自己硬開山路，司馬庫斯巨木森林、部落秘境、雲海山景一次收藏。高端包車，安心抵達。">
+<meta property="og:type" content="website">
+
+<style>
+:root{
+  --bg:#050505;
+  --bg2:#111;
+  --card:#151515;
+  --card2:#211a10;
+  --gold:#d8b56d;
+  --gold2:#fff0b8;
+  --gold3:#b88935;
+  --orange:#ff5a12;
+  --orange2:#ff9a00;
+  --text:#fff9ec;
+  --muted:#cfc3a8;
+  --line:rgba(216,181,109,.28);
+  --white:#fff;
+  --green:#62e6b2;
+  --shadow:0 24px 70px rgba(0,0,0,.46);
+  --radius:26px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 16% -10%,rgba(216,181,109,.25),transparent 35%),
+    radial-gradient(circle at 90% 10%,rgba(255,90,18,.10),transparent 24%),
+    linear-gradient(180deg,#030303 0%,#111 42%,#050505 100%);
+  color:var(--text);
+}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font-family:inherit}
+.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+
+/* ===== HERO ===== */
+.hero{padding:64px 0 28px}
+.heroGrid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:stretch}
+.heroText{
+  padding:34px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:
+    linear-gradient(145deg,rgba(38,30,17,.88),rgba(9,9,9,.94));
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.heroText::before{
+  content:"";
+  position:absolute;inset:-1px;
+  background:radial-gradient(circle at 15% 8%,rgba(255,240,184,.16),transparent 32%);
+  pointer-events:none;
+}
+.heroText>*{position:relative;z-index:1}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 14px;border:1px solid var(--line);border-radius:999px;
+  color:var(--gold2);font-size:13px;background:rgba(216,181,109,.08);
+}
+.kicker{margin-top:18px;color:var(--gold2);font-weight:900;letter-spacing:.06em}
+h1{
+  font-size:clamp(36px,6vw,66px);
+  line-height:1.08;margin:10px 0 14px;letter-spacing:.02em;
+}
+.lead{font-size:18px;color:#eadfc9;line-height:1.9;max-width:760px}
+.heroBtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.heroPills{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+.heroPills span{
+  padding:9px 13px;border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,240,184,.16);
+  color:#fff2d2;font-size:13px;
+}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+.stat{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:16px}
+.stat b{font-size:24px;color:var(--gold2)}
+.stat span{display:block;color:var(--muted);font-size:13px;margin-top:4px;line-height:1.5}
+
+.photoWall{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.photo{
+  min-height:190px;border-radius:24px;border:1px solid var(--line);
+  background-size:cover;background-position:center;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;transition:.38s ease;
+}
+.photo:hover{transform:translateY(-5px);border-color:rgba(255,240,184,.55)}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.56))}
+.photoLabel{
+  position:absolute;left:16px;right:16px;bottom:14px;z-index:2;
+  font-weight:950;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.78)
+}
+.p1{
+  grid-column:1/3;min-height:295px;
+  background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.36)),url('./images/smangus01.jpg');
+}
+.p2{background-image:url('./images/smangus02.jpg')}
+.p3{background-image:url('./images/smangus03.jpg')}
+
+/* ===== GENERAL SECTION ===== */
+section{padding:48px 0}
+.sectionTitle{
+  display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px;
+}
+.sectionTitle h2{font-size:34px;margin:0}
+.sectionTitle h2::before{
+  content:"";display:inline-block;width:8px;height:34px;background:var(--orange);
+  border-radius:999px;margin-right:12px;vertical-align:-6px;
+}
+.muted{color:var(--muted);line-height:1.8}
+
+/* ===== BOOKING ===== */
+.bookingLayout{display:grid;grid-template-columns:1fr 365px;gap:22px}
+.panel{
+  background:rgba(255,255,255,.062);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+.calendarWrap{margin:8px 0 24px}
+.calendarLabel{display:block;color:var(--muted);margin-bottom:12px;font-size:15px}
+.calendarBox{
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px 20px;
+  box-shadow:0 12px 34px rgba(0,0,0,.28);
+}
+.calendarIcon{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--orange2),var(--orange));
+  font-size:24px;color:white;
+}
+.calendarInput{
+  flex:1;border:none;background:transparent;color:var(--white);
+  font-size:20px;font-weight:950;outline:none;min-width:0;
+}
+.calendarInput::-webkit-calendar-picker-indicator{filter:invert(1);cursor:pointer;opacity:.9}
+.calendarTips{margin-top:12px;color:var(--gold2);font-size:14px}
+.optionGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0 24px}
+.option{
+  border:1px solid rgba(255,255,255,.16);border-radius:18px;
+  padding:17px 15px;background:#101010;color:#fff;cursor:pointer;
+  font-weight:900;text-align:center;line-height:1.55;transition:.25s ease;
+}
+.option:hover{transform:translateY(-2px);border-color:rgba(255,240,184,.42)}
+.option.active{border-color:var(--orange);color:var(--orange);background:rgba(255,90,18,.08)}
+.qtyRow{
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(135deg,#fff,#f1e5c8);
+  color:#111;border-radius:20px;padding:18px 20px;margin-top:12px;
+}
+.qtyBtns{display:flex;align-items:center;gap:18px}
+.qtyBtns button{width:46px;height:46px;border:0;border-radius:14px;background:#eee;font-size:24px;cursor:pointer}
+.priceLine{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:26px;flex-wrap:wrap}
+.price{font-size:38px;font-weight:950;color:#fff}
+.smallPill{display:inline-flex;background:rgba(0,170,110,.12);color:#64f0bd;padding:8px 12px;border-radius:12px;margin-top:8px}
+.side{position:sticky;top:98px;height:max-content}
+.timeline{position:relative;margin-top:12px}
+.tl{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.tl time{color:var(--gold2);font-weight:950}
+.tl b{display:block;color:#fff}
+.tl span{color:var(--muted);font-size:13px;line-height:1.65}
+
+/* ===== INTRO ===== */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  border:1px solid var(--line);border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.035));
+  padding:22px;box-shadow:var(--shadow);
+}
+.card h3{margin:0 0 10px;color:var(--gold2)}
+.card p{margin:0;color:#eadfc9;line-height:1.85}
+
+/* ===== GALLERY ===== */
+.gallery{display:grid;grid-template-columns:1.35fr .82fr .82fr;gap:16px;margin-top:18px}
+.galleryCard{
+  min-height:235px;border-radius:24px;overflow:hidden;border:1px solid var(--line);
+  background-size:cover;background-position:center;position:relative;box-shadow:var(--shadow);
+  transition:.42s ease;
+}
+.galleryCard.big{grid-row:span 2;min-height:490px}
+.galleryCard:hover{
+  transform:translateY(-8px) scale(1.015);
+  border-color:rgba(255,240,184,.62);
+  box-shadow:0 30px 80px rgba(0,0,0,.58),0 0 34px rgba(216,181,109,.16);
+}
+.galleryCard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.74))}
+.galleryCard b{
+  position:absolute;left:18px;right:18px;bottom:16px;z-index:2;color:#fff;
+  font-size:18px;line-height:1.55;text-shadow:0 3px 14px rgba(0,0,0,.92)
+}
+.g1{background-image:url('./images/smangus04.jpg')}
+.g2{background-image:url('./images/smangus05.jpg')}
+.g3{background-image:url('./images/smangus06.jpg')}
+.g4{background-image:url('./images/smangus07.jpg')}
+.g5{background-image:url('./images/smangus01.jpg')}
+.g6{background-image:url('./images/smangus02.jpg')}
+
+/* ===== VEHICLE ===== */
+.vehicleShow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.vehicleCard{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:rgba(255,255,255,.055);box-shadow:var(--shadow)}
+.vehicleCard img{width:100%;height:235px;object-fit:cover;display:block}
+.vehicleCard div{padding:18px}
+.vehicleCard h3{margin:0 0 8px;color:var(--gold2)}
+.vehicleCard p{margin:0;color:var(--muted);line-height:1.75}
+.vehicleNote{
+  margin-top:14px;color:var(--muted);line-height:1.8;
+  border:1px solid var(--line);border-radius:18px;padding:15px 16px;background:rgba(255,255,255,.045)
+}
+
+/* ===== NOTICE ===== */
+.notice{
+  background:rgba(255,90,18,.095);border:1px solid rgba(255,90,18,.35);
+  border-radius:22px;padding:24px;color:#ffe5d8;line-height:1.85;
+}
+.notice h3{color:var(--gold2);margin:18px 0 8px}
+.notice ul{line-height:2;color:#ffe8d6}
+.notice hr{border:0;border-top:1px solid rgba(255,255,255,.09);margin:22px 0}
+
+/* ===== CART ===== */
+.cartBox{
+  position:fixed;right:18px;bottom:18px;z-index:88;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#111;border-radius:999px;padding:14px 18px;box-shadow:var(--shadow);
+  font-weight:950;display:flex;gap:10px;align-items:center;cursor:pointer;
+}
+.drawer{position:fixed;inset:0;z-index:120;display:none}
+.drawer.show{display:block}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.70)}
+.drawerPanel{
+  position:absolute;right:0;top:0;height:100%;width:min(450px,92vw);
+  background:#0b0b0b;border-left:1px solid var(--line);
+  padding:26px;overflow:auto;
+}
+.formGrid{display:grid;gap:12px}
+.input{
+  width:100%;padding:15px 14px;border-radius:14px;border:1px solid var(--line);
+  background:#141414;color:#fff;font-size:15px;
+}
+.footer{padding:42px 0 90px;color:var(--muted);border-top:1px solid var(--line);margin-top:40px}
+.floatLine{
+  position:fixed;left:18px;bottom:18px;z-index:88;
+  background:#06c755;color:white;border-radius:999px;
+  padding:14px 18px;font-weight:950;box-shadow:var(--shadow);
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:900px){
+  .navlinks,.cta{display:none}
+  .heroGrid,.bookingLayout{grid-template-columns:1fr}
+  .side{position:static}
+  .optionGrid,.cards,.stats,.vehicleShow{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
+  .galleryCard.big{grid-row:auto;min-height:280px}
+  .galleryCard{min-height:240px}
+  .photoWall{grid-template-columns:1fr}
+  .p1{grid-column:auto}
+  .price{font-size:32px}
+  .calendarInput{font-size:17px}
+  .calendarBox{padding:16px}
+  .hero{padding-top:34px}
+  .topbar .wrap{width:calc(100% - 22px)}
+  .sectionTitle{display:block}
+  .qtyRow{align-items:flex-start;flex-direction:column;gap:12px}
+  .cartBox{right:12px;bottom:12px}
+  .floatLine{left:12px;bottom:12px}
+}
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://xuanxiangtravel.com/smangus-day.html">
+<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+</head>
+
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<!--
+圖片資料夾設定：
+請在本 HTML 同層建立 images 資料夾，並放入以下檔案：
+smangus01.jpg、smangus02.jpg、smangus03.jpg、smangus04.jpg、smangus05.jpg、smangus06.jpg、smangus07.jpg、smangus08.jpg、vito.jpg、sprinter.jpg
+-->
+
+<main>
+<section class="hero">
+  <div class="wrap heroGrid">
+    <div class="heroText">
+      <div class="tag">🌲 台中、彰化、南投出發｜司馬庫斯・巨木群・部落秘境路線</div>
+      <div class="kicker">山路不難，難的是自己硬開還假裝很享受。</div>
+      <h1>司馬庫斯巨木森林<br>高端一日遊</h1>
+      <p class="lead">不用自己硬開山路、不用研究管制時段，也不用一路握方向盤握到懷疑人生。玹翔旅遊安排巨木群、部落秘境、山林雲海，讓你舒服上山、優雅拍照、安全回家。😎</p>
+      <div class="heroBtns">
+        <a class="btn gold" href="#plans">立即選方案</a>
+        <button class="btn orange" onclick="sendLine('司馬庫斯行程詢問')">LINE 快速預約</button>
+      </div>
+      <div class="heroPills">
+        <span>🚐 專業山路司機派遣</span>
+        <span>🌲 巨木森林秘境</span>
+        <span>📸 網美景點直接安排</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>24H</b><span>客服諮詢</span></div>
+        <div class="stat"><b>6人成團</b><span>小資森林旅行</span></div>
+        <div class="stat"><b>500萬+</b><span>高額乘客險</span></div>
+      </div>
+    </div>
+
+    <div class="photoWall">
+      <div class="photo p1"><div class="photoLabel">司馬庫斯巨木森林｜森林大片主視覺</div></div>
+      <div class="photo p2"><div class="photoLabel">巨木群步道｜天然冷氣直接開</div></div>
+      <div class="photo p3"><div class="photoLabel">山谷雲海景色｜交給專業司機就對了</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="wrap bookingLayout">
+    <div class="panel">
+      <div class="sectionTitle"><h2>方案選擇</h2><span class="muted">拼車看人數，專車看台數；山路交給玹翔，人生少一點手汗。</span></div>
+      <div class="calendarWrap">
+        <label class="calendarLabel" for="tourDate">請選擇參加日期</label>
+        <div class="calendarBox">
+          <div class="calendarIcon">📅</div>
+          <input type="date" id="tourDate" class="calendarInput" onchange="changeCalendarDate(this.value)">
+        </div>
+        <div class="calendarTips">可選日期：6/1～12/31｜山區路線會依天候、管制與路況調整 🌲</div>
+      </div>
+
+      <p class="muted">方案類型</p>
+      <div class="optionGrid" id="planOptions"></div>
+
+      <p class="muted">數量｜<span id="qtyHint">拼車</span></p>
+      <div class="qtyRow">
+        <b id="unitLabel">每人</b>
+        <b id="unitPrice">NT$ 1,600</b>
+        <div class="qtyBtns"><button onclick="changeQty(-1)">−</button><b id="qty">1</b><button onclick="changeQty(1)">＋</button></div>
+      </div>
+
+      <div class="priceLine">
+        <div>
+          <div class="price" id="totalPrice">NT$ 1,600</div>
+          <span class="smallPill" id="priceNote">拼車方案以人數計算｜專車方案以台數計算</span>
+        </div>
+        <div>
+          <button class="btn gold" onclick="addToCart()">加入購物車</button>
+          <button class="btn orange" onclick="openCart()">立即預訂</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel side" id="timeline">
+      <h2 style="margin:0 0 8px">方案詳情</h2>
+      <div class="tag">實際時間依路況、管制與停留彈性調整</div>
+      <div class="timeline">
+        <div class="tl"><time>05:30</time><div><b>台中／彰化／南投出發</b><span>到府接送，上車補眠剛剛好。</span></div></div>
+        <div class="tl"><time>08:00</time><div><b>內灣／尖石休息</b><span>補給、洗手間，山路前調整。</span></div></div>
+        <div class="tl"><time>10:30</time><div><b>抵達司馬庫斯部落</b><span>部落散策、拍照、用餐安排。</span></div></div>
+        <div class="tl"><time>12:30</time><div><b>巨木群步道</b><span>森林步道、千年巨木、山林秘境。</span></div></div>
+        <div class="tl"><time>16:30</time><div><b>準備下山</b><span>依山區交通管制與路況彈性調整。</span></div></div>
+        <div class="tl"><time>21:30</time><div><b>返回中彰投</b><span>結束一趟不用自己硬撐的森林旅行。</span></div></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="intro">
+  <div class="wrap">
+    <div class="sectionTitle"><h2>活動介紹</h2><span class="muted">森林很美，但司機如果不穩，巨木還沒看到就先看到人生跑馬燈。</span></div>
+    <div class="cards">
+      <div class="card"><h3>🌲 千年巨木森林</h3><p>走進司馬庫斯巨木群步道，森林感、空氣感、神木感直接拉滿。平地熱到懷疑人生，山上舒服到懷疑自己是不是選對人生。</p></div>
+      <div class="card"><h3>☁️ 部落秘境氛圍</h3><p>山谷、部落、森林步道與雲霧景色一次收藏。玹翔不保證雲會聽話，但保證行程安排盡量貼心。</p></div>
+      <div class="card"><h3>🚐 高端專車服務</h3><p>九人座、VITO-2、明星保母車或同等級以上車款依需求安排。山路不是比便宜，是比穩、比舒服、比司機有沒有睡飽。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="sectionTitle">
+      <h2>行程實景氛圍</h2>
+      <span class="muted">先看照片，再決定今天要不要把山路交給專業。🌲</span>
+    </div>
+    <div class="gallery">
+      <div class="galleryCard big g1"><b>巨木森林步道｜森林大片直接封神</b></div>
+      <div class="galleryCard g2"><b>司馬庫斯部落｜抵達秘境第一張打卡照</b></div>
+      <div class="galleryCard g3"><b>山林入口｜空氣好到懷疑平常吸的是什麼</b></div>
+      <div class="galleryCard g4"><b>巨木群地標｜經典必拍畫面</b></div>
+      <div class="galleryCard g5"><b>森林步道｜天然冷氣不用錢</b></div>
+      <div class="galleryCard g6"><b>山谷雲霧｜旅程收尾剛剛好</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="vehicles">
+  <div class="wrap">
+    <div class="sectionTitle">
+      <h2>建議車款</h2>
+      <span class="muted">車款圖片與名稱為示意參考，實際派車依當日調度為準。</span>
+    </div>
+
+    <div class="vehicleShow">
+      <div class="vehicleCard">
+        <img src="./images/vehicles/vito.jpg" alt="Mercedes-Benz VITO-2 或同等級以上商務九人座">
+        <div>
+          <h3>高端商務九人座｜Mercedes VITO-2 或同等級以上</h3>
+          <p>適合 4–8 人團體，長途山路乘坐更舒適，行李空間與乘坐感都比較均衡。</p>
+        </div>
+      </div>
+
+      <div class="vehicleCard">
+        <img src="./images/vehicles/sprinter.jpg" alt="Sprinter 明星保母車或同等級以上車款">
+        <div>
+          <h3>明星保母車｜Sprinter 或同等級以上</h3>
+          <p>高端旅遊與商務接待首選，空間感、隱私感、氣場直接拉滿。不是坐車，是上山前先升級心情。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="vehicleNote">車款圖片與名稱為示意參考，實際派車將依當日車輛調度、乘客人數、行李數量與路況安排，玹翔旅遊保留派遣同等級或以上車款之權利。</div>
+  </div>
+</section>
+
+<section id="notice">
+  <div class="wrap">
+    <div class="sectionTitle">
+      <h2>行程備註與注意事項</h2>
+      <span class="muted">森林很美，但規矩要先看；不然巨木還沒看到，客服先看到驚嚇。😎</span>
+    </div>
+
+    <div class="notice">
+      <p>📍 本行程屬山區長途包車路線，實際出發、停留與回程時間，將依天候、交通管制、山區路況、旅客集合情形與安全評估進行彈性調整。</p>
+
+      <hr>
+
+      <h3>🌲 巨木群步道提醒</h3>
+      <ul>
+        <li>✔ 巨木群步道來回約 3.5～4 小時，請依個人體力狀況評估。</li>
+        <li>✔ 部分路段較原始，建議穿著止滑鞋、輕便服裝並攜帶雨具。</li>
+        <li>✔ 如有容易暈車、特殊疾病、行動不便或大型行李，請提前告知客服。</li>
+      </ul>
+
+      <hr>
+
+      <h3>🚐 車輛安排說明</h3>
+      <p>本行程將依乘客人數、行李件數與當日派車狀況安排適合車款。</p>
+      <ul>
+        <li>• VIP 九人座或同等級以上車款</li>
+        <li>• Mercedes-Benz 明星保母車或同等級以上車款</li>
+      </ul>
+      <p>圖片僅供參考，實際依當日派車為主。玹翔旅遊保留派遣同等級或以上車款之權利。</p>
+
+      <hr>
+
+      <h3>⚠️ 山區注意事項</h3>
+      <ul>
+        <li>• 山區部分路段訊號較不穩定。</li>
+        <li>• 山路彎道較多，容易暈車者請提前準備。</li>
+        <li>• 天候、道路封閉、坍方、交通中斷或政府公告管制，皆可能影響行程。</li>
+      </ul>
+      <p>另外，山路不建議一路低頭滑手機。不然還沒看到巨木，可能先看到人生跑馬燈。😎</p>
+
+      <hr>
+
+      <h3>💳 訂單與保留規範</h3>
+      <p>送出預約後，將由客服確認日期、人數、上下車地點、車型安排與報價內容。完成訂金支付後，才視為正式保留車輛與名額。</p>
+
+      <hr>
+
+      <div style="text-align:center;padding-top:10px">
+        <h3 style="color:var(--gold2);margin-bottom:10px">✨ 玹翔旅遊 Trips</h3>
+        <p style="font-size:18px;color:#fff4da;line-height:1.9">不是只有接送，<br>而是把整趟旅程照顧好。</p>
+        <p class="muted">24H 機場接送｜旅遊包車｜高端尊榮接送</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="cartBox" onclick="openCart()">🛒 <span id="cartCount">0</span>｜立即預訂</div>
+<a class="floatLine" href="#" data-xx-line-link target="_blank" rel="noopener">LINE 預約</a>
+
+<div class="drawer" id="drawer">
+  <div class="overlay" onclick="closeCart()"></div>
+  <div class="drawerPanel">
+    <h2>預訂資料</h2>
+    <p class="muted" id="cartSummary">尚未加入方案</p>
+    <div class="formGrid">
+      <input class="input" id="name" placeholder="乘客姓名">
+      <input class="input" id="phone" placeholder="聯絡電話">
+      <input class="input" id="pickup" placeholder="上車地址">
+      <input class="input" id="lineid" placeholder="LINE ID／WhatsApp">
+      <textarea class="input" id="note" rows="4" placeholder="備註：車款需求、行李、人數、是否需要安全座椅、是否容易暈車等"></textarea>
+      <button class="btn orange" onclick="submitOrder()">送出預約</button>
+      <button class="btn gold" onclick="sendLine('購物車預約')">LINE 傳送預約內容</button>
+      <button class="btn dark" onclick="closeCart()">關閉</button>
+    </div>
+    <hr style="border-color:var(--line);margin:22px 0">
+    <p class="muted">預約會送到共用 Apps Script 後端；LINE 與 API 網址都由全站設定檔統一管理，不需要修改本頁程式碼。</p>
+  </div>
+</div>
+
+<script src="assets/js/trip-booking.js"></script>
+<script>
+const LINE_URL = window.XUANXIANG_CONFIG.CONTACT.lineUrl;
+const initialTourDate = window.XUANXIANG_TRIP_BOOKING.initDateInput(document.getElementById('tourDate'));
+const plans = [
+  { name:'九人座商務車｜拼車', price:1800, unit:'人', maxQty:8, note:'最多 8 位｜6人成團｜以人數計算' },
+  { name:'九人座商務車｜專車', price:12000, unit:'台', maxQty:1, note:'每台最多 8 位｜以台數計算' },
+  { name:'明星保母車版｜拼車', price:2300, unit:'人', maxQty:8, note:'最多 8 位｜6人成團｜以人數計算' },
+  { name:'明星保母車版｜專車', price:16000, unit:'台', maxQty:1, note:'每台最多 8 位｜以台數計算' }
+];
+
+let state = {
+  date:formatDate(initialTourDate),
+  plan:plans[0],
+  qty:1,
+  cart:false
+};
+
+function money(n){
+  return 'NT$ ' + Number(n).toLocaleString('zh-TW');
+}
+
+function formatDate(value){
+  const d = new Date(value + 'T00:00:00');
+  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+}
+
+function renderOptions(){
+  planOptions.innerHTML = plans.map((p,i)=>`
+    <button class="option ${state.plan.name===p.name?'active':''}" onclick="selectPlan(${i})">
+      ${p.name}<br><span style="font-size:13px;color:var(--muted)">${money(p.price)}／${p.unit}｜${p.note}</span>
+    </button>
+  `).join('');
+  renderPrice();
+}
+
+function renderPrice(){
+  if(state.qty > state.plan.maxQty){
+    state.qty = state.plan.maxQty;
+  }
+  unitLabel.textContent = state.plan.unit === '台' ? '每台' : '每人';
+  unitPrice.textContent = money(state.plan.price);
+  qty.textContent = state.qty;
+  qtyHint.textContent = state.plan.note;
+  priceNote.textContent = state.plan.unit === '台' ? '專車方案以台為單位' : '拼車方案以人數為單位';
+  totalPrice.textContent = money(state.plan.price * state.qty);
+  cartCount.textContent = state.cart ? state.qty : 0;
+  cartSummary.textContent = `${state.date}｜${state.plan.name}｜${state.qty}${state.plan.unit}｜總計 ${money(state.plan.price * state.qty)}`;
+}
+
+window.changeCalendarDate = value => {
+  state.date = formatDate(value);
+  renderPrice();
+};
+
+window.selectPlan = i => {
+  state.plan = plans[i];
+  state.qty = Math.min(state.qty, state.plan.maxQty);
+  renderOptions();
+};
+
+window.changeQty = n => {
+  state.qty = Math.max(1, Math.min(state.plan.maxQty, state.qty + n));
+  renderPrice();
+};
+
+window.addToCart = () => {
+  state.cart = true;
+  renderPrice();
+  openCart();
+};
+
+window.openCart = () => {
+  state.cart = true;
+  renderPrice();
+  drawer.classList.add('show');
+};
+
+window.closeCart = () => drawer.classList.remove('show');
+
+function orderData(){
+  return {
+    product:'司馬庫斯神木群・巨木森林一日遊',
+    date:state.date,
+    plan:state.plan.name,
+    qty:state.qty,
+    unit:state.plan.unit,
+    unitPrice:state.plan.price,
+    total:state.plan.price * state.qty,
+    name:name.value,
+    phone:phone.value,
+    pickup:pickup.value,
+    lineid:lineid.value,
+    note:note.value
+  };
+}
+
+window.sendLine = (source) => {
+  const o = orderData();
+  const msg = `玹翔旅遊 Trips 預約詢問\n來源：${source}\n行程：${o.product}\n日期：${o.date}\n方案：${o.plan}\n數量：${o.qty}${o.unit}\n總價：${money(o.total)}\n姓名：${o.name || '尚未填寫'}\n電話：${o.phone || '尚未填寫'}\n上車：${o.pickup || '尚未填寫'}\nLINE/WhatsApp：${o.lineid || '尚未填寫'}\n備註：${o.note || '無'}`;
+  window.open(LINE_URL + '?text=' + encodeURIComponent(msg), '_blank');
+};
+
+window.submitOrder = () => window.XUANXIANG_TRIP_BOOKING.submit({
+  button: document.querySelector('.drawerPanel .btn.orange'),
+  source:'smangus-day.html',
+  payload:orderData()
+});
+
+renderOptions();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

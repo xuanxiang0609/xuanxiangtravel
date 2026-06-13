@@ -1,0 +1,111 @@
+{
+  "time": "2026-06-09T23:59:53.331818",
+  "root": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip",
+  "removed_mac_junk": [],
+  "removed_duplicate_files": [],
+  "merged_duplicate_dirs": [],
+  "conflicts": [
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/business-transfer.html",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/business.html",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/concert-transfer.html",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/concert.html",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/upload-062.jpg",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/index/hero.jpg",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/addons/sign-service.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/舉牌服務.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/addons/booster-seat.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/增高墊.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/addons/child-seat.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/正向安全座椅.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/addons/pet-transfer.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/寵物接送.PNG",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/addons/rear-facing-seat.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/反向安全座椅.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/addons/luggage-carry.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/行李搬運.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/uploads/concert.jpg",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/upload-001.jpg",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/index/concert.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/演唱會接送.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/index/airport.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/機場接送.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/vehicles/sprinter.jpg",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/sprinter.jpg",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/vehicles/vito.jpg",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/VITO.jpg",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/車照/ALPHARD/alphard.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/vehicles/alphard.jpg",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/images/車照/RAV4/251222_ToyotaRAV4_026_PhotoChen.png",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/images/vehicles/rav4.png",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/videos/sprinter-upgrade.mp4",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/videos/business-hero.mp4",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/videos/about-hero.mp4",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/videos/business-hero.mp4",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-canonical.txt",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/duplicate-archive/reports/duplicate-og-image.txt",
+      "reason": "same hash but not obvious copy; kept"
+    },
+    {
+      "path": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/garbled-names.txt",
+      "same_as": "/Users/xuanxiangtravelxianglvyou/Desktop/xuanxiang-fixed-unzip/reports/video-path-errors.txt",
+      "reason": "same hash but not obvious copy; kept"
+    }
+  ],
+  "garbled_names": [],
+  "kept_files": []
+}

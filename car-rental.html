@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!--
+=========================================================
+玹翔旅遊｜租車服務頁
+版本：Ultimate Final v8.2 Car Rental Storefront
+
+新手小白維護重點：
+1. Header / Footer / 浮動客服由 assets/js/site-layout.js 注入，本頁不要重複寫。
+2. 聯絡方式統一改 assets/js/config.js，本頁不要硬寫電話或 LINE。
+3. 圖片若失效會自動換成 images/logo.jpg，避免正式頁面破圖。
+4. 本頁是完整 HTML，不可只留下結尾腳本。
+=========================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>租車服務｜高端車款・商務接送・旅遊包車｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊租車服務，提供舒適五人座、九人座商務車、VITO、Toyota Alphard、Lexus LM、Mercedes-Benz Sprinter 等高端接送與包車服務。">
+<meta name="keywords" content="玹翔旅遊,租車服務,高端租車,商務包車,機場接送,旅遊包車,VITO,Alphard,Lexus LM,Sprinter,明星保母車">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#050505">
+<link rel="canonical" href="https://xuanxiangtravel.com/car-rental.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="玹翔旅遊">
+<meta property="og:title" content="租車服務｜玹翔旅遊">
+<meta property="og:description" content="從日常接送到商務貴賓，高端車款、專業司機與清楚流程一次到位。">
+<meta property="og:url" content="https://xuanxiangtravel.com/car-rental.html">
+<meta property="og:image" content="https://xuanxiangtravel.com/images/vehicles/sprinter.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+<style>
+/* =========================================================
+   租車服務頁專用美編
+   新手提醒：此段只影響 car-rental.html。
+========================================================= */
+:root{
+  --rental-bg:#050505;
+  --rental-panel:#15110b;
+  --rental-gold:#d8b56d;
+  --rental-gold-2:#fff0b8;
+  --rental-green:#8ff0b2;
+  --rental-blue:#9ed8ff;
+  --rental-text:#fff8e8;
+  --rental-muted:#d8ccb0;
+  --rental-line:rgba(216,181,109,.28);
+  --rental-line-strong:rgba(255,240,184,.42);
+  --rental-shadow:0 28px 82px rgba(0,0,0,.44);
+  --rental-safe:min(1180px,92vw);
+}
+
+.rental-wrap{width:var(--rental-safe);margin:auto}
+
+.rental-hero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(72px,9vw,128px) 0 clamp(46px,7vw,78px);
+}
+
+.rental-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.72),rgba(0,0,0,.42)),
+    url("images/vehicles/sprinter.jpg") center/cover no-repeat;
+}
+
+.rental-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  z-index:-1;
+  height:150px;
+  background:linear-gradient(180deg,transparent,var(--rental-bg));
+}
+
+.rental-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);
+  gap:clamp(24px,4vw,44px);
+  align-items:stretch;
+}
+
+.rental-card,
+.rental-hero-card,
+.rental-side-card,
+.rental-flow-card,
+.rental-faq-card,
+.rental-cta{
+  position:relative;
+  border:1px solid var(--rental-line);
+  background:linear-gradient(145deg,rgba(23,23,23,.94),rgba(22,16,8,.9));
+  box-shadow:var(--rental-shadow);
+  overflow:hidden;
+}
+
+.rental-hero-card{
+  border-radius:34px;
+  padding:clamp(28px,5vw,56px);
+}
+
+.rental-card::before,
+.rental-hero-card::before,
+.rental-flow-card::before,
+.rental-side-card::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--rental-line-strong),transparent);
+}
+
+.rental-kicker{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  padding:8px 14px;
+  border:1px solid var(--rental-line);
+  border-radius:999px;
+  color:var(--rental-gold-2);
+  background:rgba(216,181,109,.1);
+  font-size:.9rem;
+  font-weight:950;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.rental-hero h1{
+  margin:18px 0 0;
+  color:var(--rental-gold-2);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(2.4rem,6.2vw,5.45rem);
+  line-height:1.08;
+  letter-spacing:.035em;
+  text-shadow:0 12px 38px rgba(0,0,0,.72);
+}
+
+.rental-lead{
+  max-width:780px;
+  margin:20px 0 0;
+  color:#eadfca;
+  font-size:clamp(1rem,1.7vw,1.2rem);
+  line-height:2;
+}
+
+.rental-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+
+.rental-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:30px;
+}
+
+.rental-stat{
+  min-height:96px;
+  padding:18px;
+  border:1px solid rgba(216,181,109,.22);
+  border-radius:20px;
+  background:rgba(255,255,255,.045);
+}
+
+.rental-stat strong{
+  display:block;
+  color:var(--rental-gold-2);
+  font-size:clamp(1.3rem,3vw,2.1rem);
+  line-height:1.1;
+  font-weight:950;
+}
+
+.rental-stat span{
+  display:block;
+  margin-top:8px;
+  color:var(--rental-muted);
+  font-weight:850;
+  line-height:1.55;
+}
+
+.rental-side-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border-radius:34px;
+  padding:clamp(24px,4vw,38px);
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03)),rgba(9,8,6,.86);
+  backdrop-filter:blur(12px);
+}
+
+.rental-side-card h2,
+.rental-title h2,
+.rental-cta h2{
+  margin:0;
+  color:var(--rental-gold-2);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  line-height:1.18;
+}
+
+.rental-side-card h2{font-size:clamp(1.65rem,3vw,2.45rem)}
+.rental-title h2{font-size:clamp(1.8rem,3.8vw,3.15rem)}
+.rental-cta h2{font-size:clamp(2rem,4.6vw,3.75rem)}
+
+.rental-side-card p,
+.rental-title p,
+.rental-card p,
+.rental-flow-card p,
+.rental-faq-card p,
+.rental-cta p{
+  color:#e7dbc4;
+  line-height:1.9;
+}
+
+.rental-badges{
+  display:grid;
+  gap:10px;
+  margin-top:24px;
+}
+
+.rental-badges span{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border:1px solid rgba(216,181,109,.2);
+  border-radius:16px;
+  color:var(--rental-gold-2);
+  background:rgba(255,255,255,.045);
+  font-weight:900;
+}
+
+.rental-section{padding:clamp(46px,7vw,82px) 0}
+
+.rental-title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:26px;
+}
+
+.rental-title p{
+  max-width:560px;
+  margin:0;
+  color:var(--rental-muted);
+}
+
+.rental-grid,
+.rental-flow-grid,
+.rental-faq-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.rental-card,
+.rental-flow-card,
+.rental-faq-card{
+  border-radius:24px;
+  padding:24px;
+}
+
+.rental-card{
+  padding:0;
+}
+
+.rental-card img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  background:#111;
+}
+
+.rental-card-body{
+  padding:24px;
+}
+
+.rental-card h3,
+.rental-flow-card h3,
+.rental-faq-card h3{
+  margin:0 0 10px;
+  color:var(--rental-gold-2);
+  font-size:1.25rem;
+  line-height:1.45;
+}
+
+.rental-card p,
+.rental-flow-card p,
+.rental-faq-card p{
+  margin:0;
+}
+
+.rental-tag{
+  display:inline-flex;
+  margin-bottom:12px;
+  padding:6px 12px;
+  border-radius:999px;
+  color:#140e04;
+  background:linear-gradient(135deg,var(--rental-gold-2),var(--rental-gold));
+  font-size:.78rem;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+
+.rental-flow-num{
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  margin-bottom:14px;
+  border-radius:999px;
+  color:#130c04;
+  background:linear-gradient(135deg,var(--rental-gold-2),var(--rental-gold));
+  font-weight:950;
+}
+
+.rental-compare{
+  overflow:auto;
+  border:1px solid var(--rental-line);
+  border-radius:24px;
+  background:#090806;
+  box-shadow:var(--rental-shadow);
+}
+
+.rental-compare table{
+  width:100%;
+  min-width:680px;
+  border-collapse:collapse;
+}
+
+.rental-compare th,
+.rental-compare td{
+  padding:16px;
+  border-bottom:1px solid rgba(216,181,109,.18);
+  text-align:left;
+  vertical-align:top;
+}
+
+.rental-compare th{
+  color:var(--rental-gold-2);
+  background:linear-gradient(180deg,#21180a,#120e07);
+}
+
+.rental-compare td{
+  color:#f3ead2;
+}
+
+.rental-cta{
+  text-align:center;
+  border-radius:34px;
+  padding:clamp(42px,6vw,76px) clamp(20px,4vw,36px);
+  background:linear-gradient(135deg,#181208,#080705);
+}
+
+.rental-cta p{
+  max-width:760px;
+  margin:18px auto 0;
+  color:#eadfca;
+}
+
+@media(max-width:1060px){
+  .rental-hero-grid{grid-template-columns:1fr}
+  .rental-grid,
+  .rental-flow-grid,
+  .rental-faq-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:760px){
+  .rental-wrap{width:min(100% - 28px,1180px)}
+  .rental-hero{padding:44px 0 34px}
+  .rental-hero-card,
+  .rental-side-card,
+  .rental-cta{border-radius:26px;padding:24px}
+  .rental-hero h1{font-size:clamp(2.15rem,11vw,3.35rem)}
+  .rental-actions{display:grid}
+  .rental-actions .btn{width:100%}
+  .rental-stats,
+  .rental-grid,
+  .rental-flow-grid,
+  .rental-faq-grid{grid-template-columns:1fr}
+  .rental-title{display:grid;gap:10px}
+  .rental-card img{height:210px}
+}
+</style>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+</head>
+<body data-xx-layout="v8" data-page="car-rental">
+<div id="xx-site-header"></div>
+
+<main id="top">
+  <section class="rental-hero" aria-label="玹翔旅遊租車服務">
+    <div class="rental-wrap rental-hero-grid">
+      <article class="rental-hero-card">
+        <span class="rental-kicker">Premium Car Rental</span>
+        <h1>租車服務</h1>
+        <p class="rental-lead">不是把車借出去就叫服務。玹翔旅遊協助安排車款、司機、路線、行李與時間，讓租車從「找得到車」升級成「坐得像樣」。</p>
+        <div class="rental-actions">
+          <a class="btn primary" href="booking.html">立即預約車輛</a>
+          <a class="btn" href="vehicles.html">查看車款介紹</a>
+          <a class="btn ghost" href="price.html">查詢價目表</a>
+        </div>
+        <div class="rental-stats" aria-label="租車服務特色">
+          <div class="rental-stat"><strong>多車型</strong><span>五人座、九人座、VIP 車款與保母車。</span></div>
+          <div class="rental-stat"><strong>司機制</strong><span>專業接送與包車，不把客人丟給方向盤。</span></div>
+          <div class="rental-stat"><strong>客製化</strong><span>商務、旅遊、機場、婚禮與長途皆可規劃。</span></div>
+        </div>
+      </article>
+
+      <aside class="rental-side-card" aria-label="租車服務提醒">
+        <div>
+          <h2>選車不是猜拳，適合最重要。</h2>
+          <p>人數、行李、路線、預算與場合不同，推薦車款也會不同。若你不知道怎麼選，直接把需求交給客服，讓我們幫你把車款配好。</p>
+        </div>
+        <div class="rental-badges">
+          <span>商務接待 <b>重排面</b></span>
+          <span>家庭旅遊 <b>重空間</b></span>
+          <span>長途移動 <b>重舒適</b></span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="rental-section">
+    <div class="rental-wrap">
+      <div class="rental-title">
+        <h2>推薦車款</h2>
+        <p>依需求選對車，比硬塞行李更優雅。行李箱不是拼圖，車廂也不該變成倉庫。</p>
+      </div>
+
+      <div class="rental-grid">
+        <article class="rental-card">
+          <img src="images/vehicles/camry.jpg" alt="舒適五人座租車服務" loading="lazy" decoding="async">
+          <div class="rental-card-body"><span class="rental-tag">Sedan / SUV</span><h3>舒適五人座</h3><p>適合機場接送、商務單人、小家庭與輕行李移動，靈活、安靜、好安排。</p></div>
+        </article>
+
+        <article class="rental-card">
+          <img src="images/vehicles/vito.jpg" alt="九人座商務車租車服務" loading="lazy" decoding="async">
+          <div class="rental-card-body"><span class="rental-tag">Business Van</span><h3>九人座商務車 / VITO</h3><p>適合家庭旅遊、港口接送、多人同行與中大型行李，空間感比較不會委屈。</p></div>
+        </article>
+
+        <article class="rental-card">
+          <img src="images/vehicles/sprinter.jpg" alt="Mercedes-Benz Sprinter 明星保母車租車服務" loading="lazy" decoding="async">
+          <div class="rental-card-body"><span class="rental-tag">VIP</span><h3>Alphard / LM / Sprinter</h3><p>適合商務貴賓、婚禮禮車、藝人行程與高隱私接送，場合重要時別讓車款失禮。</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rental-section">
+    <div class="rental-wrap">
+      <div class="rental-title">
+        <h2>租車情境</h2>
+        <p>同樣是用車，目的不同，安排方式就不同；專業調度就是把這些細節先想好。</p>
+      </div>
+
+      <div class="rental-flow-grid">
+        <article class="rental-flow-card"><div class="rental-flow-num">01</div><h3>機場與港口接送</h3><p>支援航班、船班、行李與集合點確認，讓接送不靠默契表演。</p></article>
+        <article class="rental-flow-card"><div class="rental-flow-num">02</div><h3>旅遊包車</h3><p>一日遊、多日遊、親子、長輩與寵物需求都能先規劃。</p></article>
+        <article class="rental-flow-card"><div class="rental-flow-num">03</div><h3>商務與貴賓接待</h3><p>企業客戶、主管行程、活動接駁與高端車款需求可事先安排。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rental-section">
+    <div class="rental-wrap">
+      <div class="rental-title">
+        <h2>車款比較</h2>
+        <p>先看大方向，再讓客服依人數、行李與路線確認細節。</p>
+      </div>
+
+      <div class="rental-compare">
+        <table aria-label="玹翔旅遊租車車款比較">
+          <thead>
+            <tr><th>車款</th><th>適合人數</th><th>推薦情境</th><th>維護備註</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>舒適五人座</td><td>1-4人</td><td>機場接送、商務單人、小家庭、輕行李</td><td>圖片可改 images/vehicles/camry.jpg 或 rav4.png。</td></tr>
+            <tr><td>九人座商務車 / VITO</td><td>4-8人</td><td>多人同行、家庭旅遊、港口接送、中大型行李</td><td>若新增車照，請放 images/vehicles/ 並更新圖片 src。</td></tr>
+            <tr><td>Alphard / LM / Sprinter</td><td>依車款確認</td><td>VIP 接待、婚禮禮車、藝人行程、長途商務</td><td>高端車款請務必由客服二次確認報價。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="rental-section">
+    <div class="rental-wrap">
+      <div class="rental-title">
+        <h2>預約流程</h2>
+        <p>流程簡單，但資訊要完整；少一個行李數，可能多一場車廂極限挑戰。</p>
+      </div>
+      <div class="rental-flow-grid">
+        <article class="rental-flow-card"><div class="rental-flow-num">01</div><h3>提供需求</h3><p>日期、時間、上下車地點、人數、行李、車型與用途。</p></article>
+        <article class="rental-flow-card"><div class="rental-flow-num">02</div><h3>客服報價</h3><p>依路線、車款、時段、等候與加購需求確認價格。</p></article>
+        <article class="rental-flow-card"><div class="rental-flow-num">03</div><h3>保留車輛</h3><p>完成訂金或客服指定流程後，正式保留車輛與司機。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rental-section">
+    <div class="rental-wrap">
+      <div class="rental-title">
+        <h2>租車常見問題</h2>
+        <p>先把規則講清楚，後面就不用讓客服變成臨時裁判。</p>
+      </div>
+      <div class="rental-faq-grid">
+        <article class="rental-faq-card"><h3>可以只租車不含司機嗎？</h3><p>本網站主要提供含司機的接送與包車服務；特殊需求請先洽客服確認。</p></article>
+        <article class="rental-faq-card"><h3>可以指定車款嗎？</h3><p>可以提出偏好，實際安排會依日期、路線、車況與調度確認。</p></article>
+        <article class="rental-faq-card"><h3>行李很多怎麼辦？</h3><p>請提供行李尺寸與數量，客服會協助評估適合車型，避免行李比人還有存在感。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rental-section">
+    <div class="rental-wrap">
+      <div class="rental-cta">
+        <h2>把需求丟給玹翔，別把煩惱塞進後車廂。</h2>
+        <p>提供日期、時間、上下車地點、人數、行李與用途，客服會協助推薦車款與確認報價。</p>
+        <div class="rental-actions" style="justify-content:center">
+          <a class="btn primary" href="booking.html">立即預約租車服務</a>
+          <a class="btn" href="price.html">先查參考價</a>
+          <a class="btn ghost" href="#" data-xx-line-link target="_blank" rel="noopener noreferrer">LINE 詢問車款</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script>
+/*
+=========================================================
+租車頁小型防呆
+用途：追蹤 CTA 點擊、圖片 fallback。
+=========================================================
+*/
+(function(){
+  "use strict";
+
+  function ready(fn){
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, { once:true });
+    else fn();
+  }
+
+  function track(eventName, params){
+    if(window.XXAnalytics && typeof window.XXAnalytics.trackEvent === "function"){
+      window.XXAnalytics.trackEvent(eventName, params || {});
+    }
+  }
+
+  ready(function(){
+    document.querySelectorAll("img").forEach(function(img){
+      img.addEventListener("error", function(){
+        if(this.dataset.fallbackApplied) return;
+        this.dataset.fallbackApplied = "1";
+        this.src = "images/logo.jpg";
+      }, { once:true });
+    });
+
+    document.querySelectorAll('a[href*="booking.html"]').forEach(function(link){
+      link.addEventListener("click", function(){
+        track("car_rental_booking_click", { page_name:"car-rental" });
+      });
+    });
+
+    track("car_rental_page_view", { page_name:"car-rental" });
+  });
+})();
+</script>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

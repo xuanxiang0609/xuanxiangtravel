@@ -1,0 +1,22 @@
+{
+  "time": "2026-06-09T23:55:37.147912",
+  "note": "Garbled filenames were renamed for clean project packaging.",
+  "renamed": [
+    {
+      "from": "reports/garbled-archive/README_µû░µëïσ░ÅτÖ╜σ«îµò┤µôìΣ╜£µ╡üτ¿ï.html",
+      "to": "reports/garbled-archive/garbled-archived-001.html"
+    },
+    {
+      "from": "reports/garbled-archive/README_µû░µëïσ░ÅτÖ╜σ«îµò┤µôìΣ╜£µ╡üτ¿ï.txt",
+      "to": "reports/garbled-archive/garbled-archived-002.txt"
+    },
+    {
+      "from": "reports/garbled-archive/README_Φ½ïσàêτ£ï.txt",
+      "to": "reports/garbled-archive/garbled-archived-003.txt"
+    },
+    {
+      "from": "reports/garbled-archive/σ╛îµ£ƒΣ┐«µö╣σéÖΦ¿╗.txt",
+      "to": "reports/garbled-archive/garbled-archived-004.txt"
+    }
+  ]
+}

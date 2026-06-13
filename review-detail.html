@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>玹翔旅遊案例分享</title>
+<meta name="description" content="玹翔旅遊真實乘車案例">
+</head>
+<body>
+
+<div id="reviewDetail"></div>
+
+<script>
+
+const params=new URLSearchParams(location.search);
+const id=params.get('id');
+
+fetch('reviews/reviews.json')
+.then(r=>r.json())
+.then(data=>{
+
+const review=data.find(x=>x.id===id);
+
+if(!review){
+document.getElementById('reviewDetail').innerHTML='找不到案例';
+return;
+}
+
+document.getElementById('reviewDetail').innerHTML=`
+<h1>${review.customer}</h1>
+
+<p>${review.route}</p>
+
+<p>${review.people}</p>
+
+<p>⭐⭐⭐⭐⭐</p>
+
+<img src="${review.image}" style="max-width:800px">
+
+`;
+
+});
+
+</script>
+
+</body>
+</html>

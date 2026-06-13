@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>寵物接送｜玹翔旅遊</title>
+<meta name="description" content="寵物接送，玹翔旅遊高端接送與包車服務。毛孩也是貴賓，只是牠不會自己填表單。">
+<meta name="keywords" content="寵物接送, 毛孩接送, 動物醫院接送, 寵物包車, 台中寵物接送">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-black: #0a0a0a;
+  --color-gold-light: #f9d976;
+  --color-gold-dark: #f39c12;
+  --color-gold-gradient: linear-gradient(135deg, #f9d976 0%, #f39c12 100%);
+  --color-text-primary: #f5f1e9;
+  --color-text-secondary: #d4c29e;
+  --color-bg-hero: #1a1a1a;
+  --color-bg-section: #121212;
+  --shadow-light: 0 4px 15px rgba(243,156,18,0.4);
+  --shadow-dark: 0 6px 20px rgba(0,0,0,0.7);
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+  --max-width: 1200px;
+}
+
+body {
+  background-color: var(--color-black);
+  color: var(--color-text-primary);
+  font-family: "Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  line-height: 1.6;
+}
+
+a, button {
+  color: var(--color-gold-dark);
+  background: transparent;
+  border: 2px solid var(--color-gold-dark);
+  padding: 0.6em 1.4em;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all var(--transition-speed) ease;
+  box-shadow: var(--shadow-light);
+}
+
+a:hover, button:hover {
+  background: var(--color-gold-gradient);
+  color: var(--color-black);
+  border-color: var(--color-gold-gradient);
+  box-shadow: 0 8px 20px rgba(243,156,18,0.7);
+}
+
+a:focus, button:focus {
+  outline: 3px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+.xx-page-hero {
+  background: var(--color-bg-hero);
+  padding: 4rem 1rem 3rem;
+  text-align: center;
+  background-image: radial-gradient(circle at center, rgba(243,156,18,0.15), transparent 70%);
+  box-shadow: inset 0 0 80px rgba(243,156,18,0.3);
+  border-radius: var(--border-radius);
+  margin-bottom: 3rem;
+}
+
+.xx-page-hero .xx-tag {
+  display: inline-block;
+  background: var(--color-gold-gradient);
+  color: var(--color-black);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.3em 1em;
+  border-radius: 30px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.xx-page-hero h1 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 900;
+  font-size: 3rem;
+  margin: 0.3rem 0 1rem;
+  color: var(--color-gold-light);
+  text-shadow: 0 0 10px rgba(243,156,18,0.9);
+}
+
+.xx-page-hero p {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+}
+
+.xx-page-hero .xx-highlight-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.xx-page-hero .xx-highlight-stats span {
+  background: var(--color-gold-gradient);
+  color: var(--color-black);
+  font-weight: 700;
+  padding: 0.5em 1.2em;
+  border-radius: 30px;
+  font-size: 1rem;
+  box-shadow: var(--shadow-light);
+  min-width: 110px;
+  text-align: center;
+  user-select: none;
+}
+
+.xx-page-hero .hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle h2 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 900;
+  font-size: 2.8rem;
+  margin-bottom: 0.3rem;
+  color: var(--color-gold-light);
+  text-shadow: 0 0 6px rgba(243,156,18,0.7);
+}
+
+.sectionTitle .muted {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.xx-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 1.8rem 2.5rem;
+  margin-bottom: 4rem;
+}
+
+.xx-card {
+  background: var(--color-bg-section);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-dark);
+  padding: 1.8rem 1.5rem;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  cursor: default;
+  color: var(--color-text-primary);
+}
+
+.xx-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(243,156,18,0.65);
+}
+
+.xx-card h3 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: var(--color-gold-light);
+}
+
+.xx-card p {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.xx-process-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.xx-process-card {
+  background: var(--color-bg-section);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-dark);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: box-shadow var(--transition-speed) ease;
+  cursor: default;
+  color: var(--color-text-primary);
+}
+
+.xx-process-card:hover {
+  box-shadow: 0 14px 35px rgba(243,156,18,0.7);
+}
+
+.xx-process-card h3 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: var(--color-gold-light);
+}
+
+.xx-fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 2.5rem;
+  margin-bottom: 4rem;
+}
+
+.xx-fleet-card {
+  background: var(--color-bg-section);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-dark);
+  overflow: hidden;
+  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+  cursor: default;
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.xx-fleet-card:hover {
+  box-shadow: 0 16px 40px rgba(243,156,18,0.8);
+  transform: translateY(-8px);
+}
+
+.xx-fleet-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 3px solid var(--color-gold-dark);
+  user-select: none;
+}
+
+.xx-fleet-card h3 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 1rem 1.5rem 1.2rem;
+  color: var(--color-gold-light);
+}
+
+.xx-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap: 1.8rem 2rem;
+  margin-bottom: 4rem;
+}
+
+.xx-scene-card {
+  background: var(--color-bg-section);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-dark);
+  padding: 1.2rem 1rem;
+  text-align: center;
+  transition: box-shadow var(--transition-speed) ease;
+  cursor: default;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  user-select: none;
+}
+
+.xx-scene-card:hover {
+  box-shadow: 0 10px 28px rgba(243,156,18,0.65);
+  color: var(--color-gold-light);
+}
+
+.xx-highlight-bar {
+  background: var(--color-gold-gradient);
+  height: 6px;
+  border-radius: 3px;
+  margin: 2rem 0 3rem;
+  box-shadow: 0 0 14px rgba(243,156,18,0.8);
+}
+
+.xx-image-card {
+  background: var(--color-bg-section);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-dark);
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  margin-bottom: 4rem;
+  color: var(--color-text-primary);
+}
+
+.xx-image-card img {
+  flex: 1 1 280px;
+  max-width: 400px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 25px rgba(243,156,18,0.6);
+  user-select: none;
+}
+
+.xx-image-card .xx-card-body {
+  flex: 2 1 400px;
+}
+
+.xx-image-card h3 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 900;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-gold-light);
+  text-shadow: 0 0 8px rgba(243,156,18,0.9);
+}
+
+.xx-image-card p {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .wrap,
+  .container,
+  .content,
+  .main {
+    width: 92% !important;
+    max-width: 92% !important;
+  }
+  h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.25 !important;
+  }
+  h2 {
+    font-size: 1.7rem !important;
+  }
+  p, li, a, span {
+    font-size: 1rem !important;
+    line-height: 1.9 !important;
+  }
+  .xx-page-hero .xx-highlight-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .xx-page-hero .hero-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .xx-image-card {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  .xx-image-card img,
+  .xx-image-card .xx-card-body {
+    flex: unset;
+    max-width: 100%;
+  }
+}
+</style>
+
+<link rel="canonical" href="https://xuanxiangtravel.com/pet-transfer.html">
+<meta property="og:title" content="寵物接送｜玹翔旅遊">
+<meta property="og:description" content="寵物接送，玹翔旅遊高端接送與包車服務。毛孩也是貴賓，只是牠不會自己填表單。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+</head><body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main>
+<section class="xx-page-hero"><div class="wrap"><span class="xx-tag">寵物接送｜Pet Transfer Service</span><h1>毛孩專屬尊榮接送服務</h1><p>我們提供安全、舒適且專業的寵物接送服務，讓您的毛孩享受尊榮待遇。無論是日常出行、醫療回診或長途旅行，我們都能依照您的需求，客製化安排專屬路線與車型。</p><div class="xx-highlight-stats"><span>24H客服</span><span>全台服務</span><span>500萬乘客險</span><span>客製化安排</span></div><div class="hero-actions"><a href="booking.html">立即預約專車 ✨</a><a href="#" data-xx-line-link target="_blank" rel="noopener">LINE 官方客服 諮詢</a></div></div></section>
+<section><div class="wrap"><div class="sectionTitle"><h2>為什麼選擇玹翔寵物接送</h2><span class="muted">專業呵護，安心出行。</span></div><div class="xx-card-grid">
+<article class="xx-card"><h3>寵物友善安排</h3><p>依照寵物習性與需求，安排最適合的接送方案。</p></article><article class="xx-card"><h3>客製化路線</h3><p>根據您的行程，靈活調整路線與時間。</p></article><article class="xx-card"><h3>長途接送</h3><p>無論近程或長途，皆提供穩定舒適的服務。</p></article><article class="xx-card"><h3>動物醫院接送</h3><p>專業接送至各大動物醫院，保障毛孩健康。</p></article><article class="xx-card"><h3>機場港口接駁</h3><p>提供機場與港口的便捷接送服務。</p></article><article class="xx-card"><h3>專人客服</h3><p>專業客服團隊，隨時為您與毛孩解決問題。</p></article>
+</div></div></section>
+<section><div class="wrap"><div class="sectionTitle"><h2>預約流程</h2><span class="muted">簡單四步，輕鬆出發。</span></div><div class="xx-process-grid">
+<article class="xx-process-card"><h3>提供資訊</h3><p>告知寵物種類、體型及行程需求。</p></article><article class="xx-process-card"><h3>客服確認</h3><p>專人聯繫確認服務細節與安排。</p></article><article class="xx-process-card"><h3>安排車輛</h3><p>依需求調度合適車型與司機。</p></article><article class="xx-process-card"><h3>安心出發</h3><p>享受安全舒適的專屬接送體驗。</p></article>
+</div></div></section>
+<section><div class="wrap"><div class="sectionTitle">
+  <h2>推薦車型</h2><span class="muted">多元選擇，滿足各種需求。</span>
+</div>
+<div class="xx-fleet-grid">
+<article class="xx-fleet-card">
+    <img src="images/車照/rav4/rav4.png" alt="舒適五人座" onerror="this.src='images/logo.jpg'">
+    <h3>舒適五人座</h3></article><article class="xx-fleet-card">
+    <img src="images/車照/STARIA/Staria.png" alt="九人座商務車" onerror="this.src='images/logo.jpg'">
+    <h3>九人座商務車</h3>
+  </article><article class="xx-fleet-card">
+    <img src="images/車照/Sprinter.png" alt="明星保母車／尊榮專車" onerror="this.src='images/logo.jpg'">
+    <h3>明星保母車／尊榮專車</h3>
+  </article>
+</div>
+</div>
+</section>
+<section>
+  <div class="wrap"><div class="sectionTitle">
+    <h2>常見使用場景</h2>
+    <span class="muted">貼近生活，隨時隨地陪伴毛孩。</span>
+  </div><div class="xx-scene-grid">
+<article class="xx-scene-card">動物醫院回診</article>
+<article class="xx-scene-card">機場接送</article>
+<article class="xx-scene-card">寵物美容</article>
+<article class="xx-scene-card">搬家接送</article>
+<article class="xx-scene-card">跨縣市返鄉</article>
+<article class="xx-scene-card">旅遊同行</article>
+</div>
+</div>
+</section>
+<section>
+  <div class="wrap"><article class="xx-card xx-image-card">
+    <img src="images/寵物家人.jpg" alt="毛孩也是重要家人" onerror="this.src='images/logo.jpg'">
+    <div class="xx-card-body">
+      <h3>毛孩也是重要家人</h3>
+      <p>我們深知毛孩在您心中的重要性，因此提供最細心的接送服務，確保每一次旅程都安全、舒適且愉快。選擇玹翔，讓您的毛孩享有專屬尊榮待遇。</p>
+    </div>
+  </article>
+</div>
+</section>
+<section>
+  <div class="wrap"><div class="sectionTitle">
+    <h2>立即預約毛孩專車</h2>
+  </div><div class="hero-actions">
+    <a href="booking.html">立即預約專車 ✨</a>
+    <a href="#" data-xx-line-link target="_blank" rel="noopener">LINE 官方客服 諮詢</a>
+  </div></div></section>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body></html>

@@ -1,0 +1,64 @@
+玹翔旅遊 Ultimate Final v5.2｜合併升級最終檢查報告
+====================================
+產出時間：2026-05-31T03:23:41
+版本定位：KLOOK-like＋會員綁定＋CRM＋封存內容合併＋新手小白操作版
+
+檔案統計：
+- 公開 HTML 頁面：60
+- 全部 HTML 頁面含備份/參考：65
+- JS 檔案：10
+- 圖片檔案：69
+
+升級完成：
+✅ 合併最新封存內容
+✅ 保留 v5 會員／預約／CRM／Apps Script 核心
+✅ 補齊公開頁本地缺圖，避免破圖
+✅ 補 Firebase 設定橋接檔 firebase-config.js
+✅ 補 assets/js/firebase-config.js 與 firebase-init.js
+✅ README 新手流程補強
+✅ 後期修改備註補強
+✅ 最終檢查報告更新
+
+公開頁本地連結缺失：0
+無
+
+備註：archive_reference 與 v5_backup_before_archive_merge 屬人工比對備份區，不列入公開頁驗收。
+
+JS 語法檢查：
+- assets/js/config.js: 通過
+- assets/js/site.js: 通過
+- assets/js/firebase-init.js: 通過
+- assets/js/main.js: 通過
+- assets/js/login.js: 通過
+- assets/js/xx-site.js: 通過
+- assets/js/xx-site-unify.js: 通過
+- assets/js/member.js: 通過
+- assets/js/firebase-config.js: 通過
+
+上線前必填：
+□ assets/js/config.js → FIREBASE 設定
+□ assets/js/config.js → API_URL / priceApiUrl
+□ Apps Script Script Properties → ORDER_SHEET_ID / PRICE_SHEET_ID / LINE_CHANNEL_ACCESS_TOKEN / LINE_ADMIN_IDS
+□ Firebase Console → 授權網域加入 Cloudflare Pages 網域與正式網域
+□ Google Sheet → 欄位與 Code.gs 對齊
+□ LINE 官方帳號 → 管理員已加入好友
+
+從 0 開始操作流程：
+1. 解壓縮整包。
+2. 到 Firebase 建專案，啟用 Email/Password 與 Google 登入。
+3. 把 Firebase Web Config 填入 assets/js/config.js。
+4. 到 Google Apps Script 貼上 apps-script/Code.gs。
+5. 設定 Script Properties。
+6. 部署 Apps Script 網頁應用程式，取得 /exec。
+7. 把 /exec 填回 assets/js/config.js。
+8. 到 LINE Developers 建 Messaging API，取得 Token 與管理員 userId。
+9. Cloudflare Pages 上傳整包。
+10. 測試：註冊會員 → 登入 → 填預約 → Google Sheet 收單 → LINE 收通知。
+
+後期修改快速索引：
+- 聯絡資訊：assets/js/config.js
+- 導覽列／Footer：assets/js/site.js
+- 預約欄位：booking.html + site.js + Code.gs + Google Sheet
+- 會員登入：assets/js/member.js + Firebase Console
+- 價目表：Google Sheet 全台報價表 + price.html
+- SEO：sitemap.xml / robots.txt / 各頁 title description canonical

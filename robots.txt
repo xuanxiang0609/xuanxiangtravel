@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /docs/
+Disallow: /reports/
+Disallow: /tools/
+Disallow: /README.html
+Disallow: /content-merged.html
+Disallow: /404.html
+
+Sitemap: https://xuanxiangtravel.com/sitemap.xml

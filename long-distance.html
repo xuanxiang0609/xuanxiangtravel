@@ -1,0 +1,107 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>長途接送｜跨縣市・返鄉・懇親｜玹翔旅遊</title><meta name="description" content="玹翔旅遊提供全台長途接送、跨縣市移動、返鄉懇親、醫療回診與家庭接送，舒適車款與專業司機服務。"><meta name="keywords" content="玹翔旅遊,機場接送,包車旅遊,港口接送,演唱會專車,商務包車,登山包車,長途接送">
+<link rel="canonical" href="https://xuanxiangtravel.com/long-distance.html"><meta property="og:type" content="website"><meta property="og:site_name" content="玹翔旅遊"><meta property="og:title" content="長途接送｜跨縣市・返鄉・懇親｜玹翔旅遊"><meta property="og:description" content="玹翔旅遊提供全台長途接送、跨縣市移動、返鄉懇親、醫療回診與家庭接送，舒適車款與專業司機服務。"><meta property="og:url" content="https://xuanxiangtravel.com/long-distance.html"><meta property="og:image" content="https://xuanxiangtravel.com/assets/img/og/og-long-distance.jpg"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css">
+<style>
+.field{
+  width:100%;
+  min-height:56px;
+  padding:14px 16px;
+  border:1px solid rgba(216,181,109,.42);
+  border-radius:14px;
+  background:#fff8e8;
+  color:#17120a;
+  font-size:16px;
+  font-weight:800;
+  line-height:1.45;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);
+}
+.field::placeholder{color:rgba(23,18,10,.48)}
+.field:focus{
+  border-color:var(--gold2);
+  background:#fffdf4;
+  color:#111;
+  box-shadow:0 0 0 4px rgba(216,181,109,.16);
+}
+select.field{
+  appearance:auto;
+  -webkit-appearance:auto;
+  min-height:58px;
+  padding-right:42px;
+  background-color:#fff8e8;
+  color:#17120a;
+  white-space:normal;
+}
+select.field option{
+  background:#fff8e8;
+  color:#17120a;
+  font-weight:800;
+  line-height:1.6;
+  padding:12px;
+}
+textarea.field{
+  min-height:118px;
+  resize:vertical;
+}
+</style>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+</head><body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main><section class="hero"><div class="container"><div class="hero-card"><div class="kicker">LONG DISTANCE</div><h1>長途接送</h1><p class="lead">長途不是硬撐，是要坐得安穩。從中南部到北部、東部、南部長距離移動，玹翔協助安排舒適車型與休息停靠。</p><div class="actions"><a class="btn primary" href="booking.html">立即預約</a><a class="btn" href="booking.html">洽詢服務內容</a><a class="btn ghost" href="faq.html">常見問題</a></div></div></div></section><section class="section"><div class="container"><h2>長途接送情境</h2><div class="grid"><div class="card"><h3>返鄉懇親</h3><p class="muted">跨縣市到府接送，長輩、小孩與行李一次安排。</p></div><div class="card"><h3>醫療回診</h3><p class="muted">適合需要穩定車況與舒適上下車的長距離移動。</p></div><div class="card"><h3>休息安排</h3><p class="muted">可依路程安排休息站停靠，路途長但不必硬撐。</p></div></div></div></section></main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+</div>
+<script>
+  function todayValue(){var d=new Date();var y=d.getFullYear();var m=String(d.getMonth()+1).padStart(2,"0");var day=String(d.getDate()).padStart(2,"0");return y+"-"+m+"-"+day}
+  function ready(fn){if(document.readyState!="loading"){fn()}else{document.addEventListener("DOMContentLoaded",fn)}}
+  function val(id){var el=document.getElementById(id);return el?el.value:""}
+  function validPhone(phone){return /^09\d{8}$/.test(phone.replace(/[\s\-]/g,""))}
+  ready(function(){
+    var date=document.getElementById("ldDate");
+    if(date){
+      var today=todayValue();
+      if(!date.getAttribute("min")) date.setAttribute("min", today);
+      if(!date.value) date.value=today;
+    }
+    var submit=document.getElementById("ldSubmit");
+    if(submit){submit.addEventListener("click",function(){var err=document.getElementById("ldFormError");var ok=document.getElementById("ldFormOk");var required=val("ldName")&&validPhone(val("ldPhone"))&&val("ldDate")&&val("ldPickup")&&val("ldDropoff");if(!required){if(err){err.textContent="請至少填寫姓名、正確電話、出發日期、上車地點與下車地點。";err.classList.add("show");err.scrollIntoView({behavior:"smooth",block:"center"})}if(ok)ok.classList.remove("show");track("long_distance_quote_invalid",{page_name:"long-distance"});return}if(err)err.classList.remove("show");if(ok)ok.classList.add("show");var url=lineUrl()+"?text="+encodeURIComponent(msgText());var opened=window.open(url,"_blank","noopener");if(!opened){location.href=url}track("long_distance_quote_line_submit",{page_name:"long-distance",vehicle:val("ldVehicle")||"未指定"})})}
+  });
+</script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body></html>

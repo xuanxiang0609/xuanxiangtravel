@@ -1,0 +1,117 @@
+{
+  "time": "2026-06-09T23:59:43.901668",
+  "updated_references": [
+    "business-transfer.html",
+    "travel-smangus.html",
+    "index.html",
+    "about.html",
+    "price.html",
+    "html-list.txt",
+    "concert-transfer.html",
+    "hehuanshan-day.html",
+    "vehicles.html",
+    "sitemap.xml",
+    "business.html",
+    "school-airport.html",
+    "qingjing-sunmoonlake-day.html",
+    "concert.html",
+    "S2O.html",
+    "smangus-day.html",
+    "reports/terminal-fix-v11-report.json",
+    "reports/images-case-errors.txt",
+    "reports/html-list.txt",
+    "reports/local-assets-raw.txt",
+    "reports/html-list-clean.txt",
+    "reports/full-scan-report.txt"
+  ],
+  "archived_duplicates": [
+    {
+      "from": "business.html",
+      "to": "reports/duplicate-archive/business.html"
+    },
+    {
+      "from": "concert.html",
+      "to": "reports/duplicate-archive/concert.html"
+    },
+    {
+      "from": "images/機場接送.png",
+      "to": "reports/duplicate-archive/images/機場接送.png"
+    },
+    {
+      "from": "images/index/hero.jpg",
+      "to": "reports/duplicate-archive/images/index/hero.jpg"
+    },
+    {
+      "from": "images/正向安全座椅.png",
+      "to": "reports/duplicate-archive/images/正向安全座椅.png"
+    },
+    {
+      "from": "images/演唱會接送.png",
+      "to": "reports/duplicate-archive/images/演唱會接送.png"
+    },
+    {
+      "from": "images/sprinter.jpg",
+      "to": "reports/duplicate-archive/images/sprinter.jpg"
+    },
+    {
+      "from": "images/反向安全座椅.png",
+      "to": "reports/duplicate-archive/images/反向安全座椅.png"
+    },
+    {
+      "from": "images/增高墊.png",
+      "to": "reports/duplicate-archive/images/增高墊.png"
+    },
+    {
+      "from": "images/upload-001.jpg",
+      "to": "reports/duplicate-archive/images/upload-001.jpg"
+    },
+    {
+      "from": "images/寵物接送.PNG",
+      "to": "reports/duplicate-archive/images/寵物接送.PNG"
+    },
+    {
+      "from": "images/舉牌服務.png",
+      "to": "reports/duplicate-archive/images/舉牌服務.png"
+    },
+    {
+      "from": "images/VITO.jpg",
+      "to": "reports/duplicate-archive/images/VITO.jpg"
+    },
+    {
+      "from": "images/行李搬運.png",
+      "to": "reports/duplicate-archive/images/行李搬運.png"
+    },
+    {
+      "from": "images/vehicles/rav4.png",
+      "to": "reports/duplicate-archive/images/vehicles/rav4.png"
+    },
+    {
+      "from": "images/vehicles/alphard.jpg",
+      "to": "reports/duplicate-archive/images/vehicles/alphard.jpg"
+    },
+    {
+      "from": "videos/about-hero.mp4",
+      "to": "reports/duplicate-archive/videos/about-hero.mp4"
+    },
+    {
+      "from": "videos/business-hero.mp4",
+      "to": "reports/duplicate-archive/videos/business-hero.mp4"
+    },
+    {
+      "from": "reports/duplicate-og-image.txt",
+      "to": "reports/duplicate-archive/reports/duplicate-og-image.txt"
+    }
+  ],
+  "redirect_pages": [
+    {
+      "page": "business.html",
+      "redirect_to": "business-transfer.html"
+    },
+    {
+      "page": "concert.html",
+      "redirect_to": "concert-transfer.html"
+    }
+  ],
+  "missing": [],
+  "errors": []
+}

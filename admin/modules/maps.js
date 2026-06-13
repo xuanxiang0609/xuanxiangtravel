@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('mapBoard');if(el)el.innerHTML='<div class="map-placeholder"><div><b>Google Maps 派車地圖</b><p class="module-note">正式版請填入 Maps API Key，顯示司機位置、上車點與路線。</p></div></div>';});

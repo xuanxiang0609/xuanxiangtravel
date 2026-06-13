@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>玹翔旅遊｜Admin 企業後台</title>
+<link rel="stylesheet" href="dashboard.css">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="dashboard-container">
+  <section class="dashboard-hero">
+    <span class="eyebrow">XUAN XIANG TRAVEL ADMIN</span>
+    <h1>玹翔旅遊｜黑金企業後台</h1>
+    <p>整合訂單、派車、司機、車輛、會員、營收、LINE OA 與 KPI。先讓資料有位置坐，之後 Firebase / Apps Script 一接上就能正式跑。不是空殼，是準備出車的後台底盤。</p>
+    <div class="hero-actions"><a href="../index.html">回前台</a><a href="../booking.html">預約商城</a></div>
+  </section>
+  <section class="kpi-grid" id="kpiGrid"></section>
+  <section class="admin-grid two">
+    <article class="section-card"><h2 class="section-title">📦 即時訂單中心</h2><div id="orderBoard"></div></article>
+    <article class="section-card"><h2 class="section-title">📈 營收圖表</h2><canvas id="revenueChart" height="180"></canvas></article>
+  </section>
+  <section class="admin-grid two">
+    <article class="section-card"><h2 class="section-title">🗓 FullCalendar 派車日曆</h2><div id="dispatchCalendar"></div></article>
+    <article class="section-card"><h2 class="section-title">🗺 Google Maps 即時派車地圖</h2><div id="mapBoard"></div></article>
+  </section>
+  <section class="admin-grid three">
+    <article class="section-card"><h2 class="section-title">👨‍✈️ 司機排班</h2><div id="driverBoard"></div></article>
+    <article class="section-card"><h2 class="section-title">🚐 車輛管理</h2><div id="vehicleBoard"></div></article>
+    <article class="section-card"><h2 class="section-title">👥 會員中心</h2><div id="memberBoard"></div></article>
+  </section>
+  <section class="admin-grid two">
+    <article class="section-card"><h2 class="section-title">💬 LINE OA 推播中心</h2><div id="lineBoard"></div></article>
+    <article class="section-card"><h2 class="section-title">🔐 Admin 權限管理</h2><div id="permissionBoard"></div></article>
+  </section>
+</div>
+<script src="dashboard.js"></script>
+<script src="modules/kpi.js"></script>
+<script src="modules/orders.js"></script>
+<script src="modules/calendar.js"></script>
+<script src="modules/revenue.js"></script>
+<script src="modules/maps.js"></script>
+<script src="modules/drivers.js"></script>
+<script src="modules/vehicles.js"></script>
+<script src="modules/members.js"></script>
+<script src="modules/line-center.js"></script>
+</body>
+</html>

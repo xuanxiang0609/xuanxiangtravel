@@ -1,0 +1,133 @@
+玹翔旅遊 Ultimate Final v5.1｜合併近最終版 新手小白操作流程
+==================================================
+
+一、這包是什麼？
+這是將「v5 KLOOK-like＋會員綁定＋CRM 新手版」與最新「封存.zip」內容合併後的近最終版。
+核心原則：
+1. v5 保留：會員綁定、預約商城、Apps Script、CRM、KLOOK-like 商品頁、Cloudflare 上線檔。
+2. 封存補強：旅遊內容、FAQ、小學堂、價目表頁、活動頁、政策頁等較完整內文。
+3. 同名核心檔未硬蓋掉，避免預約／會員／後台失效。
+
+二、從 0 開始上線流程
+步驟 1｜解壓縮
+- 將本 zip 解壓縮。
+- 上傳到 Cloudflare Pages 時，請上傳資料夾內所有檔案，不要只上傳單一 html。
+
+步驟 2｜建立 Firebase 專案
+1. 到 Firebase Console 建立專案。
+2. 啟用 Authentication。
+3. 開啟 Email/Password 登入。
+4. 開啟 Google 登入。
+5. 啟用 Firestore Database。
+6. 將 firebase.json、firestore.rules、firestore.indexes.json 保留備用。
+
+步驟 3｜設定 Firebase 前端
+- 打開 assets/js/firebase-init.js 或 assets/js/member.js。
+- 將 Firebase config 換成您 Firebase 專案提供的設定。
+- 若沒有替換，會員登入會像司機沒有導航一樣：有車但不知道去哪。
+
+步驟 4｜設定 Google Sheet
+需要兩份試算表：
+1. 玹翔旅遊訂單系統
+2. 全台報價表
+
+訂單 Sheet 建議欄位：
+訂單編號、建立時間、會員UID、會員Email、姓名、電話、LINE、服務項目、服務細項、日期、時間、上車地址、下車地址、人數、行李、車款、加購、付款方式、訂金、訂單狀態、付款狀態、備註
+
+步驟 5｜設定 Apps Script
+1. 到 script.google.com 建立專案。
+2. 貼上 apps-script/Code.gs。
+3. 專案設定 → 指令碼屬性，加入：
+   ORDER_SHEET_ID = 訂單系統試算表 ID
+   PRICE_SHEET_ID = 全台報價表 ID
+   LINE_CHANNEL_ACCESS_TOKEN = LINE Messaging API Token
+   LINE_ADMIN_IDS = 管理員 LINE userId，多個用逗號分隔
+4. 部署 → 新增部署作業 → 網頁應用程式。
+5. 執行身分：自己。
+6. 存取權：任何人。
+7. 複製 /exec 網址。
+
+步驟 6｜綁定前端 API
+- 打開 assets/js/config.js。
+- 將 apiUrl / priceApiUrl 改成 Apps Script /exec 網址。
+
+步驟 7｜LINE Developers 註冊與綁定
+1. 到 LINE Developers 建立 Provider。
+2. 建立 Messaging API Channel。
+3. 取得 Channel access token。
+4. 將官方帳號加入好友。
+5. 用「我的 ID」工具或 webhook 取得管理員 userId。
+6. 放到 Apps Script 的 LINE_ADMIN_IDS。
+
+步驟 8｜Cloudflare Pages 上線
+1. 登入 Cloudflare。
+2. Workers & Pages → Create → Pages。
+3. Upload assets。
+4. 上傳解壓縮後的整個網站資料夾。
+5. 確認首頁 index.html 可以開啟。
+6. 確認 _headers、_redirects、404.html 有在根目錄。
+
+三、會員綁定後才可預約流程
+1. 客人點「會員註冊」。
+2. 使用 Email 或 Google 第三方登入。
+3. 會員登入狀態寫入前端 Firebase Auth。
+4. 客人進入 booking.html。
+5. booking.html 需偵測會員狀態。
+6. 未登入：顯示請先登入／註冊。
+7. 已登入：可填寫預約單。
+8. 送單時一起送出 memberUid、memberEmail。
+9. Apps Script 寫入 Google Sheet。
+10. LINE 管理員收到訂單通知。
+
+四、預約流程
+客人註冊／登入 → 綁定第三方 → 填寫預約 → Google Sheet 建立訂單 → LINE 通知客服 → 客服確認報價 → 客人付訂 → 訂單成立 → 派車 → 完成
+
+五、後期修改怎麼找？
+- 改電話／LINE／Email：assets/js/config.js、頁尾共用 JS、README。
+- 改價格來源：Google Sheet 全台報價表。
+- 改訂單欄位：booking.html、assets/js/site.js、apps-script/Code.gs、Google Sheet 欄位都要同步。
+- 改會員功能：assets/js/member.js、firebase-init.js、Firebase Console。
+- 改 SEO 網址：sitemap.xml、robots.txt、每頁 canonical。
+- 改圖片：assets/img/。
+
+六、注意事項
+- Apps Script Web App 一定要部署成「任何人可存取」，不然前台送單會失敗。
+- LINE 官方帳號一定要加入好友，否則 Push API 可能送不出去。
+- Firebase 網域需允許 Cloudflare Pages 網域與正式網域。
+- 正式網域確定後，請把 xuanxiangtravel.com 相關 canonical / sitemap 統一。
+
+
+==============================
+V5.2 合併升級檢查補充
+==============================
+產出時間：2026-05-31T03:23:16
+
+本版目標：
+1. 合併最新封存內容到 Ultimate Final v5 架構。
+2. 保留會員綁定、預約商城、CRM、Apps Script、Cloudflare 上線檔。
+3. 補齊缺圖，避免首頁或內頁出現破圖。
+4. 補 Firebase 設定橋接檔 firebase-config.js，方便後期接 Firebase。
+5. 補最終檢查報告，後期修改可以照表施工。
+
+新手最重要的 7 件事：
+1. 先解壓縮整包。
+2. 上傳 Cloudflare Pages 前，不要改檔名，不要只丟 index.html。
+3. 先打開 assets/js/config.js，確認電話、LINE、API_URL。
+4. Firebase 設定沒填以前，會員功能會提示尚未設定，這是正常，不是網站壞掉。
+5. Apps Script 部署完成後，把 /exec 網址貼回 config.js。
+6. LINE Token 與管理員 userId 放在 Apps Script Script Properties，不要寫死在前端。
+7. 正式網域確認後，更新 sitemap.xml、robots.txt、每頁 canonical。
+
+第三方註冊／綁定流程：
+Firebase Console → Authentication → Sign-in method → 啟用 Email/Password 與 Google → 將 Firebase Web config 貼入 assets/js/config.js → Cloudflare Pages 網域加入 Firebase 授權網域 → 會員註冊測試 → Google 登入測試 → 預約商城測試。
+
+訂單需綁定後才可預約：
+booking.html 會載入 member.js；member.js 會檢查 Firebase 登入狀態。未登入時顯示登入提醒；已登入時允許填表，並把 memberUid / memberEmail 一起送到 Apps Script。
+
+後期修改備註：
+- 只改文案：直接改對應 html。
+- 改全站導覽／Footer：assets/js/site.js。
+- 改聯絡資訊：assets/js/config.js。
+- 改訂單欄位：booking.html、assets/js/site.js、apps-script/Code.gs、Google Sheet 欄位都要一起改。
+- 改會員：assets/js/member.js、assets/js/config.js、Firebase Console。
+- 改圖片：images/ 或 assets/img/。

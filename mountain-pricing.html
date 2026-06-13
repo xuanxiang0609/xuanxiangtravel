@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="zh- ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登山包車｜百岳報價｜玹翔旅遊</title>
+<meta name="description" content="玹翔旅遊登山包車百岳報價，提供百岳接駁、登山口接送、清晨出發、高山路線專車服務。">
+<meta name="keywords" content="玹翔旅遊,登山包車,百岳報價,百岳接駁,登山口接送,合歡山接駁,武陵農場接駁,塔塔加接駁,旅遊包車,長途接送">
+<meta property="og:title" content="登山包車｜百岳報價｜玹翔旅遊">
+<meta property="og:description" content="登山口接駁、清晨出發、高山路線專車，讓體力留給山，不留給轉車。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo.jpg">
+<style>
+:root{
+  --bg:#05070b;
+  --bg2:#09111b;
+  --panel:#0d141c;
+  --panel2:#121b27;
+  --gold:#d8b56d;
+  --gold2:#f7df9b;
+  --gold3:#fff3c2;
+  --text:#f7f1e7;
+  --muted:#b9c1cc;
+  --line:rgba(216,181,109,.24);
+  --line2:rgba(255,255,255,.08);
+  --shadow:0 24px 70px rgba(0,0,0,.46);
+  --radius:28px;
+}
+*{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  overflow-x:hidden;
+  color:var(--text);
+  font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  line-height:1.9;
+  letter-spacing:.035em;
+  background:
+    radial-gradient(circle at 16% -8%,rgba(216,181,109,.22),transparent 28%),
+    radial-gradient(circle at 88% 12%,rgba(247,223,155,.10),transparent 24%),
+    linear-gradient(180deg,#03050a 0%,#08101a 45%,#05070b 100%);
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+.wrap{
+  width:min(1180px,calc(100% - 40px));
+  margin:auto;
+}
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:110px 0 76px;
+  text-align:center;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:18px 0 auto 0;
+  height:320px;
+  background:linear-gradient(90deg,transparent,rgba(216,181,109,.18),transparent);
+  filter:blur(28px);
+  pointer-events:none;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:42px;
+  width:520px;
+  height:520px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(216,181,109,.12),transparent 68%);
+  pointer-events:none;
+}
+.hero .wrap{
+  position:relative;
+  z-index:2;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:10px 18px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(216,181,109,.08);
+  color:var(--gold2);
+  font-size:14px;
+  font-weight:950;
+  letter-spacing:.16em;
+}
+.hero-title{
+  margin:24px auto 18px;
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(42px,7vw,86px);
+  line-height:1.08;
+  letter-spacing:.1em;
+  color:var(--gold3);
+  text-shadow:0 0 42px rgba(216,181,109,.28);
+}
+.hero-subtitle{
+  max-width:900px;
+  margin:0 auto;
+  color:#d7dee6;
+  font-size:18px;
+  line-height:2.05;
+}
+.hero-actions{
+  display:flex;flex-wrap:wrap;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:34px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:13px 24px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  color:#f7ead0;
+  background:rgba(255,255,255,.045);
+  font-weight:950;
+  transition:.25s ease;
+}
+.btn:hover{
+  transform:translateY(-3px);
+  border-color:rgba(247,223,155,.6);
+}
+.btn-primary{
+  color:#17120a;
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  border-color:rgba(247,223,155,.75);
+  box-shadow:0 16px 38px rgba(216,181,109,.22);
+}
+/* ================= 共用區塊 ================= */
+.section{
+  padding:58px 0;
+}
+.section-head{
+  margin-bottom:32px;
+  text-align:center;
+}
+.section-head small{
+  display:inline-block;
+  margin-bottom:10px;
+  color:var(--gold);
+  font-weight:950;
+  letter-spacing:.18em;
+}
+.section-head h2{
+  margin:0 0 14px;
+  color:var(--gold3);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(30px,4vw,52px);
+  line-height:1.18;
+  letter-spacing:.06em;
+}
+.section-head p{
+  max-width:860px;
+  margin:auto;
+  color:var(--muted);
+  line-height:1.95;
+}
+/* ================= 服務卡片 ================= */
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:
+    linear-gradient(180deg,rgba(17,28,39,.94),rgba(10,15,21,.96));
+  box-shadow:0 18px 48px rgba(0,0,0,.28);
+  transition:.28s ease;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(247,223,155,.48);
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 20% 0%,rgba(216,181,109,.12),transparent 34%);
+  pointer-events:none;
+}
+.card-body{
+  position:relative;
+  z-index:1;
+  padding:28px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:48px;
+  height:34px;
+  padding:0 13px;
+  margin-bottom:14px;
+  border-radius:999px;
+  color:#17120a;
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  font-weight:950;
+  font-size:13px;
+}
+.card h3{
+  color:var(--gold2);
+  font-size:24px;
+  margin:0 0 10px;
+}
+.card p{
+  color:var(--muted);
+  line-height:1.9;
+  margin:0;
+}
+/* ================= 搜尋 ================= */
+.search-zone{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:14px;
+  margin-bottom:22px;
+}
+.mountain-search{
+  width:100%;
+  height:60px;
+  border-radius:18px;
+  border:1px solid rgba(216,181,109,.26);
+  background:rgba(255,255,255,.045);
+  padding:0 22px;
+  color:#fff;
+  font-size:16px;
+  outline:none;
+  transition:.25s;
+}
+.mountain-search::placeholder{
+  color:rgba(255,255,255,.46);
+}
+.mountain-search:focus{
+  border-color:#f7df9b;
+  box-shadow:0 0 0 4px rgba(216,181,109,.12);
+  background:rgba(255,255,255,.07);
+}
+.search-hint{
+  display:flex;flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  min-height:60px;
+  padding:0 18px;
+  border-radius:18px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(216,181,109,.08);
+  color:var(--gold2);
+  font-size:14px;
+  font-weight:900;
+  white-space:nowrap;
+}
+/* ================= 價目表 ================= */
+.pricing-panel{
+  border:1px solid var(--line);
+  border-radius:34px;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(13,20,28,.97),rgba(7,10,15,.98));
+  box-shadow:var(--shadow);
+}
+.pricing-head{
+  display:flex;flex-wrap:wrap;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  padding:30px;
+  border-bottom:1px solid rgba(216,181,109,.18);
+  background:
+    radial-gradient(circle at 8% 0%,rgba(216,181,109,.18),transparent 30%),
+    rgba(255,255,255,.025);
+}
+.pricing-head h2{
+  margin:0;
+  color:var(--gold3);
+  font-family:"Noto Serif TC","Noto Sans TC",serif;
+  font-size:clamp(28px,3vw,40px);
+  line-height:1.25;
+}
+.pricing-head p{
+  margin:8px 0 0;
+  color:var(--muted);
+  line-height:1.8;
+}
+.pricing-badge{
+  flex:0 0 auto;
+  padding:10px 16px;
+  border-radius:999px;
+  color:#17120a;
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  font-size:13px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.table-wrap{display:block !important;
+  width:100%;
+  overflow:auto;
+  padding:18px;
+}
+.pricing-table{
+  width:100%;
+  min-width:960px;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border:1px solid rgba(216,181,109,.16);
+  border-radius:24px;
+}
+.pricing-table th,
+.pricing-table td{
+  padding:14px 16px;
+  border-right:1px solid rgba(216,181,109,.12);
+  border-bottom:1px solid rgba(216,181,109,.12);
+  text-align:left;
+  vertical-align:middle;
+  line-height:1.65;
+  white-space:nowrap;
+  font-size:14px;
+}
+.pricing-table th:last-child,
+.pricing-table td:last-child{
+  border-right:0;
+}
+.pricing-table tr:last-child td{
+  border-bottom:0;
+}
+.pricing-table thead th{
+  position:sticky;
+  top:0;
+  z-index:2;
+  color:#17120a;
+  background:linear-gradient(135deg,#fff2bd,#f7df9b,#d8b56d);
+  font-weight:950;
+  font-size:15px;
+}
+.pricing-table tbody tr:nth-child(odd){
+  background:rgba(255,255,255,.035);
+}
+.pricing-table tbody tr:nth-child(even){
+  background:rgba(216,181,109,.045);
+}
+.pricing-table tbody tr:hover{
+  background:rgba(216,181,109,.14);
+}
+.loading,
+.error-box{
+  padding:28px;
+  border-radius:22px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(255,255,255,.035);
+  color:var(--gold2);
+  line-height:1.9;
+}
+.pricing-note{
+  padding:0 30px 30px;
+  color:rgba(247,241,231,.76);
+  font-size:14px;
+  line-height:1.95;
+}
+.notice-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-top:24px;
+}
+.notice-card{
+  padding:20px;
+  border-radius:22px;
+  border:1px solid rgba(216,181,109,.18);
+  background:rgba(255,255,255,.035);
+}
+.notice-card h3{
+  margin:0 0 8px;
+  color:var(--gold2);
+  font-size:19px;
+}
+.notice-card p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.85;
+  font-size:14px;
+}
+/* ================= SEO ================= */
+.seo-soft{
+  width:min(1180px,calc(100% - 40px));
+  margin:40px auto;
+  color:rgba(255,255,255,.32);
+  font-size:12px;
+  line-height:1.9;
+}
+/* ================= RWD ================= */
+@media(max-width:980px){
+  .grid-3,
+  .notice-grid{
+    grid-template-columns:1fr;
+  }
+  .pricing-head{
+    display:block;
+  }
+  .pricing-badge{
+    display:inline-flex;
+    margin-top:14px;
+  }
+  .search-zone{
+    grid-template-columns:1fr;
+  }
+}
+@media(max-width:640px){
+  .wrap{
+    width:calc(100% - 28px);
+  }
+  .hero{
+    padding:70px 0 46px;
+  }
+  .hero-title{
+    letter-spacing:.05em;
+  }
+  .hero-subtitle{
+    font-size:16px;
+  }
+  .btn{
+    width:100%;
+  }
+  .pricing-head,
+  .card-body{
+    padding:22px;
+  }
+}
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://xuanxiangtravel.com/mountain-pricing.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+</head>
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">MOUNTAIN CHARTER｜百岳接駁專車</span>
+    <h1 class="hero-title">登山包車・百岳報價</h1>
+    <p class="hero-subtitle">
+      清晨出發、登山口接駁、高山路線專車、裝備行李安排一次到位。  
+      讓體力留給山景，不要浪費在轉車與等車上；畢竟山已經夠高了，交通不要再增加難度。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="booking.html">立即預約專車 ✨</a>
+      <a class="btn" href="#" data-xx-line-link rel="noopener" target="_blank">LINE 官方客服 詢價</a>
+      <a class="btn" href="#mountain-price">查看百岳報價</a>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <small>SERVICE FEATURES</small>
+      <h2>登山包車服務重點</h2>
+      <p>
+        只要提供日期、時間、上下車地點、登山口、人數、行李與車款需求，
+        客服即可協助確認最適合的高山路線接駁方案。
+      </p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="card-body">
+          <span class="badge">01</span>
+          <h3>透明報價</h3>
+          <p>依照路線、車型、時間與服務需求確認費用，避免現場臨時加價，讓預約更安心。</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-body">
+          <span class="badge">02</span>
+          <h3>高山路線安排</h3>
+          <p>適合百岳接駁、清晨出發、登山口上車與回程接送，裝備行李也能提前評估。</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-body">
+          <span class="badge">03</span>
+          <h3>客服專人確認</h3>
+          <p>特殊假日、偏遠山區、夜間清晨、臨時變更，皆由客服協助確認最終服務內容。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="section" id="mountain-price">
+  <div class="wrap">
+    <div class="section-head">
+      <small>PRICE LIST</small>
+      <h2>百岳報價｜價目表</h2>
+      <p>
+        以下資料讀取 Google 試算表「百岳報價」分頁，顯示 A 欄到 AH 欄。
+        可直接搜尋山名、登山口、地區、車型或價格，快速找到需要的路線。
+      </p>
+    </div>
+    <div class="search-zone">
+      <input
+        type="text"
+        id="mountainSearch"
+        class="mountain-search"
+        placeholder="搜尋山名、登山口、地區、車型、價格..."
+      >
+      <div class="search-hint">快速搜尋・一秒找路線</div>
+    </div>
+    <div class="pricing-panel">
+      <div class="pricing-head">
+        <div>
+          <h2>登山包車｜百岳接駁報價</h2>
+        </div>
+        <div class="pricing-badge">往右滑查看各登山口價目表</div>
+      </div>
+      <div class="table-wrap" id="tableWrap">
+        <div class="loading">正在載入百岳報價，請稍候...</div>
+      </div>
+      <div class="pricing-note">
+        ※ 表格金額為參考資訊，實際報價仍依日期、時間、登山口位置、人數、行李、車型、停靠點、等待時間與特殊假日由客服確認。
+        登山包車最怕不是山高，是資料沒填完整；資料越完整，報價越漂亮。
+      </div>
+    </div>
+    <div class="notice-grid">
+      <article class="notice-card">
+        <h3>⛰️ 登山口資訊</h3>
+        <p>請提供正確登山口、集合地點與預計回程時間，方便安排最順路線。</p>
+      </article>
+      <article class="notice-card">
+        <h3>🧳 裝備行李</h3>
+        <p>大型背包、登山杖、冰爪、睡袋等裝備請提前告知，避免後車廂玩疊疊樂。</p>
+      </article>
+      <article class="notice-card">
+        <h3>🌙 清晨夜間</h3>
+        <p>凌晨或深夜出發屬特殊時段，實際報價以客服確認為準。</p>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+<section class="seo-soft" aria-label="玹翔旅遊 SEO 語意補強">
+玹翔旅遊、登山包車、百岳報價、百岳接駁、登山口接送、合歡山接駁、武陵農場接駁、塔塔加接駁、雪山接駁、玉山接駁、奇萊接駁、南湖大山接駁、機場接送、港口接送、長途接送、旅遊包車、商務包車、寵物接送、演唱會專車、結婚禮車、明星保母車、Alphard、Lexus LM、VITO-2、Tesla、24小時客服、公司行號長期配合、可統編、可收據。
+</section>
+
+<script>
+const tableWrap = document.getElementById('tableWrap');
+document.addEventListener('DOMContentLoaded', loadMountainPricing);
+async function loadMountainPricing(){
+  try{
+    const data = await window.XXPricing.fetchSheet('百岳報價');
+    const rows = data.rows.slice();
+    const headers = data.headers.length ? data.headers : (rows.shift() || []);
+    if(!headers.length && !rows.length){
+      tableWrap.innerHTML = '<div class="error-box">目前沒有讀取到百岳報價資料。</div>';
+      return;
+    }
+    renderTable(headers, rows);
+    initSearch();
+  }catch(error){
+    tableWrap.innerHTML = `
+      <div class="error-box">
+        百岳報價目前無法載入。<br>
+        價目表 API 目前無法載入，請稍後重新整理頁面或直接聯絡客服。
+      </div>
+    `;
+  }
+}
+function escapeHTML(value){
+  return String(value ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+function renderTable(headers, rows){
+  const safeHeaders = headers.slice(0, 34);
+  let html = `
+    <table class="pricing-table" id="pricingTable">
+      <thead>
+        <tr>
+  `;
+  safeHeaders.forEach((header, index)=>{
+    html += `<th>${escapeHTML(header || '欄位' + (index + 1))}</th>`;
+  });
+  html += `
+        </tr>
+      </thead>
+      <tbody>
+  `;
+  rows.forEach(row=>{
+    const safeRow = row.slice(0, 34);
+    const hasValue = safeRow.some(cell => String(cell).trim() !== '');
+    if(!hasValue) return;
+    html += '<tr>';
+    for(let i = 0; i < 34; i++){
+      html += `<td>${escapeHTML(safeRow[i] ?? '')}</td>`;
+    }
+    html += '</tr>';
+  });
+  html += `
+      </tbody>
+    </table>
+  `;
+  tableWrap.innerHTML = html;
+}
+function initSearch(){
+  const input = document.getElementById('mountainSearch');
+  const table = document.getElementById('pricingTable');
+  if(!input || !table) return;
+  input.addEventListener('input', function(){
+    const keyword = this.value.toLowerCase().trim();
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row=>{
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(keyword) ? '' : 'none';
+    });
+  });
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>玹翔旅遊｜上線包說明</title><style>body{font-family:"Microsoft JhengHei",sans-serif;background:#050505;color:#fff9ec;line-height:1.8;padding:32px}code{background:#151515;color:#fff0b8;padding:2px 6px;border-radius:6px}h1,h2{color:#fff0b8}
+/* ===== 玹翔旅遊｜全站統一黑金高端導覽列 FINAL ===== */
+.xx-topbar{
+  position:sticky;
+  top:0;
+  z-index:9999;
+  background:rgba(5,5,5,.92);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(216,181,109,.26);
+}
+.xx-nav-wrap{
+  width:min(1280px,calc(100% - 28px));
+  margin:auto;
+  min-height:76px;
+  display:flex;flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.xx-brand{
+  display:flex;flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  min-width:max-content;
+}
+.logo-img,.logo-fallback{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 0 26px rgba(216,181,109,.20);
+}
+.logo-fallback{
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#fff0b8,#d8b56d);
+  color:#111;
+  font-weight:950;
+  font-size:22px;
+}
+.brand-text strong{
+  display:block;
+  color:#fff3cf;
+  font-size:20px;
+  letter-spacing:.04em;
+  line-height:1.15;
+}
+.brand-text small{
+  display:block;
+  color:#cfc3a8;
+  font-size:11px;
+  letter-spacing:.16em;
+  margin-top:3px;
+  text-transform:uppercase;
+}
+.nav-links{
+  display:flex;flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-end;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.nav-links a,.drop-btn,.xx-sub-title{
+  color:#f5e5c1;
+  font-size:14px;
+  font-weight:850;
+  line-height:1.4;
+  text-decoration:none;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.22s ease;
+}
+.nav-links a:hover,.drop-btn:hover,.xx-sub-title:hover{
+  color:#fff0b8;
+}
+.drop{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+.drop-list{
+  display:none;
+  position:absolute;
+  top:calc(100% + 10px);
+  left:0;
+  min-width:245px;
+  max-width:360px;
+  padding:12px;
+  border-radius:20px;
+  border:1px solid rgba(216,181,109,.30);
+  background:linear-gradient(180deg,rgba(20,20,20,.98),rgba(8,8,8,.98));
+  box-shadow:0 26px 70px rgba(0,0,0,.56);
+}
+.drop:hover>.drop-list{
+  display:flex;flex-wrap:wrap;
+  flex-direction:column;
+  gap:8px;
+}
+.drop-list a,.xx-sub-title{
+  display:block;
+  padding:10px 12px;
+  border-radius:13px;
+}
+.drop-list a:hover,.xx-sub-title:hover{
+  background:rgba(216,181,109,.10);
+}
+.xx-sub-drop{
+  position:relative;
+  display:block;
+}
+.xx-sub-list{
+  display:none;
+  position:absolute;
+  left:calc(100% + 12px);
+  top:0;
+  min-width:220px;
+  padding:12px;
+  border-radius:18px;
+  border:1px solid rgba(216,181,109,.28);
+  background:linear-gradient(180deg,rgba(18,18,18,.98),rgba(7,7,7,.98));
+  box-shadow:0 24px 65px rgba(0,0,0,.55);
+}
+.xx-sub-drop:hover>.xx-sub-list{
+  display:flex;flex-wrap:wrap;
+  flex-direction:column;
+  gap:7px;
+}
+.xx-nav-toggle,.xx-hamburger{
+  display:none;
+}
+@media(max-width:980px){
+  .xx-nav-wrap{
+    position:relative;
+    min-height:74px;
+  }
+  .xx-hamburger{
+    display:grid;
+    place-items:center;
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    color:#fff0b8;
+    border:1px solid rgba(216,181,109,.28);
+    background:rgba(255,255,255,.05);
+    font-size:28px;
+    cursor:pointer;
+  }
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:76px;
+    left:0;
+    right:0;
+    max-height:calc(100vh - 86px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:18px;
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+    border:1px solid rgba(216,181,109,.24);
+    border-radius:0 0 22px 22px;
+    background:rgba(8,8,8,.98);
+    box-shadow:0 26px 70px rgba(0,0,0,.56);
+  }
+  .xx-nav-toggle:checked ~ .nav-links{
+    display:flex;flex-wrap:wrap;
+  }
+  .drop{
+    display:block;
+    width:100%;
+  }
+  .drop-btn{
+    display:block;
+    padding:12px;
+    border-radius:14px;
+    background:rgba(255,255,255,.045);
+  }
+  .drop-list{
+    display:flex;flex-wrap:wrap;
+    position:static;
+    min-width:0;
+    max-width:none;
+    width:100%;
+    margin-top:8px;
+    padding:8px 0 8px 12px;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+  }
+  .xx-sub-list{
+    display:flex;flex-wrap:wrap;
+    position:static;
+    min-width:0;
+    width:100%;
+    margin:6px 0 6px 12px;
+    padding:6px 0 6px 10px;
+    border-left:1px solid rgba(216,181,109,.24);
+    border-top:0;
+    border-right:0;
+    border-bottom:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+  }
+  .nav-links a,.drop-btn,.xx-sub-title{
+    white-space:normal;
+  }
+}
+
+</style><link rel="stylesheet" href="assets/css/xx-global.css">
+
+<style>
+html{scroll-behavior:smooth}
+body{
+font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+::selection{
+background:#d8b56d;
+color:#111;
+}
+img{
+max-width:100%;
+height:auto;
+}
+a,button{
+transition:.28s ease;
+}
+a:hover{
+opacity:.92;
+}
+@media(max-width:768px){
+.container,
+.wrap,
+.content,
+.main{
+width:92% !important;
+max-width:92% !important;
+}
+h1{font-size:2.2rem !important;line-height:1.25 !important;}
+h2{font-size:1.7rem !important;}
+p,li,a,span{
+font-size:1rem !important;
+line-height:1.9 !important;
+}
+}
+</style>
+
+
+<style id="xx-mobile-dropdown-final">
+
+@media(max-width:980px){
+
+  .drop{
+    width:100% !important;
+    position:relative !important;
+  }
+
+  .drop-btn{
+    min-height:54px !important;
+    padding:14px 16px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    border-radius:16px !important;
+    background:rgba(255,255,255,.06) !important;
+    border:1px solid rgba(216,181,109,.18) !important;
+    font-size:15px !important;
+    font-weight:900 !important;
+    cursor:pointer !important;
+    user-select:none !important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
+
+  .drop-btn::after{
+    content:"＋";
+    color:#fff0b8;
+    font-size:18px;
+    transition:.25s ease;
+  }
+
+  .drop.active .drop-btn::after{
+    content:"－";
+  }
+
+  .drop-list{
+    display:none !important;
+    position:static !important;
+    width:100% !important;
+    margin-top:8px !important;
+    padding:10px !important;
+    border-radius:18px !important;
+    background:rgba(255,255,255,.03) !important;
+    border:1px solid rgba(216,181,109,.12) !important;
+    box-shadow:none !important;
+  }
+
+  .drop.active > .drop-list{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:8px !important;
+  }
+
+  .drop-list a,
+  .xx-sub-title{
+    min-height:48px !important;
+    padding:12px 14px !important;
+    display:flex !important;
+    align-items:center !important;
+    border-radius:14px !important;
+    background:rgba(255,255,255,.03);
+    font-size:14px !important;
+    line-height:1.6 !important;
+  }
+
+  .xx-sub-list{
+    position:static !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:6px !important;
+    width:100% !important;
+    margin-top:6px !important;
+    padding-left:10px !important;
+    border-left:1px solid rgba(216,181,109,.18) !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+}
+</style>
+
+<script id="xx-mobile-dropdown-script">
+document.addEventListener("DOMContentLoaded",()=>{
+
+  if(window.innerWidth <= 980){
+
+    document.querySelectorAll('.drop').forEach(drop=>{
+
+      const btn = drop.querySelector('.drop-btn');
+
+      if(btn){
+
+        btn.addEventListener('click',(e)=>{
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          document.querySelectorAll('.drop').forEach(other=>{
+            if(other !== drop){
+              other.classList.remove('active');
+            }
+          });
+
+          drop.classList.toggle('active');
+
+        });
+
+      }
+
+    });
+
+    document.addEventListener('click',()=>{
+      document.querySelectorAll('.drop').forEach(drop=>{
+        drop.classList.remove('active');
+      });
+    });
+
+  }
+
+});
+</script>
+
+<link rel="stylesheet" href="assets/css/xx-site-unify.css">
+<link rel="stylesheet" href="assets/css/xx-click-nav-final.css">
+<link rel="stylesheet" href="assets/css/xx-member-upgrade.css">
+</head><body>
+<!-- Ultimate Final v7.0 新手小白備註：本頁已掛入統一導覽列、點擊下拉選單、手機版修復與 Footer。 -->
+
+<!-- ================================
+玹翔旅遊｜全站統一導覽列
+新手小白改法：
+1. 想改選單名稱：改這段 <nav> 文字。
+2. 想改連結：改 href="xxx.html"。
+3. 下拉選單已改為點擊展開，不要再用 hover 當主要功能。
+================================ -->
+<header class="xx-topbar">
+  <div class="xx-nav-wrap">
+    <a class="xx-brand" href="index.html" aria-label="玹翔旅遊主頁">
+      <img src="images/logo.jpg" class="logo-img" alt="玹翔旅遊 LOGO" onerror="this.outerHTML='<div class=&quot;logo-fallback&quot;>玹</div>'">
+      <div class="brand-text"><strong>玹翔旅遊</strong><small>Xuan Xiang Travel</small></div>
+    </a>
+    <input id="xx-nav-toggle" class="xx-nav-toggle" type="checkbox" aria-label="開啟導覽選單">
+    <label for="xx-nav-toggle" class="xx-hamburger" aria-hidden="true">☰</label>
+    <nav class="nav-links xx-menu" aria-label="玹翔旅遊主導覽列">
+      <a href="index.html">主頁</a>
+      <a href="about.html">關於玹翔</a>
+      <span class="drop xx-service-mega"><span class="drop-btn">服務項目</span><span class="drop-list xx-service-list">
+        <a href="airport-pricing.html">機場接送</a><a href="port-pricing.html">港口接送</a><a href="tour-pricing.html">旅遊包車</a><a href="mountain-pricing.html">登山包車</a><a href="long-distance-pricing.html">長途接送</a><a href="concert-transfer.html">演唱會專車</a><a href="pet-transfer.html">寵物接送</a><a href="wedding-car.html">結婚禮車</a>
+      </span></span>
+      <span class="drop"><span class="drop-btn">價目表</span><span class="drop-list"><a href="airport-pricing.html">機場價目表</a><a href="port-pricing.html">港口價目表</a><a href="tour-pricing.html">旅遊包車價目表</a><a href="mountain-pricing.html">登山包車價目表</a><a href="long-distance-pricing.html">長途接送價目表</a></span></span>
+      <a href="booking.html">VIP預約商城</a><a href="vehicles.html">車款介紹</a>
+      <span class="drop xx-tour-mega"><span class="drop-btn">旅遊專區</span><span class="drop-list xx-tour-list"><a href="travel-one-day.html">一日遊</a><a href="travel-two-days.html">兩天一夜</a><a href="travel-three-days.html">三天兩夜</a><a href="smangus-day.html">司馬庫斯</a><a href="hehuanshan-day.html">合歡山</a><a href="qingjing-sunmoonlake-day.html">清境・日月潭</a><a href="travel-region.html">全台旅遊搜尋</a></span></span>
+      <span class="drop"><span class="drop-btn">玹翔小學堂</span><span class="drop-list"><a href="school-airport.html">機場小學堂</a><a href="school-tour.html">旅遊包車小學堂</a><a href="school-mountain.html">登山包車小學堂</a><a href="school-secret.html">旅遊秘境</a><a href="school-hiking.html">百岳縱走</a></span></span>
+      <span class="drop"><span class="drop-btn">會員專區</span><span class="drop-list"><a href="register.html">會員申請</a><a href="login.html">會員登入</a><a href="forgot-password.html">忘記密碼</a><a href="member-center.html">會員中心</a></span></span>
+      <span class="drop"><span class="drop-btn">常見問題Ｉ條款政策</span><span class="drop-list"><a href="faq.html">常見問題</a><a href="charter-policy.html">包車條款</a><a href="transfer-policy.html">機場條款</a><a href="privacy.html">隱私權政策</a><a href="ocba.html">網路訂車協議</a></span></span>
+      <a href="driver-recruit.html">司機招募</a>
+    </nav>
+  </div>
+</header>
+<h1>玹翔旅遊｜高端旅遊平台最終修正版</h1><p>本包已修正導覽列、字體、色彩、手機版選單、頁面內容與圖片顯示比例。</p><h2>上線方式</h2><ol><li>將 <code>site</code> 資料夾內容整包上傳至 Cloudflare Pages。</li><li>首頁檔案為 <code>index.html</code>。</li><li>圖片統一放在 <code>images/</code>，CSS/JS 統一放在 <code>assets/</code>。</li></ol><h2>已修正重點</h2><ul><li>全站導覽列統一成黑金高端版。</li><li>旅遊包車主目錄補齊一日遊、兩天一夜、三天兩夜與地區搜尋。</li><li>COMING SOON 頁面改成正式文案，不再像半成品。</li><li>新增手機版選單滑動與關閉功能。</li><li>統一 Noto Sans TC / Noto Serif TC 字體。</li></ul>
+<script id="xx-table-fix-final">
+
+/* ================================
+玹翔旅遊｜表格顯示 FINAL 修正
+不顯示試算表，但正常顯示表格
+================================ */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  // 只隱藏試算表網址，不隱藏表格內容
+  document.querySelectorAll('a[href*="docs.google.com"],a[href*="spreadsheets"],a[href*="gviz"]').forEach(el=>{
+    el.style.display="none";
+  });
+
+  // 不再替換「試算表」文字，避免表格被誤判
+  document.querySelectorAll(".empty").forEach(el=>{
+    if(el.innerText.includes("資料更新中")){
+      el.style.display="none";
+    }
+  });
+
+  // 表格強制顯示
+  document.querySelectorAll(".table-wrap").forEach(wrap=>{
+    wrap.style.display="block";
+    wrap.style.overflowX="auto";
+  });
+
+  document.querySelectorAll(".table-wrap table").forEach(table=>{
+    table.style.display="table";
+    table.style.width="100%";
+    table.style.minWidth="720px";
+    table.style.visibility="visible";
+  });
+
+});
+
+</script>
+
+<script src="assets/js/xx-site-unify.js"></script>
+<script src="assets/js/xx-click-nav-final.js" defer></script>
+<!-- ================================
+玹翔旅遊｜全站統一 Footer
+新手小白改法：電話、LINE、IG、WhatsApp 都在這裡改。
+================================ -->
+<footer class="xx-footer">
+  <div class="xx-footer-inner">
+    <strong>玹翔旅遊｜Xuan Xiang Travel</strong>
+    <p>24H 機場接送｜旅遊包車｜商務包車｜港口接駁｜高端尊榮接送</p>
+    <p>電話：0972-268295｜LINE：@sco20240609｜WhatsApp：(+886)972268295｜WeChat：sco20240609</p>
+    <p>IG：xuanxiang0609｜Threads：xuanxiang0609｜YouTube：玹翔旅遊</p>
+    <p class="xx-footer-note">用心、貼心、深得你心。山路交給我們，您負責拍照跟優雅下車 😎</p>
+  </div>
+</footer>
+</body></html>

@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玹翔旅遊｜機場接送・旅遊包車司機招募</title>
+<meta name="description" content="玹翔旅遊招募機場接送司機、旅遊包車司機、商務包車司機，歡迎有責任感、守時、重視服務品質的夥伴加入高端接送車隊。">
+<meta name="keywords" content="玹翔旅遊,司機招募,機場接送司機,旅遊包車司機,商務包車司機,長途接送司機,高端接送車隊">
+<meta property="og:title" content="玹翔旅遊｜機場接送・旅遊包車司機招募">
+<meta property="og:description" content="玹翔旅遊招募機場接送、旅遊包車、商務接送與長途接送司機，歡迎重視服務品質的夥伴加入。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo.jpg">
+
+<style>
+:root{
+  --bg:#050505;
+  --card:#151515;
+  --gold:#d8b56d;
+  --gold2:#fff0b8;
+  --text:#fff8e8;
+  --muted:#cfc3a8;
+  --line:rgba(216,181,109,.28);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:
+    radial-gradient(circle at top,#2a2112 0%,#050505 42%,#000 100%);
+  color:var(--text);
+}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1180px;margin:auto;padding:28px 18px}
+.hero{
+  min-height:92vh;
+  display:flex;flex-wrap:wrap;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-stats{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:16px;
+ margin-top:34px;
+ max-width:760px;
+}
+.hero-stat{
+ background:rgba(255,255,255,.05);
+ border:1px solid var(--line);
+ border-radius:20px;
+ padding:18px;
+ text-align:center;
+ backdrop-filter:blur(12px);
+}
+.hero-stat strong{
+ display:block;
+ color:var(--gold2);
+ font-size:28px;
+ font-weight:900;
+}
+.hero-stat span{
+ color:var(--muted);
+ font-size:13px;
+}
+.vehicle-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:22px;
+}
+.vehicle-card{
+ border:1px solid var(--line);
+ border-radius:26px;
+ overflow:hidden;
+ background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+}
+.vehicle-card img{
+ width:100%;
+ height:240px;
+ object-fit:cover;
+}
+.vehicle-card .body{
+ padding:24px;
+}
+.feature-list{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:20px;
+}
+.feature-item{
+ padding:24px;
+ border-radius:24px;
+ border:1px solid var(--line);
+ background:rgba(255,255,255,.04);
+ text-align:center;
+}
+@media(max-width:900px){
+ .hero-stats,.vehicle-grid,.feature-list{grid-template-columns:1fr;}
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.55)),
+    url("Images/招聘圖.png") center/cover;
+  z-index:-2;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 75% 20%,rgba(216,181,109,.25),transparent 36%);
+  z-index:-1;
+}
+.badge{
+  display:inline-block;
+  border:1px solid var(--gold);
+  color:var(--gold2);
+  padding:8px 16px;
+  border-radius:999px;
+  letter-spacing:.12em;
+  font-size:14px;
+  background:rgba(0,0,0,.45);
+}
+h1{
+  font-size:clamp(38px,6vw,78px);
+  line-height:1.08;
+  margin:24px 0 18px;
+  color:var(--gold2);
+  text-shadow:0 0 28px rgba(216,181,109,.28);
+}
+.hero p{
+  max-width:720px;
+  font-size:20px;
+  line-height:1.9;
+  color:var(--muted);
+}
+.cta{
+  display:flex;flex-wrap:wrap;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:30px;
+}
+.btn{
+  padding:14px 24px;
+  border-radius:999px;
+  font-weight:800;
+  border:1px solid var(--gold);
+}
+.btn.primary{
+  background:linear-gradient(135deg,#fff0b8,#d8b56d,#9f732e);
+  color:#151006;
+}
+.btn.dark{
+  background:rgba(0,0,0,.45);
+  color:var(--gold2);
+}
+section{padding:72px 0}
+.title{
+  text-align:center;
+  margin-bottom:34px;
+}
+.title span{
+  color:var(--gold);
+  letter-spacing:.16em;
+  font-size:14px;
+}
+.title h2{
+  margin:10px 0;
+  font-size:clamp(30px,4vw,48px);
+  color:var(--gold2);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:26px;
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+}
+.card h3{
+  color:var(--gold2);
+  font-size:24px;
+  margin:0 0 12px;
+}
+.card p,.card li{
+  color:var(--muted);
+  line-height:1.8;
+}
+ul{padding-left:20px}
+.highlight{
+  background:linear-gradient(135deg,rgba(216,181,109,.18),rgba(255,255,255,.04));
+  border:1px solid var(--gold);
+  border-radius:30px;
+  padding:36px;
+  text-align:center;
+}
+.highlight h2{
+  color:var(--gold2);
+  font-size:36px;
+}
+.steps{
+  counter-reset:num;
+}
+.step{
+  position:relative;
+  padding-left:58px;
+  margin-bottom:20px;
+}
+.step::before{
+  counter-increment:num;
+  content:counter(num);
+  position:absolute;
+  left:0;
+  top:0;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--gold);
+  color:#111;
+  font-weight:900;
+}
+.contact{
+  text-align:center;
+  background:#0b0b0b;
+  border-top:1px solid var(--line);
+}
+.contact h2{
+  color:var(--gold2);
+  font-size:42px;
+}
+.footer{
+  text-align:center;
+  color:#9f936f;
+  padding:24px;
+  border-top:1px solid var(--line);
+  font-size:14px;
+}
+.apply-form{
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(216,181,109,.06));
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:34px;
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.form-group{
+  text-align:left;
+}
+.form-group.full{
+  grid-column:1/-1;
+}
+.form-group label{
+  display:block;
+  color:var(--gold2);
+  font-weight:800;
+  margin:0 0 8px;
+  letter-spacing:.04em;
+}
+.form-group input,
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"]{
+  width:100%;
+  border:1px solid rgba(216,181,109,.34);
+  border-radius:16px;
+  background:rgba(0,0,0,.38);
+  color:var(--text);
+  padding:14px 15px;
+  font-size:16px;
+  outline:none;
+  font-family:inherit;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:var(--gold2);
+  box-shadow:0 0 0 4px rgba(216,181,109,.12);
+}
+.form-group textarea{
+  min-height:120px;
+  resize:vertical;
+}
+.form-upload{
+  padding:18px;
+  border:1px dashed rgba(216,181,109,.45);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+}
+.form-upload small{
+  display:block;
+  margin-top:8px;
+  color:#b9ab8d;
+  line-height:1.7;
+}
+.form-note{
+  margin-top:18px;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:15px;
+}
+.footer{
+  text-align:center;
+  color:#9f936f;
+  padding:24px;
+  border-top:1px solid var(--line);
+  font-size:14px;
+}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .hero{min-height:86vh}
+  .form-grid{grid-template-columns:1fr}
+  .apply-form{padding:24px}
+}
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{
+font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+::selection{
+background:#d8b56d;
+color:#111;
+}
+img{
+max-width:100%;
+height:auto;
+}
+a,button{
+transition:.28s ease;
+}
+a:hover{
+opacity:.92;
+}
+@media(max-width:768px){
+.container,
+.wrap,
+.content,
+.main{
+width:92% !important;
+max-width:92% !important;
+}
+h1{font-size:2.2rem !important;line-height:1.25 !important;}
+h2{font-size:1.7rem !important;}
+p,li,a,span{
+font-size:1rem !important;
+line-height:1.9 !important;
+}
+}
+</style>
+
+
+<link rel="canonical" href="https://xuanxiangtravel.com/driver-recruit.html">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<script src="assets/js/config.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+</head>
+
+<body data-xx-layout="v8">
+<div id="xx-site-header"></div>
+<section class="hero">
+  <div class="wrap">
+    <span class="badge">DRIVER RECRUITMENT｜玹翔旅遊</span>
+    <h1>徵的不是司機，<br>是一路上的安全感</h1>
+    <p>玹翔旅遊招募機場接送、旅遊包車、商務長途與高端專車合作夥伴。守時、穩定、重視服務品質的你，就是我們正在找的人。</p>
+    <div class="cta">
+      <a class="btn primary" href="#apply">立即填寫合作資料</a>
+      <a class="btn dark" href="#" data-xx-line-link target="_blank" rel="noopener">LINE 官方客服 洽詢</a>
+    </div>
+    <div class="hero-stats">
+<div class="hero-stat"><strong>24H</strong><span>客服支援</span></div>
+<div class="hero-stat"><strong>全台</strong><span>派單服務</span></div>
+<div class="hero-stat"><strong>500萬+</strong><span>乘客保險</span></div>
+<div class="hero-stat"><strong>彈性</strong><span>合作模式</span></div>
+</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="title">
+      <span>RECRUITMENT</span>
+      <h2>工作內容</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>✈️ 機場接送</h3>
+        <p>桃園、松山、清泉岡、小港等機場接送服務，準時、安全、貼心是基本配備。</p>
+      </div>
+      <div class="card">
+        <h3>🏖️ 旅遊包車</h3>
+        <p>一日遊、多日遊、登山接駁、客製化旅程，帶客人出門玩，也把口碑開回來。</p>
+      </div>
+      <div class="card">
+        <h3>💼 商務長途</h3>
+        <p>商務接送、長途接駁、公司行號合作，重視形象、穩定與專業服務品質。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="title">
+<span>OUR ADVANTAGES</span>
+<h2>加入玹翔旅遊的四大優勢</h2>
+</div>
+<div class="feature-list">
+<div class="feature-item"><h3>品牌派單</h3><p>網站、Google、LINE 持續導流。</p></div>
+<div class="feature-item"><h3>高端客群</h3><p>商務、旅遊、機場接送需求穩定。</p></div>
+<div class="feature-item"><h3>教育訓練</h3><p>新進司機完整接案教學。</p></div>
+<div class="feature-item"><h3>長期發展</h3><p>可轉專職、租購或創業模式。</p></div>
+</div>
+</div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="title">
+      <span>WHY JOIN US</span>
+      <h2>加入玹翔旅遊，你會得到什麼？</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>💰 穩定派單收入</h3>
+        <p>公司協助媒合訂單，機場接送、旅遊包車、商務接送多元服務，收入更有機會。</p>
+      </div>
+      <div class="card">
+        <h3>🚘 創業機會</h3>
+        <p>對於想自行創業的夥伴，我們必定全力相助，提供專人 1 對 1 教學。</p>
+      </div>
+      <div class="card">
+        <h3>🕐 彈性合作模式</h3>
+        <p>可全職、可兼職、在這大環境，只要有心想賺錢，我們必然找出適合你的工作模式。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="title">
+<span>FLEET OPTIONS</span>
+<h2>可承接車型與服務場景</h2>
+</div>
+<div class="vehicle-grid">
+<div class="vehicle-card">
+<div class="body">
+<h3>五人座舒適車</h3>
+<p>機場接送、商務接待、長途接送。</p>
+</div>
+</div>
+<div class="vehicle-card">
+<div class="body">
+<h3>九人座商務車</h3>
+<p>家庭旅遊、登山包車、企業團體。</p>
+</div>
+</div>
+<div class="vehicle-card">
+<div class="body">
+<h3>明星保母車</h3>
+<p>VIP接待、藝人行程、高端商務。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="highlight">
+      <h2>我們歡迎這樣的你 😎</h2>
+      <p>不是每個會開車的人都適合服務客人，但每位用心的司機，都值得被看見。</p>
+
+      <div class="grid" style="margin-top:28px;text-align:left">
+        <div class="card">
+          <h3>✅ 基本條件</h3>
+          <ul>
+            <li>具備合法職業小客車駕照</li>
+            <li>無重大肇責紀錄</li>
+            <li>良民證</li>
+            <li>自然人憑證</li>
+
+          </ul>
+        </div>
+        <div class="card">
+          <h3>✅ 服務態度</h3>
+          <ul>
+            <li>守時不放鳥</li>
+            <li>禮貌親切</li>
+            <li>重視乘客安全</li>
+            <li>有責任感</li>
+            <li>有心肯學</li>
+            <li>不路怒，路怒請先深呼吸三次</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>✅ 加分項目</h3>
+          <ul>
+            <li>有經驗，熟悉機場動線者</li>
+            <li>會英文、韓文、日語等其他語言者</li>
+            <li>懂基本交談應對</li>
+            <li>有導遊證等旅遊相關證照者</li>
+            <li>願意長期穩定合作</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="highlight">
+      <h2>＊租車、租購、公司車三種模式讓你選擇＊</h2>
+      <h2>＊挑戰高薪，甚至自己創業＊</h2>
+      <h2>＊只要有心想賺錢、有責任感，任何困難都可以提出，我們一起想辦法。＊</h2>
+    </div>
+  </div>
+</section>
+
+<section id="apply">
+  <div class="wrap">
+    <div class="title">
+      <span>DRIVER APPLICATION</span>
+      <h2>填寫司機基本資料</h2>
+    </div>
+
+    <form class="apply-form" action="#" data-xx-line-form method="get">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="driverName">姓名／稱呼</label>
+          <input id="driverName" name="driverName" type="text" placeholder="例：曾先生、陳小姐" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">聯絡電話</label>
+          <input id="phone" name="phone" type="tel" placeholder="例：09xx-xxx-xxx" required>
+        </div>
+
+        <div class="form-group">
+<label for="age">年齡</label>
+<input id="age" name="age" type="number" min="20" max="75" placeholder="請輸入年齡">
+</div>
+
+        <div class="form-group">
+          <label for="lineId">LINE ID</label>
+          <input id="lineId" name="lineId" type="text" placeholder="請填寫方便聯繫的 LINE 官方客服 ID">
+        </div>
+
+        <div class="form-group">
+          <label for="city">居住地</label>
+          <input id="city" name="city" type="text" placeholder="例：台中市北屯區、彰化縣員林市、高雄市左營區">
+        </div>
+
+        <div class="form-group">
+          <label for="license">駕照類型</label>
+          <select id="license" name="license" required>
+            <option value="">請選擇駕照類型</option>
+            <option>普通小型車駕照</option>
+            <option>職業小型車駕照</option>
+            <option>職業大客車駕照</option>
+            <option>其他</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="timeSlot">合作模式</label>
+          <select id="timeSlot" name="timeSlot">
+            <option value="">請選擇方案</option>
+            <option>公司車正職司機</option>
+            <option>公司車禮車司機</option>
+            <option>長租車司機</option>
+            <option>租購</option>
+            <option>需另行討論</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label for="uploadFiles">上傳相關資料</label>
+          <div class="form-upload">
+            <input id="uploadFiles" name="uploadFiles" type="file" multiple accept="image/*,.pdf">
+            <small>
+              可上傳：身分證、駕照、良民證、無肇責紀錄等資料。<br>
+              支援 JPG、PNG、PDF 檔案格式，可一次上傳多個檔案。
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label for="note">補充說明</label>
+          <textarea id="note" name="note" placeholder="若有其他問題歡迎諮詢細聊"></textarea>
+        </div>
+      </div>
+
+      <p class="form-note">
+        送出後請加入官方 LINE 官方客服，客服會依照資料進行合作評估與聯繫。資料填越完整，媒合速度越快；方向盤不會說話，但履歷會。😎
+      </p>
+
+      <div class="form-group full">
+<label><input type="checkbox" required> 我已確認資料內容正確並同意客服聯繫。</label>
+</div>
+
+      <div class="cta" style="justify-content:center">
+        <button class="btn primary" type="submit">送出基本資料</button>
+        <a class="btn dark" href="#" data-xx-phone-link>電話快速洽詢</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="wrap">
+    <h2>方向盤握得穩，人生也能開得更穩。</h2>
+    <p style="color:var(--muted);font-size:20px;line-height:1.8">
+      玹翔旅遊誠摯邀請優質司機加入。  
+      一起把每一趟接送，做成客人願意回頭的服務。
+    </p>
+    <div class="cta" style="justify-content:center">
+      <a class="btn primary" href="#apply">填寫司機合作資料</a>
+      <a class="btn dark" href="#" data-xx-phone-link>撥打電話</a>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+</body>
+</html>

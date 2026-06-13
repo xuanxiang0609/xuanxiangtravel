@@ -1,0 +1,350 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "database.rules.json",
+      "storage.rules",
+      "apps-script/**",
+      "tools/**",
+      "docs/**",
+      "backups/**",
+      "backup/**",
+      "tmp/**",
+      "temp/**",
+      "node_modules/**",
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.github/**",
+      "**/.vscode/**",
+      "**/.idea/**",
+      "**/.DS_Store",
+      ".DS_Store",
+      "**/Thumbs.db",
+      "**/*.log",
+      "**/*.map",
+      "**/*.bak",
+      "**/*.old",
+      "**/*.tmp",
+      "**/*.zip",
+      "**/*.rar",
+      "**/*.7z",
+      "**/*.psd",
+      "**/*.ai",
+      "**/*.sketch",
+      "**/*.fig",
+      "README.md",
+      "README.html",
+      "content-merged.html",
+      "css-list.txt",
+      "css-list 2.txt",
+      "html-list.txt",
+      "html-list 2.txt",
+      "js-list.txt",
+      "js-list 2.txt",
+      "FINAL_CHECK_REPORT.txt",
+      "FINAL_ONLINE_REPORT.txt",
+      "README.txt",
+      "reports/**",
+
+      "**/*.bak*",
+      "**/*.backup*",
+      "firebase.backup.*",
+
+      ".clasp.json",
+      ".claspignore",
+      "appsscript.json",
+
+      "MERGE_LOG.*",
+      "validation-report.*",
+
+      "FINAL_CHECK_REPORT.*",
+      "FINAL_ONLINE_REPORT.*",
+
+      "*.py",
+      "**/*.py",
+
+      "**/*.bak*",
+      "**/*.backup*",
+      "firebase.backup.*",
+
+      ".clasp.json",
+      ".claspignore",
+      "appsscript.json",
+
+      "MERGE_LOG.*",
+      "validation-report.*",
+
+      "FINAL_CHECK_REPORT.*",
+      "FINAL_ONLINE_REPORT.*",
+
+      "*.py",
+      "**/*.py"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/home",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/vehicles",
+        "destination": "/fleet",
+        "type": 301
+      },
+      {
+        "source": "/business-transfer",
+        "destination": "/business",
+        "type": 301
+      },
+      {
+        "source": "/concert-transfer",
+        "destination": "/concert",
+        "type": 301
+      },
+      {
+        "source": "/travel-charter",
+        "destination": "/charter",
+        "type": 301
+      },
+      {
+        "source": "/smangus-day.html",
+        "destination": "/smangus-day",
+        "type": 301
+      },
+      {
+        "source": "/hehuanshan-day.html",
+        "destination": "/hehuanshan-day",
+        "type": 301
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|mjs)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "assets/js/config.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|png|gif|webp|svg|ico|avif)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(mp4|webm|ogg|mp3|wav)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(woff|woff2|ttf|otf)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/404.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache,no-store,must-revalidate"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex,follow"
+          }
+        ]
+      },
+      {
+        "source": "/robots.txt",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=3600,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/sitemap.xml",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=3600,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/manifest.json",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=86400,must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "accelerometer=(), autoplay=(self), camera=(), clipboard-read=(), clipboard-write=(self), display-capture=(), encrypted-media=(self), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self), publickey-credentials-get=(self), usb=(), xr-spatial-tracking=()"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains; preload"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-site"
+          },
+          {
+            "key": "X-DNS-Prefetch-Control",
+            "value": "on"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com; connect-src 'self' https:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://accounts.google.com https://script.google.com https://docs.google.com;"
+          }
+        ]
+      }
+    ]
+  },
+  "firestore": [
+    {
+      "database": "xuanxiangtravel",
+      "rules": "firestore.rules",
+      "indexes": "firestore.indexes.json"
+    }
+  ]
+}

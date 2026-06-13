@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('orderBoard');if(!el)return;el.innerHTML=XXAdmin.state.orders.map(o=>`<div class="order-row"><div><b>${o.id}｜${o.service}</b><span>${o.customer}・${o.time}</span></div><em class="status-pill">${o.status}</em></div>`).join('');});

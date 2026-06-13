@@ -1,0 +1,1571 @@
+<!doctype html>
+<!-- Xuan Xiang Travel Booking Mall v14.2 Black Gold Step Booking Mall｜Dream Player Step Flow + Google Maps Fare Engine - 2026-06-13 -->
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>預約商城｜機場接送・包車旅遊線上預約｜玹翔旅遊</title>
+<meta name="description" content="機場接送線上預訂，線上填寫機場接送、港口接送、旅遊包車、登山包車、長途接送與商務包車需求，由客服確認報價。">
+<meta name="keywords" content="玹翔旅遊,機場接送,包車旅遊,港口接送,演唱會專車,商務包車,登山包車,長途接送">
+<link rel="canonical" href="https://xuanxiangtravel.com/booking">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="玹翔旅遊">
+<meta property="og:title" content="預約商城｜機場接送・包車旅遊線上預約｜玹翔旅遊">
+<meta property="og:description" content="機場接送線上預訂，線上填寫機場接送、港口接送、旅遊包車、登山包車、長途接送與商務包車需求，由客服確認報價。">
+<meta property="og:url" content="https://xuanxiangtravel.com/booking">
+<meta property="og:image" content="https://xuanxiangtravel.com/images/og/og-booking.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/xx-v8.css">
+<link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
+<script src="assets/js/config.js"></script>
+<style>
+:root{
+  --xx-bg:#070604;
+  --xx-card:#11100d;
+  --xx-card-2:#17140f;
+  --xx-gold:#d8b56d;
+  --xx-gold-2:#fff0b8;
+  --xx-cream:#fff8e8;
+  --xx-muted:#d8ccb0;
+  --xx-line:rgba(216,181,109,.28);
+  --xx-danger:#ffb4b4;
+  --xx-ok:#9df0bf;
+}
+
+/* === v14.1 真正一步一步下單模式 === */
+body[data-xx-page="booking"] .step-panel{
+  display:none!important;
+}
+
+body[data-xx-page="booking"] .step-panel.is-active{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:18px!important;
+  animation:xxStepFade .22s ease both;
+}
+
+@keyframes xxStepFade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+body[data-xx-page="booking"] .booking-stepper{
+  pointer-events:none!important;
+}
+
+body[data-xx-page="booking"] .step-tab{
+  cursor:default!important;
+}
+
+body[data-xx-page="booking"] .step-actions{
+  display:flex!important;
+}
+
+body[data-xx-page="booking"] .step-actions [data-prev],
+body[data-xx-page="booking"] .step-actions [data-next]{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+body[data-xx-page="booking"] .member-gate:empty{
+  display:none!important;
+}
+
+
+/* === v14.2 第一步依服務動態顯示欄位 === */
+body[data-xx-page="booking"] [data-field="flight"],
+body[data-xx-page="booking"] [data-field="ship"],
+body[data-xx-page="booking"] [data-field="event"]{
+  display:none!important;
+}
+
+body[data-xx-page="booking"] [data-field].is-visible{
+  display:block!important;
+}
+
+</style>
+
+
+<style id="xx-booking-blackgold-v14">
+/* === Ultimate Final v14.2 Black Gold Step Booking Mall === */
+:root{
+  --xx-bg:#050403;
+  --xx-bg2:#0c0905;
+  --xx-card:#11100d;
+  --xx-card2:#18140d;
+  --xx-gold:#d4af37;
+  --xx-gold2:#f7dc82;
+  --xx-gold3:#9d7522;
+  --xx-text:#fff8e8;
+  --xx-muted:#c9b98e;
+  --xx-line:rgba(212,175,55,.28);
+  --xx-soft:rgba(212,175,55,.10);
+  --xx-danger:#ffb4b4;
+  --xx-ok:#9df0bf;
+}
+
+html{scroll-behavior:smooth}
+
+body[data-xx-page="booking"],
+body[data-xx-page="booking"] main{
+  background:
+    radial-gradient(circle at top left,rgba(212,175,55,.18),transparent 34%),
+    linear-gradient(135deg,#030302 0%,#0b0905 44%,#151006 100%)!important;
+  color:var(--xx-text)!important;
+}
+
+.booking-mall-hero{
+  min-height:360px!important;
+  display:flex!important;
+  align-items:center!important;
+  background:
+    linear-gradient(120deg,rgba(0,0,0,.76),rgba(0,0,0,.46),rgba(0,0,0,.88)),
+    url('images/airport-transfer-hero.jpg') center/cover no-repeat!important;
+  border-bottom:1px solid var(--xx-line)!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+
+.booking-mall-hero:after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0 0;
+  height:120px;
+  background:linear-gradient(transparent,rgba(5,4,3,.98));
+}
+
+.booking-hero-card{
+  position:relative!important;
+  z-index:2!important;
+  max-width:980px!important;
+  margin:0 auto!important;
+  padding:72px 24px 96px!important;
+  text-align:center!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+.booking-hero-card .kicker{
+  display:inline-flex!important;
+  color:var(--xx-gold2)!important;
+  border:1px solid var(--xx-line)!important;
+  border-radius:999px!important;
+  padding:8px 16px!important;
+  background:rgba(0,0,0,.38)!important;
+  letter-spacing:.18em!important;
+}
+
+.booking-hero-card h1{
+  margin-top:20px!important;
+  font-size:42px!important;
+  line-height:1.18!important;
+  color:#fff8e8!important;
+  font-family:"Noto Serif TC",serif!important;
+  text-shadow:0 12px 36px rgba(0,0,0,.75),0 0 22px rgba(212,175,55,.22)!important;
+}
+
+.booking-hero-card .lead{
+  display:block!important;
+  max-width:720px!important;
+  margin:18px auto 0!important;
+  color:#e8dcc0!important;
+  line-height:2!important;
+  font-size:16px!important;
+}
+
+.booking-hero-card .actions{
+  justify-content:center!important;
+  margin-top:30px!important;
+  gap:12px!important;
+}
+
+.booking-hero-card .btn,
+.step-actions .btn,
+.btn.primary{
+  border-radius:999px!important;
+  min-height:44px!important;
+  padding:0 22px!important;
+  font-weight:900!important;
+}
+
+.booking-hero-card .btn.primary,
+.step-actions .btn.primary,
+.btn.primary{
+  background:linear-gradient(135deg,var(--xx-gold),var(--xx-gold2))!important;
+  color:#171004!important;
+  border:1px solid rgba(255,235,160,.72)!important;
+  box-shadow:0 14px 34px rgba(212,175,55,.22)!important;
+}
+
+.booking-hero-card .btn:not(.primary),
+.step-actions .btn.ghost{
+  background:rgba(255,255,255,.06)!important;
+  color:var(--xx-text)!important;
+  border:1px solid var(--xx-line)!important;
+}
+
+#bookingSection.section{
+  padding-top:42px!important;
+  background:transparent!important;
+}
+
+.booking-layout{
+  max-width:1160px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 360px!important;
+  gap:26px!important;
+  align-items:start!important;
+}
+
+.booking-summary{
+  order:2!important;
+  position:sticky!important;
+  top:96px!important;
+  border-radius:22px!important;
+  padding:26px!important;
+  background:linear-gradient(145deg,rgba(24,20,13,.98),rgba(8,7,5,.98))!important;
+  border:1px solid var(--xx-line)!important;
+  box-shadow:0 24px 80px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.06)!important;
+  color:var(--xx-text)!important;
+}
+
+.summary-brand{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  color:var(--xx-gold2)!important;
+  margin-bottom:16px!important;
+}
+
+.summary-brand b{font-size:18px!important}
+.summary-brand span{font-size:11px!important;letter-spacing:.18em!important;color:var(--xx-muted)!important}
+
+.summary-price{
+  padding:18px!important;
+  margin:0 0 18px!important;
+  border-radius:18px!important;
+  background:linear-gradient(135deg,rgba(212,175,55,.16),rgba(255,255,255,.04))!important;
+  border:1px solid var(--xx-line)!important;
+  color:var(--xx-text)!important;
+}
+
+.summary-price span{color:var(--xx-muted)!important;font-weight:900!important}
+.summary-price strong{
+  display:block!important;
+  margin-top:8px!important;
+  font-size:30px!important;
+  color:var(--xx-gold2)!important;
+  letter-spacing:.3px!important;
+}
+
+.summary-row{
+  display:grid!important;
+  grid-template-columns:96px minmax(0,1fr)!important;
+  gap:12px!important;
+  padding:12px 0!important;
+  border-bottom:1px solid rgba(212,175,55,.16)!important;
+  font-size:14px!important;
+}
+
+.summary-row dt{color:var(--xx-gold2)!important;font-weight:900!important}
+.summary-row dd{color:var(--xx-text)!important;font-weight:800!important;text-align:right!important}
+
+.summary-note{
+  margin-top:18px!important;
+  background:rgba(212,175,55,.08)!important;
+  border:1px solid var(--xx-line)!important;
+  color:var(--xx-muted)!important;
+  border-radius:16px!important;
+  padding:14px!important;
+  line-height:1.8!important;
+}
+
+.booking-form{
+  order:1!important;
+  max-width:720px!important;
+  margin:0 auto!important;
+  background:linear-gradient(145deg,rgba(19,16,11,.98),rgba(9,8,6,.98))!important;
+  border:1px solid var(--xx-line)!important;
+  box-shadow:0 26px 90px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.05)!important;
+  border-radius:24px!important;
+  padding:38px!important;
+  color:var(--xx-text)!important;
+}
+
+.booking-stepper{
+  max-width:520px!important;
+  margin:0 auto 36px!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:0!important;
+  position:relative!important;
+}
+
+.booking-stepper:before{
+  content:"";
+  position:absolute;
+  left:14%;
+  right:14%;
+  top:17px;
+  height:3px;
+  background:rgba(255,255,255,.14);
+  z-index:0!important;
+}
+
+.step-tab{
+  position:relative!important;
+  z-index:1!important;
+  min-height:58px!important;
+  border:0!important;
+  background:transparent!important;
+  color:var(--xx-muted)!important;
+  border-radius:0!important;
+  padding-top:38px!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+
+.step-tab:before{
+  content:attr(data-step-num);
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#2a261c;
+  color:#b7aa82;
+  border:1px solid rgba(255,255,255,.14);
+  font-size:14px;
+  font-weight:900;
+}
+
+.step-tab.is-active{
+  color:var(--xx-gold2)!important;
+}
+
+.step-tab.is-active:before{
+  background:linear-gradient(135deg,var(--xx-gold),var(--xx-gold2))!important;
+  color:#151005!important;
+  box-shadow:0 0 0 6px rgba(212,175,55,.12),0 0 28px rgba(212,175,55,.48)!important;
+  border-color:rgba(255,236,165,.75)!important;
+}
+
+.step-tab small{display:none!important}
+
+.step-title{
+  text-align:center!important;
+  padding-bottom:18px!important;
+  margin-bottom:22px!important;
+  border-bottom:1px solid var(--xx-line)!important;
+}
+
+.step-title h2{
+  font-size:26px!important;
+  color:var(--xx-text)!important;
+  font-family:"Noto Serif TC",serif!important;
+  font-weight:900!important;
+}
+
+.step-title p{
+  max-width:560px!important;
+  margin:10px auto 0!important;
+  font-size:14px!important;
+  color:var(--xx-muted)!important;
+  line-height:1.9!important;
+}
+
+.step-panel.is-active{
+  gap:18px!important;
+}
+
+.booking-form label,
+.booking-form legend{
+  color:var(--xx-gold2)!important;
+  font-size:14px!important;
+  font-weight:900!important;
+}
+
+.booking-form .input,
+.booking-form .select,
+.booking-form textarea{
+  min-height:52px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(212,175,55,.42)!important;
+  background:rgba(255,255,255,.055)!important;
+  color:var(--xx-text)!important;
+  font-size:15px!important;
+  font-weight:700!important;
+  padding:0 16px!important;
+  outline:none!important;
+}
+
+.booking-form textarea{padding:14px 16px!important}
+
+.booking-form .input:focus,
+.booking-form .select:focus,
+.booking-form textarea:focus{
+  border-color:var(--xx-gold2)!important;
+  box-shadow:0 0 0 4px rgba(212,175,55,.16)!important;
+  background:rgba(255,255,255,.08)!important;
+}
+
+.booking-form input::placeholder,
+.booking-form textarea::placeholder{
+  color:rgba(255,248,232,.42)!important;
+}
+
+.field-hint{
+  color:var(--xx-muted)!important;
+  font-size:12px!important;
+}
+
+.route-grid,
+.addon-box,
+.estimate-box,
+.recommendation,
+.vehicle-select-wrap,
+.flight-preview-card{
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid var(--xx-line)!important;
+  border-radius:18px!important;
+  box-shadow:none!important;
+}
+
+.route-grid{
+  padding:18px!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:16px!important;
+}
+
+.dynamic-block{
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+}
+
+.dynamic-head b{
+  color:var(--xx-gold2)!important;
+}
+
+.dynamic-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 70px!important;
+  gap:10px!important;
+}
+
+.mini-btn{
+  min-height:38px!important;
+  border-radius:999px!important;
+  background:rgba(212,175,55,.10)!important;
+  color:var(--xx-gold2)!important;
+  border:1px dashed var(--xx-line)!important;
+  font-weight:900!important;
+}
+
+.mini-btn.danger{
+  color:#ddc99b!important;
+  border-color:rgba(255,255,255,.14)!important;
+}
+
+.flight-preview-head{
+  background:linear-gradient(135deg,var(--xx-gold),var(--xx-gold2))!important;
+  color:#140f04!important;
+  padding:12px 16px!important;
+  font-weight:900!important;
+}
+
+.flight-preview-body,
+.flight-code,
+.flight-route{
+  color:var(--xx-text)!important;
+}
+
+.flight-route span{
+  background:rgba(0,0,0,.22)!important;
+  border-color:var(--xx-line)!important;
+  color:var(--xx-text)!important;
+}
+
+.qty-stepper{
+  display:grid!important;
+  grid-template-columns:48px 88px 48px!important;
+  justify-content:center!important;
+  gap:14px!important;
+  margin-top:6px!important;
+}
+
+.qty-input{
+  text-align:center!important;
+  background:rgba(255,255,255,.06)!important;
+  color:var(--xx-text)!important;
+  border-color:var(--xx-line)!important;
+  font-size:20px!important;
+}
+
+.qty-btn,
+.vehicle-arrow{
+  min-height:46px!important;
+  width:46px!important;
+  border-radius:50%!important;
+  border:1px solid var(--xx-line)!important;
+  background:rgba(212,175,55,.10)!important;
+  color:var(--xx-gold2)!important;
+  font-size:24px!important;
+  font-weight:900!important;
+}
+
+.vehicle-select-wrap{
+  padding:18px!important;
+}
+
+.vehicle-picker{
+  display:grid!important;
+  grid-template-columns:50px minmax(0,1fr) 50px!important;
+  gap:12px!important;
+  align-items:center!important;
+}
+
+.vehicle-preview{
+  display:grid!important;
+  grid-template-columns:210px 1fr!important;
+  gap:18px!important;
+  align-items:center!important;
+  border-top:1px solid var(--xx-line)!important;
+  margin-top:18px!important;
+  padding:18px 0 0!important;
+}
+
+.vehicle-preview img{
+  background:rgba(255,255,255,.04)!important;
+  border-radius:14px!important;
+}
+
+.vehicle-preview b{
+  color:var(--xx-gold2)!important;
+  font-size:20px!important;
+}
+
+.vehicle-preview p{
+  color:var(--xx-muted)!important;
+}
+
+.vehicle-badge{
+  display:inline-flex!important;
+  width:max-content!important;
+  background:rgba(212,175,55,.12)!important;
+  border:1px solid var(--xx-line)!important;
+  color:var(--xx-gold2)!important;
+  border-radius:999px!important;
+  padding:6px 12px!important;
+}
+
+.recommendation{
+  color:var(--xx-muted)!important;
+  font-weight:800!important;
+  padding:14px!important;
+}
+
+.addon-box{
+  padding:16px!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+
+.addon-row{
+  display:grid!important;
+  grid-template-columns:1fr 78px!important;
+  gap:8px!important;
+  background:transparent!important;
+}
+
+.addon-row label{
+  min-height:46px!important;
+  border:1px solid rgba(212,175,55,.22)!important;
+  border-radius:14px!important;
+  padding:0 12px!important;
+  color:var(--xx-text)!important;
+  background:rgba(255,255,255,.04)!important;
+}
+
+.addon-row small{
+  color:var(--xx-muted)!important;
+}
+
+.addon-qty{
+  min-height:46px!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.055)!important;
+  color:var(--xx-text)!important;
+  border:1px solid var(--xx-line)!important;
+}
+
+.tax-fields,
+.other-fields{grid-column:1/-1!important}
+
+.estimate-box{
+  padding:18px!important;
+}
+
+.estimate-box h3{
+  color:var(--xx-gold2)!important;
+  font-size:22px!important;
+  font-family:"Noto Serif TC",serif!important;
+}
+
+.estimate-line{
+  color:var(--xx-muted)!important;
+  border-color:rgba(212,175,55,.18)!important;
+}
+
+.estimate-line strong{
+  color:var(--xx-text)!important;
+}
+
+.estimate-total{
+  background:linear-gradient(135deg,var(--xx-gold),var(--xx-gold2))!important;
+  color:#150f03!important;
+  border-radius:16px!important;
+}
+
+.estimate-total strong{color:#150f03!important}
+
+.estimate-note,
+.notice{
+  color:var(--xx-muted)!important;
+}
+
+.policy-check{
+  color:var(--xx-muted)!important;
+}
+
+.policy-check a{
+  color:var(--xx-gold2)!important;
+}
+
+.notice{
+  background:rgba(212,175,55,.08)!important;
+  border:1px solid var(--xx-line)!important;
+  border-radius:16px!important;
+}
+
+.step-actions{
+  border-top:1px solid var(--xx-line)!important;
+  justify-content:space-between!important;
+  padding-top:20px!important;
+}
+
+.result-box{
+  color:var(--xx-text)!important;
+}
+
+.result-box.ok{
+  background:rgba(55,190,120,.14)!important;
+  border-color:rgba(120,240,170,.42)!important;
+}
+
+.result-box.warn{
+  background:rgba(212,175,55,.12)!important;
+  border-color:var(--xx-line)!important;
+}
+
+.result-box.error{
+  background:rgba(255,90,90,.12)!important;
+  border-color:rgba(255,180,180,.42)!important;
+}
+
+@media(max-width:980px){
+  .booking-layout{
+    grid-template-columns:1fr!important;
+    max-width:720px!important;
+  }
+  .booking-summary{
+    order:1!important;
+    position:relative!important;
+    top:auto!important;
+  }
+  .booking-form{order:2!important}
+  .vehicle-preview{grid-template-columns:1fr!important}
+}
+
+@media(max-width:680px){
+  .booking-hero-card h1{font-size:31px!important}
+  .booking-form{padding:24px 16px!important}
+  .booking-stepper{grid-template-columns:repeat(3,1fr)!important}
+  .step-tab{font-size:12px!important}
+  .addon-box{grid-template-columns:1fr!important}
+  .addon-row{grid-template-columns:1fr 84px!important}
+  .summary-row dd{text-align:left!important}
+  .booking-summary{padding:20px!important}
+  .dynamic-row{grid-template-columns:1fr!important}
+  .mini-btn.danger{width:100%!important}
+  .step-actions{
+    position:sticky!important;
+    bottom:0!important;
+    background:rgba(9,8,6,.96)!important;
+    z-index:10!important;
+    backdrop-filter:blur(14px)!important;
+  }
+}
+</style>
+
+
+</head>
+<body data-xx-layout="v13" data-xx-page="booking" data-xx-template="booking-mall" data-xx-booking-version="v14.2-blackgold-step-booking" data-xx-shared-template="true">
+<div id="xx-site-header"></div>
+<main>
+<section class="booking-mall-hero">
+  <div class="container">
+    <div class="booking-hero-card">
+      <div class="kicker">XUAN XIANG TRAVEL BOOKING</div>
+      <h1>玹翔旅遊黑金預約商城</h1>
+      <p class="lead">夢玩家式一步一步下單，結合 Google Maps 自動測距與黑金禮賓報價引擎。24小時客服、專業司機、500萬乘客險，讓接送不只是移動，是整趟旅程的開場。</p>
+      <div class="actions">
+        <a class="btn primary" href="#bookingSection">立即預約</a>
+        <a class="btn" href="airport-pricing.html">查詢價目表</a>
+        <a class="btn ghost" href="faq.html">常見問題</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="bookingSection">
+<div class="container">
+<div id="bookingMemberGate" class="member-gate"></div>
+<div class="booking-layout">
+<aside class="booking-summary" aria-label="訂單摘要">
+  <div class="summary-brand"><b>玹翔旅遊</b><span>BOOKING</span></div>
+  <div class="summary-price"><span>預估費用</span><strong id="summaryPrice">待客服確認</strong></div>
+  <dl>
+    <div class="summary-row"><dt>服務</dt><dd id="summaryService">尚未選擇</dd></div>
+    <div class="summary-row"><dt>日期時間</dt><dd id="summaryDate">尚未填寫</dd></div>
+    <div class="summary-row"><dt>航班／船班</dt><dd id="summaryFlight">未填寫</dd></div>
+    <div class="summary-row"><dt>上車</dt><dd id="summaryPickup">尚未填寫</dd></div>
+    <div class="summary-row"><dt>下車</dt><dd id="summaryDropoff">尚未填寫</dd></div>
+    <div class="summary-row"><dt>人數行李</dt><dd id="summaryPax">尚未填寫</dd></div>
+    <div class="summary-row"><dt>車型</dt><dd id="summaryVehicle">依客服派車</dd></div>
+    <div class="summary-row"><dt>加購</dt><dd id="summaryAddons">無</dd></div>
+  </dl>
+  <div class="summary-note">線上送出為需求登記，需客服確認車輛、報價與訂金後，訂單才正式成立。</div>
+</aside>
+<form class="booking-form" id="bookingForm" data-booking-mall-version="v14.2-blackgold-step-booking" data-xx-api-mode="apps-script" onsubmit="submitBooking(event)" novalidate>
+  <input type="hidden" name="contactApp">
+  <input type="hidden" name="pickup">
+  <input type="hidden" name="dropoff">
+  <input type="hidden" name="midpoints">
+  <input type="hidden" name="addonTotal">
+  <input type="hidden" name="baseFare">
+  <input type="hidden" name="taxFee">
+  <input type="hidden" name="cardFee">
+  <input type="hidden" name="transferPointFee">
+  <input type="hidden" name="estimatedTotal">
+  <input type="hidden" name="quotedFare">
+  <input type="hidden" name="distanceKm">
+  <input type="hidden" name="durationMin">
+  <input type="hidden" name="vehicleCode">
+  <input type="hidden" name="fareRuleJson">
+  <input type="hidden" name="customerAddons">
+  <input type="hidden" name="itineraryJson">
+  <input type="hidden" name="bookingVersion" value="Ultimate Final v14.2 Black Gold Step Booking Mall">
+  <input type="hidden" name="bookingMallVersion" value="v14.2-blackgold-step-booking">
+  <input type="hidden" name="bookingTemplate" value="booking-mall-three-step-blackgold">
+  <input type="hidden" name="layoutVersion" value="Ultimate Final v13 Shared Layout Core">
+  <input type="hidden" name="apiMode" value="apps-script">
+  <input type="hidden" name="pageSource" value="booking.html">
+  <input type="hidden" name="apiEndpoint" value="">
+
+  <div class="booking-stepper" role="tablist" aria-label="預約步驟">
+    <button type="button" class="step-tab is-active" data-step-tab="0" data-step-num="1">選擇日期<small>服務、日期、時間、航班</small></button>
+    <button type="button" class="step-tab" data-step-tab="1" data-step-num="2">填寫明細<small>地點、人數、車型、加購</small></button>
+    <button type="button" class="step-tab" data-step-tab="2" data-step-num="3">確認資料<small>聯絡資料與送出預約</small></button>
+  </div>
+
+  <section class="step-panel is-active" data-step-panel="0">
+    <div class="step-title"><h2>選擇日期與時間</h2><p>請先選擇服務項目、服務細項、日期與時間；系統會依服務類型自動顯示航班、船班梯次或活動名稱欄位。</p></div>
+    <label>服務項目（必選）
+      <select name="service" class="select" id="serviceSelect" required>
+        <option value="">請選擇服務項目</option>
+        <option value="機場接送">機場接送</option>
+        <option value="港口接送">港口接送</option>
+        <option value="旅遊包車">旅遊包車</option>
+        <option value="登山包車">登山包車</option>
+        <option value="演唱會接送">演唱會接送</option>
+        <option value="長途接送">長途接送</option>
+      </select>
+    </label>
+    <label>服務細項（必選）
+      <select name="serviceDetail" class="select" id="serviceDetailSelect" required>
+        <option value="">請先選擇服務項目</option>
+      </select>
+    </label>
+    <label>預約日期（必選）
+      <input type="date" name="date" class="input" required>
+    </label>
+    <label>上車時間／落地時間（24小時制）
+      <input type="time" name="time" class="input" required>
+      <span class="field-hint">接機可填預計落地時間；送機可填希望上車時間。</span>
+    </label>
+    <label class="full" data-field="flight">航班編號
+      <input name="flight" class="input" placeholder="例：CI195、BR856、JX804；無航班可填無" autocomplete="off">
+    </label>
+    <label class="full" data-field="ship">船班梯次
+      <input name="shipSession" class="input" placeholder="例：東琉線 09:30、布袋港 10:00、無則填無" autocomplete="off">
+    </label>
+    <label class="full" data-field="event">活動名稱
+      <input name="eventName" class="input" placeholder="例：BLACKPINK 高雄場、五月天演唱會、追星活動名稱" autocomplete="off">
+    </label>
+    <div class="flight-preview-card full" id="flightPreviewCard">
+      <div class="flight-preview-head"><span>已填寫航班</span><span>FLIGHT INFO</span></div>
+      <div class="flight-preview-body">
+        <div class="flight-code" id="flightPreviewCode">CI195</div>
+        <div class="flight-route"><span id="flightPreviewFrom">出發／抵達地待確認</span><strong>✈</strong><span id="flightPreviewTo">目的地待確認</span></div>
+        <div class="field-hint" id="flightPreviewNote">系統已記錄航班編號，實際航廈、落地時間與接送時間仍以客服確認為準。</div>
+      </div>
+    </div>
+    <div class="step-actions"><button class="btn ghost" type="button" data-prev>回到上方</button><button class="btn primary" type="button" data-next>下一步：填寫乘車明細</button></div>
+  </section>
+
+  <section class="step-panel" data-step-panel="1">
+    <div class="step-title"><h2>填寫行程明細與加購</h2><p>可輸入地址、地標或 Google Map 連結。車型會依人數、28／29 吋行李數與寵物條件自動推薦。</p></div>
+    <div class="route-grid full">
+      <div class="dynamic-block" data-dynamic-group="pickups" data-target-name="pickups" data-placeholder="上車地點，可輸入地址、地標或 Google Map 連結">
+        <div class="dynamic-head"><b>上車地點</b><button class="mini-btn" type="button" data-add-dynamic>＋新增</button></div>
+        <div class="dynamic-list" data-dynamic-list></div>
+      </div>
+      <div class="dynamic-block" data-dynamic-group="dropoffs" data-target-name="dropoffs" data-placeholder="下車地點，可輸入地址、地標或 Google Map 連結">
+        <div class="dynamic-head"><b>下車地點</b><button class="mini-btn" type="button" data-add-dynamic>＋新增</button></div>
+        <div class="dynamic-list" data-dynamic-list></div>
+      </div>
+    </div>
+    <input type="hidden" name="manualDistanceKm" value="">
+    <label>人數
+      <div class="qty-stepper passenger-stepper" data-counter="passengers" aria-label="人數 0 到 8 位">
+        <button class="qty-btn" type="button" data-counter-minus aria-label="減少人數">－</button>
+        <input name="passengers" class="input qty-input" type="number" min="0" max="8" step="1" value="0" inputmode="numeric" required aria-label="人數">
+        <button class="qty-btn" type="button" data-counter-plus aria-label="增加人數">＋</button>
+      </div>
+      <span class="field-hint">可用左右按鈕調整 0～8 位；嬰幼兒、長輩或特殊座位需求可寫在備註。</span>
+    </label>
+    <label class="luggage-field">行李數（28／29 吋大型行李）
+      <div class="qty-stepper luggage-stepper" data-counter="luggage" aria-label="行李數 0 到 10 件">
+        <button class="qty-btn" type="button" data-counter-minus aria-label="減少行李數">－</button>
+        <input name="luggage" class="input qty-input" type="number" min="0" max="10" step="1" value="0" inputmode="numeric" required aria-label="行李數">
+        <button class="qty-btn" type="button" data-counter-plus aria-label="增加行李數">＋</button>
+      </div>
+      <span class="field-hint">可用左右按鈕調整 0～10 件；登機箱、嬰兒車、胖胖箱等特殊行李可寫在備註。</span>
+    </label>
+    <input type="hidden" name="vehicle" id="vehicleInput" value="依客服派車">
+    <div class="full">
+      <label>車型選擇</label>
+      <div class="vehicle-select-wrap">
+        <div class="vehicle-picker" aria-label="車型左右箭頭滑動挑選">
+          <button class="vehicle-arrow" type="button" id="vehiclePrevBtn" aria-label="上一台車型">‹</button>
+          <select class="select" id="vehicleSelect" aria-label="選擇車型"></select>
+          <button class="vehicle-arrow" type="button" id="vehicleNextBtn" aria-label="下一台車型">›</button>
+        </div>
+        <div class="vehicle-preview" id="vehiclePreview" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="full recommendation" id="vehicleSuggest">填入人數與行李後，系統會依規則提供車型建議；最後仍以客服確認為準。</div>
+    <fieldset class="full addon-box">
+      <legend>加購項目</legend>
+      <div class="addon-row"><label><span>正向安全座椅 <small>+NT$200／張</small></span></label><select class="addon-qty" data-addon-qty="forwardSeat" name="forwardSeatQty" aria-label="正向安全座椅數量"></select></div>
+      <div class="addon-row"><label><span>反向安全座椅 <small>+NT$200／張</small></span></label><select class="addon-qty" data-addon-qty="rearSeat" name="rearSeatQty" aria-label="反向安全座椅數量"></select></div>
+      <div class="addon-row"><label><span>增高墊 <small>+NT$200／張</small></span></label><select class="addon-qty" data-addon-qty="booster" name="boosterQty" aria-label="增高墊數量"></select></div>
+      <div class="addon-row"><label><span>機場舉牌服務 <small>+NT$200／次</small></span></label><select class="addon-qty" data-addon-qty="sign" name="signQty" aria-label="舉牌服務數量"></select></div>
+      <div class="addon-row"><label><span>行李搬運 2樓（含）以下 <small>+NT$100／趟</small></span></label><select class="addon-qty" data-addon-qty="luggage12" name="luggageCarry12Qty" aria-label="行李搬運2樓以下次數"></select></div>
+      <div class="addon-row"><label><span>行李搬運 3樓（含）以上 <small>+NT$200／趟</small></span></label><select class="addon-qty" data-addon-qty="luggage3" name="luggageCarry3Qty" aria-label="行李搬運3樓以上次數"></select></div>
+      <div class="addon-row"><label><span>寵物接送 <small>+NT$100／隻，需客服確認籠具與清潔規範</small></span></label><select class="addon-qty" data-addon-qty="pet" name="petQty" aria-label="寵物接送隻數"></select></div>
+      <div class="addon-row"><label><input type="checkbox" data-addon-check="taxId" value="開立統編"> <span>開立統編 <small>系統先估 10% 加成，實際依客服確認</small></span></label></div>
+      <div class="tax-fields full" data-tax-fields><input class="input" name="taxTitle" placeholder="公司抬頭"><input class="input" name="taxIdNumber" placeholder="統一編號 8 碼"></div>
+      <div class="addon-row"><label><input type="checkbox" data-addon-check="receipt" value="開立收據"> <span>開立收據</span></label></div>
+      <div class="addon-row"><label><input type="checkbox" data-addon-check="creditCard" value="刷卡服務"> <span>刷卡服務 <small>系統先估 6% 手續費，實際依客服確認</small></span></label></div>
+      <div class="addon-row"><label><input type="checkbox" data-addon-check="other" value="其他需求"> <span>其他 <small>勾選後可填寫客製需求</small></span></label></div>
+      <div class="other-fields full" data-other-fields><input class="input" name="otherAddonNote" placeholder="請填寫其他需求，例如：大型樂器、輪椅、花束、特殊停靠等"></div>
+    </fieldset>
+    <div class="full estimate-box" id="estimateBox">
+      <h3>自動估價</h3>
+      <div class="estimate-line"><span>初估車資</span><strong id="baseFareText">待填地址／車型</strong></div>
+      <div class="estimate-line"><span>轉點費</span><strong id="transferPointFeeText">NT$0</strong></div>
+      <div class="estimate-line"><span>加購小計</span><strong id="addonTotalText">NT$0</strong></div>
+      <div class="estimate-line"><span>統編加成</span><strong id="taxFeeText">系統自動估算</strong></div>
+      <div class="estimate-line"><span>刷卡手續費</span><strong id="cardFeeText">系統自動估算</strong></div>
+      <div class="estimate-total"><span>預估總額</span><strong id="estimatedTotalText">待客服確認</strong></div>
+      <div class="estimate-note">系統會依上車地點、下車地點與車型自動呼叫 Google Maps 測距估價；轉點每個點 +NT$200，實際金額仍以客服確認為準。</div>
+    </div>
+    <div class="step-actions"><button class="btn ghost" type="button" data-prev>上一步</button><button class="btn primary" type="button" data-next>下一步：確認送出</button></div>
+  </section>
+
+  <section class="step-panel" data-step-panel="2">
+    <div class="step-title"><h2>確認資料並送出預約</h2><p>最後填寫聯絡資料與備註。送出後客服會確認車輛、報價、訂金與派車資訊，不會讓您的行程像盲盒一樣刺激。</p></div>
+    <label>貴賓姓名（必填）
+      <input name="name" class="input" placeholder="請填寫貴賓姓名" required>
+    </label>
+    <label>手機（必填）
+      <input name="phone" class="input" placeholder="請填寫手機號碼，例如 0912345678" inputmode="tel" autocomplete="tel" required>
+    </label>
+    <label>LINE／WhatsApp
+      <input name="lineId" class="input" placeholder="方便客服聯繫的 LINE ID 或 WhatsApp">
+    </label>
+    <label>付款方式偏好
+      <select name="paymentMethod" class="select">
+        <option>客服確認後付款</option>
+        <option>匯款訂金</option>
+        <option>現金付款</option>
+        <option>公司月結／長期配合</option>
+        <option>需統編／收據</option>
+        <option>刷信用卡</option>
+      </select>
+    </label>
+    <label class="full">備註
+      <textarea name="note" rows="4" placeholder="特殊需求、停靠點、寵物、長輩行動需求、航廈、胖胖箱、嬰兒車都可以寫。"></textarea>
+    </label>
+    <label class="full policy-check"><input type="checkbox" name="agreeTerms" required> 我已閱讀並同意 <a href="terms.html" target="_blank" rel="noopener noreferrer">條款政策</a> 與訂金／取消規範。</label>
+    <label class="full policy-check"><input type="checkbox" name="agreePrivacy" required> 我已閱讀並同意 <a href="privacy.html" target="_blank" rel="noopener noreferrer">隱私權政策</a>。</label>
+    <div class="full notice">線上送出為需求登記，需客服確認車輛、報價與訂金後，訂單才正式成立。若為臨時接送、凌晨時段、偏遠地區或多點行程，建議同步加 LINE 提醒客服。</div>
+    <div class="full"><button class="btn primary" type="submit">送出預約，客服確認專車安排</button></div>
+    <div id="bookingResult"></div>
+    <div class="step-actions"><button class="btn ghost" type="button" data-prev>上一步</button><button class="btn primary" type="button" onclick="document.getElementById('bookingForm').requestSubmit()">送出預約</button></div>
+  </section>
+</form>
+</div>
+</div>
+</section>
+</main>
+<div id="xx-site-footer"></div>
+<div id="xx-site-floating"></div>
+<script src="assets/js/site-layout.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/pricing-freeze.js" defer></script>
+<script src="assets/js/xx-enterprise-v10.js" defer></script>
+<script type="module" src="assets/js/member.js"></script>
+<script>
+(function(){
+  const form = document.getElementById('bookingForm');
+  if(!form) return;
+
+  const BOOKING_PAGE_VERSION = 'Ultimate Final v14.2 Black Gold Step Booking Mall';
+  const APPS_SCRIPT_URL = (window.XX_CONFIG && window.XX_CONFIG.APPS_SCRIPT_URL) || (window.XX && window.XX.APPS_SCRIPT_URL) || 'https://script.google.com/macros/s/AKfycby4Lt6lDNFZJIjHZ6tyktQTHxvSR93B1KuVXjT-ngAgST7f_ZK7J2mS5rNDIczKuEDE/exec';
+  form.querySelector('[name="apiEndpoint"]').value = APPS_SCRIPT_URL;
+
+  const SERVICE_DETAILS = {
+    '機場接送':['送機','接機','接送機'],
+    '港口接送':['送港','接船','接送港'],
+    '旅遊包車':['一日遊','兩天一夜','三天兩夜','多日遊'],
+    '登山包車':['一日縱走','兩天一夜','三天兩夜','多日縱走'],
+    '演唱會接送':['去程','回程','來回','兩天一夜','三天兩夜','多日追星'],
+    '長途接送':['單程','來回']
+  };
+  const ADDON_PRICES = {forwardSeat:200,rearSeat:200,booster:200,sign:200,luggage12:100,luggage3:200,pet:100};
+  const ADDON_LABELS = {forwardSeat:'正向安全座椅',rearSeat:'反向安全座椅',booster:'增高墊',sign:'機場舉牌服務',luggage12:'行李搬運2樓含以下',luggage3:'行李搬運3樓含以上',pet:'寵物接送'};
+  const AUTO_ESTIMATE_SERVICES = ['機場接送','長途接送','演唱會接送','港口接送'];
+  let remoteQuoteState = {
+    loading:false,
+    key:'',
+    distanceKm:0,
+    durationMin:0,
+    price:0,
+    vehicleCode:'',
+    fareRule:null,
+    message:''
+  };
+  let remoteQuoteTimer = null;
+  const VEHICLES = [
+    {kind:'dispatch',name:'依客服派車',cap:'客服依人數、行李與路線安排',people:99,luggage:99,img:'images/vehicles/van-black.png'},
+    {kind:'comfort5',name:'五人座轎車',cap:'Toyota Altis、Camry 或其他同等級車款，最多 3 人，28／29 吋行李 2 件。',people:3,luggage:2,img:'images/vehicles/sedan.png'},
+    {kind:'suv',name:'五人座休旅車',cap:'Toyota Cross、RAV4 或其他同等級車款，最多 4 人，28／29 吋行李 3 件。',people:4,luggage:3,img:'images/vehicles/suv.png'},
+    {kind:'van9',name:'九人座廂型車',cap:'福斯 T6、福特、Staria 或其他同等級車款，最多 8 人，28／29 吋行李 8 件。',people:8,luggage:8,img:'images/vehicles/van.png'},
+    {kind:'vito',name:'賓士VITO九人座',cap:'賓士 VITO 豪華九人座，最多 8 人，28／29 吋行李 8 件。',people:8,luggage:8,img:'images/vehicles/vito.png'},
+    {kind:'granvia',name:'Granvia獨立航空座椅',cap:'Toyota Granvia 獨立航空座椅商務車，最多 6 人最舒適，28／29 吋行李 4–6 件。',people:6,luggage:6,img:'images/vehicles/granvia.png'},
+    {kind:'alphard',name:'七人座尊榮阿法',cap:'Toyota Alphard，頂級商務禮賓，最多 6 人，28／29 吋行李 5 件。',people:6,luggage:5,img:'images/vehicles/alphard.png'},
+    {kind:'lm',name:'Lexus LM',cap:'Lexus LM 旗艦禮賓座駕，最多 4 人最舒適，28／29 吋行李 3–4 件。',people:4,luggage:4,img:'images/vehicles/lexus-lm.png'},
+    {kind:'sclass',name:'Benz S-Class',cap:'高端禮賓、企業貴賓，最多 3 人，28／29 吋行李 2 件。',people:3,luggage:2,img:'images/vehicles/lexus-lm.png'},
+    {kind:'sprinter',name:'明星保母車',cap:'Mercedes-Benz Sprinter 明星保母車，最多 8 人，28／29 吋行李 8–10 件。',people:8,luggage:10,img:'images/vehicles/sprinter.png'}
+  ];
+  const $ = (s, root=form) => root.querySelector(s);
+  const $$ = (s, root=form) => Array.from(root.querySelectorAll(s));
+  const text = el => String(el?.value || '').trim();
+  const money = n => Number.isFinite(Number(n)) && Number(n) > 0 ? 'NT$' + Math.round(Number(n)).toLocaleString('zh-TW') : '待客服確認';
+  const clampNumber = (value,min,max,fallback=0)=>{
+    const n = Number(value);
+    if(!Number.isFinite(n)) return fallback;
+    return Math.max(min, Math.min(max, n));
+  };
+  const normalizeVehicleName = value => String(value || '').trim().replace(/\s+/g,'');
+  const esc = v => String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+
+  const buildQuoteKey = () => [
+    text($('#serviceSelect')),
+    text($('#serviceDetailSelect')),
+    collectArray('pickups').join('|'),
+    collectArray('dropoffs').join('|'),
+    text($('#vehicleInput'))
+  ].join('::');
+
+  function setRemoteQuoteState(next){
+    remoteQuoteState = Object.assign({}, remoteQuoteState, next || {});
+    estimate();
+    updateSummary();
+  }
+
+  function scheduleRemoteQuote(){
+    if(remoteQuoteTimer) clearTimeout(remoteQuoteTimer);
+    remoteQuoteTimer = setTimeout(fetchRemoteQuote, 700);
+  }
+
+  async function fetchRemoteQuote(){
+    const service = text($('#serviceSelect'));
+    if(!AUTO_ESTIMATE_SERVICES.includes(service)) return;
+
+    const pickup = collectArray('pickups')[0] || '';
+    const dropoff = collectArray('dropoffs')[0] || '';
+    const vehicle = text($('#vehicleInput'));
+
+    if(!pickup || !dropoff || !vehicle || vehicle === '依客服派車') return;
+
+    const key = buildQuoteKey();
+    if(remoteQuoteState.key === key && remoteQuoteState.price > 0) return;
+
+    setRemoteQuoteState({
+      loading:true,
+      key:key,
+      message:'Google Maps 測距中'
+    });
+
+    try{
+      const url = new URL(APPS_SCRIPT_URL);
+      url.searchParams.set('action','estimate');
+      url.searchParams.set('service',service);
+      url.searchParams.set('serviceDetail',text($('#serviceDetailSelect')));
+      url.searchParams.set('pickup',pickup);
+      url.searchParams.set('dropoff',dropoff);
+      url.searchParams.set('vehicle',vehicle);
+
+      const response = await fetch(url.toString(), { method:'GET' });
+      if(!response.ok) throw new Error('API 狀態碼 ' + response.status);
+
+      const data = await response.json();
+      if(!data || data.ok === false) throw new Error(data?.message || '估價 API 未回傳成功');
+
+      const distanceKm = Number(data.distanceKm || 0);
+      const durationMin = Number(data.durationMin || 0);
+      const price = Number(data.price || data.baseFare || data.mapFare || 0);
+
+      setRemoteQuoteState({
+        loading:false,
+        key:key,
+        distanceKm:distanceKm,
+        durationMin:durationMin,
+        price:price,
+        vehicleCode:data.vehicleCode || data.fareRule?.code || '',
+        fareRule:data.fareRule || null,
+        message:data.distanceText ? `${data.distanceText}／${data.durationText || ''}` : 'Google Maps 已完成測距'
+      });
+    }catch(err){
+      setRemoteQuoteState({
+        loading:false,
+        key:key,
+        distanceKm:0,
+        durationMin:0,
+        price:0,
+        vehicleCode:'',
+        fareRule:null,
+        message:'Google Maps 測距失敗，改由客服確認：' + (err.message || err)
+      });
+    }
+  }
+
+  function showStep(index){
+    $$('[data-step-panel]').forEach((p,i)=>p.classList.toggle('is-active',i===index));
+    $$('[data-step-tab]').forEach((b,i)=>b.classList.toggle('is-active',i===index));
+    form.scrollIntoView({behavior:'smooth',block:'start'});
+    updateAll();
+  }
+  $$('[data-step-tab]').forEach(btn=>btn.addEventListener('click',()=>{}));
+  $$('[data-next]').forEach(btn=>btn.addEventListener('click',()=>{
+    const step = currentStep();
+    if(!validateStep(step)) return;
+    showStep(Math.min(2,step+1));
+  }));
+  $$('[data-prev]').forEach(btn=>btn.addEventListener('click',()=> currentStep()===0 ? window.scrollTo({top:0,behavior:'smooth'}) : showStep(Math.max(0,currentStep()-1))));
+  function currentStep(){ return $$('[data-step-panel]').findIndex(p=>p.classList.contains('is-active')); }
+
+  function fillServiceDetails(){
+    const select = $('#serviceDetailSelect');
+    const service = text($('#serviceSelect'));
+    const options = SERVICE_DETAILS[service] || [];
+    const old = select.value;
+    select.innerHTML = '<option value="">請選擇服務細項</option>' + options.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+    if(options.includes(old)) select.value = old;
+  }
+
+  function fillQty(){
+    $$('[data-addon-qty]').forEach(select=>{
+      if(select.children.length) return;
+      for(let i=0;i<=9;i++) select.insertAdjacentHTML('beforeend',`<option value="${i}">${i}</option>`);
+    });
+  }
+
+  function makeDynamicRow(group){
+    const name = group.dataset.targetName;
+    const placeholder = group.dataset.placeholder || '';
+    const row = document.createElement('div');
+    row.className = 'dynamic-row';
+    row.innerHTML = `<input class="input" name="${name}[]" placeholder="${esc(placeholder)}"><button class="mini-btn danger" type="button">刪除</button>`;
+    row.querySelector('button').addEventListener('click',()=>{
+      const list = group.querySelector('[data-dynamic-list]');
+      if(list.querySelectorAll('.dynamic-row').length > 1) row.remove();
+      updateAll();
+    });
+    row.querySelector('input').addEventListener('input', updateAll);
+    return row;
+  }
+  function initDynamic(){
+    $$('[data-dynamic-group]').forEach(group=>{
+      const list = group.querySelector('[data-dynamic-list]');
+      list.appendChild(makeDynamicRow(group));
+      group.querySelector('[data-add-dynamic]').addEventListener('click',()=>list.appendChild(makeDynamicRow(group)));
+    });
+  }
+  function collectArray(name){return $$(`[name="${name}[]"]`).map(i=>i.value.trim()).filter(Boolean);}
+  function syncHidden(){
+    $('[name="contactApp"]').value = text($('[name="phone"]')) || text($('[name="lineId"]'));
+    $('[name="pickup"]').value = collectArray('pickups').join('、');
+    $('[name="dropoff"]').value = collectArray('dropoffs').join('、');
+    $('[name="itineraryJson"]').value = JSON.stringify({pickups:collectArray('pickups'),dropoffs:collectArray('dropoffs')});
+  }
+
+  function parsePeople(){
+    const input = $('[name="passengers"]');
+    const raw = text(input).replace(/[０-９]/g,d=>String.fromCharCode(d.charCodeAt(0)-65248)).replace(/兩/g,'2');
+    if(input && input.type === 'number'){
+      const n = Number(raw || 0);
+      return Math.round(clampNumber(n,0,8,0));
+    }
+    const nums = raw.match(/\d+/g)||[];
+    return nums.length ? Math.max(0, Math.min(8, nums.map(Number).reduce((a,b)=>a+b,0))) : 0;
+  }
+  function parseLuggage(){
+    const input = $('[name="luggage"]');
+    const raw = text(input).replace(/[０-９]/g,d=>String.fromCharCode(d.charCodeAt(0)-65248)).replace(/兩/g,'2');
+    if(input && input.type === 'number'){
+      const n = Number(raw || 0);
+      return Math.round(clampNumber(n,0,10,0));
+    }
+    if(!raw || /無|沒有|none|no/i.test(raw)) return 0;
+    let total = 0;
+    [/((?:\d+))\s*(?:件|咖|個)?\s*(?:28|29)\s*(?:吋|寸)/g,/(?:28|29)\s*(?:吋|寸)?\s*(\d+)\s*(?:件|咖|個)/g,/(\d+)\s*(?:件|咖|個)\s*(?:大型|大行李|胖胖箱)/g].forEach(p=>Array.from(raw.matchAll(p)).forEach(m=>total+=Number(m[1]||0)));
+    if(total) return Math.max(0, Math.min(10, total));
+    const generic = raw.match(/(\d+)\s*(?:件|咖|個)/);
+    return generic ? Math.max(0, Math.min(10, Number(generic[1]))) : 0;
+  }
+  function renderVehicles(){
+    const select = $('#vehicleSelect');
+    if(!select) return;
+    const uniqueVehicles = [];
+    const seenVehicles = new Set();
+    VEHICLES.forEach(v=>{
+      const key = normalizeVehicleName(v.name);
+      if(seenVehicles.has(key)) return;
+      seenVehicles.add(key);
+      uniqueVehicles.push(v);
+    });
+    select.innerHTML = uniqueVehicles.map(v=>`<option value="${esc(v.name)}" data-vehicle-kind="${v.kind}">${esc(v.name)}｜最多 ${v.people} 人／${v.luggage} 件大型行李</option>`).join('');
+    select.value = $('#vehicleInput').value || '依客服派車';
+    select.addEventListener('change',()=>{
+      $('#vehicleInput').value = select.value;
+      updateAll();
+    });
+    document.getElementById('vehiclePrevBtn')?.addEventListener('click',()=>cycleVehicle(-1));
+    document.getElementById('vehicleNextBtn')?.addEventListener('click',()=>cycleVehicle(1));
+    updateVehiclePreview();
+  }
+  function availableVehicleOptions(){
+    const select = $('#vehicleSelect');
+    return select ? Array.from(select.options).filter(option=>!option.disabled) : [];
+  }
+  function cycleVehicle(direction){
+    const select = $('#vehicleSelect');
+    if(!select) return;
+    updateVehicle();
+    const options = availableVehicleOptions();
+    if(!options.length) return;
+    const currentIndex = options.findIndex(option=>option.value === select.value);
+    const baseIndex = currentIndex >= 0 ? currentIndex : 0;
+    const nextIndex = (baseIndex + direction + options.length) % options.length;
+    select.value = options[nextIndex].value;
+    $('#vehicleInput').value = select.value;
+    updateAll();
+  }
+  function updateVehicleArrowState(){
+    const options = availableVehicleOptions();
+    const disabled = options.length <= 1;
+    const prev = document.getElementById('vehiclePrevBtn');
+    const next = document.getElementById('vehicleNextBtn');
+    if(prev) prev.disabled = disabled;
+    if(next) next.disabled = disabled;
+  }
+  function updateVehiclePreview(){
+    const selected = VEHICLES.find(v=>v.name === ($('#vehicleSelect')?.value || $('#vehicleInput').value)) || VEHICLES[0];
+    const box = $('#vehiclePreview');
+    if(!box || !selected) return;
+    box.innerHTML = `<img src="${selected.img}" alt="${esc(selected.name)}" onerror="this.style.display='none'"><b>${esc(selected.name)}</b><p>${esc(selected.cap)}</p><span class="vehicle-badge">最多 ${selected.people} 人／${selected.luggage} 件大型行李</span>`;
+  }
+  function updateVehicle(){
+    const people = parsePeople();
+    const luggage = parseLuggage();
+    const petQty = Number($('[data-addon-qty="pet"]')?.value || 0);
+    let reason = '填入人數與行李後，系統會依規則提供車型建議；最後仍以客服確認為準。';
+    const select = $('#vehicleSelect');
+    if(!select) return;
+    Array.from(select.options).forEach(option=>{
+      const v = VEHICLES.find(x=>x.name===option.value);
+      let allow = true;
+    if(v.kind !== 'dispatch') allow = (!people || people <= v.people) && luggage <= v.luggage;
+    if(petQty > 0 && !['dispatch','van9','vito','granvia','alphard','lm','sprinter'].includes(v.kind)) allow = false;
+      option.disabled = !allow;
+      option.textContent = `${v.name}｜最多 ${v.people} 人／${v.luggage} 件大型行李${allow ? '' : '（不適用）'}`;
+    });
+    const current = Array.from(select.options).find(o=>o.value===select.value);
+    if(current?.disabled) select.value = '依客服派車';
+    $('#vehicleInput').value = select.value || '依客服派車';
+    updateVehiclePreview();
+    updateVehicleArrowState();
+    if(people || luggage){
+      reason = `目前偵測：${people || 0} 人／28、29吋大型行李 ${luggage} 件。系統已鎖定不適合車型；不確定時請選「依客服派車」。`;
+      if(petQty > 0) reason += ` 已選寵物接送 ${petQty} 隻，建議九人座、VITO、Granvia、LM、明星保母車或客服派車。`;
+    }
+    $('#vehicleSuggest').textContent = reason;
+  }
+
+  function addonSummary(){
+    const items=[]; let total=0;
+    Object.entries(ADDON_PRICES).forEach(([key,price])=>{
+      const qty = Number($(`[data-addon-qty="${key}"]`)?.value || 0);
+      if(qty>0){ total += price*qty; items.push(`${ADDON_LABELS[key]} x${qty}（${money(price*qty)}）`); }
+    });
+    ['taxId','receipt','creditCard'].forEach(key=>{ const c=$(`[data-addon-check="${key}"]`); if(c?.checked) items.push(c.value); });
+    const other = $('[data-addon-check="other"]');
+    const otherText = text($('[name="otherAddonNote"]'));
+    if(other?.checked) items.push(otherText ? `其他：${otherText}` : '其他需求');
+    return {items,total};
+  }
+  function estimate(){
+    const addons = addonSummary();
+    const vehicle = text($('#vehicleInput'));
+    const service = text($('#serviceSelect'));
+    const canAutoEstimate = AUTO_ESTIMATE_SERVICES.includes(service);
+    const GOOGLE_MAPS_FARE_RULES = {
+      '五人座轎車': { code:'COMFORT4', baseFare:900, includedKm:10, perKm:10.00, taichungTaoyuanAirportFare:2200 },
+      '五人座休旅車': { code:'COMFORT5', baseFare:900, includedKm:10, perKm:10.77, taichungTaoyuanAirportFare:2300 },
+      '九人座廂型車': { code:'TVGS', baseFare:1200, includedKm:10, perKm:10.77, taichungTaoyuanAirportFare:2600 },
+      '賓士VITO九人座': { code:'VITO', baseFare:1500, includedKm:20, perKm:12.50, taichungTaoyuanAirportFare:3000 },
+      'Granvia獨立航空座椅': { code:'GRANVIA', baseFare:2000, includedKm:20, perKm:13.33, taichungTaoyuanAirportFare:3600 },
+      'Benz S-Class': { code:'SCLASS', baseFare:2000, includedKm:20, perKm:12.50, taichungTaoyuanAirportFare:3500 },
+      '七人座尊榮阿法': { code:'ALPHARD', baseFare:2500, includedKm:20, perKm:29.17, taichungTaoyuanAirportFare:6000 },
+      'Lexus LM': { code:'LM', baseFare:3000, includedKm:20, perKm:25.00, taichungTaoyuanAirportFare:6000 },
+      '明星保母車': { code:'SPRINTER', baseFare:3500, includedKm:20, perKm:30.83, taichungTaoyuanAirportFare:7200 }
+    };
+    const rule = GOOGLE_MAPS_FARE_RULES[vehicle] || null;
+    const manualDistance = clampNumber($('[name="manualDistanceKm"]')?.value,0,999,0);
+    const remoteReady = remoteQuoteState.key === buildQuoteKey() && Number(remoteQuoteState.price || 0) > 0;
+    let base = 0;
+    if(canAutoEstimate && rule){
+      if(manualDistance > 0){
+        base = manualDistance <= rule.includedKm ? rule.baseFare : Math.round(rule.baseFare + ((manualDistance - rule.includedKm) * rule.perKm));
+      }else if(remoteReady){
+        base = Number(remoteQuoteState.price || 0);
+      }else{
+        base = remoteQuoteState.loading ? 0 : 0;
+      }
+    }
+    const points = canAutoEstimate ? Math.max(0, collectArray('pickups').length + collectArray('dropoffs').length - 2) : 0;
+    const transfer = points * 200;
+    const subtotal = base + transfer + addons.total;
+    const tax = $('[data-addon-check="taxId"]')?.checked && subtotal ? Math.round(subtotal*.1) : 0;
+    const card = $('[data-addon-check="creditCard"]')?.checked && subtotal ? Math.round((subtotal+tax)*.06) : 0;
+    const total = subtotal + tax + card;
+
+    if(!canAutoEstimate){
+      $('#baseFareText').textContent = '依客服報價';
+      $('#transferPointFeeText').textContent = '依客服報價';
+      $('#addonTotalText').textContent = 'NT$' + addons.total.toLocaleString('zh-TW');
+      $('#taxFeeText').textContent = '依客服確認';
+      $('#cardFeeText').textContent = '依客服確認';
+      $('#estimatedTotalText').textContent = '依客服報價';
+      $('[name="baseFare"]').value = '';
+      $('[name="transferPointFee"]').value = '';
+      $('[name="addonTotal"]').value = addons.total;
+      $('[name="taxFee"]').value = '';
+      $('[name="cardFee"]').value = '';
+      $('[name="estimatedTotal"]').value = '';
+      $('[name="quotedFare"]').value = '';
+      $('[name="distanceKm"]').value = '';
+      $('[name="durationMin"]').value = '';
+      $('[name="vehicleCode"]').value = '';
+      $('[name="fareRuleJson"]').value = '';
+      $('[name="customerAddons"]').value = addons.items.join('、');
+      return;
+    }
+
+    const quoteDistanceText = remoteReady && remoteQuoteState.distanceKm ? `${remoteQuoteState.distanceKm}km` : 'Google Maps 自動測距';
+    $('#baseFareText').textContent = base ? money(base) + `（${quoteDistanceText}）` : (remoteQuoteState.loading ? 'Google Maps 測距中...' : '請填完整上車、下車與車型');
+    $('#transferPointFeeText').textContent = 'NT$' + transfer.toLocaleString('zh-TW');
+    $('#addonTotalText').textContent = 'NT$' + addons.total.toLocaleString('zh-TW');
+    $('#taxFeeText').textContent = tax ? money(tax) : '系統自動估算';
+    $('#cardFeeText').textContent = card ? money(card) : '系統自動估算';
+    $('#estimatedTotalText').textContent = total ? money(total) : '待客服確認';
+    $('[name="baseFare"]').value = base || '';
+    $('[name="transferPointFee"]').value = transfer;
+    $('[name="addonTotal"]').value = addons.total;
+    $('[name="taxFee"]').value = tax;
+    $('[name="cardFee"]').value = card;
+    $('[name="estimatedTotal"]').value = total || '';
+    $('[name="quotedFare"]').value = base || '';
+    $('[name="distanceKm"]').value = manualDistance || (remoteReady ? remoteQuoteState.distanceKm : '') || '';
+    $('[name="durationMin"]').value = remoteReady ? remoteQuoteState.durationMin : '';
+    $('[name="vehicleCode"]').value = remoteReady ? (remoteQuoteState.vehicleCode || (rule ? rule.code : '')) : (rule ? rule.code : '');
+    $('[name="fareRuleJson"]').value = remoteReady && remoteQuoteState.fareRule ? JSON.stringify(remoteQuoteState.fareRule) : (rule ? JSON.stringify(rule) : '');
+    $('[name="customerAddons"]').value = addons.items.join('、');
+  }
+  function updateStepOneFields(){
+    const service = text($('#serviceSelect'));
+    const flightField = $('[data-field="flight"]');
+    const shipField = $('[data-field="ship"]');
+    const eventField = $('[data-field="event"]');
+
+    if(flightField) flightField.classList.toggle('is-visible', service === '機場接送' || service === '港口接送');
+    if(shipField) shipField.classList.toggle('is-visible', service === '港口接送');
+    if(eventField) eventField.classList.toggle('is-visible', service === '演唱會接送');
+
+    if(service !== '機場接送' && service !== '港口接送' && $('[name="flight"]')){
+      $('[name="flight"]').value = '';
+    }
+    if(service !== '港口接送' && $('[name="shipSession"]')){
+      $('[name="shipSession"]').value = '';
+    }
+    if(service !== '演唱會接送' && $('[name="eventName"]')){
+      $('[name="eventName"]').value = '';
+    }
+  }
+
+  function updateFlight(){
+    const code = text($('[name="flight"]')).toUpperCase().replace(/\s+/g,'');
+    const service = text($('#serviceSelect'));
+    const card = $('#flightPreviewCard');
+    if(card) card.style.display = (service === '機場接送' || service === '港口接送') ? '' : 'none';
+    card?.classList.toggle('is-active',!!code && code !== '無');
+    $('#flightPreviewCode').textContent = code || '未填寫';
+    const detail = text($('#serviceDetailSelect'));
+    $('#flightPreviewFrom').textContent = detail === '接機' ? '機場／航廈待確認' : '上車地點';
+    $('#flightPreviewTo').textContent = detail === '送機' ? '機場／航廈待確認' : '下車地點';
+  }
+  function updateTaxFields(){ $('[data-tax-fields]').classList.toggle('is-active',$('[data-addon-check="taxId"]')?.checked); $('[data-other-fields]')?.classList.toggle('is-active',$('[data-addon-check="other"]')?.checked); }
+  function updateSummary(){
+    const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+    set('summaryService',[text($('#serviceSelect')),text($('#serviceDetailSelect'))].filter(Boolean).join('／') || '尚未選擇');
+    set('summaryDate',[text($('[name="date"]')),text($('[name="time"]'))].filter(Boolean).join(' ') || '尚未填寫');
+    set('summaryFlight',text($('[name="flight"]')) || '未填寫');
+    set('summaryPickup',collectArray('pickups').join('、') || '尚未填寫');
+    set('summaryDropoff',collectArray('dropoffs').join('、') || '尚未填寫');
+    set('summaryPax',[text($('[name="passengers"]')),text($('[name="luggage"]'))].filter(Boolean).join('／') || '尚未填寫');
+    set('summaryVehicle',text($('#vehicleInput')) || '依客服派車');
+    set('summaryAddons',addonSummary().items.join('、') || '無');
+    set('summaryPrice',$('#estimatedTotalText').textContent || '待客服確認');
+  }
+  function updateAll(){
+    updateStepOneFields();
+    syncHidden();
+    updateVehicle();
+    updateTaxFields();
+    estimate();
+    updateFlight();
+    updateSummary();
+    scheduleRemoteQuote();
+  }
+
+  function result(message,type='warn'){
+    const box = $('#bookingResult');
+    box.innerHTML = `<div class="result-box ${type}">${message}</div>`;
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  function validateStep(step){
+    updateAll();
+    const errors = [];
+
+    if(step === 0){
+      if(!text($('#serviceSelect'))) errors.push('請先選擇服務項目。');
+      if(!text($('#serviceDetailSelect'))) errors.push('請先選擇服務細項。');
+      if(!text($('[name="date"]'))) errors.push('請先選擇預約日期。');
+      if(!text($('[name="time"]'))) errors.push('請先填寫上車時間／落地時間。');
+      const service = text($('#serviceSelect'));
+      if((service === '機場接送' || service === '港口接送') && !text($('[name="flight"]'))) errors.push('請填寫航班編號；若無請填「無」。');
+      if(service === '港口接送' && !text($('[name="shipSession"]'))) errors.push('請填寫船班梯次；若無請填「無」。');
+      if(service === '演唱會接送' && !text($('[name="eventName"]'))) errors.push('請填寫活動名稱。');
+    }
+
+    if(step === 1){
+      if(!collectArray('pickups').length) errors.push('請至少填寫一個上車地點。');
+      if(!collectArray('dropoffs').length) errors.push('請至少填寫一個下車地點。');
+      if(text($('[name="passengers"]')) === '') errors.push('請選擇人數 0～8 位。');
+      if(text($('[name="luggage"]')) === '') errors.push('請選擇行李數 0～10 件。');
+
+      const manualDistance = Number($('[name="manualDistanceKm"]')?.value || 0);
+      if($('[name="manualDistanceKm"]')?.value && (!Number.isFinite(manualDistance) || manualDistance <= 0)){
+        errors.push('Google Maps 將自動測距，若無法估算請由客服確認。');
+      }
+      if($('[name="manualDistanceKm"]')?.value && manualDistance > 999){
+        errors.push('Google Maps 距離超過 999km，請改由客服人工確認。');
+      }
+    }
+
+    if(errors.length){
+      result('這一步還差一點點 😊<br>' + errors.map(e=>`・${esc(e)}`).join('<br>'),'warn');
+      return false;
+    }
+
+    return true;
+  }
+
+  function validate(){
+    updateAll();
+    const errors=[];
+    const phone = text($('[name="phone"]')).replace(/[\s-]/g,'');
+    if(!text($('#serviceSelect'))) errors.push('請選擇服務項目。');
+    if(!text($('#serviceDetailSelect'))) errors.push('請選擇服務細項。');
+    if(!text($('[name="date"]'))) errors.push('請選擇預約日期。');
+    if(!text($('[name="time"]'))) errors.push('請填寫上車時間／落地時間。');
+    const currentService = text($('#serviceSelect'));
+    if((currentService === '機場接送' || currentService === '港口接送') && !text($('[name="flight"]'))) errors.push('請填寫航班編號；若無請填「無」。');
+    if(currentService === '港口接送' && !text($('[name="shipSession"]'))) errors.push('請填寫船班梯次；若無請填「無」。');
+    if(currentService === '演唱會接送' && !text($('[name="eventName"]'))) errors.push('請填寫活動名稱。');
+    if(!collectArray('pickups').length) errors.push('請至少填寫一個上車地點。');
+    if(!collectArray('dropoffs').length) errors.push('請至少填寫一個下車地點。');
+    if(text($('[name="passengers"]')) === '') errors.push('請選擇人數 0～8 位。');
+    if(text($('[name="luggage"]')) === '') errors.push('請選擇行李數 0～10 件。');
+    if(!text($('[name="name"]'))) errors.push('請填寫貴賓姓名。');
+    if(!phone) errors.push('請填寫手機號碼。');
+    else if(!/^09\d{8}$/.test(phone)) errors.push('手機格式建議填台灣手機 10 碼，例如 0912345678。');
+    if($('[data-addon-check="taxId"]')?.checked){
+      if(!text($('[name="taxTitle"]'))) errors.push('已勾選開立統編，請填寫公司抬頭。');
+      if(!/^\d{8}$/.test(text($('[name="taxIdNumber"]')))) errors.push('統一編號請填 8 碼數字。');
+    }
+    if(!$('[name="agreeTerms"]')?.checked) errors.push('請勾選同意條款政策與訂金／取消規範。');
+    if(!$('[name="agreePrivacy"]')?.checked) errors.push('請勾選同意隱私權政策。');
+    if(errors.length){ result('別急，差一點就完成囉 😊<br>' + errors.map(e=>`・${esc(e)}`).join('<br>'),'warn'); return false; }
+    return true;
+  }
+  function appendDefaults(fd){
+    fd.set('source','booking.html');
+    fd.set('bookingVersion',BOOKING_PAGE_VERSION);
+    fd.set('bookingMallVersion','v14.2-blackgold-step-booking');
+    fd.set('bookingTemplate','booking-mall-three-step-blackgold');
+    fd.set('layoutVersion','Ultimate Final v13 Shared Layout Core');
+    fd.set('apiMode','apps-script');
+    fd.set('pageSource','booking.html');
+    fd.set('apiEndpoint',APPS_SCRIPT_URL);
+    fd.set('status','新訂單');
+    fd.set('quoteMemo', remoteQuoteState.price ? 'Google Maps 已自動測距並完成前端初估，仍需客服確認正式報價。' : 'Google Maps 尚未完成自動測距，需客服確認正式報價。');
+    fd.set('googleMapsQuoteMemo', remoteQuoteState.message || '');
+  }
+  async function postBooking(){
+    const fd = new FormData(form);
+    appendDefaults(fd);
+    try{
+      const controller = new AbortController();
+      const timer = setTimeout(()=>controller.abort(),12000);
+      const response = await fetch(APPS_SCRIPT_URL,{method:'POST',body:fd,signal:controller.signal});
+      clearTimeout(timer);
+      const contentType = response.headers.get('content-type') || '';
+      if(!response.ok) return {ok:false,message:'API 回應狀態碼：' + response.status};
+      if(contentType.includes('application/json')) return response.json();
+      const body = await response.text();
+      try{return JSON.parse(body)}catch(e){return {ok:response.ok,raw:body}}
+    }catch(e){
+      const iframeName = 'bookingSubmitFrame_' + Date.now();
+      const iframe = document.createElement('iframe'); iframe.name = iframeName; iframe.style.display='none';
+      const fallback = document.createElement('form'); fallback.method='POST'; fallback.action=APPS_SCRIPT_URL; fallback.target=iframeName; fallback.style.display='none';
+      for(const [k,v] of fd.entries()){ const input=document.createElement('input'); input.type='hidden'; input.name=k; input.value=v; fallback.appendChild(input); }
+      document.body.append(iframe,fallback); fallback.submit(); setTimeout(()=>{iframe.remove();fallback.remove();},15000);
+      return {ok:true,queued:true};
+    }
+  }
+  window.submitBooking = async function(event){
+    event?.preventDefault?.();
+    if(form.dataset.submitting === '1') return false;
+    if(!validate()) return false;
+    form.dataset.submitting = '1';
+    result('資料檢查完成，正在送出預約需求，請勿重複點擊。','ok');
+    const btn = form.querySelector('button[type="submit"]');
+    if(btn){btn.disabled=true;btn.textContent='送出中...';}
+    try{
+      updateAll();
+      await fetchRemoteQuote();
+      updateAll();
+      const res = await postBooking();
+      if(res && res.ok !== false){
+        const orderNo = res.orderNo || res.orderId || res.id || '';
+        result(`預約需求已送出成功 ✅${orderNo ? '<br>訂單編號：' + esc(orderNo) : ''}<br>客服會盡快協助確認車輛、報價與訂金資訊。`,'ok');
+        form.reset(); $('#vehicleInput').value='依客服派車'; if($('#vehicleSelect')) $('#vehicleSelect').value='依客服派車'; fillServiceDetails(); fillQty(); initQtyCounters(); updateAll(); showStep(0);
+      }else result(`送出時遇到一點狀況，請截圖給客服協助確認。<br>${esc(res?.message || res?.error || '系統暫時沒有回傳成功訊息。')}`,'error');
+    }catch(e){ result(`送出時遇到一點狀況，請稍後再試或直接加 LINE 由客服協助。<br>錯誤原因：${esc(e.message || e)}`,'error'); }
+    finally{ form.dataset.submitting = '0'; if(btn){btn.disabled=false;btn.textContent='送出預約，客服確認專車安排';} }
+    return false;
+  };
+
+  function initQtyCounters(){
+    document.querySelectorAll('[data-counter]').forEach(wrap=>{
+      const input = wrap.querySelector('.qty-input');
+      const minus = wrap.querySelector('[data-counter-minus]');
+      const plus = wrap.querySelector('[data-counter-plus]');
+      if(!input || input.dataset.counterReady === '1') return;
+      input.dataset.counterReady = '1';
+      const min = Number(input.min || 0);
+      const max = Number(input.max || 9);
+      let internalUpdate = false;
+      function setValue(next, emit=true){
+        let n = Number(next);
+        if(!Number.isFinite(n)) n = min;
+        n = Math.max(min, Math.min(max, Math.round(n)));
+        internalUpdate = true;
+        input.value = String(n);
+        internalUpdate = false;
+        if(minus) minus.disabled = n <= min;
+        if(plus) plus.disabled = n >= max;
+        if(emit){
+          input.dispatchEvent(new Event('change', { bubbles:true }));
+        }
+      }
+      minus?.addEventListener('click',()=>setValue(Number(input.value || 0) - 1));
+      plus?.addEventListener('click',()=>setValue(Number(input.value || 0) + 1));
+      input.addEventListener('input',()=>{ if(!internalUpdate) setValue(input.value, false); updateAll(); });
+      setValue(input.value || 0, false);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    fillQty(); initQtyCounters(); initDynamic(); renderVehicles();
+    $('#vehicleInput').value = '依客服派車';
+    $('#serviceSelect').addEventListener('change',()=>{fillServiceDetails();updateAll();});
+    form.addEventListener('input',updateAll);
+    form.addEventListener('change',updateAll);
+    fillServiceDetails(); updateAll(); showStep(0);
+  });
+})();
+</script>
+</body>
+</html>
