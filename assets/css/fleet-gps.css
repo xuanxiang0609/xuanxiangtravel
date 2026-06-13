@@ -1,0 +1,20 @@
+
+body{
+margin:0;
+background:#050505;
+color:#fff;
+font-family:sans-serif;
+}
+
+header{
+height:70px;
+padding:20px;
+background:#111;
+color:#d4af37;
+}
+
+#map{
+width:100%;
+height:calc(100vh - 70px);
+}
+
