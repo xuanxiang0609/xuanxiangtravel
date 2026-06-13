@@ -1,0 +1,20 @@
+body{
+background:#050505;
+color:#fff;
+font-family:sans-serif;
+padding:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #c8a96b;
+padding:10px;
+}
+
+h1{
+color:#c8a96b;
+}
