@@ -22,6 +22,9 @@ const CONFIG = {
   ERROR_SHEET_NAME: '系統錯誤紀錄',
   DRIVER_SHEET_NAME: '司機資料',
   VEHICLE_SHEET_NAME: '車輛資料',
+  MEMBER_SHEET_NAME: '會員資料',
+DRIVER_LOCATION_SHEET_NAME: '司機定位',
+DISPATCH_SHEET_NAME: '派遣紀錄',
   TIMEZONE: 'Asia/Taipei',
   MAX_ORDERS_RETURN: 500,
   DEFAULT_SOURCE: 'website',
@@ -239,31 +242,30 @@ function routeRequest_(e, method) {
         break;
 
       // ---- NEW CASES START ----
-      case 'memberlookup':
-  result = memberLookup_(params);
-  break;
+      case 'memberregister':
+      case 'membercreate':
+        result = memberRegister_(params);
+        break;
 
-case 'memberlogin':
-  result = memberLogin_(params);
-  break;
+      case 'driverapp':
+      case 'driverorders':
+        result = getDriverAppData_(params);
+        break;
 
 case 'driverlocation':
   result = updateDriverLocation_(params);
   break;
 
-case 'memberregister':
-case 'membercreate':
-  result = memberRegister_(params);
-  break;
+      case 'driverlocations':
+        result = getDriverLocations_();
+        break;
 
-case 'driverapp':
-case 'driverorders':
-  result = getDriverAppData_(params);
-  break;
+      case 'memberlogin':
+        result = memberLogin_(params);
+        break;
 
-      case 'driverapp':
-      case 'driverorders':
-        result = getDriverAppData_(params);
+      case 'memberpoints':
+        result = memberPoints_(params);
         break;
 
       case 'routesestimate':
@@ -315,7 +317,10 @@ case 'driverorders':
             'driverApp',
             'driverOrders',
             'routesEstimate',
-            'googleRoute'
+            'googleRoute',
+            'driverLocations',
+            'memberLogin',
+            'memberPoints'
           ]
         };
     }
@@ -1208,9 +1213,77 @@ function orderLookup_(params) {
   });
 }
 
-/************************************************
- * Member / Driver App / Google Routes API
- ************************************************/
+    /************************************************
+     * Member / Driver App / Google Routes API
+     ************************************************/
+
+function updateDriverLocation_(params) {
+  const sheet = openOptionalSheet_(CONFIG.DRIVER_LOCATION_SHEET_NAME) || openOrderSheet_().getParent().insertSheet(CONFIG.DRIVER_LOCATION_SHEET_NAME);
+
+  const driver = clean_(getValueByKeys_(params,['driver','司機'],'未指定司機'));
+  const lat = clean_(getValueByKeys_(params,['lat','latitude'],'0'));
+  const lng = clean_(getValueByKeys_(params,['lng','longitude'],'0'));
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['時間','司機','Latitude','Longitude']);
+  }
+
+  sheet.appendRow([
+    now_(),
+    driver,
+    lat,
+    lng
+  ]);
+
+  return {
+    ok:true,
+    driver:driver,
+    lat:lat,
+    lng:lng,
+    updatedAt:now_()
+  };
+}
+
+function getDriverLocations_() {
+  const sheet = openOptionalSheet_(CONFIG.DRIVER_LOCATION_SHEET_NAME);
+
+  if (!sheet) {
+    return {
+      ok:true,
+      locations:[]
+    };
+  }
+
+  return {
+    ok:true,
+    locations:sheetToObjects_(sheet),
+    updatedAt:now_()
+  };
+}
+
+function memberLogin_(params) {
+  const phone = clean_(getValueByKeys_(params,['phone','電話'],'') );
+
+  return {
+    ok:true,
+    login:true,
+    phone:phone,
+    token:Utilities.getUuid(),
+    updatedAt:now_()
+  };
+}
+
+function memberPoints_(params) {
+  const phone = clean_(getValueByKeys_(params,['phone','電話'],'') );
+
+  return {
+    ok:true,
+    phone:phone,
+    points:100,
+    level:'VIP',
+    updatedAt:now_()
+  };
+}
 
 function memberRegister_(params) {
   return {
@@ -1221,59 +1294,6 @@ function memberRegister_(params) {
     message: '會員模組接口已建立，可串接會員資料表'
   };
 }
-
-
-function memberLogin_(params){
-
-  return {
-    ok:true,
-    action:'memberLogin',
-    memberName:clean_(getValueByKeys_(params,['name','姓名'],'')),
-    phone:clean_(getValueByKeys_(params,['phone','電話'],'')),
-    message:'會員登入成功',
-    updatedAt:now_()
-  };
-
-}
-
-function updateDriverLocation_(params){
-
-  return {
-    ok:true,
-    action:'driverLocation',
-    driver:clean_(getValueByKeys_(params,['driver','司機'],'')),
-    lat:clean_(getValueByKeys_(params,['lat'],'')),
-    lng:clean_(getValueByKeys_(params,['lng'],'')),
-    updatedAt:now_()
-  };
-
-}
-
-function getDriverAppData_(params){
-
-  const driver =
-    clean_(getValueByKeys_(params,['driver','司機'],''));
-
-  const orders = getOrders_({limit:500});
-
-  if(!orders.ok){
-    return orders;
-  }
-
-  const list = orders.orders.filter(function(o){
-    return !driver || o.driver === driver;
-  });
-
-  return {
-    ok:true,
-    driver:driver,
-    count:list.length,
-    orders:list,
-    updatedAt:now_()
-  };
-
-}
-
 
 function estimateRouteByRoutesApi_(params) {
   try {
