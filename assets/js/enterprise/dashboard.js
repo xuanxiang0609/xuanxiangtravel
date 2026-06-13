@@ -1,25 +1,34 @@
 
-const API = APP_CONFIG.API_URL;
+const API =
+APP_CONFIG.API_URL;
 
 async function loadDashboard(){
 
-const dashboard =
-await fetch(API+"?action=dashboard")
-.then(r=>r.json());
+const data =
+await fetch(
+API+"?action=dashboard"
+).then(r=>r.json());
 
-const revenue =
-await fetch(API+"?action=revenue")
-.then(r=>r.json());
+document.getElementById(
+"todayOrders"
+).innerText =
+data.todayOrders || 0;
 
-const kpi =
-await fetch(API+"?action=kpi")
-.then(r=>r.json());
+document.getElementById(
+"pendingDispatch"
+).innerText =
+data.pendingDispatch || 0;
 
-console.log({
-dashboard,
-revenue,
-kpi
-});
+document.getElementById(
+"todayRevenue"
+).innerText =
+(data.todayRevenue || 0)
+.toLocaleString();
+
+document.getElementById(
+"activeDrivers"
+).innerText =
+data.activeDrivers || 0;
 
 }
 
