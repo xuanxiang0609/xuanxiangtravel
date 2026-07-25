@@ -1,0 +1,769 @@
+/**
+ * ======================================================
+ * 玹翔旅遊 V39.2.3.4 Enterprise Final
+ * DispatchDayView.js｜單日派車視圖 Render Engine
+ * ======================================================
+ *
+ * 執行環境：
+ * Google Apps Script HTML Service 瀏覽器端
+ *
+ * 本模組只負責：
+ * 1. 接收標準事件資料
+ * 2. 正規化事件
+ * 3. 依時間／司機排序
+ * 4. 建立 Timeline
+ * 5. 渲染派車卡片
+ * 6. 顯示狀態與排班衝突
+ * 7. 處理 Empty State
+ *
+ * 本模組不負責：
+ * - google.script.run
+ * - Apps Script Controller
+ * - SpreadsheetApp
+ * - HtmlService
+ * - 資料庫或試算表讀取
+ */
+
+
+/* ======================================================
+ * Configuration
+ * ====================================================== */
+
+const DISPATCH_DAY_VIEW_CONFIG = Object.freeze({
+  DEFAULT_SORT: 'time',
+
+  STATUS_CLASS_MAP: Object.freeze({
+    待確認: 'status-pending',
+    已確認: 'status-confirmed',
+    待派車: 'status-awaiting-dispatch',
+    已派車: 'status-dispatched',
+    已出車: 'status-in-progress',
+    行程中: 'status-in-progress',
+    已完成: 'status-completed',
+    已取消: 'status-cancelled'
+  })
+});
+
+
+/* ======================================================
+ * Public Render API
+ * ====================================================== */
+
+/**
+ * 渲染單日派車視圖。
+ *
+ * @param {Object[]} events 派車事件
+ * @param {Object=} options 顯示設定
+ * @return {Object} Render 結果
+ */
+function renderDispatchDayView(events, options) {
+  const settings = options || {};
+
+  const sortMode = normalizeDayViewSortMode_(
+    settings.sortMode
+  );
+
+  const normalizedEvents = normalizeDayViewEvents_(
+    events
+  );
+
+  const sortedEvents = sortDayViewEvents_(
+    normalizedEvents,
+    sortMode
+  );
+
+  renderDayViewSummary_(
+    settings.summary ||
+    createDayViewSummary_(sortedEvents)
+  );
+
+  renderDayViewGeneratedAt_(
+    settings.generatedAt || ''
+  );
+
+  if (sortedEvents.length === 0) {
+    showDayViewEmptyState_();
+    clearDayViewTimeline_();
+
+    return {
+      ok: true,
+      rendered: 0,
+      sortMode: sortMode,
+      empty: true
+    };
+  }
+
+  hideDayViewEmptyState_();
+  renderDayViewTimeline_(sortedEvents);
+
+  return {
+    ok: true,
+    rendered: sortedEvents.length,
+    sortMode: sortMode,
+    empty: false
+  };
+}
+
+
+/* ======================================================
+ * Timeline
+ * ====================================================== */
+
+/**
+ * 建立派車時間軸。
+ *
+ * @param {Object[]} events
+ */
+function renderDayViewTimeline_(events) {
+  const timeline = getDayViewElement_(
+    'dayTimeline'
+  );
+
+  const template = getDayViewElement_(
+    'eventCardTemplate'
+  );
+
+  if (!timeline) {
+    throw new Error(
+      '找不到 Day View Timeline：#dayTimeline'
+    );
+  }
+
+  if (!template || !template.content) {
+    throw new Error(
+      '找不到 Day View 卡片模板：#eventCardTemplate'
+    );
+  }
+
+  timeline.innerHTML = '';
+
+  const fragment =
+    document.createDocumentFragment();
+
+  events.forEach(function (event) {
+    fragment.appendChild(
+      createDayViewEventCard_(
+        event,
+        template
+      )
+    );
+  });
+
+  timeline.appendChild(fragment);
+  timeline.hidden = false;
+}
+
+
+/**
+ * 建立單筆 Timeline 卡片。
+ *
+ * @param {Object} event
+ * @param {HTMLTemplateElement} template
+ * @return {DocumentFragment}
+ */
+function createDayViewEventCard_(event, template) {
+  const clone =
+    template.content.cloneNode(true);
+
+  const row =
+    clone.querySelector('.timeline-row');
+
+  const card =
+    clone.querySelector('.event-card');
+
+  setDayViewText_(
+    clone.querySelector('.timeline-time'),
+    formatDayViewTimeRange_(event)
+  );
+
+  setDayViewDataset_(row, event);
+  setDayViewDataset_(card, event);
+
+  if (card && event.conflict) {
+    card.classList.add('conflict');
+  }
+
+  renderDayViewDriver_(clone, event);
+  renderDayViewCustomer_(clone, event);
+  renderDayViewRoute_(clone, event);
+  renderDayViewVehicle_(clone, event);
+  renderDayViewAmount_(clone, event);
+  renderDayViewOrderNo_(clone, event);
+  renderDayViewStatus_(clone, event);
+  renderDayViewConflict_(clone, event);
+  bindDayViewCardActions_(clone, event);
+
+  return clone;
+}
+
+
+/* ======================================================
+ * Card Fields
+ * ====================================================== */
+
+function renderDayViewDriver_(clone, event) {
+  setDayViewText_(
+    clone.querySelector('.driver'),
+    event.driver
+      ? '👨‍✈️ ' + event.driver
+      : '👨‍✈️ 待派車'
+  );
+}
+
+
+function renderDayViewCustomer_(clone, event) {
+  const element =
+    clone.querySelector('.customer');
+
+  if (!element) {
+    return;
+  }
+
+  if (!event.customer) {
+    element.hidden = true;
+    return;
+  }
+
+  element.hidden = false;
+  element.textContent =
+    '乘客：' + event.customer;
+}
+
+
+function renderDayViewRoute_(clone, event) {
+  setDayViewText_(
+    clone.querySelector('.pickup'),
+    event.pickup || '未填上車地址'
+  );
+
+  setDayViewText_(
+    clone.querySelector('.dropoff'),
+    event.dropoff || '未填下車地址'
+  );
+}
+
+
+function renderDayViewVehicle_(clone, event) {
+  setDayViewText_(
+    clone.querySelector('.vehicle'),
+    event.vehicle
+      ? '🚐 ' + event.vehicle
+      : '🚐 未指定車款'
+  );
+}
+
+
+function renderDayViewAmount_(clone, event) {
+  const element =
+    clone.querySelector('.amount');
+
+  if (!element) {
+    return;
+  }
+
+  if (
+    event.amount === '' ||
+    event.amount === null ||
+    typeof event.amount === 'undefined'
+  ) {
+    element.hidden = true;
+    element.textContent = '';
+    return;
+  }
+
+  element.hidden = false;
+  element.textContent =
+    formatDayViewCurrency_(event.amount);
+}
+
+
+function renderDayViewOrderNo_(clone, event) {
+  const element =
+    clone.querySelector('.order-number');
+
+  if (!element) {
+    return;
+  }
+
+  if (!event.orderNo) {
+    element.hidden = true;
+    return;
+  }
+
+  element.hidden = false;
+  element.textContent =
+    '訂單編號：' + event.orderNo;
+}
+
+
+/* ======================================================
+ * Status
+ * ====================================================== */
+
+function renderDayViewStatus_(clone, event) {
+  const element =
+    clone.querySelector('.status');
+
+  if (!element) {
+    return;
+  }
+
+  const status =
+    event.status || '待確認';
+
+  element.textContent = status;
+
+  Object.keys(
+    DISPATCH_DAY_VIEW_CONFIG.STATUS_CLASS_MAP
+  ).forEach(function (key) {
+    element.classList.remove(
+      DISPATCH_DAY_VIEW_CONFIG
+        .STATUS_CLASS_MAP[key]
+    );
+  });
+
+  element.classList.remove(
+    'status-default'
+  );
+
+  element.classList.add(
+    DISPATCH_DAY_VIEW_CONFIG
+      .STATUS_CLASS_MAP[status] ||
+    'status-default'
+  );
+}
+
+
+/* ======================================================
+ * Conflict
+ * ====================================================== */
+
+function renderDayViewConflict_(clone, event) {
+  const badge =
+    clone.querySelector('.conflict-badge');
+
+  if (!badge) {
+    return;
+  }
+
+  if (!event.conflict) {
+    badge.hidden = true;
+    badge.textContent = '';
+    return;
+  }
+
+  badge.hidden = false;
+
+  if (
+    Array.isArray(event.conflictOrders) &&
+    event.conflictOrders.length > 0
+  ) {
+    badge.textContent =
+      '⚠️ 排班衝突：' +
+      event.conflictOrders.join('、');
+  } else {
+    badge.textContent =
+      '⚠️ 排班衝突';
+  }
+}
+
+
+/* ======================================================
+ * Sorting
+ * ====================================================== */
+
+/**
+ * 依時間或司機排序。
+ *
+ * @param {Object[]} events
+ * @param {string} sortMode
+ * @return {Object[]}
+ */
+function sortDayViewEvents_(events, sortMode) {
+  const result = events.slice();
+
+  result.sort(function (a, b) {
+    if (sortMode === 'driver') {
+      const driverCompare =
+        String(a.driver || '')
+          .localeCompare(
+            String(b.driver || ''),
+            'zh-Hant'
+          );
+
+      if (driverCompare !== 0) {
+        return driverCompare;
+      }
+    }
+
+    const timeCompare =
+      dayViewTimeToMinutes_(a.startTime) -
+      dayViewTimeToMinutes_(b.startTime);
+
+    if (timeCompare !== 0) {
+      return timeCompare;
+    }
+
+    return String(a.orderNo || '')
+      .localeCompare(
+        String(b.orderNo || ''),
+        'zh-Hant'
+      );
+  });
+
+  return result;
+}
+
+
+function normalizeDayViewSortMode_(mode) {
+  return String(mode || '').toLowerCase() ===
+    'driver'
+      ? 'driver'
+      : DISPATCH_DAY_VIEW_CONFIG.DEFAULT_SORT;
+}
+
+
+/**
+ * HH:mm 轉分鐘。
+ *
+ * 無效時間排到最後。
+ *
+ * @param {*} value
+ * @return {number}
+ */
+function dayViewTimeToMinutes_(value) {
+  const match = String(value || '')
+    .trim()
+    .match(/^(\d{1,2}):(\d{2})/);
+
+  if (!match) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+
+  if (
+    hour < 0 ||
+    hour > 23 ||
+    minute < 0 ||
+    minute > 59
+  ) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  return hour * 60 + minute;
+}
+
+
+/* ======================================================
+ * Data Normalization
+ * ====================================================== */
+
+function normalizeDayViewEvents_(events) {
+  if (!Array.isArray(events)) {
+    return [];
+  }
+
+  return events.map(
+    normalizeDayViewEvent_
+  );
+}
+
+
+function normalizeDayViewEvent_(event) {
+  const data = event || {};
+
+  return {
+    orderNo: String(
+      data.orderNo || ''
+    ).trim(),
+
+    date: String(
+      data.date || ''
+    ).trim(),
+
+    startTime: String(
+      data.startTime ||
+      data.start ||
+      ''
+    ).trim(),
+
+    endTime: String(
+      data.endTime ||
+      data.end ||
+      ''
+    ).trim(),
+
+    driver: String(
+      data.driver || ''
+    ).trim(),
+
+    customer: String(
+      data.customer || ''
+    ).trim(),
+
+    pickup: String(
+      data.pickup || ''
+    ).trim(),
+
+    dropoff: String(
+      data.dropoff || ''
+    ).trim(),
+
+    vehicle: String(
+      data.vehicle || ''
+    ).trim(),
+
+    amount:
+      data.amount === null ||
+      typeof data.amount === 'undefined'
+        ? ''
+        : data.amount,
+
+    status: String(
+      data.status || '待確認'
+    ).trim(),
+
+    conflict: Boolean(
+      data.conflict
+    ),
+
+    conflictOrders:
+      Array.isArray(data.conflictOrders)
+        ? data.conflictOrders
+        : []
+  };
+}
+
+
+/* ======================================================
+ * Summary
+ * ====================================================== */
+
+function createDayViewSummary_(events) {
+  const drivers = new Set();
+
+  events.forEach(function (event) {
+    if (event.driver) {
+      drivers.add(event.driver);
+    }
+  });
+
+  return {
+    totalOrders: events.length,
+
+    totalDrivers: drivers.size,
+
+    totalConflicts:
+      events.filter(function (event) {
+        return event.conflict;
+      }).length
+  };
+}
+
+
+function renderDayViewSummary_(summary) {
+  const element =
+    getDayViewElement_('daySummary');
+
+  if (!element) {
+    return;
+  }
+
+  const data = summary || {};
+
+  const totalOrders =
+    Number(data.totalOrders || 0);
+
+  const totalDrivers =
+    Number(data.totalDrivers || 0);
+
+  const totalConflicts =
+    Number(data.totalConflicts || 0);
+
+  const text = [
+    '共 ' + totalOrders + ' 筆訂單',
+    totalDrivers + ' 位司機'
+  ];
+
+  if (totalConflicts > 0) {
+    text.push(
+      '⚠️ ' + totalConflicts + ' 筆衝突'
+    );
+  }
+
+  element.textContent =
+    text.join('｜');
+}
+
+
+function renderDayViewGeneratedAt_(value) {
+  const element =
+    getDayViewElement_('generatedAt');
+
+  if (!element) {
+    return;
+  }
+
+  element.textContent = value
+    ? '更新時間：' + value
+    : '';
+}
+
+
+/* ======================================================
+ * Empty State
+ * ====================================================== */
+
+function showDayViewEmptyState_() {
+  const empty =
+    getDayViewElement_('emptyState');
+
+  if (empty) {
+    empty.hidden = false;
+  }
+}
+
+
+function hideDayViewEmptyState_() {
+  const empty =
+    getDayViewElement_('emptyState');
+
+  if (empty) {
+    empty.hidden = true;
+  }
+}
+
+
+function clearDayViewTimeline_() {
+  const timeline =
+    getDayViewElement_('dayTimeline');
+
+  if (!timeline) {
+    return;
+  }
+
+  timeline.innerHTML = '';
+  timeline.hidden = true;
+}
+
+
+/* ======================================================
+ * Action Events
+ * ====================================================== */
+
+function bindDayViewCardActions_(clone, event) {
+  const buttons =
+    clone.querySelectorAll(
+      '[data-action]'
+    );
+
+  buttons.forEach(function (button) {
+    button.dataset.order =
+      event.orderNo;
+
+    button.addEventListener(
+      'click',
+      function () {
+        dispatchDayViewAction_(
+          button.dataset.action,
+          event
+        );
+      }
+    );
+  });
+}
+
+
+/**
+ * 將操作轉成瀏覽器自訂事件。
+ *
+ * Controller 或其他模組可監聽：
+ *
+ * document.addEventListener(
+ *   'dispatch-day-view-action',
+ *   handler
+ * );
+ */
+function dispatchDayViewAction_(action, event) {
+  document.dispatchEvent(
+    new CustomEvent(
+      'dispatch-day-view-action',
+      {
+        detail: {
+          action: action,
+          orderNo: event.orderNo,
+          event: event
+        }
+      }
+    )
+  );
+}
+
+
+/* ======================================================
+ * Formatting
+ * ====================================================== */
+
+function formatDayViewTimeRange_(event) {
+  const start =
+    event.startTime || '--:--';
+
+  return event.endTime
+    ? start + '～' + event.endTime
+    : start;
+}
+
+
+function formatDayViewCurrency_(value) {
+  const number = Number(
+    String(value)
+      .replace(/[^\d.-]/g, '')
+  );
+
+  if (!Number.isFinite(number)) {
+    return 'NT$ ' + String(value);
+  }
+
+  return 'NT$ ' +
+    number.toLocaleString('zh-TW');
+}
+
+
+/* ======================================================
+ * DOM Helpers
+ * ====================================================== */
+
+function getDayViewElement_(id) {
+  return document.getElementById(id);
+}
+
+
+function setDayViewText_(element, value) {
+  if (!element) {
+    return;
+  }
+
+  element.textContent =
+    String(value || '');
+}
+
+
+function setDayViewDataset_(element, event) {
+  if (!element) {
+    return;
+  }
+
+  element.dataset.order =
+    event.orderNo || '';
+
+  element.dataset.driver =
+    event.driver || '';
+
+  element.dataset.startTime =
+    event.startTime || '';
+
+  element.dataset.status =
+    event.status || '';
+}
