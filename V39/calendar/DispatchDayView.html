@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dispatch Calendar</title>
+<style>
+body{
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    margin:20px;
+    background:#f5f6f8;
+}
+h2{
+    margin-bottom:20px;
+}
+.card{
+    background:#fff;
+    border-left:6px solid #2196F3;
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:8px;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+}
+.time{
+    font-size:18px;
+    font-weight:bold;
+}
+.driver{
+    color:#1976D2;
+}
+.route{
+    color:#555;
+}
+.status{
+    float:right;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🚖 今日派車</h2>
+
+<div id="dispatchList">
+Loading...
+</div>
+
+<script>
+google.script.run
+.withSuccessHandler(render)
+.getDispatchEventsToday();
+
+function render(events){
+
+    const div=document.getElementById("dispatchList");
+
+    div.innerHTML="";
+
+    events.forEach(function(e){
+
+        div.innerHTML+=`
+        <div class="card">
+
+            <div class="time">
+                ${e.start}
+                <span class="status">${e.status}</span>
+            </div>
+
+            <div class="driver">
+                ${e.driver}
+            </div>
+
+            <div>
+                ${e.orderNo}
+            </div>
+
+            <div class="route">
+                ${e.pickup}
+                →
+                ${e.dropoff}
+            </div>
+
+        </div>
+        `;
+    });
+
+}
+</script>
+
+</body>
+</html>
