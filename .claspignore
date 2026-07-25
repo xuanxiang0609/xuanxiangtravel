@@ -1,0 +1,10 @@
+**/**
+!*.js
+!*.gs
+!*.html
+!appsscript.json
+README.md
+CHANGELOG.md
+VALIDATION_REPORT.md
+.DS_Store
+node_modules/**
