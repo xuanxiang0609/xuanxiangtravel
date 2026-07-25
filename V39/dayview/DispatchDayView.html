@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <title>玹翔旅遊｜今日派車</title>
+
+  <?!= includeDayViewFile_('V39/dayview/DispatchDayView.css'); ?>
+</head>
+
+<body>
+
+  <main class="dayview">
+
+    <!-- ===============================
+         Header
+    ================================ -->
+
+    <header class="day-header">
+
+      <div>
+        <div class="day-title">
+          🚖 今日派車
+        </div>
+
+        <div
+          id="daySummary"
+          class="day-summary"
+        >
+          正在讀取派車資料…
+        </div>
+      </div>
+
+      <div class="day-toolbar">
+
+        <label
+          class="date-field"
+          for="selectedDate"
+        >
+          日期
+        </label>
+
+        <input
+          id="selectedDate"
+          type="date"
+          aria-label="選擇派車日期"
+        >
+
+        <select
+          id="sortMode"
+          aria-label="派車排序方式"
+        >
+          <option value="time">
+            依時間排序
+          </option>
+
+          <option value="driver">
+            依司機排序
+          </option>
+        </select>
+
+        <button
+          id="refreshButton"
+          type="button"
+          class="toolbar-button"
+        >
+          重新整理
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- ===============================
+         Loading
+    ================================ -->
+
+    <section
+      id="loadingState"
+      class="loading-state"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="loading-spinner"></div>
+
+      <div>
+        正在整理今日派車，司機還沒出發，資料先起跑。🚐
+      </div>
+    </section>
+
+
+    <!-- ===============================
+         Error
+    ================================ -->
+
+    <section
+      id="errorState"
+      class="error-state"
+      role="alert"
+      hidden
+    >
+      <div class="error-icon">
+        ⚠️
+      </div>
+
+      <div>
+        <div class="error-title">
+          派車資料讀取失敗
+        </div>
+
+        <div
+          id="errorMessage"
+          class="error-message"
+        ></div>
+      </div>
+    </section>
+
+
+    <!-- ===============================
+         Empty
+    ================================ -->
+
+    <section
+      id="emptyState"
+      class="empty"
+      role="status"
+      aria-live="polite"
+      hidden
+    >
+      <div class="empty-icon">
+        📅
+      </div>
+
+      <div class="empty-title">
+        今日沒有派車
+      </div>
+
+      <div class="empty-message">
+        目前沒有符合條件的派車訂單。
+      </div>
+    </section>
+
+
+    <!-- ===============================
+         Timeline
+    ================================ -->
+
+    <section
+      id="dayTimeline"
+      class="timeline"
+      aria-label="單日派車時間軸"
+      hidden
+    ></section>
+
+
+    <!-- ===============================
+         Footer
+    ================================ -->
+
+    <footer class="day-footer">
+
+      <span>
+        V39.2.3 Dispatch Day View
+      </span>
+
+      <span id="generatedAt"></span>
+
+    </footer>
+
+  </main>
+
+
+  <!-- ===============================
+       Card Template
+  ================================ -->
+
+  <template id="eventCardTemplate">
+
+    <div class="timeline-row">
+
+      <div class="timeline-time"></div>
+
+      <article
+        class="event-card"
+        tabindex="0"
+      >
+
+        <div class="event-card-header">
+
+          <div>
+
+            <div class="driver"></div>
+
+            <div class="customer"></div>
+
+          </div>
+
+          <span class="status"></span>
+
+        </div>
+
+
+        <div class="route">
+
+          <div class="route-point">
+
+            <span
+              class="route-icon"
+              aria-hidden="true"
+            >
+              📍
+            </span>
+
+            <span class="pickup"></span>
+
+          </div>
+
+          <div
+            class="arrow"
+            aria-hidden="true"
+          >
+            ↓
+          </div>
+
+          <div class="route-point">
+
+            <span
+              class="route-icon"
+              aria-hidden="true"
+            >
+              🏁
+            </span>
+
+            <span class="dropoff"></span>
+
+          </div>
+
+        </div>
+
+
+        <div class="meta">
+
+          <div class="vehicle"></div>
+
+          <div class="amount"></div>
+
+        </div>
+
+
+        <div class="order-number"></div>
+
+
+        <div
+          class="conflict-badge"
+          role="alert"
+          hidden
+        >
+          ⚠️ 排班衝突
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            type="button"
+            data-action="view"
+          >
+            查看
+          </button>
+
+          <button
+            type="button"
+            data-action="edit"
+          >
+            編輯
+          </button>
+
+          <button
+            type="button"
+            data-action="dispatch"
+          >
+            派車
+          </button>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </template>
+
+
+  <!-- ===============================
+       Client Script
+  ================================ -->
+
+  <?!= includeDayViewFile_('V39/dayview/DispatchDayView.js'); ?>
+
+</body>
+</html>
