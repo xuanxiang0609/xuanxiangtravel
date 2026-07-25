@@ -3,3 +3,7 @@ backup-v39/
 *.log
 .DS_Store
 node_modules/
+
+# Backup files
+*.bak
+*.bak.*
