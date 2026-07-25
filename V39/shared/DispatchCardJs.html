@@ -1,0 +1,1042 @@
+<script>
+/**
+ * ======================================================
+ * 玹翔旅遊 V39.2.3.8 Enterprise Final
+ * DispatchCardJs.html｜共用派車卡片 Render Engine
+ * ======================================================
+ *
+ * 適用模組：
+ * - Day View
+ * - Week View
+ * - Month View
+ * - Dashboard 2.0
+ * - AI Dispatch
+ *
+ * 職責：
+ * 1. 正規化派車事件資料
+ * 2. Clone DispatchCard.html 共用模板
+ * 3. 填入卡片欄位
+ * 4. 顯示狀態、金額、路線及衝突資訊
+ * 5. 派送共用卡片操作事件
+ *
+ * 不負責：
+ * - google.script.run
+ * - SpreadsheetApp
+ * - HtmlService
+ * - 訂單資料讀取
+ */
+
+(function (global) {
+  'use strict';
+
+  /* ====================================================
+   * Configuration
+   * ==================================================== */
+
+  const DISPATCH_CARD_CONFIG = Object.freeze({
+    TEMPLATE_ID: 'dispatchCardTemplate',
+
+    ACTION_EVENT_NAME: 'dispatch-card-action',
+
+    STATUS_CLASS_MAP: Object.freeze({
+      '待確認': 'status-pending',
+      '已確認': 'status-confirmed',
+      '待派車': 'status-awaiting-dispatch',
+      '已派車': 'status-dispatched',
+      '已出車': 'status-in-progress',
+      '行程中': 'status-in-progress',
+      '已完成': 'status-completed',
+      '已取消': 'status-cancelled'
+    }),
+
+    DEFAULT_OPTIONS: Object.freeze({
+      compact: false,
+
+      showTime: true,
+      showDriver: true,
+      showCustomer: true,
+      showRoute: true,
+      showVehicle: true,
+      showAmount: true,
+      showOrderNo: true,
+      showStatus: true,
+      showConflict: true,
+      showRecommendation: true,
+      showActions: true,
+
+      showViewButton: true,
+      showEditButton: true,
+      showDispatchButton: true
+    })
+  });
+
+
+  /* ====================================================
+   * Public Render API
+   * ==================================================== */
+
+  /**
+   * 建立共用派車卡片。
+   *
+   * @param {Object} event 派車事件
+   * @param {Object=} options 顯示設定
+   * @return {HTMLElement}
+   */
+  function createDispatchCard(event, options) {
+    const data = normalizeDispatchEvent(event);
+    const settings = mergeDispatchCardOptions_(options);
+
+    const template = document.getElementById(
+      DISPATCH_CARD_CONFIG.TEMPLATE_ID
+    );
+
+    if (!template || !template.content) {
+      throw new Error(
+        '找不到共用派車卡片模板：#' +
+        DISPATCH_CARD_CONFIG.TEMPLATE_ID
+      );
+    }
+
+    const fragment = template.content.cloneNode(true);
+    const card = fragment.querySelector('.dispatch-card');
+
+    if (!card) {
+      throw new Error(
+        'DispatchCard.html 缺少 .dispatch-card 根節點。'
+      );
+    }
+
+    setDispatchCardDataset_(card, data);
+
+    if (settings.compact) {
+      card.classList.add('dispatch-card-compact');
+    }
+
+    if (data.conflict) {
+      card.classList.add('dispatch-card-conflict');
+    }
+
+    fillDispatchCardTime_(fragment, data, settings);
+    fillDispatchCardDriver_(fragment, data, settings);
+    fillDispatchCardCustomer_(fragment, data, settings);
+    fillDispatchCardRoute_(fragment, data, settings);
+    fillDispatchCardVehicle_(fragment, data, settings);
+    fillDispatchCardAmount_(fragment, data, settings);
+    fillDispatchCardOrderNo_(fragment, data, settings);
+    fillDispatchCardStatus_(fragment, data, settings);
+    fillDispatchCardConflict_(fragment, data, settings);
+    fillDispatchCardRecommendation_(fragment, data, settings);
+    fillDispatchCardActions_(fragment, data, settings);
+
+    return card;
+  }
+
+
+  /**
+   * 批次建立派車卡片。
+   *
+   * @param {Object[]} events 派車事件
+   * @param {Object=} options 顯示設定
+   * @return {DocumentFragment}
+   */
+  function createDispatchCardList(events, options) {
+    const fragment = document.createDocumentFragment();
+
+    if (!Array.isArray(events)) {
+      return fragment;
+    }
+
+    events.forEach(function (event) {
+      fragment.appendChild(
+        createDispatchCard(event, options)
+      );
+    });
+
+    return fragment;
+  }
+
+
+  /* ====================================================
+   * Event Normalization
+   * ==================================================== */
+
+  /**
+   * 正規化派車事件資料。
+   *
+   * @param {*} event
+   * @return {Object}
+   */
+  function normalizeDispatchEvent(event) {
+    const data = event || {};
+
+    return {
+      orderNo: normalizeDispatchText_(
+        data.orderNo ||
+        data.orderNumber
+      ),
+
+      date: normalizeDispatchText_(
+        data.date ||
+        data.serviceDate
+      ),
+
+      startTime: normalizeDispatchText_(
+        data.startTime ||
+        data.start
+      ),
+
+      endTime: normalizeDispatchText_(
+        data.endTime ||
+        data.end
+      ),
+
+      driver: normalizeDispatchText_(
+        data.driver ||
+        data.driverName
+      ),
+
+      customer: normalizeDispatchText_(
+        data.customer ||
+        data.customerName ||
+        data.passengerName ||
+        data.name
+      ),
+
+      pickup: normalizeDispatchText_(
+        data.pickup ||
+        data.pickupAddress
+      ),
+
+      dropoff: normalizeDispatchText_(
+        data.dropoff ||
+        data.dropoffAddress
+      ),
+
+      vehicle: normalizeDispatchText_(
+        data.vehicle ||
+        data.vehicleType ||
+        data.carType
+      ),
+
+      vehicleNo: normalizeDispatchText_(
+        data.vehicleNo ||
+        data.plateNo
+      ),
+
+      driverPhone: normalizeDispatchText_(
+        data.driverPhone ||
+        data.phone
+      ),
+
+      amount: normalizeDispatchAmount_(
+        data.amount !== undefined
+          ? data.amount
+          : data.price
+      ),
+
+      status:
+        normalizeDispatchText_(
+          data.status || '待確認'
+        ) || '待確認',
+
+      conflict: Boolean(data.conflict),
+
+      conflictOrders:
+        normalizeDispatchStringArray_(
+          data.conflictOrders
+        ),
+
+      recommendation:
+        normalizeDispatchRecommendation_(
+          data.recommendation
+        ),
+
+      raw: data
+    };
+  }
+
+
+  function normalizeDispatchAmount_(value) {
+    if (
+      value === null ||
+      typeof value === 'undefined'
+    ) {
+      return '';
+    }
+
+    return value;
+  }
+
+
+  function normalizeDispatchStringArray_(value) {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+
+    return value
+      .map(normalizeDispatchText_)
+      .filter(Boolean);
+  }
+
+
+  function normalizeDispatchRecommendation_(value) {
+    if (!value || typeof value !== 'object') {
+      return null;
+    }
+
+    return {
+      score:
+        value.score === null ||
+        typeof value.score === 'undefined'
+          ? ''
+          : value.score,
+
+      reason: normalizeDispatchText_(
+        value.reason
+      )
+    };
+  }
+
+
+  /* ====================================================
+   * Time
+   * ==================================================== */
+
+  function fillDispatchCardTime_(
+    fragment,
+    data,
+    settings
+  ) {
+    const group = fragment.querySelector(
+      '.dispatch-card-time-group'
+    );
+
+    const startTime = fragment.querySelector(
+      '.dispatch-card-time'
+    );
+
+    const separator = fragment.querySelector(
+      '.dispatch-card-time-separator'
+    );
+
+    const endTime = fragment.querySelector(
+      '.dispatch-card-end-time'
+    );
+
+    if (!settings.showTime) {
+      hideDispatchCardElement_(group);
+      return;
+    }
+
+    showDispatchCardElement_(group);
+
+    setDispatchCardText_(
+      startTime,
+      data.startTime || '--:--'
+    );
+
+    if (data.endTime) {
+      showDispatchCardElement_(separator);
+      showDispatchCardElement_(endTime);
+
+      setDispatchCardText_(
+        endTime,
+        data.endTime
+      );
+    } else {
+      hideDispatchCardElement_(separator);
+      hideDispatchCardElement_(endTime);
+
+      setDispatchCardText_(
+        endTime,
+        ''
+      );
+    }
+  }
+
+
+  /* ====================================================
+   * Driver
+   * ==================================================== */
+
+  function fillDispatchCardDriver_(
+    fragment,
+    data,
+    settings
+  ) {
+    const container = fragment.querySelector(
+      '.dispatch-card-driver'
+    );
+
+    const name = fragment.querySelector(
+      '.dispatch-card-driver-name'
+    );
+
+    if (!settings.showDriver) {
+      hideDispatchCardElement_(container);
+      return;
+    }
+
+    showDispatchCardElement_(container);
+
+    setDispatchCardText_(
+      name,
+      data.driver || '待派車'
+    );
+  }
+
+
+  /* ====================================================
+   * Customer
+   * ==================================================== */
+
+  function fillDispatchCardCustomer_(
+    fragment,
+    data,
+    settings
+  ) {
+    const container = fragment.querySelector(
+      '.dispatch-card-customer'
+    );
+
+    const customer = fragment.querySelector(
+      '.dispatch-card-customer-name'
+    );
+
+    if (
+      !settings.showCustomer ||
+      !data.customer
+    ) {
+      hideDispatchCardElement_(container);
+      setDispatchCardText_(customer, '');
+      return;
+    }
+
+    showDispatchCardElement_(container);
+
+    setDispatchCardText_(
+      customer,
+      data.customer
+    );
+  }
+
+
+  /* ====================================================
+   * Route
+   * ==================================================== */
+
+  function fillDispatchCardRoute_(
+    fragment,
+    data,
+    settings
+  ) {
+    const route = fragment.querySelector(
+      '.dispatch-card-route'
+    );
+
+    const pickup = fragment.querySelector(
+      '.dispatch-route-pickup-text'
+    );
+
+    const dropoff = fragment.querySelector(
+      '.dispatch-route-dropoff-text'
+    );
+
+    if (!settings.showRoute) {
+      hideDispatchCardElement_(route);
+      return;
+    }
+
+    showDispatchCardElement_(route);
+
+    setDispatchCardText_(
+      pickup,
+      data.pickup || '未填上車地址'
+    );
+
+    setDispatchCardText_(
+      dropoff,
+      data.dropoff || '未填下車地址'
+    );
+  }
+
+
+  /* ====================================================
+   * Vehicle
+   * ==================================================== */
+
+  function fillDispatchCardVehicle_(
+    fragment,
+    data,
+    settings
+  ) {
+    const container = fragment.querySelector(
+      '.dispatch-card-vehicle'
+    );
+
+    const vehicle = fragment.querySelector(
+      '.dispatch-card-vehicle-text'
+    );
+
+    if (!settings.showVehicle) {
+      hideDispatchCardElement_(container);
+      return;
+    }
+
+    showDispatchCardElement_(container);
+
+    let vehicleText =
+      data.vehicle || '未指定車款';
+
+    if (data.vehicleNo) {
+      vehicleText += '｜' + data.vehicleNo;
+    }
+
+    setDispatchCardText_(
+      vehicle,
+      vehicleText
+    );
+  }
+
+
+  /* ====================================================
+   * Amount
+   * ==================================================== */
+
+  function fillDispatchCardAmount_(
+    fragment,
+    data,
+    settings
+  ) {
+    const amount = fragment.querySelector(
+      '.dispatch-card-amount'
+    );
+
+    if (
+      !settings.showAmount ||
+      data.amount === ''
+    ) {
+      hideDispatchCardElement_(amount);
+      setDispatchCardText_(amount, '');
+      return;
+    }
+
+    showDispatchCardElement_(amount);
+
+    setDispatchCardText_(
+      amount,
+      formatDispatchCurrency(data.amount)
+    );
+  }
+
+
+  /* ====================================================
+   * Order Number
+   * ==================================================== */
+
+  function fillDispatchCardOrderNo_(
+    fragment,
+    data,
+    settings
+  ) {
+    const container = fragment.querySelector(
+      '.dispatch-card-order-no'
+    );
+
+    const orderNo = fragment.querySelector(
+      '.dispatch-card-order-no-text'
+    );
+
+    if (
+      !settings.showOrderNo ||
+      !data.orderNo
+    ) {
+      hideDispatchCardElement_(container);
+      setDispatchCardText_(orderNo, '');
+      return;
+    }
+
+    showDispatchCardElement_(container);
+
+    setDispatchCardText_(
+      orderNo,
+      data.orderNo
+    );
+  }
+
+
+  /* ====================================================
+   * Status
+   * ==================================================== */
+
+  function fillDispatchCardStatus_(
+    fragment,
+    data,
+    settings
+  ) {
+    const badge = fragment.querySelector(
+      '.dispatch-status-badge'
+    );
+
+    if (!badge) {
+      return;
+    }
+
+    if (!settings.showStatus) {
+      hideDispatchCardElement_(badge);
+      return;
+    }
+
+    showDispatchCardElement_(badge);
+
+    badge.className =
+      'dispatch-status-badge ' +
+      getDispatchStatusClass(data.status);
+
+    badge.textContent =
+      data.status || '待確認';
+
+    badge.dataset.status =
+      data.status || '待確認';
+  }
+
+
+  /**
+   * 取得狀態 CSS class。
+   *
+   * @param {string} status
+   * @return {string}
+   */
+  function getDispatchStatusClass(status) {
+    const normalizedStatus =
+      normalizeDispatchText_(status);
+
+    return (
+      DISPATCH_CARD_CONFIG
+        .STATUS_CLASS_MAP[normalizedStatus] ||
+      'status-default'
+    );
+  }
+
+
+  /* ====================================================
+   * Conflict
+   * ==================================================== */
+
+  function fillDispatchCardConflict_(
+    fragment,
+    data,
+    settings
+  ) {
+    const warning = fragment.querySelector(
+      '.dispatch-card-warning'
+    );
+
+    const warningOrders = fragment.querySelector(
+      '.dispatch-card-warning-orders'
+    );
+
+    if (
+      !settings.showConflict ||
+      !data.conflict
+    ) {
+      hideDispatchCardElement_(warning);
+      hideDispatchCardElement_(warningOrders);
+
+      setDispatchCardText_(
+        warningOrders,
+        ''
+      );
+
+      return;
+    }
+
+    showDispatchCardElement_(warning);
+
+    if (data.conflictOrders.length > 0) {
+      showDispatchCardElement_(warningOrders);
+
+      setDispatchCardText_(
+        warningOrders,
+        '衝突訂單：' +
+        data.conflictOrders.join('、')
+      );
+    } else {
+      hideDispatchCardElement_(warningOrders);
+
+      setDispatchCardText_(
+        warningOrders,
+        ''
+      );
+    }
+  }
+
+
+  /* ====================================================
+   * AI Recommendation
+   * ==================================================== */
+
+  function fillDispatchCardRecommendation_(
+    fragment,
+    data,
+    settings
+  ) {
+    const container = fragment.querySelector(
+      '.dispatch-card-recommendation'
+    );
+
+    const score = fragment.querySelector(
+      '.dispatch-card-recommendation-score'
+    );
+
+    const reason = fragment.querySelector(
+      '.dispatch-card-recommendation-reason'
+    );
+
+    if (
+      !settings.showRecommendation ||
+      !data.recommendation
+    ) {
+      hideDispatchCardElement_(container);
+      setDispatchCardText_(score, '');
+      setDispatchCardText_(reason, '');
+      return;
+    }
+
+    showDispatchCardElement_(container);
+
+    setDispatchCardText_(
+      score,
+      data.recommendation.score !== ''
+        ? '推薦分數：' +
+          data.recommendation.score
+        : ''
+    );
+
+    setDispatchCardText_(
+      reason,
+      data.recommendation.reason
+    );
+  }
+
+
+  /* ====================================================
+   * Action Buttons
+   * ==================================================== */
+
+  function fillDispatchCardActions_(
+    fragment,
+    data,
+    settings
+  ) {
+    const actions = fragment.querySelector(
+      '.dispatch-card-actions'
+    );
+
+    if (!actions) {
+      return;
+    }
+
+    if (!settings.showActions) {
+      hideDispatchCardElement_(actions);
+      return;
+    }
+
+    showDispatchCardElement_(actions);
+
+    configureDispatchCardButton_(
+      fragment.querySelector(
+        '[data-action="view"]'
+      ),
+      data,
+      settings.showViewButton
+    );
+
+    configureDispatchCardButton_(
+      fragment.querySelector(
+        '[data-action="edit"]'
+      ),
+      data,
+      settings.showEditButton
+    );
+
+    configureDispatchCardButton_(
+      fragment.querySelector(
+        '[data-action="dispatch"]'
+      ),
+      data,
+      settings.showDispatchButton
+    );
+  }
+
+
+  function configureDispatchCardButton_(
+    button,
+    data,
+    enabled
+  ) {
+    if (!button) {
+      return;
+    }
+
+    if (!enabled) {
+      button.remove();
+      return;
+    }
+
+    button.dataset.order =
+      data.orderNo;
+
+    button.addEventListener(
+      'click',
+      function (browserEvent) {
+        browserEvent.preventDefault();
+        browserEvent.stopPropagation();
+
+        dispatchDispatchCardAction_(
+          button.dataset.action,
+          data,
+          button,
+          browserEvent
+        );
+      }
+    );
+  }
+
+
+  /**
+   * 派送共用卡片操作事件。
+   *
+   * 監聽方式：
+   *
+   * document.addEventListener(
+   *   'dispatch-card-action',
+   *   function (event) {
+   *     console.log(event.detail);
+   *   }
+   * );
+   */
+  function dispatchDispatchCardAction_(
+    action,
+    data,
+    sourceElement,
+    browserEvent
+  ) {
+    document.dispatchEvent(
+      new CustomEvent(
+        DISPATCH_CARD_CONFIG.ACTION_EVENT_NAME,
+        {
+          detail: {
+            action: action,
+            orderNo: data.orderNo,
+            event: data,
+            sourceElement: sourceElement,
+            browserEvent: browserEvent || null
+          }
+        }
+      )
+    );
+  }
+
+
+  /* ====================================================
+   * Formatting
+   * ==================================================== */
+
+  /**
+   * 格式化金額。
+   *
+   * @param {*} amount
+   * @return {string}
+   */
+  function formatDispatchCurrency(amount) {
+    if (
+      amount === '' ||
+      amount === null ||
+      typeof amount === 'undefined'
+    ) {
+      return '';
+    }
+
+    const numericValue = Number(
+      String(amount)
+        .replace(/[^\d.-]/g, '')
+    );
+
+    if (!Number.isFinite(numericValue)) {
+      return 'NT$ ' + String(amount);
+    }
+
+    return (
+      'NT$ ' +
+      numericValue.toLocaleString('zh-TW')
+    );
+  }
+
+
+  /**
+   * 格式化起訖時間。
+   *
+   * @param {Object} event
+   * @return {string}
+   */
+  function formatDispatchTimeRange(event) {
+    const data = normalizeDispatchEvent(event);
+    const start = data.startTime || '--:--';
+
+    return data.endTime
+      ? start + '～' + data.endTime
+      : start;
+  }
+
+
+  /* ====================================================
+   * Options
+   * ==================================================== */
+
+  function mergeDispatchCardOptions_(options) {
+    return Object.assign(
+      {},
+      DISPATCH_CARD_CONFIG.DEFAULT_OPTIONS,
+      options || {}
+    );
+  }
+
+
+  /* ====================================================
+   * Dataset
+   * ==================================================== */
+
+  function setDispatchCardDataset_(
+    element,
+    data
+  ) {
+    if (!element) {
+      return;
+    }
+
+    element.dataset.order =
+      data.orderNo;
+
+    element.dataset.date =
+      data.date;
+
+    element.dataset.driver =
+      data.driver;
+
+    element.dataset.startTime =
+      data.startTime;
+
+    element.dataset.endTime =
+      data.endTime;
+
+    element.dataset.status =
+      data.status;
+
+    element.dataset.vehicle =
+      data.vehicle;
+
+    element.dataset.vehicleNo =
+      data.vehicleNo;
+
+    element.dataset.conflict =
+      data.conflict ? 'true' : 'false';
+  }
+
+
+  /* ====================================================
+   * DOM Helpers
+   * ==================================================== */
+
+  function setDispatchCardText_(
+    element,
+    value
+  ) {
+    if (!element) {
+      return;
+    }
+
+    element.textContent =
+      String(
+        value === null ||
+        typeof value === 'undefined'
+          ? ''
+          : value
+      );
+  }
+
+
+  function showDispatchCardElement_(element) {
+    if (element) {
+      element.hidden = false;
+    }
+  }
+
+
+  function hideDispatchCardElement_(element) {
+    if (element) {
+      element.hidden = true;
+    }
+  }
+
+
+  function normalizeDispatchText_(value) {
+    return String(
+      value === null ||
+      typeof value === 'undefined'
+        ? ''
+        : value
+    ).trim();
+  }
+
+
+  /* ====================================================
+   * Public API
+   * ==================================================== */
+
+  global.DispatchCard = Object.freeze({
+    create: createDispatchCard,
+
+    createList: createDispatchCardList,
+
+    normalize: normalizeDispatchEvent,
+
+    getStatusClass:
+      getDispatchStatusClass,
+
+    formatCurrency:
+      formatDispatchCurrency,
+
+    formatTimeRange:
+      formatDispatchTimeRange,
+
+    config:
+      DISPATCH_CARD_CONFIG
+  });
+
+
+  /*
+   * 保留函式式 API，
+   * 方便既有模組直接呼叫。
+   */
+
+  global.createDispatchCard =
+    createDispatchCard;
+
+  global.createDispatchCardList =
+    createDispatchCardList;
+
+  global.normalizeDispatchEvent =
+    normalizeDispatchEvent;
+
+  global.getDispatchStatusClass =
+    getDispatchStatusClass;
+
+  global.formatDispatchCurrency =
+    formatDispatchCurrency;
+
+  global.formatDispatchTimeRange =
+    formatDispatchTimeRange;
+
+})(window);
+</script>

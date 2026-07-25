@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <base target="_top">
+
   <meta charset="UTF-8">
 
   <meta
@@ -8,78 +10,124 @@
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
 
-  <title>玹翔旅遊｜今日派車</title>
+  <meta
+    name="color-scheme"
+    content="light"
+  >
 
-  <?!= includeDayViewFile_('V39/dayview/DispatchDayView.css'); ?>
+  <title>玹翔旅遊｜單日派車</title>
+
+  <!-- Day View 專用樣式 -->
+  <?!= includeDayViewFile_(
+    'V39/dayview/DispatchDayViewCss'
+  ); ?>
+
+  <!-- 共用派車卡片樣式 -->
+  <?!= includeDayViewFile_(
+    'V39/shared/DispatchCardCss'
+  ); ?>
 </head>
 
 <body>
 
-  <main class="dayview">
+  <main
+    id="dispatchDayView"
+    class="dayview"
+    data-initial-date="<?= initialDate ?>"
+    data-controller-version="<?= controllerVersion ?>"
+  >
 
-    <!-- ===============================
+    <!-- =================================================
          Header
-    ================================ -->
+    ================================================== -->
 
     <header class="day-header">
 
-      <div>
-        <div class="day-title">
-          🚖 今日派車
+      <div class="day-header-main">
+
+        <div class="day-heading">
+
+          <h1 class="day-title">
+            🚖 單日派車
+          </h1>
+
+          <div
+            id="daySummary"
+            class="day-summary"
+            aria-live="polite"
+          >
+            正在整理派車資料…
+          </div>
+
         </div>
+
 
         <div
-          id="daySummary"
-          class="day-summary"
+          class="day-toolbar"
+          aria-label="單日派車工具列"
         >
-          正在讀取派車資料…
+
+          <label
+            class="day-toolbar-field"
+            for="selectedDate"
+          >
+            <span class="day-toolbar-label">
+              日期
+            </span>
+
+            <input
+              id="selectedDate"
+              class="day-date-input"
+              type="date"
+              value="<?= initialDate ?>"
+              aria-label="選擇派車日期"
+            >
+          </label>
+
+
+          <label
+            class="day-toolbar-field"
+            for="sortMode"
+          >
+            <span class="day-toolbar-label">
+              排序
+            </span>
+
+            <select
+              id="sortMode"
+              class="day-sort-select"
+              aria-label="派車排序方式"
+            >
+              <option value="time" selected>
+                依時間
+              </option>
+
+              <option value="driver">
+                依司機
+              </option>
+            </select>
+          </label>
+
+
+          <button
+            id="refreshButton"
+            type="button"
+            class="day-toolbar-button"
+            aria-label="重新整理派車資料"
+          >
+            🔄 重新整理
+          </button>
+
         </div>
-      </div>
-
-      <div class="day-toolbar">
-
-        <label
-          class="date-field"
-          for="selectedDate"
-        >
-          日期
-        </label>
-
-        <input
-          id="selectedDate"
-          type="date"
-          aria-label="選擇派車日期"
-        >
-
-        <select
-          id="sortMode"
-          aria-label="派車排序方式"
-        >
-          <option value="time">
-            依時間排序
-          </option>
-
-          <option value="driver">
-            依司機排序
-          </option>
-        </select>
-
-        <button
-          id="refreshButton"
-          type="button"
-          class="toolbar-button"
-        >
-          重新整理
-        </button>
 
       </div>
 
     </header>
 
 
-    <!-- ===============================
-         Loading
-    ================================ -->
+    <!-- =================================================
+         Loading State
+    ================================================== -->
 
     <section
       id="loadingState"
@@ -87,17 +135,30 @@
       role="status"
       aria-live="polite"
     >
-      <div class="loading-spinner"></div>
 
-      <div>
-        正在整理今日派車，司機還沒出發，資料先起跑。🚐
+      <div
+        class="loading-spinner"
+        aria-hidden="true"
+      ></div>
+
+      <div class="loading-content">
+
+        <div class="loading-title">
+          正在讀取派車資料
+        </div>
+
+        <div class="loading-message">
+          行程還沒出發，資料先繫好安全帶。🚐
+        </div>
+
       </div>
+
     </section>
 
 
-    <!-- ===============================
-         Error
-    ================================ -->
+    <!-- =================================================
+         Error State
+    ================================================== -->
 
     <section
       id="errorState"
@@ -105,11 +166,16 @@
       role="alert"
       hidden
     >
-      <div class="error-icon">
+
+      <div
+        class="error-icon"
+        aria-hidden="true"
+      >
         ⚠️
       </div>
 
-      <div>
+      <div class="error-content">
+
         <div class="error-title">
           派車資料讀取失敗
         </div>
@@ -117,14 +183,26 @@
         <div
           id="errorMessage"
           class="error-message"
-        ></div>
+        >
+          發生未知錯誤。
+        </div>
+
+        <button
+          id="errorRetryButton"
+          type="button"
+          class="error-retry-button"
+        >
+          再試一次
+        </button>
+
       </div>
+
     </section>
 
 
-    <!-- ===============================
-         Empty
-    ================================ -->
+    <!-- =================================================
+         Empty State
+    ================================================== -->
 
     <section
       id="emptyState"
@@ -133,175 +211,571 @@
       aria-live="polite"
       hidden
     >
-      <div class="empty-icon">
+
+      <div
+        class="empty-icon"
+        aria-hidden="true"
+      >
         📅
       </div>
 
       <div class="empty-title">
-        今日沒有派車
+        這一天沒有派車
       </div>
 
       <div class="empty-message">
-        目前沒有符合條件的派車訂單。
+        目前沒有符合日期條件的派車訂單。
       </div>
+
     </section>
 
 
-    <!-- ===============================
-         Timeline
-    ================================ -->
+    <!-- =================================================
+         Day Timeline
+    ================================================== -->
 
     <section
       id="dayTimeline"
       class="timeline"
       aria-label="單日派車時間軸"
+      aria-live="polite"
       hidden
     ></section>
 
 
-    <!-- ===============================
+    <!-- =================================================
          Footer
-    ================================ -->
+    ================================================== -->
 
     <footer class="day-footer">
 
-      <span>
+      <span class="day-footer-version">
         V39.2.3 Dispatch Day View
       </span>
 
-      <span id="generatedAt"></span>
+      <span
+        id="generatedAt"
+        class="day-footer-generated-at"
+      >
+        <? if (generatedAt) { ?>
+          更新時間：<?= generatedAt ?>
+        <? } ?>
+      </span>
 
     </footer>
 
   </main>
 
 
-  <!-- ===============================
-       Card Template
-  ================================ -->
+  <!-- ===================================================
+       Shared Dispatch Card Template
 
-  <template id="eventCardTemplate">
+       必須先載入模板，再載入 DispatchCardJs。
+  ==================================================== -->
 
-    <div class="timeline-row">
-
-      <div class="timeline-time"></div>
-
-      <article
-        class="event-card"
-        tabindex="0"
-      >
-
-        <div class="event-card-header">
-
-          <div>
-
-            <div class="driver"></div>
-
-            <div class="customer"></div>
-
-          </div>
-
-          <span class="status"></span>
-
-        </div>
+  <?!= includeDayViewFile_(
+    'V39/shared/DispatchCard'
+  ); ?>
 
 
-        <div class="route">
+  <!-- ===================================================
+       Shared Dispatch Card Render Engine
+  ==================================================== -->
 
-          <div class="route-point">
-
-            <span
-              class="route-icon"
-              aria-hidden="true"
-            >
-              📍
-            </span>
-
-            <span class="pickup"></span>
-
-          </div>
-
-          <div
-            class="arrow"
-            aria-hidden="true"
-          >
-            ↓
-          </div>
-
-          <div class="route-point">
-
-            <span
-              class="route-icon"
-              aria-hidden="true"
-            >
-              🏁
-            </span>
-
-            <span class="dropoff"></span>
-
-          </div>
-
-        </div>
+  <?!= includeDayViewFile_(
+    'V39/shared/DispatchCardJs'
+  ); ?>
 
 
-        <div class="meta">
+  <!-- ===================================================
+       Day View Render Engine
 
-          <div class="vehicle"></div>
+       DispatchDayView.js 專職 Render，
+       不包含 google.script.run。
+  ==================================================== -->
 
-          <div class="amount"></div>
-
-        </div>
-
-
-        <div class="order-number"></div>
-
-
-        <div
-          class="conflict-badge"
-          role="alert"
-          hidden
-        >
-          ⚠️ 排班衝突
-        </div>
+  <?!= includeDayViewFile_(
+    'V39/dayview/DispatchDayViewJs'
+  ); ?>
 
 
-        <div class="actions">
+  <!-- ===================================================
+       Day View Client Controller
 
-          <button
-            type="button"
-            data-action="view"
-          >
-            查看
-          </button>
+       負責：
+       - 呼叫 Apps Script getDayViewPayload()
+       - 日期切換
+       - 排序切換
+       - Loading／Error 控制
 
-          <button
-            type="button"
-            data-action="edit"
-          >
-            編輯
-          </button>
+       Render 仍由 DispatchDayView.js 負責。
+  ==================================================== -->
 
-          <button
-            type="button"
-            data-action="dispatch"
-          >
-            派車
-          </button>
+  <script>
+    (function () {
+      'use strict';
 
-        </div>
-
-      </article>
-
-    </div>
-
-  </template>
+      const DAY_VIEW_CLIENT_STATE = {
+        events: [],
+        summary: null,
+        generatedAt: '',
+        selectedDate: '',
+        sortMode: 'time',
+        loading: false
+      };
 
 
-  <!-- ===============================
-       Client Script
-  ================================ -->
+      document.addEventListener(
+        'DOMContentLoaded',
+        initializeDayViewClient_
+      );
 
-  <?!= includeDayViewFile_('V39/dayview/DispatchDayView.js'); ?>
+
+      /**
+       * 初始化 Day View Client Controller。
+       */
+      function initializeDayViewClient_() {
+        const root = document.getElementById(
+          'dispatchDayView'
+        );
+
+        const dateInput = document.getElementById(
+          'selectedDate'
+        );
+
+        const sortSelect = document.getElementById(
+          'sortMode'
+        );
+
+        DAY_VIEW_CLIENT_STATE.selectedDate =
+          normalizeClientDate_(
+            dateInput && dateInput.value
+              ? dateInput.value
+              : root &&
+                root.dataset.initialDate
+          );
+
+        DAY_VIEW_CLIENT_STATE.sortMode =
+          normalizeClientSortMode_(
+            sortSelect
+              ? sortSelect.value
+              : 'time'
+          );
+
+        if (dateInput) {
+          dateInput.value =
+            DAY_VIEW_CLIENT_STATE.selectedDate;
+        }
+
+        bindDayViewClientEvents_();
+
+        loadDayViewPayload_(
+          DAY_VIEW_CLIENT_STATE.selectedDate
+        );
+      }
+
+
+      /**
+       * 綁定日期、排序與重新整理操作。
+       */
+      function bindDayViewClientEvents_() {
+        const dateInput = document.getElementById(
+          'selectedDate'
+        );
+
+        const sortSelect = document.getElementById(
+          'sortMode'
+        );
+
+        const refreshButton = document.getElementById(
+          'refreshButton'
+        );
+
+        const errorRetryButton =
+          document.getElementById(
+            'errorRetryButton'
+          );
+
+
+        if (dateInput) {
+          dateInput.addEventListener(
+            'change',
+            function () {
+              const selectedDate =
+                normalizeClientDate_(
+                  dateInput.value
+                );
+
+              DAY_VIEW_CLIENT_STATE.selectedDate =
+                selectedDate;
+
+              loadDayViewPayload_(
+                selectedDate
+              );
+            }
+          );
+        }
+
+
+        if (sortSelect) {
+          sortSelect.addEventListener(
+            'change',
+            function () {
+              DAY_VIEW_CLIENT_STATE.sortMode =
+                normalizeClientSortMode_(
+                  sortSelect.value
+                );
+
+              renderCurrentDayView_();
+            }
+          );
+        }
+
+
+        if (refreshButton) {
+          refreshButton.addEventListener(
+            'click',
+            function () {
+              loadDayViewPayload_(
+                DAY_VIEW_CLIENT_STATE.selectedDate
+              );
+            }
+          );
+        }
+
+
+        if (errorRetryButton) {
+          errorRetryButton.addEventListener(
+            'click',
+            function () {
+              loadDayViewPayload_(
+                DAY_VIEW_CLIENT_STATE.selectedDate
+              );
+            }
+          );
+        }
+      }
+
+
+      /**
+       * 讀取 Apps Script Day View Payload。
+       *
+       * @param {string} dateString yyyy-MM-dd
+       */
+      function loadDayViewPayload_(dateString) {
+        const normalizedDate =
+          normalizeClientDate_(dateString);
+
+        DAY_VIEW_CLIENT_STATE.selectedDate =
+          normalizedDate;
+
+        DAY_VIEW_CLIENT_STATE.loading = true;
+
+        showDayViewLoading_();
+
+        if (
+          typeof google === 'undefined' ||
+          !google.script ||
+          !google.script.run
+        ) {
+          handleDayViewClientError_(
+            new Error(
+              '目前不在 Google Apps Script HTML Service 環境。'
+            )
+          );
+
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(
+            handleDayViewPayloadSuccess_
+          )
+          .withFailureHandler(
+            handleDayViewClientError_
+          )
+          .getDayViewPayload(
+            normalizedDate
+          );
+      }
+
+
+      /**
+       * 處理 Controller Payload。
+       *
+       * @param {Object} payload
+       */
+      function handleDayViewPayloadSuccess_(payload) {
+        try {
+          const data = payload || {};
+
+          if (data.ok === false) {
+            throw new Error(
+              data.message ||
+              'Day View 資料讀取失敗。'
+            );
+          }
+
+          DAY_VIEW_CLIENT_STATE.events =
+            Array.isArray(data.events)
+              ? data.events
+              : [];
+
+          DAY_VIEW_CLIENT_STATE.summary =
+            data.summary || null;
+
+          DAY_VIEW_CLIENT_STATE.generatedAt =
+            String(
+              data.generatedAt || ''
+            );
+
+          DAY_VIEW_CLIENT_STATE.selectedDate =
+            normalizeClientDate_(
+              data.date ||
+              DAY_VIEW_CLIENT_STATE.selectedDate
+            );
+
+          DAY_VIEW_CLIENT_STATE.loading = false;
+
+          updateDayViewDateInput_(
+            DAY_VIEW_CLIENT_STATE.selectedDate
+          );
+
+          hideDayViewLoading_();
+          hideDayViewError_();
+
+          renderCurrentDayView_();
+        } catch (error) {
+          handleDayViewClientError_(error);
+        }
+      }
+
+
+      /**
+       * 使用純 Render Engine 顯示目前資料。
+       */
+      function renderCurrentDayView_() {
+        if (
+          typeof window.renderDispatchDayView !==
+          'function'
+        ) {
+          handleDayViewClientError_(
+            new Error(
+              '找不到 DispatchDayView Render Engine。'
+            )
+          );
+
+          return;
+        }
+
+        try {
+          window.renderDispatchDayView(
+            DAY_VIEW_CLIENT_STATE.events,
+            {
+              sortMode:
+                DAY_VIEW_CLIENT_STATE.sortMode,
+
+              summary:
+                DAY_VIEW_CLIENT_STATE.summary,
+
+              generatedAt:
+                DAY_VIEW_CLIENT_STATE.generatedAt,
+
+              date:
+                DAY_VIEW_CLIENT_STATE.selectedDate
+            }
+          );
+        } catch (error) {
+          handleDayViewClientError_(error);
+        }
+      }
+
+
+      /**
+       * Loading 狀態。
+       */
+      function showDayViewLoading_() {
+        setDayViewClientHidden_(
+          'loadingState',
+          false
+        );
+
+        setDayViewClientHidden_(
+          'errorState',
+          true
+        );
+
+        setDayViewClientHidden_(
+          'emptyState',
+          true
+        );
+
+        setDayViewClientHidden_(
+          'dayTimeline',
+          true
+        );
+      }
+
+
+      function hideDayViewLoading_() {
+        setDayViewClientHidden_(
+          'loadingState',
+          true
+        );
+      }
+
+
+      /**
+       * Error 狀態。
+       *
+       * @param {*} error
+       */
+      function handleDayViewClientError_(error) {
+        DAY_VIEW_CLIENT_STATE.loading = false;
+
+        hideDayViewLoading_();
+
+        setDayViewClientHidden_(
+          'dayTimeline',
+          true
+        );
+
+        setDayViewClientHidden_(
+          'emptyState',
+          true
+        );
+
+        const message =
+          error &&
+          typeof error.message === 'string'
+            ? error.message
+            : String(
+                error || '未知錯誤'
+              );
+
+        const errorMessage =
+          document.getElementById(
+            'errorMessage'
+          );
+
+        if (errorMessage) {
+          errorMessage.textContent =
+            message;
+        }
+
+        setDayViewClientHidden_(
+          'errorState',
+          false
+        );
+
+        console.error(
+          'V39 Dispatch Day View Client 失敗：',
+          error
+        );
+      }
+
+
+      function hideDayViewError_() {
+        setDayViewClientHidden_(
+          'errorState',
+          true
+        );
+      }
+
+
+      /**
+       * 更新日期欄位。
+       *
+       * @param {string} value
+       */
+      function updateDayViewDateInput_(value) {
+        const dateInput =
+          document.getElementById(
+            'selectedDate'
+          );
+
+        if (dateInput) {
+          dateInput.value =
+            normalizeClientDate_(value);
+        }
+      }
+
+
+      /**
+       * 正規化日期。
+       *
+       * @param {*} value
+       * @return {string}
+       */
+      function normalizeClientDate_(value) {
+        const text =
+          String(value || '').trim();
+
+        if (
+          /^\d{4}-\d{2}-\d{2}$/.test(text)
+        ) {
+          return text;
+        }
+
+        const date = value
+          ? new Date(value)
+          : new Date();
+
+        if (
+          Number.isNaN(date.getTime())
+        ) {
+          return getClientToday_();
+        }
+
+        return [
+          date.getFullYear(),
+          String(
+            date.getMonth() + 1
+          ).padStart(2, '0'),
+          String(
+            date.getDate()
+          ).padStart(2, '0')
+        ].join('-');
+      }
+
+
+      function getClientToday_() {
+        const now = new Date();
+
+        return [
+          now.getFullYear(),
+          String(
+            now.getMonth() + 1
+          ).padStart(2, '0'),
+          String(
+            now.getDate()
+          ).padStart(2, '0')
+        ].join('-');
+      }
+
+
+      function normalizeClientSortMode_(value) {
+        return String(value || '')
+          .toLowerCase() === 'driver'
+            ? 'driver'
+            : 'time';
+      }
+
+
+      function setDayViewClientHidden_(
+        id,
+        hidden
+      ) {
+        const element =
+          document.getElementById(id);
+
+        if (element) {
+          element.hidden = hidden;
+        }
+      }
+
+    })();
+  </script>
 
 </body>
 </html>

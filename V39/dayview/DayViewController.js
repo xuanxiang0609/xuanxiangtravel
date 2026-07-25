@@ -1,6 +1,6 @@
 /**
  * ======================================================
- * 玹翔旅遊 V39.2.3.5 Enterprise Final
+ * 玹翔旅遊 V39.2.3.8 Enterprise Final
  * DayViewController.js｜Dispatch Day View Controller
  * ======================================================
  *
@@ -26,32 +26,63 @@
  * ====================================================== */
 
 const V39235_DAY_VIEW_CONFIG = Object.freeze({
-  VERSION: 'V39.2.3.5 Dispatch Day View Controller',
+  VERSION:
+    'V39.2.3.8 Dispatch Day View Controller',
 
-  TEMPLATE_FILE: 'V39/dayview/DispatchDayView',
+  TEMPLATE_FILE:
+    'V39/dayview/DispatchDayView',
 
-  CSS_FILE: 'V39/dayview/DispatchDayView.css',
+  DAY_VIEW_CSS_PARTIAL:
+    'V39/dayview/DispatchDayViewCss',
 
-  JS_FILE: 'V39/dayview/DispatchDayView.js',
+  DAY_VIEW_JS_PARTIAL:
+    'V39/dayview/DispatchDayViewJs',
 
-  TITLE: '🚖 玹翔旅遊｜單日派車',
+  SHARED_CARD_TEMPLATE:
+    'V39/shared/DispatchCard',
 
-  SIDEBAR_TITLE: '🚖 今日派車',
+  SHARED_CARD_CSS_PARTIAL:
+    'V39/shared/DispatchCardCss',
 
-  DIALOG_TITLE: '🚖 Dispatch Day View',
+  SHARED_CARD_JS_PARTIAL:
+    'V39/shared/DispatchCardJs',
+
+  TITLE:
+    '🚖 玹翔旅遊｜單日派車',
+
+  SIDEBAR_TITLE:
+    '🚖 今日派車',
+
+  DIALOG_TITLE:
+    '🚖 Dispatch Day View',
 
   DIALOG_WIDTH: 1080,
-
   DIALOG_HEIGHT: 760,
 
-  TIME_ZONE: 'Asia/Taipei',
+  TIME_ZONE:
+    'Asia/Taipei',
 
-  DATE_FORMAT: 'yyyy-MM-dd',
+  DATE_FORMAT:
+    'yyyy-MM-dd',
 
-  DATETIME_FORMAT: 'yyyy-MM-dd HH:mm:ss'
+  DATETIME_FORMAT:
+    'yyyy-MM-dd HH:mm:ss'
 });
 
+/**
+ * 引入 Day View／Shared HTML Partial。
+ *
+ * @param {string} filename Partial 名稱
+ * @return {string} Partial HTML
+ */
+function includeDayViewFile_(filename) {
+  const safeFilename =
+    validateDayViewIncludeFile_(filename);
 
+  return HtmlService
+    .createHtmlOutputFromFile(safeFilename)
+    .getContent();
+}
 /* ======================================================
  * Payload API
  * ====================================================== */
@@ -116,10 +147,10 @@ function getDayViewPayload(date) {
         V39235_DAY_VIEW_CONFIG.VERSION
     };
   } catch (error) {
-    console.error(
-      'V39.2.3.5 getDayViewPayload 失敗：' +
-      getDayViewControllerErrorMessage_(error)
-    );
+console.error(
+  'V39.2.3.8 getDayViewPayload 失敗：' +
+  getDayViewControllerErrorMessage_(error)
+);
 
     return {
       ok: false,
@@ -313,49 +344,27 @@ function createDayViewHtmlOutput_(normalizedDate) {
 <?!= includeDayViewFile_('V39/dayview/DispatchDayViewCss'); ?>
 <?!= includeDayViewFile_('V39/dayview/DispatchDayViewJs'); ?>
  *
- * @param {string} filename 檔案名稱
- * @return {string} HTML 內容
+ * 
  */
-function includeDayViewFile_(filename) {
-  const safeFilename =
-    validateDayViewIncludeFile_(filename);
 
-  const content =
-    HtmlService
-      .createHtmlOutputFromFile(
-        safeFilename
-      )
-      .getContent();
-
-  if (/\.css$/i.test(safeFilename)) {
-    return '<style>\n' +
-      content +
-      '\n</style>';
-  }
-
-  if (/\.js$/i.test(safeFilename)) {
-    return '<script>\n' +
-      content +
-      '\n</script>';
-  }
-
-  return content;
-}
 
 
 /**
  * 限制 Day View 只能 include 白名單檔案。
  *
- * @param {string} filename
- * @return {string}
+ * @param {string} filename 檔案名稱
+ * @return {string} HTML 內容
  */
 function validateDayViewIncludeFile_(filename) {
   const value =
     String(filename || '').trim();
 
   const allowedFiles = [
-    V39235_DAY_VIEW_CONFIG.CSS_FILE,
-    V39235_DAY_VIEW_CONFIG.JS_FILE
+    V39235_DAY_VIEW_CONFIG.DAY_VIEW_CSS_PARTIAL,
+    V39235_DAY_VIEW_CONFIG.DAY_VIEW_JS_PARTIAL,
+    V39235_DAY_VIEW_CONFIG.SHARED_CARD_TEMPLATE,
+    V39235_DAY_VIEW_CONFIG.SHARED_CARD_CSS_PARTIAL,
+    V39235_DAY_VIEW_CONFIG.SHARED_CARD_JS_PARTIAL
   ];
 
   if (allowedFiles.indexOf(value) === -1) {

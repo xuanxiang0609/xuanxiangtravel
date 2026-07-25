@@ -1,0 +1,255 @@
+<!--
+  ======================================================
+  玹翔旅遊 V39.2.3.8 Enterprise
+  DispatchCard.html｜共用派車卡片模板
+  ======================================================
+
+  職責：
+  - 定義共用派車卡片 HTML 結構
+  - 提供 Day / Week / Month / Dashboard 共用
+  - 不含 JavaScript
+  - 不讀取資料
+-->
+
+<template id="dispatchCardTemplate">
+
+  <article
+    class="dispatch-card"
+    tabindex="0"
+    aria-label="派車訂單卡片"
+  >
+
+    <!-- Header：時間／狀態 -->
+    <div class="dispatch-card-header">
+
+      <div class="dispatch-card-time-group">
+
+        <span class="dispatch-card-time">
+          --:--
+        </span>
+
+        <span
+          class="dispatch-card-time-separator"
+          hidden
+        >
+          ～
+        </span>
+
+        <span
+          class="dispatch-card-end-time"
+          hidden
+        ></span>
+
+      </div>
+
+      <span
+        class="dispatch-status-badge status-default"
+      >
+        待確認
+      </span>
+
+    </div>
+
+
+    <!-- 司機 -->
+    <div class="dispatch-card-driver">
+
+      <span
+        class="dispatch-card-driver-icon"
+        aria-hidden="true"
+      >
+        👨‍✈️
+      </span>
+
+      <span class="dispatch-card-driver-name">
+        待派車
+      </span>
+
+    </div>
+
+
+    <!-- 乘客 -->
+    <div
+      class="dispatch-card-customer"
+      hidden
+    >
+
+      <span class="dispatch-card-field-label">
+        乘客
+      </span>
+
+      <span class="dispatch-card-customer-name"></span>
+
+    </div>
+
+
+    <!-- 路線 -->
+    <div class="dispatch-card-route">
+
+      <div
+        class="
+          dispatch-route-point
+          dispatch-route-pickup
+        "
+      >
+
+        <span
+          class="dispatch-route-icon"
+          aria-hidden="true"
+        >
+          📍
+        </span>
+
+        <span class="dispatch-route-pickup-text">
+          未填上車地址
+        </span>
+
+      </div>
+
+      <div
+        class="dispatch-route-arrow"
+        aria-hidden="true"
+      >
+        ↓
+      </div>
+
+      <div
+        class="
+          dispatch-route-point
+          dispatch-route-dropoff
+        "
+      >
+
+        <span
+          class="dispatch-route-icon"
+          aria-hidden="true"
+        >
+          🏁
+        </span>
+
+        <span class="dispatch-route-dropoff-text">
+          未填下車地址
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- 車型／金額 -->
+    <div class="dispatch-card-meta">
+
+      <div class="dispatch-card-vehicle">
+
+        <span
+          class="dispatch-card-vehicle-icon"
+          aria-hidden="true"
+        >
+          🚐
+        </span>
+
+        <span class="dispatch-card-vehicle-text">
+          未指定車款
+        </span>
+
+      </div>
+
+      <div
+        class="dispatch-card-amount"
+        hidden
+      ></div>
+
+    </div>
+
+
+    <!-- 訂單編號 -->
+    <div
+      class="dispatch-card-order-no"
+      hidden
+    >
+
+      <span class="dispatch-card-field-label">
+        訂單編號
+      </span>
+
+      <span class="dispatch-card-order-no-text"></span>
+
+    </div>
+
+
+    <!-- 衝突警示 -->
+    <div
+      class="dispatch-card-warning"
+      role="alert"
+      hidden
+    >
+
+      <div class="dispatch-card-warning-title">
+        ⚠️ 排班衝突
+      </div>
+
+      <div
+        class="dispatch-card-warning-orders"
+        hidden
+      ></div>
+
+    </div>
+
+
+    <!-- AI 推薦資訊（預留） -->
+    <div
+      class="dispatch-card-recommendation"
+      hidden
+    >
+
+      <div class="dispatch-card-recommendation-score"></div>
+
+      <div class="dispatch-card-recommendation-reason"></div>
+
+    </div>
+
+
+    <!-- 操作按鈕 -->
+    <div
+      class="dispatch-card-actions"
+      aria-label="派車訂單操作"
+    >
+
+      <button
+        type="button"
+        class="
+          dispatch-card-button
+          dispatch-card-button-view
+        "
+        data-action="view"
+      >
+        查看
+      </button>
+
+      <button
+        type="button"
+        class="
+          dispatch-card-button
+          dispatch-card-button-edit
+        "
+        data-action="edit"
+      >
+        編輯
+      </button>
+
+      <button
+        type="button"
+        class="
+          dispatch-card-button
+          dispatch-card-button-dispatch
+        "
+        data-action="dispatch"
+      >
+        派車
+      </button>
+
+    </div>
+
+  </article>
+
+</template>
