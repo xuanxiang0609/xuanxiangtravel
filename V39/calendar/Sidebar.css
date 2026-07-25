@@ -1,0 +1,42 @@
+.dispatch-card{
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin:10px;
+  padding:12px;
+  background:#fff;
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.driver{
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.route{
+  margin:8px 0;
+}
+
+.arrow{
+  text-align:center;
+  color:#666;
+}
+
+.warning{
+  margin-top:10px;
+  color:#d32f2f;
+  font-weight:bold;
+}
+
+.actions{
+  margin-top:10px;
+}
+
+.actions button{
+  margin-right:6px;
+}

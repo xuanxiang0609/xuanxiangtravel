@@ -1,0 +1,30 @@
+<div class="dispatch-card" data-order="<?= orderNo ?>">
+  <div class="card-header">
+    <span class="time"><?= startTime ?></span>
+    <span class="status <?= statusClass ?>"><?= status ?></span>
+  </div>
+
+  <div class="driver">👨‍✈️ <?= driver ?></div>
+
+  <div class="route">
+    <div><?= pickup ?></div>
+    <div class="arrow">↓</div>
+    <div><?= dropoff ?></div>
+  </div>
+
+  <div class="vehicle">🚐 <?= vehicle ?></div>
+
+  <div class="amount">NT$ <?= amount ?></div>
+
+  <div class="actions">
+    <button>查看</button>
+    <button>編輯</button>
+    <button>派車</button>
+  </div>
+
+  <? if (conflict) { ?>
+  <div class="warning">
+    ⚠️ 排班衝突
+  </div>
+  <? } ?>
+</div>
