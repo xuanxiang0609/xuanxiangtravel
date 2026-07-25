@@ -19,6 +19,22 @@ function onOpen() {
 
 function onEdit(e) {
   handleOrderDriverEdit_(e);
+
+
+  if (typeof onDriverChanged_ === 'function') {
+    try {
+      onDriverChanged_(e);
+    } catch (error) {
+      console.error(
+        'V39.1.2 Dispatch Guard onEdit 失敗：' +
+        String(
+          error && error.message
+            ? error.message
+            : error
+        )
+      );
+    }
+  }
 }
 
 function upgradeV383Enterprise() {
