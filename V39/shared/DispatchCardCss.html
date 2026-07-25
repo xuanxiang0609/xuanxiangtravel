@@ -1,0 +1,608 @@
+<style>
+/**
+ * ======================================================
+ * 玹翔旅遊 V39.2.3.8 Enterprise Final
+ * DispatchCardCss.html｜共用派車卡片樣式
+ * ======================================================
+ *
+ * 適用：
+ * - Day View
+ * - Week View
+ * - Month View
+ * - Dashboard 2.0
+ * - AI Dispatch
+ */
+
+:root {
+  --dispatch-primary: #1976d2;
+  --dispatch-primary-dark: #125aa0;
+  --dispatch-success: #2e7d32;
+  --dispatch-warning: #f9a825;
+  --dispatch-danger: #c62828;
+  --dispatch-orange: #ef6c00;
+  --dispatch-muted: #757575;
+
+  --dispatch-text: #202124;
+  --dispatch-text-secondary: #5f6368;
+  --dispatch-border: #e0e3e7;
+  --dispatch-surface: #ffffff;
+  --dispatch-background: #f6f8fb;
+
+  --dispatch-radius: 14px;
+  --dispatch-radius-small: 8px;
+
+  --dispatch-shadow:
+    0 2px 8px rgba(32, 33, 36, 0.08);
+
+  --dispatch-shadow-hover:
+    0 10px 28px rgba(32, 33, 36, 0.15);
+
+  --dispatch-transition: 0.2s ease;
+}
+
+
+/* ======================================================
+ * Card
+ * ====================================================== */
+
+.dispatch-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 16px;
+
+  border: 1px solid var(--dispatch-border);
+  border-radius: var(--dispatch-radius);
+
+  background: var(--dispatch-surface);
+  color: var(--dispatch-text);
+
+  box-shadow: var(--dispatch-shadow);
+
+  transition:
+    transform var(--dispatch-transition),
+    box-shadow var(--dispatch-transition),
+    border-color var(--dispatch-transition);
+}
+
+.dispatch-card:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(25, 118, 210, 0.55);
+
+  box-shadow: var(--dispatch-shadow-hover);
+}
+
+.dispatch-card:focus-visible {
+  outline: 3px solid rgba(25, 118, 210, 0.2);
+  outline-offset: 2px;
+}
+
+
+/* ======================================================
+ * Compact Mode
+ * ====================================================== */
+
+.dispatch-card-compact {
+  gap: 7px;
+  padding: 11px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+}
+
+.dispatch-card-compact .dispatch-card-customer,
+.dispatch-card-compact .dispatch-card-order-no {
+  font-size: 12px;
+}
+
+.dispatch-card-compact .dispatch-card-route {
+  gap: 3px;
+  margin: 2px 0;
+}
+
+.dispatch-card-compact .dispatch-card-actions {
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.dispatch-card-compact .dispatch-card-button {
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+
+/* ======================================================
+ * Conflict
+ * ====================================================== */
+
+.dispatch-card-conflict {
+  border-left: 6px solid var(--dispatch-danger);
+}
+
+.dispatch-card-conflict:hover {
+  border-color: var(--dispatch-danger);
+}
+
+
+/* ======================================================
+ * Header
+ * ====================================================== */
+
+.dispatch-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.dispatch-card-time-group {
+  display: inline-flex;
+  align-items: baseline;
+
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.dispatch-card-time {
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  color: var(--dispatch-text);
+}
+
+.dispatch-card-time-separator,
+.dispatch-card-end-time {
+  font-size: 13px;
+  font-weight: 600;
+
+  color: var(--dispatch-text-secondary);
+}
+
+
+/* ======================================================
+ * Driver
+ * ====================================================== */
+
+.dispatch-card-driver {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 16px;
+  font-weight: 750;
+
+  color: var(--dispatch-primary-dark);
+}
+
+.dispatch-card-driver-icon {
+  flex: 0 0 auto;
+}
+
+.dispatch-card-driver-name {
+  overflow-wrap: anywhere;
+}
+
+
+/* ======================================================
+ * Shared Field
+ * ====================================================== */
+
+.dispatch-card-field-label {
+  flex: 0 0 auto;
+
+  padding: 2px 6px;
+
+  border-radius: 999px;
+
+  background: #eef3f8;
+  color: var(--dispatch-text-secondary);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ======================================================
+ * Customer
+ * ====================================================== */
+
+.dispatch-card-customer {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 14px;
+  color: var(--dispatch-text-secondary);
+}
+
+.dispatch-card-customer-name {
+  overflow-wrap: anywhere;
+}
+
+
+/* ======================================================
+ * Route
+ * ====================================================== */
+
+.dispatch-card-route {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  margin: 3px 0;
+}
+
+.dispatch-route-point {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+
+  align-items: flex-start;
+
+  gap: 5px;
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.dispatch-route-icon {
+  text-align: center;
+}
+
+.dispatch-route-pickup-text,
+.dispatch-route-dropoff-text {
+  overflow-wrap: anywhere;
+}
+
+.dispatch-route-arrow {
+  margin-left: 7px;
+
+  color: #9aa0a6;
+
+  font-size: 14px;
+  line-height: 1;
+}
+
+
+/* ======================================================
+ * Meta
+ * ====================================================== */
+
+.dispatch-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  padding-top: 4px;
+}
+
+.dispatch-card-vehicle {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  min-width: 0;
+
+  color: var(--dispatch-text-secondary);
+  font-size: 13px;
+}
+
+.dispatch-card-vehicle-text {
+  overflow-wrap: anywhere;
+}
+
+.dispatch-card-amount {
+  white-space: nowrap;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  color: var(--dispatch-primary);
+}
+
+
+/* ======================================================
+ * Order Number
+ * ====================================================== */
+
+.dispatch-card-order-no {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 12px;
+  color: var(--dispatch-text-secondary);
+}
+
+.dispatch-card-order-no-text {
+  overflow-wrap: anywhere;
+}
+
+
+/* ======================================================
+ * Status Badge
+ * ====================================================== */
+
+.dispatch-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  min-height: 24px;
+
+  padding: 3px 10px;
+
+  border-radius: 999px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  white-space: nowrap;
+}
+
+.status-pending {
+  background: var(--dispatch-warning);
+  color: #3f3000;
+}
+
+.status-confirmed {
+  background: #1565c0;
+}
+
+.status-awaiting-dispatch {
+  background: var(--dispatch-orange);
+}
+
+.status-dispatched {
+  background: var(--dispatch-primary);
+}
+
+.status-in-progress {
+  background: var(--dispatch-success);
+}
+
+.status-completed {
+  background: #616161;
+}
+
+.status-cancelled {
+  background: var(--dispatch-danger);
+}
+
+.status-default {
+  background: #8b949e;
+}
+
+
+/* ======================================================
+ * Conflict Warning
+ * ====================================================== */
+
+.dispatch-card-warning {
+  padding: 10px 12px;
+
+  border: 1px solid rgba(198, 40, 40, 0.25);
+  border-radius: var(--dispatch-radius-small);
+
+  background: rgba(198, 40, 40, 0.07);
+  color: var(--dispatch-danger);
+}
+
+.dispatch-card-warning-title {
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.dispatch-card-warning-orders {
+  margin-top: 4px;
+
+  font-size: 12px;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ======================================================
+ * AI Recommendation
+ * ====================================================== */
+
+.dispatch-card-recommendation {
+  padding: 10px 12px;
+
+  border: 1px solid rgba(46, 125, 50, 0.22);
+  border-radius: var(--dispatch-radius-small);
+
+  background: rgba(46, 125, 50, 0.07);
+  color: var(--dispatch-success);
+}
+
+.dispatch-card-recommendation-score {
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.dispatch-card-recommendation-reason {
+  margin-top: 4px;
+
+  font-size: 12px;
+  line-height: 1.45;
+
+  color: #386b3a;
+}
+
+
+/* ======================================================
+ * Actions
+ * ====================================================== */
+
+.dispatch-card-actions {
+  display: flex;
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 4px;
+}
+
+.dispatch-card-button {
+  min-height: 34px;
+
+  padding: 7px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  background: #edf2f7;
+  color: var(--dispatch-text);
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    transform var(--dispatch-transition),
+    background-color var(--dispatch-transition),
+    border-color var(--dispatch-transition),
+    color var(--dispatch-transition);
+}
+
+.dispatch-card-button:hover {
+  transform: translateY(-1px);
+}
+
+.dispatch-card-button:focus-visible {
+  outline: 3px solid rgba(25, 118, 210, 0.2);
+  outline-offset: 2px;
+}
+
+.dispatch-card-button-view {
+  border-color: #d7dce2;
+
+  background: #ffffff;
+}
+
+.dispatch-card-button-view:hover {
+  border-color: var(--dispatch-primary);
+
+  color: var(--dispatch-primary);
+}
+
+.dispatch-card-button-edit {
+  background: #e8f1fb;
+  color: var(--dispatch-primary-dark);
+}
+
+.dispatch-card-button-edit:hover {
+  background: #d8e9fb;
+}
+
+.dispatch-card-button-dispatch {
+  background: var(--dispatch-primary);
+  color: #ffffff;
+}
+
+.dispatch-card-button-dispatch:hover {
+  background: var(--dispatch-primary-dark);
+}
+
+
+/* ======================================================
+ * Hidden
+ * ====================================================== */
+
+.dispatch-card [hidden] {
+  display: none !important;
+}
+
+
+/* ======================================================
+ * Responsive
+ * ====================================================== */
+
+@media (max-width: 640px) {
+  .dispatch-card {
+    gap: 9px;
+    padding: 13px;
+  }
+
+  .dispatch-card-header {
+    align-items: flex-start;
+  }
+
+  .dispatch-card-time {
+    font-size: 17px;
+  }
+
+  .dispatch-card-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dispatch-card-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    width: 100%;
+  }
+
+  .dispatch-card-button {
+    width: 100%;
+    padding: 7px 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .dispatch-card-header {
+    flex-direction: column;
+  }
+
+  .dispatch-card-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ======================================================
+ * Reduced Motion
+ * ====================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dispatch-card,
+  .dispatch-card-button {
+    transition: none;
+  }
+
+  .dispatch-card:hover,
+  .dispatch-card-button:hover {
+    transform: none;
+  }
+}
+</style>
