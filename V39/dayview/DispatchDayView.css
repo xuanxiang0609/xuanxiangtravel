@@ -1,0 +1,492 @@
+/**
+ * ======================================================
+ * 玹翔旅遊 V39.2.3 Enterprise
+ * DispatchDayView.css
+ * Day View UI
+ * ======================================================
+ */
+
+/* ===============================
+   Root
+================================== */
+
+:root{
+  --primary:#1976d2;
+  --success:#2e7d32;
+  --warning:#f9a825;
+  --danger:#d32f2f;
+  --gray:#757575;
+
+  --border:#e5e7eb;
+  --background:#f5f7fb;
+  --card:#ffffff;
+
+  --radius:12px;
+
+  --shadow-sm:0 2px 8px rgba(0,0,0,.08);
+  --shadow-md:0 8px 24px rgba(0,0,0,.12);
+
+  --transition:.2s ease;
+}
+
+/* ===============================
+   Layout
+================================== */
+
+.dayview{
+
+  background:var(--background);
+
+  padding:18px;
+
+  height:100%;
+
+  overflow-y:auto;
+
+}
+
+.dayview-scroll{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+
+}
+
+/* ===============================
+   Header
+================================== */
+
+.day-header{
+
+  background:#fff;
+
+  border:1px solid var(--border);
+
+  border-radius:var(--radius);
+
+  padding:16px;
+
+  box-shadow:var(--shadow-sm);
+
+}
+
+.day-title{
+
+  font-size:22px;
+
+  font-weight:700;
+
+  color:#222;
+
+}
+
+.day-summary{
+
+  margin-top:6px;
+
+  color:#666;
+
+  font-size:13px;
+
+}
+
+/* ===============================
+   Timeline
+================================== */
+
+.timeline{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:16px;
+
+}
+
+.timeline-row{
+
+  display:grid;
+
+  grid-template-columns:80px 1fr;
+
+  column-gap:16px;
+
+}
+
+.timeline-time{
+
+  text-align:right;
+
+  font-weight:700;
+
+  color:#555;
+
+  padding-top:18px;
+
+}
+
+/* ===============================
+   Event Card
+================================== */
+
+.event-card{
+
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:var(--radius);
+
+  padding:16px;
+
+  box-shadow:var(--shadow-sm);
+
+  transition:all var(--transition);
+
+}
+
+.event-card:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:var(--shadow-md);
+
+  border-color:var(--primary);
+
+}
+
+/* ===============================
+   Conflict
+================================== */
+
+.event-card.conflict{
+
+  border-left:6px solid var(--danger);
+
+}
+
+.conflict-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:4px;
+
+  color:var(--danger);
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-top:8px;
+
+}
+
+/* ===============================
+   Driver
+================================== */
+
+.driver{
+
+  font-size:16px;
+
+  font-weight:700;
+
+  margin-bottom:8px;
+
+}
+
+/* ===============================
+   Customer
+================================== */
+
+.customer{
+
+  margin-bottom:8px;
+
+  color:#444;
+
+}
+
+/* ===============================
+   Route
+================================== */
+
+.route{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:6px;
+
+  margin:12px 0;
+
+}
+
+.route-point{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+}
+
+.route-icon{
+
+  width:18px;
+
+}
+
+.arrow{
+
+  margin-left:9px;
+
+  color:#999;
+
+}
+
+/* ===============================
+   Meta
+================================== */
+
+.meta{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-top:12px;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+}
+
+.vehicle{
+
+  color:#555;
+
+}
+
+.amount{
+
+  font-weight:700;
+
+  color:var(--primary);
+
+}
+
+/* ===============================
+   Status Badge
+================================== */
+
+.status{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:4px 12px;
+
+  border-radius:999px;
+
+  color:#fff;
+
+  font-size:12px;
+
+  font-weight:700;
+
+}
+
+.status-pending{
+
+  background:var(--warning);
+
+}
+
+.status-confirmed{
+
+  background:#1565c0;
+
+}
+
+.status-awaiting-dispatch{
+
+  background:#ef6c00;
+
+}
+
+.status-dispatched{
+
+  background:#1976d2;
+
+}
+
+.status-in-progress{
+
+  background:var(--success);
+
+}
+
+.status-completed{
+
+  background:#616161;
+
+}
+
+.status-cancelled{
+
+  background:var(--danger);
+
+}
+
+.status-default{
+
+  background:#9e9e9e;
+
+}
+
+/* ===============================
+   Action Buttons
+================================== */
+
+.actions{
+
+  display:flex;
+
+  gap:8px;
+
+  margin-top:14px;
+
+}
+
+.actions button{
+
+  border:none;
+
+  background:var(--primary);
+
+  color:#fff;
+
+  border-radius:8px;
+
+  padding:8px 14px;
+
+  cursor:pointer;
+
+  transition:all var(--transition);
+
+}
+
+.actions button:hover{
+
+  opacity:.92;
+
+  transform:translateY(-1px);
+
+}
+
+/* ===============================
+   Empty State
+================================== */
+
+.empty{
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  text-align:center;
+
+  padding:60px 20px;
+
+  background:#fff;
+
+  border:1px dashed #cfd8dc;
+
+  border-radius:var(--radius);
+
+}
+
+.empty-icon{
+
+  font-size:54px;
+
+  margin-bottom:12px;
+
+}
+
+.empty-title{
+
+  font-size:22px;
+
+  font-weight:700;
+
+  margin-bottom:8px;
+
+}
+
+.empty-message{
+
+  color:#777;
+
+}
+
+/* ===============================
+   Responsive
+================================== */
+
+@media (max-width:768px){
+
+  .timeline-row{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .timeline-time{
+
+    text-align:left;
+
+    padding-top:0;
+
+  }
+
+  .meta{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+  }
+
+  .actions{
+
+    flex-wrap:wrap;
+
+  }
+
+  .actions button{
+
+    flex:1;
+
+  }
+
+}
