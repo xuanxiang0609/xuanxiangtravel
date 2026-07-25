@@ -1,0 +1,536 @@
+/**
+ * ======================================================
+ * 玹翔旅遊 V39.2.4.3 Enterprise
+ * DispatchWeekView.css｜週派車視圖樣式
+ * ======================================================
+ */
+
+:root {
+  --week-primary: #1976d2;
+  --week-primary-dark: #125aa0;
+  --week-danger: #c62828;
+  --week-muted: #5f6368;
+  --week-text: #202124;
+  --week-border: #e0e3e7;
+  --week-surface: #ffffff;
+  --week-background: #f4f7fb;
+  --week-radius: 14px;
+
+  --week-shadow:
+    0 2px 10px rgba(32, 33, 36, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+
+  background: var(--week-background);
+  color: var(--week-text);
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans TC",
+    sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.week-view {
+  min-height: 100vh;
+  padding: 18px;
+}
+
+.week-header {
+  padding: 18px;
+
+  border: 1px solid var(--week-border);
+  border-radius: var(--week-radius);
+
+  background: var(--week-surface);
+  box-shadow: var(--week-shadow);
+}
+
+.week-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 18px;
+}
+
+.week-title {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.week-range-label {
+  margin-top: 6px;
+
+  color: var(--week-muted);
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.week-summary-text {
+  color: var(--week-muted);
+
+  font-size: 13px;
+  text-align: right;
+}
+
+.week-toolbar {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.week-navigation {
+  display: flex;
+  gap: 7px;
+}
+
+.week-toolbar-button {
+  min-height: 38px;
+
+  padding: 8px 13px;
+
+  border: 1px solid #d7dce2;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: var(--week-text);
+
+  font-weight: 750;
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.week-toolbar-button:hover {
+  transform: translateY(-1px);
+
+  border-color: var(--week-primary);
+  color: var(--week-primary);
+}
+
+.week-toolbar-button-primary {
+  border-color: var(--week-primary);
+
+  background: var(--week-primary);
+  color: #ffffff;
+}
+
+.week-toolbar-button-primary:hover {
+  background: var(--week-primary-dark);
+  color: #ffffff;
+}
+
+.week-date-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.week-field-label {
+  color: var(--week-muted);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.week-date-input {
+  min-height: 38px;
+
+  padding: 7px 10px;
+
+  border: 1px solid #d7dce2;
+  border-radius: 9px;
+
+  background: #ffffff;
+}
+
+.week-summary-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin: 16px 0;
+}
+
+.week-summary-card {
+  padding: 15px;
+
+  border: 1px solid var(--week-border);
+  border-radius: 12px;
+
+  background: var(--week-surface);
+  box-shadow: var(--week-shadow);
+}
+
+.week-summary-label {
+  color: var(--week-muted);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.week-summary-value {
+  margin-top: 6px;
+
+  font-size: 22px;
+  font-weight: 850;
+}
+
+.week-summary-value.has-conflict {
+  color: var(--week-danger);
+}
+
+.week-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  min-height: 220px;
+
+  padding: 30px;
+
+  border: 1px solid var(--week-border);
+  border-radius: var(--week-radius);
+
+  background: var(--week-surface);
+}
+
+.week-loading-spinner {
+  width: 34px;
+  height: 34px;
+
+  border: 4px solid #d9e4ef;
+  border-top-color: var(--week-primary);
+  border-radius: 50%;
+
+  animation: week-spin 0.8s linear infinite;
+}
+
+.week-loading-title {
+  font-weight: 800;
+}
+
+.week-loading-message {
+  margin-top: 5px;
+
+  color: var(--week-muted);
+  font-size: 13px;
+}
+
+@keyframes week-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.week-error-state {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 22px;
+
+  border: 1px solid rgba(198, 40, 40, 0.28);
+  border-radius: var(--week-radius);
+
+  background: #fff7f7;
+  color: var(--week-danger);
+}
+
+.week-error-icon {
+  font-size: 28px;
+}
+
+.week-error-title {
+  font-weight: 850;
+}
+
+.week-error-message {
+  margin-top: 6px;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.week-error-retry-button {
+  margin-top: 12px;
+
+  padding: 8px 13px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: var(--week-danger);
+  color: #ffffff;
+
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.week-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 260px;
+
+  padding: 36px 20px;
+
+  border: 1px dashed #c9d0d8;
+  border-radius: var(--week-radius);
+
+  background: var(--week-surface);
+
+  text-align: center;
+}
+
+.week-empty-icon {
+  font-size: 50px;
+}
+
+.week-empty-title {
+  margin-top: 12px;
+
+  font-size: 21px;
+  font-weight: 850;
+}
+
+.week-empty-message {
+  margin-top: 7px;
+
+  color: var(--week-muted);
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(7, minmax(270px, 1fr));
+
+  gap: 12px;
+
+  padding-bottom: 12px;
+
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.week-day-column {
+  min-width: 270px;
+
+  padding: 12px;
+
+  border: 1px solid var(--week-border);
+  border-radius: var(--week-radius);
+
+  background: #edf2f7;
+}
+
+.week-day-column.is-today {
+  border-color: var(--week-primary);
+
+  background: #eaf3fc;
+}
+
+.week-day-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+
+  gap: 5px;
+
+  margin: -12px -12px 12px;
+  padding: 12px;
+
+  border-bottom: 1px solid var(--week-border);
+  border-radius:
+    var(--week-radius)
+    var(--week-radius)
+    0
+    0;
+
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+}
+
+.week-day-label {
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.week-day-date {
+  color: var(--week-muted);
+  font-size: 12px;
+}
+
+.week-day-count {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+
+  padding: 3px 8px;
+
+  border-radius: 999px;
+
+  background: #e7edf4;
+  color: var(--week-muted);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.week-day-events {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.week-day-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 28px 12px;
+
+  border: 1px dashed #cbd2da;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--week-muted);
+
+  font-size: 13px;
+  text-align: center;
+}
+
+.week-day-empty-icon {
+  font-size: 26px;
+}
+
+.week-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-top: 18px;
+  padding: 12px 3px;
+
+  color: var(--week-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 960px) {
+  .week-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .week-view {
+    padding: 11px;
+  }
+
+  .week-heading {
+    flex-direction: column;
+  }
+
+  .week-summary-text {
+    text-align: left;
+  }
+
+  .week-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .week-navigation {
+    display: grid;
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .week-toolbar-button,
+  .week-date-input {
+    width: 100%;
+  }
+
+  .week-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .week-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .week-summary-grid,
+  .week-navigation {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .week-loading-spinner {
+    animation: none;
+  }
+
+  .week-toolbar-button {
+    transition: none;
+  }
+
+  .week-toolbar-button:hover {
+    transform: none;
+  }
+}

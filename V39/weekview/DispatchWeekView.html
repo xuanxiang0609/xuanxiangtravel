@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <base target="_top">
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <title>玹翔旅遊｜週派車排班</title>
+
+  <?!= includeWeekViewFile_(
+    'V39/weekview/DispatchWeekViewCss'
+  ); ?>
+
+  <?!= includeWeekViewFile_(
+    'V39/shared/DispatchCardCss'
+  ); ?>
+</head>
+
+<body>
+
+  <main
+    id="dispatchWeekView"
+    class="week-view"
+    data-initial-date="<?= initialDate ?>"
+    data-controller-version="<?= controllerVersion ?>"
+  >
+
+    <header class="week-header">
+
+      <div class="week-heading">
+
+        <div>
+          <h1 class="week-title">
+            📅 週派車排班
+          </h1>
+
+          <div
+            id="weekRangeLabel"
+            class="week-range-label"
+          >
+            正在計算本週日期…
+          </div>
+        </div>
+
+        <div
+          id="weekSummaryText"
+          class="week-summary-text"
+          aria-live="polite"
+        >
+          正在整理週派車資料…
+        </div>
+
+      </div>
+
+
+      <div
+        class="week-toolbar"
+        aria-label="週派車導覽工具列"
+      >
+
+        <div class="week-navigation">
+
+          <button
+            id="previousWeekButton"
+            type="button"
+            class="week-toolbar-button"
+          >
+            ← 上一週
+          </button>
+
+          <button
+            id="currentWeekButton"
+            type="button"
+            class="week-toolbar-button week-toolbar-button-primary"
+          >
+            本週
+          </button>
+
+          <button
+            id="nextWeekButton"
+            type="button"
+            class="week-toolbar-button"
+          >
+            下一週 →
+          </button>
+
+        </div>
+
+
+        <label
+          class="week-date-field"
+          for="weekDateInput"
+        >
+          <span class="week-field-label">
+            指定日期
+          </span>
+
+          <input
+            id="weekDateInput"
+            class="week-date-input"
+            type="date"
+            value="<?= initialDate ?>"
+          >
+        </label>
+
+
+        <button
+          id="refreshWeekButton"
+          type="button"
+          class="week-toolbar-button"
+        >
+          🔄 重新整理
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <section
+      id="weekSummaryCards"
+      class="week-summary-grid"
+      aria-label="本週派車摘要"
+    >
+
+      <article class="week-summary-card">
+        <div class="week-summary-label">
+          訂單
+        </div>
+
+        <div
+          id="summaryTotalOrders"
+          class="week-summary-value"
+        >
+          0
+        </div>
+      </article>
+
+
+      <article class="week-summary-card">
+        <div class="week-summary-label">
+          司機
+        </div>
+
+        <div
+          id="summaryTotalDrivers"
+          class="week-summary-value"
+        >
+          0
+        </div>
+      </article>
+
+
+      <article class="week-summary-card">
+        <div class="week-summary-label">
+          排班衝突
+        </div>
+
+        <div
+          id="summaryTotalConflicts"
+          class="week-summary-value"
+        >
+          0
+        </div>
+      </article>
+
+
+      <article class="week-summary-card">
+        <div class="week-summary-label">
+          週營收
+        </div>
+
+        <div
+          id="summaryTotalRevenue"
+          class="week-summary-value"
+        >
+          NT$ 0
+        </div>
+      </article>
+
+    </section>
+
+
+    <section
+      id="weekLoadingState"
+      class="week-loading-state"
+      role="status"
+      aria-live="polite"
+    >
+
+      <div
+        class="week-loading-spinner"
+        aria-hidden="true"
+      ></div>
+
+      <div>
+        <div class="week-loading-title">
+          正在整理本週派車
+        </div>
+
+        <div class="week-loading-message">
+          七天的行程正在排隊上車，請稍候。🚐
+        </div>
+      </div>
+
+    </section>
+
+
+    <section
+      id="weekErrorState"
+      class="week-error-state"
+      role="alert"
+      hidden
+    >
+
+      <div
+        class="week-error-icon"
+        aria-hidden="true"
+      >
+        ⚠️
+      </div>
+
+      <div>
+        <div class="week-error-title">
+          週派車資料讀取失敗
+        </div>
+
+        <div
+          id="weekErrorMessage"
+          class="week-error-message"
+        >
+          發生未知錯誤。
+        </div>
+
+        <button
+          id="weekRetryButton"
+          type="button"
+          class="week-error-retry-button"
+        >
+          再試一次
+        </button>
+      </div>
+
+    </section>
+
+
+    <section
+      id="weekEmptyState"
+      class="week-empty-state"
+      role="status"
+      aria-live="polite"
+      hidden
+    >
+
+      <div
+        class="week-empty-icon"
+        aria-hidden="true"
+      >
+        🗓️
+      </div>
+
+      <div class="week-empty-title">
+        本週沒有派車
+      </div>
+
+      <div class="week-empty-message">
+        這一週目前沒有符合條件的派車訂單。
+      </div>
+
+    </section>
+
+
+    <section
+      id="weekGrid"
+      class="week-grid"
+      aria-label="週一至週日派車排班"
+      aria-live="polite"
+      hidden
+    ></section>
+
+
+    <footer class="week-footer">
+
+      <span>
+        V39.2.4 Dispatch Week View
+      </span>
+
+      <span
+        id="weekGeneratedAt"
+        class="week-generated-at"
+      >
+        <? if (generatedAt) { ?>
+          更新時間：<?= generatedAt ?>
+        <? } ?>
+      </span>
+
+    </footer>
+
+  </main>
+
+
+  <template id="weekDayColumnTemplate">
+
+    <article class="week-day-column">
+
+      <header class="week-day-header">
+
+        <div class="week-day-label">
+          星期一
+        </div>
+
+        <div class="week-day-date">
+          07/27
+        </div>
+
+        <span class="week-day-count">
+          0 筆
+        </span>
+
+      </header>
+
+
+      <div
+        class="week-day-empty"
+        hidden
+      >
+        <div
+          class="week-day-empty-icon"
+          aria-hidden="true"
+        >
+          🚖
+        </div>
+
+        <div>
+          本日無派車
+        </div>
+      </div>
+
+
+      <div
+        class="week-day-events"
+        aria-live="polite"
+      ></div>
+
+    </article>
+
+  </template>
+
+
+  <?!= includeWeekViewFile_(
+    'V39/shared/DispatchCard'
+  ); ?>
+
+  <?!= includeWeekViewFile_(
+    'V39/shared/DispatchCardJs'
+  ); ?>
+
+  <?!= includeWeekViewFile_(
+    'V39/weekview/DispatchWeekViewJs'
+  ); ?>
+
+</body>
+</html>
