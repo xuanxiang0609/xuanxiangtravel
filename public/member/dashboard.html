@@ -1,10 +1,4420 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html
+  lang="zh-Hant"
+  data-member-guard-mode="protected"
+  data-member-guard="checking"
+>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>玹翔旅遊會員中心｜dashboard</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#090909"
+  >
+
+  <meta
+    name="description"
+    content="玹翔旅遊會員中心，管理訂單、點數、優惠券、常用乘車人與地址。"
+  >
+
+  <title>會員首頁｜玹翔旅遊</title>
+
+  <link
+    rel="preconnect"
+    href="https://www.gstatic.com"
+    crossorigin
+  >
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      --bg: #070707;
+      --bg-soft: #0c0c0c;
+      --panel: #111111;
+      --panel-soft: #161616;
+      --panel-glass: rgba(17, 17, 17, 0.88);
+
+      --gold: #d7b56d;
+      --gold-light: #f1d38c;
+      --gold-deep: #9f7732;
+      --gold-soft: rgba(215, 181, 109, 0.12);
+
+      --text: #f7f3eb;
+      --text-soft: #cec6b8;
+      --text-muted: #8f8a81;
+
+      --line: rgba(255, 255, 255, 0.085);
+      --line-strong: rgba(215, 181, 109, 0.28);
+
+      --success: #81c995;
+      --warning: #f5c768;
+      --danger: #ff938f;
+      --info: #8ab4f8;
+
+      --sidebar-width: 278px;
+
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 15px;
+      --radius-sm: 11px;
+
+      --shadow:
+        0 30px 80px rgba(0, 0, 0, 0.38);
+
+      --font:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans TC",
+        "PingFang TC",
+        "Microsoft JhengHei",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 92% 2%,
+          rgba(215, 181, 109, 0.105),
+          transparent 26%
+        ),
+        radial-gradient(
+          circle at 5% 85%,
+          rgba(126, 87, 25, 0.08),
+          transparent 32%
+        ),
+        var(--bg);
+
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(241, 211, 140, 0.78);
+      outline-offset: 3px;
+    }
+
+    .boot-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(215, 181, 109, 0.08),
+          transparent 34%
+        ),
+        rgba(5, 5, 5, 0.98);
+
+      transition:
+        opacity 240ms ease,
+        visibility 240ms ease;
+    }
+
+    body[data-ready="true"] .boot-screen {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .boot-content {
+      display: grid;
+      justify-items: center;
+      gap: 17px;
+      text-align: center;
+    }
+
+    .boot-logo,
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      color: #090909;
+      background:
+        linear-gradient(
+          135deg,
+          #f7dda2,
+          #b88636
+        );
+      font-weight: 900;
+    }
+
+    .boot-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 23px;
+      font-size: 29px;
+      box-shadow:
+        0 18px 42px rgba(215, 181, 109, 0.19);
+    }
+
+    .boot-spinner,
+    .button-spinner {
+      border-radius: 999px;
+      animation: spin 720ms linear infinite;
+    }
+
+    .boot-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(215, 181, 109, 0.18);
+      border-top-color: var(--gold-light);
+    }
+
+    .button-spinner {
+      width: 17px;
+      height: 17px;
+      border: 2px solid rgba(255, 255, 255, 0.24);
+      border-top-color: currentColor;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .boot-title {
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .boot-message {
+      margin: 2px 0 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns:
+        var(--sidebar-width)
+        minmax(0, 1fr);
+
+      min-height: 100vh;
+      min-height: 100svh;
+
+      transition:
+        opacity 220ms ease,
+        transform 220ms ease;
+    }
+
+    body[data-ready="false"] .app-shell {
+      opacity: 0;
+      transform: translateY(5px);
+      pointer-events: none;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      width: var(--sidebar-width);
+      height: 100vh;
+      height: 100svh;
+      padding:
+        max(26px, env(safe-area-inset-top))
+        20px
+        max(22px, env(safe-area-inset-bottom));
+
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(18, 18, 18, 0.98),
+          rgba(8, 8, 8, 0.99)
+        );
+
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 0 8px 25px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      flex: 0 0 auto;
+      width: 49px;
+      height: 49px;
+      border-radius: 16px;
+      font-size: 21px;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 1px;
+    }
+
+    .brand-copy strong {
+      font-size: 16px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-copy span {
+      color: var(--text-muted);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-label {
+      margin: 28px 10px 10px;
+      color: #66625b;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 47px;
+      padding: 11px 13px;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 650;
+
+      transition:
+        color 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+    }
+
+    .nav-link svg {
+      flex: 0 0 auto;
+      width: 19px;
+      height: 19px;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .nav-link[aria-current="page"] {
+      color: var(--gold-light);
+      border-color: var(--line-strong);
+      background:
+        linear-gradient(
+          120deg,
+          rgba(215, 181, 109, 0.13),
+          rgba(215, 181, 109, 0.035)
+        );
+    }
+
+    .sidebar-footer {
+      display: grid;
+      gap: 13px;
+      margin-top: auto;
+      padding-top: 26px;
+    }
+
+    .support-card {
+      padding: 17px;
+      border: 1px solid var(--line-strong);
+      border-radius: 16px;
+      background: var(--gold-soft);
+    }
+
+    .support-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .support-card span {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .sidebar-signout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 10px 13px;
+
+      border: 1px solid var(--line);
+      border-radius: 13px;
+
+      color: var(--text-soft);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sidebar-signout:hover {
+      color: #ffd1ce;
+      border-color: rgba(255, 147, 143, 0.3);
+      background: rgba(255, 147, 143, 0.055);
+    }
+
+    .sidebar-signout svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .main-area {
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      min-height: 78px;
+      padding:
+        max(14px, env(safe-area-inset-top))
+        clamp(22px, 3.4vw, 48px)
+        14px;
+
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 7, 7, 0.82);
+      backdrop-filter: blur(20px);
+    }
+
+    .topbar-left,
+    .topbar-right,
+    .member-mini {
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar-left {
+      gap: 14px;
+    }
+
+    .topbar-right {
+      gap: 10px;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--panel);
+      cursor: pointer;
+    }
+
+    .mobile-menu-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .page-heading {
+      display: grid;
+      gap: 1px;
+    }
+
+    .page-heading strong {
+      font-size: 15px;
+    }
+
+    .page-heading span {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .topbar-icon-button {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+
+      border: 1px solid var(--line);
+      border-radius: 13px;
+
+      color: var(--text-soft);
+      background: var(--panel);
+      cursor: pointer;
+    }
+
+    .topbar-icon-button:hover {
+      color: var(--gold-light);
+      border-color: var(--line-strong);
+    }
+
+    .topbar-icon-button svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: none;
+      width: 7px;
+      height: 7px;
+      border: 2px solid var(--panel);
+      border-radius: 50%;
+      background: var(--danger);
+    }
+
+    .notification-dot[data-visible="true"] {
+      display: block;
+    }
+
+    .member-mini {
+      gap: 10px;
+      padding: 5px 7px 5px 5px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--panel);
+    }
+
+    .mini-avatar,
+    .profile-avatar {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      color: #0b0b0b;
+      background:
+        linear-gradient(
+          135deg,
+          #f5d897,
+          #a97b31
+        );
+      font-weight: 900;
+    }
+
+    .mini-avatar {
+      width: 34px;
+      height: 34px;
+      font-size: 13px;
+    }
+
+    .member-mini-copy {
+      display: grid;
+      min-width: 84px;
+      gap: 0;
+    }
+
+    .member-mini-copy strong {
+      max-width: 130px;
+      overflow: hidden;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .member-mini-copy span {
+      color: var(--text-muted);
+      font-size: 9px;
+      letter-spacing: 0.05em;
+    }
+
+    .content {
+      width: min(1500px, 100%);
+      margin: 0 auto;
+      padding:
+        clamp(24px, 3.6vw, 48px)
+        clamp(20px, 3.4vw, 48px)
+        70px;
+    }
+
+    .global-alert {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 15px 16px;
+      border: 1px solid rgba(255, 147, 143, 0.27);
+      border-radius: 15px;
+      color: #ffd6d3;
+      background: rgba(255, 147, 143, 0.075);
+      font-size: 13px;
+    }
+
+    .global-alert svg {
+      width: 19px;
+      height: 19px;
+      margin-top: 1px;
+    }
+
+    .global-alert strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .global-alert p {
+      margin: 0;
+      color: inherit;
+      opacity: 0.82;
+    }
+
+    .alert-close {
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .alert-close:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+      align-items: center;
+      gap: 30px;
+
+      min-height: 235px;
+      padding: clamp(28px, 4vw, 48px);
+      overflow: hidden;
+
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-xl);
+
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(215, 181, 109, 0.16),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(27, 24, 18, 0.96),
+          rgba(13, 13, 13, 0.98) 60%
+        );
+
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .hero::after {
+      position: absolute;
+      right: -80px;
+      bottom: -180px;
+      z-index: -1;
+      width: 470px;
+      height: 470px;
+      border: 1px solid rgba(215, 181, 109, 0.13);
+      border-radius: 50%;
+      content: "";
+      box-shadow:
+        0 0 0 70px rgba(215, 181, 109, 0.022),
+        0 0 0 140px rgba(215, 181, 109, 0.014);
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 12px;
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(31px, 4vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -0.045em;
+    }
+
+    .hero h1 span {
+      color: transparent;
+      background:
+        linear-gradient(
+          100deg,
+          #fff2c8,
+          #c79642
+        );
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero p {
+      max-width: 660px;
+      margin: 14px 0 0;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .hero-date {
+      margin-top: 22px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .hero-actions {
+      display: grid;
+      min-width: 190px;
+      gap: 10px;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .small-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border-radius: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+    }
+
+    .primary-button {
+      min-height: 50px;
+      padding: 12px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #090909;
+      background:
+        linear-gradient(
+          120deg,
+          #f7dda2,
+          #c59443
+        );
+      box-shadow:
+        0 14px 32px rgba(215, 181, 109, 0.16);
+    }
+
+    .secondary-button {
+      min-height: 47px;
+      padding: 11px 17px;
+      border: 1px solid var(--line);
+      color: var(--text-soft);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .small-button {
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      color: var(--text-soft);
+      background: transparent;
+      font-size: 11px;
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover,
+    .small-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .secondary-button:hover,
+    .small-button:hover {
+      color: var(--gold-light);
+      border-color: var(--line-strong);
+      background: var(--gold-soft);
+    }
+
+    .primary-button svg,
+    .secondary-button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      transform: none !important;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .metric-card {
+      position: relative;
+      min-width: 0;
+      padding: 21px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--panel-glass);
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.15);
+    }
+
+    .metric-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .metric-label {
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .metric-icon {
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border-radius: 11px;
+      color: var(--gold-light);
+      background: var(--gold-soft);
+    }
+
+    .metric-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .metric-value {
+      margin-top: 17px;
+      font-size: clamp(27px, 3vw, 37px);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+
+    .metric-note {
+      margin-top: 9px;
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(300px, 0.75fr);
+      gap: 20px;
+      margin-top: 22px;
+    }
+
+    .column {
+      display: grid;
+      align-content: start;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 23px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--panel-glass);
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.16);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 19px;
+    }
+
+    .panel-heading {
+      display: grid;
+      gap: 3px;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-heading p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .panel-link {
+      flex: 0 0 auto;
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .panel-link:hover {
+      text-decoration: underline;
+    }
+
+    .orders-list,
+    .compact-list,
+    .notification-list {
+      display: grid;
+      gap: 11px;
+    }
+
+    .order-card {
+      display: grid;
+      grid-template-columns:
+        minmax(100px, 0.3fr)
+        minmax(0, 1fr)
+        auto;
+      align-items: center;
+      gap: 18px;
+      padding: 17px;
+
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.023);
+    }
+
+    .order-date {
+      display: grid;
+      gap: 3px;
+      padding-right: 15px;
+      border-right: 1px solid var(--line);
+    }
+
+    .order-date strong {
+      font-size: 16px;
+    }
+
+    .order-date span {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .order-main {
+      min-width: 0;
+    }
+
+    .order-title-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .order-title {
+      overflow: hidden;
+      font-size: 13px;
+      font-weight: 800;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .status-badge {
+      flex: 0 0 auto;
+      padding: 3px 8px;
+      border: 1px solid rgba(129, 201, 149, 0.23);
+      border-radius: 999px;
+      color: var(--success);
+      background: rgba(129, 201, 149, 0.07);
+      font-size: 9px;
+      font-weight: 750;
+    }
+
+    .order-route {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .order-route span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .route-arrow {
+      flex: 0 0 auto;
+      color: var(--gold);
+    }
+
+    .order-actions {
+      display: grid;
+      gap: 7px;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .quick-action {
+      display: grid;
+      justify-items: center;
+      gap: 9px;
+      min-height: 108px;
+      padding: 15px 10px;
+
+      border: 1px solid var(--line);
+      border-radius: 16px;
+
+      color: var(--text-soft);
+      background: rgba(255, 255, 255, 0.022);
+      text-align: center;
+
+      transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease;
+    }
+
+    .quick-action:hover {
+      color: var(--gold-light);
+      border-color: var(--line-strong);
+      background: var(--gold-soft);
+      transform: translateY(-2px);
+    }
+
+    .quick-action-icon {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      color: var(--gold-light);
+      background: var(--gold-soft);
+    }
+
+    .quick-action-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .quick-action span {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .profile-summary {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.023);
+    }
+
+    .profile-avatar {
+      width: 52px;
+      height: 52px;
+      font-size: 17px;
+    }
+
+    .profile-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .profile-copy strong {
+      display: block;
+      overflow: hidden;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .profile-copy span {
+      display: block;
+      overflow: hidden;
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 0;
+      margin-top: 13px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 2px;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: 0;
+    }
+
+    .detail-row span:first-child {
+      color: var(--text-muted);
+    }
+
+    .detail-row span:last-child {
+      max-width: 65%;
+      overflow: hidden;
+      color: var(--text-soft);
+      text-align: right;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .compact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.021);
+    }
+
+    .compact-icon {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 37px;
+      height: 37px;
+      border-radius: 12px;
+      color: var(--gold-light);
+      background: var(--gold-soft);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .compact-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .compact-copy strong {
+      display: block;
+      overflow: hidden;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .compact-copy span {
+      display: block;
+      overflow: hidden;
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .notification-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.021);
+    }
+
+    .notification-item[data-unread="true"] {
+      border-color: var(--line-strong);
+      background: var(--gold-soft);
+    }
+
+    .notification-item[data-unread="true"]::after {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      content: "";
+    }
+
+    .notification-symbol {
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border-radius: 11px;
+      color: var(--info);
+      background: rgba(138, 180, 248, 0.08);
+    }
+
+    .notification-symbol svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .notification-copy {
+      min-width: 0;
+      padding-right: 8px;
+    }
+
+    .notification-copy strong {
+      display: block;
+      overflow: hidden;
+      font-size: 11px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .notification-copy p {
+      display: -webkit-box;
+      margin: 3px 0 0;
+      overflow: hidden;
+      color: var(--text-muted);
+      font-size: 10px;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .notification-time {
+      display: block;
+      margin-top: 6px;
+      color: #66625c;
+      font-size: 9px;
+    }
+
+    .state-box {
+      display: grid;
+      justify-items: center;
+      gap: 9px;
+      min-height: 150px;
+      padding: 28px 18px;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .state-box svg {
+      width: 31px;
+      height: 31px;
+      color: var(--gold);
+    }
+
+    .state-box strong {
+      color: var(--text-soft);
+      font-size: 12px;
+    }
+
+    .state-box p {
+      max-width: 370px;
+      margin: 0;
+      font-size: 10px;
+    }
+
+    .skeleton {
+      position: relative;
+      min-height: 70px;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .skeleton::after {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          100deg,
+          transparent,
+          rgba(255, 255, 255, 0.055),
+          transparent
+        );
+      content: "";
+      transform: translateX(-100%);
+      animation: shimmer 1.25s infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    .toast-region {
+      position: fixed;
+      right: max(20px, env(safe-area-inset-right));
+      bottom: max(20px, env(safe-area-inset-bottom));
+      z-index: 1500;
+      display: grid;
+      width: min(380px, calc(100vw - 40px));
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      padding: 14px 15px;
+      border: 1px solid var(--line-strong);
+      border-radius: 15px;
+      color: var(--text-soft);
+      background: rgba(20, 20, 20, 0.96);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      pointer-events: auto;
+      animation: toast-in 200ms ease both;
+    }
+
+    .toast[data-type="success"] {
+      border-color: rgba(129, 201, 149, 0.3);
+    }
+
+    .toast[data-type="error"] {
+      border-color: rgba(255, 147, 143, 0.3);
+    }
+
+    .toast strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .toast span {
+      display: block;
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    @keyframes toast-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      visibility: hidden;
+      background: rgba(0, 0, 0, 0.68);
+      opacity: 0;
+      transition:
+        opacity 180ms ease,
+        visibility 180ms ease;
+    }
+
+    body[data-sidebar-open="true"] .mobile-overlay {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    @media (max-width: 1180px) {
+      .metrics {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .app-shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        transform: translateX(-105%);
+        transition: transform 190ms ease;
+        box-shadow: var(--shadow);
+      }
+
+      body[data-sidebar-open="true"] .sidebar {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-button {
+        display: grid;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        min-height: 68px;
+        padding:
+          max(11px, env(safe-area-inset-top))
+          14px
+          11px;
+      }
+
+      .member-mini-copy {
+        display: none;
+      }
+
+      .member-mini {
+        padding-right: 5px;
+      }
+
+      .content {
+        padding:
+          20px
+          13px
+          55px;
+      }
+
+      .hero {
+        min-height: 0;
+        padding: 25px 21px;
+        border-radius: 23px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+        gap: 11px;
+      }
+
+      .metric-card {
+        padding: 17px;
+        border-radius: 18px;
+      }
+
+      .metric-value {
+        font-size: 29px;
+      }
+
+      .panel {
+        padding: 18px;
+        border-radius: 19px;
+      }
+
+      .quick-actions {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .order-card {
+        grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .order-date {
+        grid-template-columns: auto 1fr;
+        align-items: baseline;
+        gap: 8px;
+        padding: 0 0 10px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .order-actions {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+
+  <script>
+    /**
+     * 此設定必須與 login.html 使用相同內容。
+     * 正式部署時填入 Apps Script 與 Firebase Web App 設定。
+     */
+    window.__XUANXIANG_MEMBER_ENV__ =
+      window.__XUANXIANG_MEMBER_ENV__ || {
+        environment: "production",
+        apiUrl: "",
+        apiTimeoutMs: 15000,
+
+        firebase: {
+          apiKey: "",
+          authDomain:
+            "xuanxiang-travel.firebaseapp.com",
+          projectId:
+            "xuanxiang-travel",
+          appId: "",
+          messagingSenderId: "",
+          measurementId: ""
+        }
+      };
+  </script>
 </head>
-<body>
+
+<body
+  data-ready="false"
+  data-sidebar-open="false"
+>
+  <div
+    id="boot-screen"
+    class="boot-screen"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="boot-content">
+      <div
+        class="boot-logo"
+        aria-hidden="true"
+      >
+        玹
+      </div>
+
+      <div
+        class="boot-spinner"
+        aria-hidden="true"
+      ></div>
+
+      <div>
+        <p class="boot-title">
+          正在開啟會員專屬服務
+        </p>
+
+        <p
+          id="boot-message"
+          class="boot-message"
+        >
+          正在驗證會員身分
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="mobile-overlay"
+    class="mobile-overlay"
+    aria-hidden="true"
+  ></div>
+
+  <div class="app-shell">
+    <aside
+      id="sidebar"
+      class="sidebar"
+      aria-label="會員中心導覽"
+    >
+      <div class="brand">
+        <div
+          class="brand-mark"
+          aria-hidden="true"
+        >
+          玹
+        </div>
+
+        <div class="brand-copy">
+          <strong>玹翔旅遊</strong>
+          <span>Member Center</span>
+        </div>
+      </div>
+
+      <div class="nav-label">
+        會員中心
+      </div>
+
+      <nav>
+        <ul class="nav-list">
+          <li>
+            <a
+              class="nav-link"
+              data-route="dashboard"
+              href="./dashboard.html"
+              aria-current="page"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+              </svg>
+
+              <span>會員首頁</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="orders"
+              href="./orders.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M5 4h14v16H5z"></path>
+                <path d="M8 8h8M8 12h8M8 16h5"></path>
+              </svg>
+
+              <span>我的訂單</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="booking"
+              href="./booking.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M5 4h14v16H5z"></path>
+                <path d="M8 2v4M16 2v4M5 9h14"></path>
+                <path d="M9 14h6"></path>
+              </svg>
+
+              <span>立即預約</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="points"
+              href="./points.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="8"></circle>
+                <path d="M9 12h6M12 9v6"></path>
+              </svg>
+
+              <span>會員點數</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="coupons"
+              href="./coupons.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M4 7h16v4a2 2 0 000 4v4H4v-4a2 2 0 000-4z"></path>
+                <path d="M12 7v12"></path>
+              </svg>
+
+              <span>優惠券</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="notifications"
+              href="./notifications.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M6 16h12l-1.5-2V10a4.5 4.5 0 00-9 0v4z"></path>
+                <path d="M10 19h4"></path>
+              </svg>
+
+              <span>通知中心</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-label">
+        個人設定
+      </div>
+
+      <nav>
+        <ul class="nav-list">
+          <li>
+            <a
+              class="nav-link"
+              data-route="profile"
+              href="./profile.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="8" r="3"></circle>
+                <path d="M5 20c.7-4 3-6 7-6s6.3 2 7 6"></path>
+              </svg>
+
+              <span>會員資料</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="passengers"
+              href="./passengers.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <circle cx="9" cy="8" r="3"></circle>
+                <circle cx="17" cy="9" r="2"></circle>
+                <path d="M3 20c.6-4 2.6-6 6-6s5.4 2 6 6"></path>
+                <path d="M15 15c3 0 4.7 1.7 5 5"></path>
+              </svg>
+
+              <span>常用乘車人</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="addresses"
+              href="./addresses.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M12 21s7-5.1 7-12a7 7 0 10-14 0c0 6.9 7 12 7 12z"></path>
+                <circle cx="12" cy="9" r="2"></circle>
+              </svg>
+
+              <span>常用地址</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              data-route="settings"
+              href="./settings.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.5-2.4 1a8 8 0 00-1.8-1L14.4 3h-4.8L9.3 6a8 8 0 00-1.8 1L5 6 3 9.5 5.1 11A7 7 0 005 12a7 7 0 00.1 1L3 14.5 5 18l2.5-1a8 8 0 001.8 1l.3 3h4.8l.3-3a8 8 0 001.8-1l2.5 1 2-3.5-2.1-1.5a7 7 0 00.1-1z"></path>
+              </svg>
+
+              <span>帳號設定</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="support-card">
+          <strong>需要協助嗎？</strong>
+          <span>
+            玹翔旅遊提供 24 小時客服支援。
+          </span>
+        </div>
+
+        <button
+          id="sidebar-signout-button"
+          class="sidebar-signout"
+          type="button"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <path d="M10 4H5v16h5"></path>
+            <path d="M14 8l4 4-4 4"></path>
+            <path d="M8 12h10"></path>
+          </svg>
+
+          <span>安全登出</span>
+        </button>
+      </div>
+    </aside>
+
+    <div
+      id="mobile-overlay-button"
+      class="mobile-overlay"
+      aria-hidden="true"
+    ></div>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button
+            id="mobile-menu-button"
+            class="mobile-menu-button"
+            type="button"
+            aria-label="開啟會員選單"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16"></path>
+            </svg>
+          </button>
+
+          <div class="page-heading">
+            <strong>會員首頁</strong>
+            <span>您的旅程與會員權益總覽</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button
+            id="refresh-button"
+            class="topbar-icon-button"
+            type="button"
+            aria-label="重新整理會員資料"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M20 6v5h-5"></path>
+              <path d="M4 18v-5h5"></path>
+              <path d="M18.5 9A7 7 0 006 6.5L4 11"></path>
+              <path d="M5.5 15A7 7 0 0018 17.5l2-4.5"></path>
+            </svg>
+          </button>
+
+          <button
+            id="notification-button"
+            class="topbar-icon-button"
+            type="button"
+            aria-label="查看會員通知"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M6 16h12l-1.5-2V10a4.5 4.5 0 00-9 0v4z"></path>
+              <path d="M10 19h4"></path>
+            </svg>
+
+            <span
+              id="notification-dot"
+              class="notification-dot"
+              data-visible="false"
+            ></span>
+          </button>
+
+          <div class="member-mini">
+            <div
+              id="mini-avatar"
+              class="mini-avatar"
+              aria-hidden="true"
+            >
+              會
+            </div>
+
+            <div class="member-mini-copy">
+              <strong id="mini-name">
+                會員
+              </strong>
+
+              <span>尊榮會員</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section
+          id="global-alert"
+          class="global-alert"
+          role="alert"
+          hidden
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 8v5"></path>
+            <path d="M12 16.5h.01"></path>
+          </svg>
+
+          <div>
+            <strong id="global-alert-title">
+              系統通知
+            </strong>
+
+            <p id="global-alert-message"></p>
+          </div>
+
+          <button
+            id="global-alert-close"
+            class="alert-close"
+            type="button"
+            aria-label="關閉通知"
+          >
+            ×
+          </button>
+        </section>
+
+        <section class="hero">
+          <div>
+            <div class="hero-eyebrow">
+              Premium Member Dashboard
+            </div>
+
+            <h1>
+              <span id="hero-greeting">
+                歡迎回來
+              </span>，
+              <br>
+              您的專屬旅程已準備就緒。
+            </h1>
+
+            <p>
+              訂單進度、點數、優惠券與常用資料都已集中在此，
+              下次預約不必再從零開始填到懷疑人生。
+            </p>
+
+            <div
+              id="hero-date"
+              class="hero-date"
+            ></div>
+          </div>
+
+          <div class="hero-actions">
+            <a
+              class="primary-button"
+              data-route="booking"
+              href="./booking.html"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M5 4h14v16H5z"></path>
+                <path d="M8 2v4M16 2v4M5 9h14"></path>
+                <path d="M12 12v5M9.5 14.5h5"></path>
+              </svg>
+
+              <span>立即預約</span>
+            </a>
+
+            <a
+              class="secondary-button"
+              data-route="orders"
+              href="./orders.html"
+            >
+              查看我的訂單
+            </a>
+          </div>
+        </section>
+
+        <section
+          class="metrics"
+          aria-label="會員數據摘要"
+        >
+          <article class="metric-card">
+            <div class="metric-head">
+              <span class="metric-label">
+                累積可用點數
+              </span>
+
+              <span
+                class="metric-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <circle cx="12" cy="12" r="8"></circle>
+                  <path d="M9 12h6M12 9v6"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div
+              id="metric-points"
+              class="metric-value"
+            >
+              —
+            </div>
+
+            <div class="metric-note">
+              可於符合條件的預約折抵
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span class="metric-label">
+                可用優惠券
+              </span>
+
+              <span
+                class="metric-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M4 7h16v4a2 2 0 000 4v4H4v-4a2 2 0 000-4z"></path>
+                  <path d="M12 7v12"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div
+              id="metric-coupons"
+              class="metric-value"
+            >
+              —
+            </div>
+
+            <div class="metric-note">
+              結帳前請確認使用期限
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span class="metric-label">
+                即將出發訂單
+              </span>
+
+              <span
+                class="metric-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M5 4h14v16H5z"></path>
+                  <path d="M8 2v4M16 2v4M5 9h14"></path>
+                  <path d="M9 14h6"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div
+              id="metric-orders"
+              class="metric-value"
+            >
+              —
+            </div>
+
+            <div class="metric-note">
+              建議出發前再次確認行程
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span class="metric-label">
+                未讀通知
+              </span>
+
+              <span
+                class="metric-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M6 16h12l-1.5-2V10a4.5 4.5 0 00-9 0v4z"></path>
+                  <path d="M10 19h4"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div
+              id="metric-notifications"
+              class="metric-value"
+            >
+              —
+            </div>
+
+            <div class="metric-note">
+              包含訂單與優惠活動通知
+            </div>
+          </article>
+        </section>
+
+        <div class="dashboard-grid">
+          <div class="column">
+            <section
+              id="orders-panel"
+              class="panel"
+            >
+              <header class="panel-header">
+                <div class="panel-heading">
+                  <h2>即將出發</h2>
+                  <p>
+                    您近期需要留意的預約行程
+                  </p>
+                </div>
+
+                <a
+                  class="panel-link"
+                  data-route="orders"
+                  href="./orders.html"
+                >
+                  查看全部
+                </a>
+              </header>
+
+              <div
+                id="orders-content"
+                class="orders-list"
+              >
+                <div class="skeleton"></div>
+                <div class="skeleton"></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <header class="panel-header">
+                <div class="panel-heading">
+                  <h2>快速服務</h2>
+                  <p>
+                    常用功能一鍵抵達
+                  </p>
+                </div>
+              </header>
+
+              <div class="quick-actions">
+                <a
+                  class="quick-action"
+                  data-route="booking"
+                  href="./booking.html"
+                >
+                  <span
+                    class="quick-action-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M5 4h14v16H5z"></path>
+                      <path d="M8 2v4M16 2v4M5 9h14"></path>
+                      <path d="M12 12v5M9.5 14.5h5"></path>
+                    </svg>
+                  </span>
+
+                  <span>立即預約</span>
+                </a>
+
+                <a
+                  class="quick-action"
+                  data-route="passengers"
+                  href="./passengers.html"
+                >
+                  <span
+                    class="quick-action-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <circle cx="9" cy="8" r="3"></circle>
+                      <circle cx="17" cy="9" r="2"></circle>
+                      <path d="M3 20c.6-4 2.6-6 6-6s5.4 2 6 6"></path>
+                      <path d="M15 15c3 0 4.7 1.7 5 5"></path>
+                    </svg>
+                  </span>
+
+                  <span>常用乘車人</span>
+                </a>
+
+                <a
+                  class="quick-action"
+                  data-route="addresses"
+                  href="./addresses.html"
+                >
+                  <span
+                    class="quick-action-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M12 21s7-5.1 7-12a7 7 0 10-14 0c0 6.9 7 12 7 12z"></path>
+                      <circle cx="12" cy="9" r="2"></circle>
+                    </svg>
+                  </span>
+
+                  <span>常用地址</span>
+                </a>
+
+                <a
+                  class="quick-action"
+                  data-route="coupons"
+                  href="./coupons.html"
+                >
+                  <span
+                    class="quick-action-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M4 7h16v4a2 2 0 000 4v4H4v-4a2 2 0 000-4z"></path>
+                      <path d="M12 7v12"></path>
+                    </svg>
+                  </span>
+
+                  <span>優惠券</span>
+                </a>
+              </div>
+            </section>
+
+            <section
+              id="notifications-panel"
+              class="panel"
+            >
+              <header class="panel-header">
+                <div class="panel-heading">
+                  <h2>通知中心</h2>
+                  <p>
+                    訂單狀態與會員消息
+                  </p>
+                </div>
+
+                <a
+                  class="panel-link"
+                  data-route="notifications"
+                  href="./notifications.html"
+                >
+                  查看全部
+                </a>
+              </header>
+
+              <div
+                id="notifications-content"
+                class="notification-list"
+              >
+                <div class="skeleton"></div>
+                <div class="skeleton"></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="column">
+            <section class="panel">
+              <header class="panel-header">
+                <div class="panel-heading">
+                  <h2>會員資料摘要</h2>
+                  <p>
+                    請保持聯絡資訊正確
+                  </p>
+                </div>
+
+                <a
+                  class="panel-link"
+                  data-route="profile"
+                  href="./profile.html"
+                >
+                  編輯
+                </a>
+              </header>
+
+              <div id="profile-content">
+                <div class="skeleton"></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <header class="panel-header">
+                <div class="panel-heading">
+                  <h2>常用乘車人</h2>
+                  <p>
+                    預約時快速帶入資料
+                  </p>
+                </div>
+
+                <a
+                  class="panel-link"
+                  data-route="passengers"
+                  href="./passengers.html"
+                >
+                  管理
+                </a>
+              </header>
+
+              <div
+                id="passengers-content"
+                class="compact-list"
+              >
+                <div class="skeleton"></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <header class="panel-header">
+                <div class="panel-heading">
+                  <h2>常用地址</h2>
+                  <p>
+                    住家、公司與常用站點
+                  </p>
+                </div>
+
+                <a
+                  class="panel-link"
+                  data-route="addresses"
+                  href="./addresses.html"
+                >
+                  管理
+                </a>
+              </header>
+
+              <div
+                id="addresses-content"
+                class="compact-list"
+              >
+                <div class="skeleton"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div
+    id="toast-region"
+    class="toast-region"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script
+    src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"
+  ></script>
+
+  <script
+    src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"
+  ></script>
+
+  <script src="./assets/config.js"></script>
+  <script src="./assets/firebase.js"></script>
+  <script src="./assets/api.js"></script>
+  <script src="./assets/auth.js"></script>
+  <script src="./assets/guard.js"></script>
+
+  <script>
+    (function initializeMemberDashboard(global) {
+      "use strict";
+
+      const state = {
+        busy: false,
+        initialized: false,
+        user: null,
+        session: null,
+
+        profile: null,
+        orders: [],
+        points: null,
+        coupons: [],
+        passengers: [],
+        addresses: [],
+        notifications: [],
+
+        errors: {}
+      };
+
+      const elements = {};
+
+      function byId(id) {
+        return global.document.getElementById(id);
+      }
+
+      function cacheElements() {
+        Object.assign(elements, {
+          bootMessage:
+            byId("boot-message"),
+
+          mobileMenu:
+            byId("mobile-menu-button"),
+
+          mobileOverlay:
+            byId("mobile-overlay-button"),
+
+          refreshButton:
+            byId("refresh-button"),
+
+          notificationButton:
+            byId("notification-button"),
+
+          notificationDot:
+            byId("notification-dot"),
+
+          miniAvatar:
+            byId("mini-avatar"),
+
+          miniName:
+            byId("mini-name"),
+
+          heroGreeting:
+            byId("hero-greeting"),
+
+          heroDate:
+            byId("hero-date"),
+
+          metricPoints:
+            byId("metric-points"),
+
+          metricCoupons:
+            byId("metric-coupons"),
+
+          metricOrders:
+            byId("metric-orders"),
+
+          metricNotifications:
+            byId("metric-notifications"),
+
+          ordersContent:
+            byId("orders-content"),
+
+          profileContent:
+            byId("profile-content"),
+
+          passengersContent:
+            byId("passengers-content"),
+
+          addressesContent:
+            byId("addresses-content"),
+
+          notificationsContent:
+            byId("notifications-content"),
+
+          notificationsPanel:
+            byId("notifications-panel"),
+
+          globalAlert:
+            byId("global-alert"),
+
+          globalAlertTitle:
+            byId("global-alert-title"),
+
+          globalAlertMessage:
+            byId("global-alert-message"),
+
+          globalAlertClose:
+            byId("global-alert-close"),
+
+          sidebarSignout:
+            byId("sidebar-signout-button"),
+
+          toastRegion:
+            byId("toast-region")
+        });
+      }
+
+      function setBootMessage(message) {
+        if (elements.bootMessage) {
+          elements.bootMessage.textContent =
+            message;
+        }
+      }
+
+      function revealPage() {
+        global.document.body.setAttribute(
+          "data-ready",
+          "true"
+        );
+      }
+
+      function normalizeString(value) {
+        if (
+          value === undefined ||
+          value === null
+        ) {
+          return "";
+        }
+
+        return String(value).trim();
+      }
+
+      function isObject(value) {
+        return Boolean(
+          value &&
+          typeof value === "object" &&
+          !Array.isArray(value)
+        );
+      }
+
+      function escapeHtml(value) {
+        return normalizeString(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function pick(source, keys, fallback) {
+        if (!source || typeof source !== "object") {
+          return fallback;
+        }
+
+        for (
+          let index = 0;
+          index < keys.length;
+          index += 1
+        ) {
+          const value =
+            source[keys[index]];
+
+          if (
+            value !== undefined &&
+            value !== null &&
+            value !== ""
+          ) {
+            return value;
+          }
+        }
+
+        return fallback;
+      }
+
+      function findObject(response, keys) {
+        const candidates = [
+          response,
+          response && response.data,
+          response && response.result
+        ];
+
+        for (
+          let index = 0;
+          index < candidates.length;
+          index += 1
+        ) {
+          const candidate =
+            candidates[index];
+
+          if (!isObject(candidate)) {
+            continue;
+          }
+
+          for (
+            let keyIndex = 0;
+            keyIndex < keys.length;
+            keyIndex += 1
+          ) {
+            const value =
+              candidate[keys[keyIndex]];
+
+            if (isObject(value)) {
+              return value;
+            }
+          }
+        }
+
+        if (isObject(response)) {
+          return response;
+        }
+
+        return null;
+      }
+
+      function findArray(response, keys) {
+        const candidates = [
+          response,
+          response && response.data,
+          response && response.result
+        ];
+
+        for (
+          let index = 0;
+          index < candidates.length;
+          index += 1
+        ) {
+          const candidate =
+            candidates[index];
+
+          if (Array.isArray(candidate)) {
+            return candidate;
+          }
+
+          if (!isObject(candidate)) {
+            continue;
+          }
+
+          for (
+            let keyIndex = 0;
+            keyIndex < keys.length;
+            keyIndex += 1
+          ) {
+            const value =
+              candidate[keys[keyIndex]];
+
+            if (Array.isArray(value)) {
+              return value;
+            }
+          }
+        }
+
+        return [];
+      }
+
+      function getInitials(name) {
+        const normalized =
+          normalizeString(name);
+
+        if (!normalized) {
+          return "會";
+        }
+
+        return Array.from(normalized)
+          .slice(0, 2)
+          .join("");
+      }
+
+      function formatNumber(value) {
+        const parsed = Number(value);
+
+        if (!Number.isFinite(parsed)) {
+          return "0";
+        }
+
+        return new Intl.NumberFormat(
+          "zh-TW",
+          {
+            maximumFractionDigits: 0
+          }
+        ).format(parsed);
+      }
+
+      function formatDate(value) {
+        const normalized =
+          normalizeString(value);
+
+        if (!normalized) {
+          return "日期待確認";
+        }
+
+        const date =
+          new Date(normalized);
+
+        if (
+          Number.isNaN(date.getTime())
+        ) {
+          return normalized;
+        }
+
+        return new Intl.DateTimeFormat(
+          "zh-TW",
+          {
+            month: "2-digit",
+            day: "2-digit",
+            weekday: "short"
+          }
+        ).format(date);
+      }
+
+      function formatDateTime(value) {
+        const normalized =
+          normalizeString(value);
+
+        if (!normalized) {
+          return "";
+        }
+
+        const date =
+          new Date(normalized);
+
+        if (
+          Number.isNaN(date.getTime())
+        ) {
+          return normalized;
+        }
+
+        return new Intl.DateTimeFormat(
+          "zh-TW",
+          {
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        ).format(date);
+      }
+
+      function getErrorMessage(error) {
+        if (
+          error &&
+          typeof error.message === "string" &&
+          error.message.trim()
+        ) {
+          return error.message.trim();
+        }
+
+        return "資料暫時無法載入，請稍後再試。";
+      }
+
+      function showGlobalAlert(
+        title,
+        message
+      ) {
+        elements.globalAlertTitle
+          .textContent =
+            title || "系統通知";
+
+        elements.globalAlertMessage
+          .textContent =
+            message || "";
+
+        elements.globalAlert.hidden =
+          false;
+      }
+
+      function hideGlobalAlert() {
+        elements.globalAlert.hidden =
+          true;
+      }
+
+      function showToast(
+        type,
+        title,
+        message
+      ) {
+        const toast =
+          global.document.createElement(
+            "div"
+          );
+
+        toast.className = "toast";
+        toast.dataset.type =
+          type || "info";
+
+        toast.innerHTML = `
+          <div aria-hidden="true">
+            ${
+              type === "success"
+                ? "✓"
+                : type === "error"
+                  ? "!"
+                  : "•"
+            }
+          </div>
+
+          <div>
+            <strong>
+              ${escapeHtml(title)}
+            </strong>
+
+            <span>
+              ${escapeHtml(message)}
+            </span>
+          </div>
+        `;
+
+        elements.toastRegion.appendChild(
+          toast
+        );
+
+        global.setTimeout(
+          function removeToast() {
+            toast.remove();
+          },
+          4200
+        );
+      }
+
+      function setSidebarOpen(open) {
+        const isOpen =
+          Boolean(open);
+
+        global.document.body.setAttribute(
+          "data-sidebar-open",
+          isOpen
+            ? "true"
+            : "false"
+        );
+
+        elements.mobileMenu.setAttribute(
+          "aria-expanded",
+          isOpen
+            ? "true"
+            : "false"
+        );
+      }
+
+      function setBusy(busy) {
+        state.busy =
+          Boolean(busy);
+
+        elements.refreshButton.disabled =
+          state.busy;
+
+        elements.sidebarSignout.disabled =
+          state.busy;
+      }
+
+      function setRoutes() {
+        if (
+          !global.XuanXiangMember ||
+          typeof global.XuanXiangMember
+            .getRoute !== "function"
+        ) {
+          return;
+        }
+
+        global.document
+          .querySelectorAll("[data-route]")
+          .forEach(function setRoute(link) {
+            const route =
+              link.dataset.route;
+
+            link.href =
+              global.XuanXiangMember
+                .getRoute(route);
+          });
+      }
+
+      function getProfileName() {
+        return normalizeString(
+          pick(
+            state.profile,
+            [
+              "name",
+              "displayName",
+              "memberName",
+              "姓名",
+              "乘客姓名"
+            ],
+            pick(
+              state.user,
+              [
+                "displayName",
+                "email"
+              ],
+              "尊榮會員"
+            )
+          )
+        );
+      }
+
+      function updateIdentity() {
+        const name =
+          getProfileName();
+
+        const initials =
+          getInitials(name);
+
+        elements.miniName.textContent =
+          name || "尊榮會員";
+
+        elements.miniAvatar.textContent =
+          initials;
+
+        elements.heroGreeting.textContent =
+          name
+            ? `${name}，歡迎回來`
+            : "歡迎回來";
+      }
+
+      function renderProfile() {
+        const profile =
+          state.profile || {};
+
+        const name =
+          getProfileName();
+
+        const email =
+          normalizeString(
+            pick(
+              profile,
+              [
+                "email",
+                "Email",
+                "電子信箱"
+              ],
+              pick(
+                state.user,
+                ["email"],
+                "尚未設定"
+              )
+            )
+          );
+
+        const phone =
+          normalizeString(
+            pick(
+              profile,
+              [
+                "phone",
+                "phoneNumber",
+                "mobile",
+                "聯絡電話",
+                "手機"
+              ],
+              "尚未設定"
+            )
+          );
+
+        const memberId =
+          normalizeString(
+            pick(
+              profile,
+              [
+                "memberId",
+                "id",
+                "會員編號"
+              ],
+              pick(
+                state.session &&
+                  state.session.member,
+                [
+                  "memberId",
+                  "id",
+                  "會員編號"
+                ],
+                "系統會員"
+              )
+            )
+          );
+
+        elements.profileContent.innerHTML = `
+          <div class="profile-summary">
+            <div
+              class="profile-avatar"
+              aria-hidden="true"
+            >
+              ${escapeHtml(getInitials(name))}
+            </div>
+
+            <div class="profile-copy">
+              <strong>
+                ${escapeHtml(name || "尊榮會員")}
+              </strong>
+
+              <span>
+                ${escapeHtml(email || "尚未設定 Email")}
+              </span>
+            </div>
+          </div>
+
+          <div class="detail-list">
+            <div class="detail-row">
+              <span>會員編號</span>
+              <span>${escapeHtml(memberId)}</span>
+            </div>
+
+            <div class="detail-row">
+              <span>聯絡電話</span>
+              <span>${escapeHtml(phone)}</span>
+            </div>
+
+            <div class="detail-row">
+              <span>登入方式</span>
+              <span>
+                ${escapeHtml(
+                  pick(
+                    state.session,
+                    ["provider"],
+                    "Firebase"
+                  )
+                )}
+              </span>
+            </div>
+          </div>
+        `;
+
+        updateIdentity();
+      }
+
+      function getOrderId(order) {
+        return normalizeString(
+          pick(
+            order,
+            [
+              "orderId",
+              "id",
+              "orderNumber",
+              "訂單編號"
+            ],
+            ""
+          )
+        );
+      }
+
+      function renderOrders() {
+        if (
+          state.errors.orders &&
+          state.orders.length === 0
+        ) {
+          elements.ordersContent.innerHTML =
+            createStateHtml(
+              "error",
+              "訂單資料載入失敗",
+              state.errors.orders
+            );
+
+          return;
+        }
+
+        if (state.orders.length === 0) {
+          elements.ordersContent.innerHTML =
+            createStateHtml(
+              "empty",
+              "目前沒有即將出發的訂單",
+              "準備好下一段旅程時，可直接使用立即預約。"
+            );
+
+          return;
+        }
+
+        elements.ordersContent.innerHTML =
+          state.orders
+            .slice(0, 4)
+            .map(function renderOrder(order) {
+              const orderId =
+                getOrderId(order);
+
+              const date =
+                pick(
+                  order,
+                  [
+                    "reservationDate",
+                    "date",
+                    "serviceDate",
+                    "預約日期"
+                  ],
+                  ""
+                );
+
+              const time =
+                normalizeString(
+                  pick(
+                    order,
+                    [
+                      "reservationTime",
+                      "time",
+                      "pickupTime",
+                      "時間",
+                      "預約時間"
+                    ],
+                    "時間待確認"
+                  )
+                );
+
+              const service =
+                normalizeString(
+                  pick(
+                    order,
+                    [
+                      "service",
+                      "serviceItem",
+                      "serviceType",
+                      "服務項目"
+                    ],
+                    "專車接送"
+                  )
+                );
+
+              const pickup =
+                normalizeString(
+                  pick(
+                    order,
+                    [
+                      "pickup",
+                      "pickupAddress",
+                      "from",
+                      "上車地點"
+                    ],
+                    "上車地點待確認"
+                  )
+                );
+
+              const dropoff =
+                normalizeString(
+                  pick(
+                    order,
+                    [
+                      "dropoff",
+                      "dropoffAddress",
+                      "to",
+                      "下車地點"
+                    ],
+                    "下車地點待確認"
+                  )
+                );
+
+              const status =
+                normalizeString(
+                  pick(
+                    order,
+                    [
+                      "status",
+                      "orderStatus",
+                      "訂單狀態"
+                    ],
+                    "已預約"
+                  )
+                );
+
+              return `
+                <article class="order-card">
+                  <div class="order-date">
+                    <strong>
+                      ${escapeHtml(formatDate(date))}
+                    </strong>
+
+                    <span>
+                      ${escapeHtml(time)}
+                    </span>
+                  </div>
+
+                  <div class="order-main">
+                    <div class="order-title-row">
+                      <span class="order-title">
+                        ${escapeHtml(service)}
+                      </span>
+
+                      <span class="status-badge">
+                        ${escapeHtml(status)}
+                      </span>
+                    </div>
+
+                    <div class="order-route">
+                      <span>
+                        ${escapeHtml(pickup)}
+                      </span>
+
+                      <span
+                        class="route-arrow"
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
+
+                      <span>
+                        ${escapeHtml(dropoff)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="order-actions">
+                    <a
+                      class="small-button"
+                      href="./orders.html?orderId=${encodeURIComponent(orderId)}"
+                    >
+                      查看
+                    </a>
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      data-repeat-order-id="${escapeHtml(orderId)}"
+                      ${orderId ? "" : "disabled"}
+                    >
+                      再次預約
+                    </button>
+                  </div>
+                </article>
+              `;
+            })
+            .join("");
+      }
+
+      function getPointsBalance() {
+        if (
+          typeof state.points === "number"
+        ) {
+          return state.points;
+        }
+
+        return Number(
+          pick(
+            state.points,
+            [
+              "balance",
+              "available",
+              "availablePoints",
+              "points",
+              "total",
+              "目前點數",
+              "可用點數"
+            ],
+            0
+          )
+        ) || 0;
+      }
+
+      function isCouponAvailable(coupon) {
+        const status =
+          normalizeString(
+            pick(
+              coupon,
+              [
+                "status",
+                "couponStatus",
+                "狀態"
+              ],
+              "available"
+            )
+          ).toLowerCase();
+
+        return ![
+          "used",
+          "expired",
+          "已使用",
+          "已過期"
+        ].includes(status);
+      }
+
+      function isNotificationUnread(
+        notification
+      ) {
+        const read =
+          pick(
+            notification,
+            [
+              "read",
+              "isRead",
+              "已讀"
+            ],
+            false
+          );
+
+        const status =
+          normalizeString(
+            pick(
+              notification,
+              [
+                "status",
+                "notificationStatus",
+                "狀態"
+              ],
+              ""
+            )
+          ).toLowerCase();
+
+        return !(
+          read === true ||
+          read === "true" ||
+          status === "read" ||
+          status === "已讀"
+        );
+      }
+
+      function updateMetrics() {
+        const points =
+          getPointsBalance();
+
+        const availableCoupons =
+          state.coupons.filter(
+            isCouponAvailable
+          ).length;
+
+        const unreadNotifications =
+          state.notifications.filter(
+            isNotificationUnread
+          ).length;
+
+        elements.metricPoints.textContent =
+          formatNumber(points);
+
+        elements.metricCoupons.textContent =
+          formatNumber(availableCoupons);
+
+        elements.metricOrders.textContent =
+          formatNumber(
+            state.orders.length
+          );
+
+        elements.metricNotifications
+          .textContent =
+            formatNumber(
+              unreadNotifications
+            );
+
+        elements.notificationDot
+          .setAttribute(
+            "data-visible",
+            unreadNotifications > 0
+              ? "true"
+              : "false"
+          );
+      }
+
+      function renderPassengers() {
+        if (
+          state.errors.passengers &&
+          state.passengers.length === 0
+        ) {
+          elements.passengersContent.innerHTML =
+            createStateHtml(
+              "error",
+              "乘車人資料載入失敗",
+              state.errors.passengers
+            );
+
+          return;
+        }
+
+        if (state.passengers.length === 0) {
+          elements.passengersContent.innerHTML =
+            createStateHtml(
+              "empty",
+              "尚未建立常用乘車人",
+              "新增家人、朋友或主管資料，預約時會更快速。"
+            );
+
+          return;
+        }
+
+        elements.passengersContent.innerHTML =
+          state.passengers
+            .slice(0, 3)
+            .map(
+              function renderPassenger(
+                passenger
+              ) {
+                const name =
+                  normalizeString(
+                    pick(
+                      passenger,
+                      [
+                        "name",
+                        "passengerName",
+                        "姓名"
+                      ],
+                      "乘車人"
+                    )
+                  );
+
+                const relation =
+                  normalizeString(
+                    pick(
+                      passenger,
+                      [
+                        "relation",
+                        "type",
+                        "label",
+                        "關係",
+                        "類型"
+                      ],
+                      "常用乘車人"
+                    )
+                  );
+
+                const phone =
+                  normalizeString(
+                    pick(
+                      passenger,
+                      [
+                        "phone",
+                        "mobile",
+                        "聯絡電話"
+                      ],
+                      ""
+                    )
+                  );
+
+                return `
+                  <div class="compact-item">
+                    <div
+                      class="compact-icon"
+                      aria-hidden="true"
+                    >
+                      ${escapeHtml(getInitials(name))}
+                    </div>
+
+                    <div class="compact-copy">
+                      <strong>
+                        ${escapeHtml(name)}
+                      </strong>
+
+                      <span>
+                        ${escapeHtml(
+                          [relation, phone]
+                            .filter(Boolean)
+                            .join("・")
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                `;
+              }
+            )
+            .join("");
+      }
+
+      function renderAddresses() {
+        if (
+          state.errors.addresses &&
+          state.addresses.length === 0
+        ) {
+          elements.addressesContent.innerHTML =
+            createStateHtml(
+              "error",
+              "地址資料載入失敗",
+              state.errors.addresses
+            );
+
+          return;
+        }
+
+        if (state.addresses.length === 0) {
+          elements.addressesContent.innerHTML =
+            createStateHtml(
+              "empty",
+              "尚未建立常用地址",
+              "新增住家或公司地址，下次預約就能少打幾十個字。"
+            );
+
+          return;
+        }
+
+        elements.addressesContent.innerHTML =
+          state.addresses
+            .slice(0, 3)
+            .map(function renderAddress(
+              address
+            ) {
+              const label =
+                normalizeString(
+                  pick(
+                    address,
+                    [
+                      "label",
+                      "name",
+                      "type",
+                      "名稱",
+                      "類型"
+                    ],
+                    "常用地址"
+                  )
+                );
+
+              const fullAddress =
+                normalizeString(
+                  pick(
+                    address,
+                    [
+                      "address",
+                      "fullAddress",
+                      "地址"
+                    ],
+                    "地址尚未設定"
+                  )
+                );
+
+              return `
+                <div class="compact-item">
+                  <div
+                    class="compact-icon"
+                    aria-hidden="true"
+                  >
+                    地
+                  </div>
+
+                  <div class="compact-copy">
+                    <strong>
+                      ${escapeHtml(label)}
+                    </strong>
+
+                    <span>
+                      ${escapeHtml(fullAddress)}
+                    </span>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+      }
+
+      function renderNotifications() {
+        if (
+          state.errors.notifications &&
+          state.notifications.length === 0
+        ) {
+          elements.notificationsContent.innerHTML =
+            createStateHtml(
+              "error",
+              "通知資料載入失敗",
+              state.errors.notifications
+            );
+
+          return;
+        }
+
+        if (
+          state.notifications.length === 0
+        ) {
+          elements.notificationsContent.innerHTML =
+            createStateHtml(
+              "empty",
+              "目前沒有新通知",
+              "訂單狀態更新與會員活動會顯示在這裡。"
+            );
+
+          return;
+        }
+
+        elements.notificationsContent.innerHTML =
+          state.notifications
+            .slice(0, 4)
+            .map(
+              function renderNotification(
+                notification
+              ) {
+                const title =
+                  normalizeString(
+                    pick(
+                      notification,
+                      [
+                        "title",
+                        "subject",
+                        "標題"
+                      ],
+                      "會員通知"
+                    )
+                  );
+
+                const message =
+                  normalizeString(
+                    pick(
+                      notification,
+                      [
+                        "message",
+                        "content",
+                        "body",
+                        "內容"
+                      ],
+                      ""
+                    )
+                  );
+
+                const createdAt =
+                  pick(
+                    notification,
+                    [
+                      "createdAt",
+                      "time",
+                      "date",
+                      "建立時間"
+                    ],
+                    ""
+                  );
+
+                const unread =
+                  isNotificationUnread(
+                    notification
+                  );
+
+                return `
+                  <article
+                    class="notification-item"
+                    data-unread="${
+                      unread
+                        ? "true"
+                        : "false"
+                    }"
+                  >
+                    <div
+                      class="notification-symbol"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                      >
+                        <path d="M6 16h12l-1.5-2V10a4.5 4.5 0 00-9 0v4z"></path>
+                        <path d="M10 19h4"></path>
+                      </svg>
+                    </div>
+
+                    <div class="notification-copy">
+                      <strong>
+                        ${escapeHtml(title)}
+                      </strong>
+
+                      <p>
+                        ${escapeHtml(message)}
+                      </p>
+
+                      <span class="notification-time">
+                        ${escapeHtml(
+                          formatDateTime(createdAt)
+                        )}
+                      </span>
+                    </div>
+                  </article>
+                `;
+              }
+            )
+            .join("");
+      }
+
+      function createStateHtml(
+        type,
+        title,
+        message
+      ) {
+        return `
+          <div class="state-box">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              ${
+                type === "error"
+                  ? `
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 8v5"></path>
+                    <path d="M12 16.5h.01"></path>
+                  `
+                  : `
+                    <path d="M5 4h14v16H5z"></path>
+                    <path d="M8 9h8M8 13h8"></path>
+                  `
+              }
+            </svg>
+
+            <strong>
+              ${escapeHtml(title)}
+            </strong>
+
+            <p>
+              ${escapeHtml(message)}
+            </p>
+          </div>
+        `;
+      }
+
+      async function loadResource(
+        name,
+        request,
+        apply
+      ) {
+        try {
+          const response =
+            await request();
+
+          delete state.errors[name];
+
+          apply(response);
+
+          return {
+            ok: true,
+            name: name
+          };
+        } catch (error) {
+          state.errors[name] =
+            getErrorMessage(error);
+
+          return {
+            ok: false,
+            name: name,
+            error: error
+          };
+        }
+      }
+
+      async function loadDashboardData(
+        showSuccessToast
+      ) {
+        if (state.busy) {
+          return;
+        }
+
+        setBusy(true);
+
+        const api =
+          global.XuanXiangMemberApi;
+
+        const tasks = [
+          loadResource(
+            "profile",
+            function requestProfile() {
+              return api.profile({
+                mode: "get"
+              });
+            },
+            function applyProfile(
+              response
+            ) {
+              state.profile =
+                findObject(
+                  response,
+                  [
+                    "member",
+                    "profile",
+                    "user"
+                  ]
+                ) ||
+                state.session.member ||
+                {};
+            }
+          ),
+
+          loadResource(
+            "orders",
+            function requestOrders() {
+              return api.orders({
+                status: "upcoming",
+                limit: 10
+              });
+            },
+            function applyOrders(
+              response
+            ) {
+              state.orders =
+                findArray(
+                  response,
+                  [
+                    "orders",
+                    "items",
+                    "list"
+                  ]
+                );
+            }
+          ),
+
+          loadResource(
+            "points",
+            function requestPoints() {
+              return api.points({
+                mode: "summary"
+              });
+            },
+            function applyPoints(
+              response
+            ) {
+              state.points =
+                findObject(
+                  response,
+                  [
+                    "points",
+                    "summary",
+                    "balance"
+                  ]
+                ) ||
+                pick(
+                  response,
+                  [
+                    "points",
+                    "balance",
+                    "availablePoints"
+                  ],
+                  0
+                );
+            }
+          ),
+
+          loadResource(
+            "coupons",
+            function requestCoupons() {
+              return api.coupons({
+                status: "available",
+                limit: 20
+              });
+            },
+            function applyCoupons(
+              response
+            ) {
+              state.coupons =
+                findArray(
+                  response,
+                  [
+                    "coupons",
+                    "items",
+                    "list"
+                  ]
+                );
+            }
+          ),
+
+          loadResource(
+            "passengers",
+            function requestPassengers() {
+              return api.passengers({
+                mode: "list",
+                limit: 10
+              });
+            },
+            function applyPassengers(
+              response
+            ) {
+              state.passengers =
+                findArray(
+                  response,
+                  [
+                    "passengers",
+                    "items",
+                    "list"
+                  ]
+                );
+            }
+          ),
+
+          loadResource(
+            "addresses",
+            function requestAddresses() {
+              return api.addresses({
+                mode: "list",
+                limit: 10
+              });
+            },
+            function applyAddresses(
+              response
+            ) {
+              state.addresses =
+                findArray(
+                  response,
+                  [
+                    "addresses",
+                    "items",
+                    "list"
+                  ]
+                );
+            }
+          ),
+
+          loadResource(
+            "notifications",
+            function requestNotifications() {
+              return api.notifications({
+                limit: 10
+              });
+            },
+            function applyNotifications(
+              response
+            ) {
+              state.notifications =
+                findArray(
+                  response,
+                  [
+                    "notifications",
+                    "items",
+                    "list"
+                  ]
+                );
+            }
+          )
+        ];
+
+        const results =
+          await Promise.all(tasks);
+
+        renderProfile();
+        renderOrders();
+        renderPassengers();
+        renderAddresses();
+        renderNotifications();
+        updateMetrics();
+
+        const failed =
+          results.filter(
+            function filterFailed(
+              result
+            ) {
+              return !result.ok;
+            }
+          );
+
+        if (failed.length > 0) {
+          showGlobalAlert(
+            "部分會員資料暫時無法載入",
+            `共有 ${failed.length} 個資料區塊未成功取得，其餘功能仍可正常使用。`
+          );
+        } else {
+          hideGlobalAlert();
+        }
+
+        setBusy(false);
+
+        if (
+          showSuccessToast &&
+          failed.length === 0
+        ) {
+          showToast(
+            "success",
+            "資料已更新",
+            "會員中心已取得最新資料。"
+          );
+        }
+      }
+
+      async function handleRepeatBooking(
+        button
+      ) {
+        const orderId =
+          normalizeString(
+            button.dataset.repeatOrderId
+          );
+
+        if (!orderId || state.busy) {
+          return;
+        }
+
+        const originalText =
+          button.textContent;
+
+        button.disabled = true;
+        button.textContent =
+          "準備中";
+
+        try {
+          const response =
+            await global
+              .XuanXiangMemberApi
+              .repeatBooking(
+                orderId,
+                {}
+              );
+
+          try {
+            global.sessionStorage.setItem(
+              "xx_member_repeat_booking",
+              JSON.stringify({
+                orderId: orderId,
+                response: response,
+                createdAt: Date.now()
+              })
+            );
+          } catch (storageError) {
+            console.warn(
+              "無法儲存再次預約資料：",
+              storageError
+            );
+          }
+
+          showToast(
+            "success",
+            "再次預約資料已準備完成",
+            "正在前往預約頁面。"
+          );
+
+          const bookingRoute =
+            global.XuanXiangMember
+              .getRoute("booking");
+
+          const target =
+            new URL(
+              bookingRoute,
+              global.location.href
+            );
+
+          target.searchParams.set(
+            "repeatOrderId",
+            orderId
+          );
+
+          global.setTimeout(
+            function navigateBooking() {
+              global.location.assign(
+                target.toString()
+              );
+            },
+            450
+          );
+        } catch (error) {
+          showToast(
+            "error",
+            "再次預約未完成",
+            getErrorMessage(error)
+          );
+
+          button.disabled = false;
+          button.textContent =
+            originalText;
+        }
+      }
+
+      async function handleSignOut() {
+        if (state.busy) {
+          return;
+        }
+
+        const confirmed =
+          global.confirm(
+            "確定要安全登出會員中心嗎？"
+          );
+
+        if (!confirmed) {
+          return;
+        }
+
+        setBusy(true);
+        setBootMessage(
+          "正在安全登出會員中心"
+        );
+
+        global.document.body.setAttribute(
+          "data-ready",
+          "false"
+        );
+
+        try {
+          await global
+            .XuanXiangMemberAuth
+            .signOut();
+        } catch (error) {
+          console.warn(
+            "會員登出程序回報錯誤：",
+            error
+          );
+        }
+
+        const loginRoute =
+          global.XuanXiangMember
+            .getRoute("login");
+
+        const target =
+          new URL(
+            loginRoute,
+            global.location.href
+          );
+
+        target.searchParams.set(
+          "reason",
+          "signed-out"
+        );
+
+        global.location.replace(
+          target.toString()
+        );
+      }
+
+      function bindEvents() {
+        elements.mobileMenu.addEventListener(
+          "click",
+          function toggleSidebar() {
+            const open =
+              global.document.body
+                .getAttribute(
+                  "data-sidebar-open"
+                ) === "true";
+
+            setSidebarOpen(!open);
+          }
+        );
+
+        elements.mobileOverlay
+          .addEventListener(
+            "click",
+            function closeSidebar() {
+              setSidebarOpen(false);
+            }
+          );
+
+        global.document
+          .querySelectorAll(
+            ".nav-link"
+          )
+          .forEach(function bindNav(link) {
+            link.addEventListener(
+              "click",
+              function closeMobileNav() {
+                setSidebarOpen(false);
+              }
+            );
+          });
+
+        elements.globalAlertClose
+          .addEventListener(
+            "click",
+            hideGlobalAlert
+          );
+
+        elements.refreshButton
+          .addEventListener(
+            "click",
+            function refreshData() {
+              loadDashboardData(true);
+            }
+          );
+
+        elements.notificationButton
+          .addEventListener(
+            "click",
+            function scrollNotifications() {
+              elements.notificationsPanel
+                .scrollIntoView({
+                  behavior: "smooth",
+                  block: "start"
+                });
+            }
+          );
+
+        elements.sidebarSignout
+          .addEventListener(
+            "click",
+            handleSignOut
+          );
+
+        global.document.addEventListener(
+          "click",
+          function handleDelegatedClick(
+            event
+          ) {
+            const repeatButton =
+              event.target.closest(
+                "[data-repeat-order-id]"
+              );
+
+            if (repeatButton) {
+              handleRepeatBooking(
+                repeatButton
+              );
+            }
+          }
+        );
+
+        global.addEventListener(
+          "keydown",
+          function handleEscape(event) {
+            if (event.key === "Escape") {
+              setSidebarOpen(false);
+            }
+          }
+        );
+      }
+
+      function setCurrentDate() {
+        elements.heroDate.textContent =
+          new Intl.DateTimeFormat(
+            "zh-TW",
+            {
+              dateStyle: "full"
+            }
+          ).format(new Date());
+      }
+
+      function validateConfiguration() {
+        if (
+          !global.XuanXiangMember ||
+          typeof global.XuanXiangMember
+            .validate !== "function"
+        ) {
+          return {
+            ok: false,
+            errors: [
+              "會員設定模組尚未載入。"
+            ]
+          };
+        }
+
+        return global
+          .XuanXiangMember
+          .validate();
+      }
+
+      async function start() {
+        cacheElements();
+        bindEvents();
+        setRoutes();
+        setCurrentDate();
+
+        const validation =
+          validateConfiguration();
+
+        if (!validation.ok) {
+          revealPage();
+
+          showGlobalAlert(
+            "會員系統設定尚未完成",
+            validation.errors.join(" ")
+          );
+
+          return;
+        }
+
+        try {
+          setBootMessage(
+            "正在確認會員登入狀態"
+          );
+
+          const guard =
+            global.XuanXiangMemberGuard;
+
+          const guardResult =
+            await guard.initialize(
+              guard.MODES.PROTECTED,
+              {
+                redirect: true,
+                replace: true,
+                watch: true
+              }
+            );
+
+          if (
+            !guardResult ||
+            guardResult.allowed !== true
+          ) {
+            return;
+          }
+
+          setBootMessage(
+            "正在取得會員資料"
+          );
+
+          const authenticated =
+            await global
+              .XuanXiangMemberAuth
+              .requireAuthenticated();
+
+          state.user =
+            authenticated.user || null;
+
+          state.session =
+            authenticated.session || {};
+
+          state.profile =
+            state.session.member || null;
+
+          updateIdentity();
+          revealPage();
+
+          await loadDashboardData(false);
+
+          state.initialized = true;
+        } catch (error) {
+          revealPage();
+
+          showGlobalAlert(
+            "會員首頁暫時無法啟動",
+            getErrorMessage(error)
+          );
+        }
+      }
+
+      if (
+        global.document.readyState ===
+        "loading"
+      ) {
+        global.document.addEventListener(
+          "DOMContentLoaded",
+          start,
+          {
+            once: true
+          }
+        );
+      } else {
+        start();
+      }
+    })(globalThis);
+  </script>
 </body>
 </html>
