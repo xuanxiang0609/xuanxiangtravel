@@ -1,22 +1,24 @@
 /**
  * ======================================================
- * 玹翔旅遊 V39.2.5.2.1 Enterprise
- * MonthViewService.js｜Month View Date Core
+ * 玹翔旅遊 V39.2.5.2.2 Enterprise
+ * MonthViewService.js｜42-Day Month Grid Service
  * ======================================================
  *
  * 本階段職責：
  * 1. 標準化目標月份
  * 2. 計算月份第一天與最後一天
- * 3. 計算上一月與下一月
- * 4. 建立月份導覽資料
- * 5. 提供後續 42 格月曆模型共用的日期工具
+ * 3. 計算固定 6 × 7，共 42 天顯示範圍
+ * 4. 建立 Month View 每日標準資料
+ * 5. 建立六週資料模型
+ * 6. 標記本月、跨月、今日與週末
+ * 7. 建立月份導覽資料
  *
- * 本階段不負責：
- * - 訂單資料讀取
+ * 本階段暫不負責：
  * - SpreadsheetApp
- * - 月曆 42 格資料模型
- * - 每日統計
- * - 整月統計
+ * - 訂單讀取
+ * - 訂單日期分組
+ * - 衝突判定
+ * - 營收計算
  * - Renderer
  * - Controller
  */
@@ -25,16 +27,41 @@ var MonthViewService = (function () {
   'use strict';
 
   var VERSION =
-    'V39.2.5.2.1 Month View Date Core';
+    'V39.2.5.2.2 Month View 42-Day Grid';
 
-  var MONTH_PATTERN =
-    /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?$/;
+  var GRID_WEEK_COUNT = 6;
+  var DAYS_PER_WEEK = 7;
+  var GRID_DAY_COUNT =
+    GRID_WEEK_COUNT * DAYS_PER_WEEK;
 
   var MIN_YEAR = 1900;
   var MAX_YEAR = 2100;
 
+  var MONTH_PATTERN =
+    /^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?$/;
+
+  var WEEKDAY_LABELS = Object.freeze([
+    '星期日',
+    '星期一',
+    '星期二',
+    '星期三',
+    '星期四',
+    '星期五',
+    '星期六'
+  ]);
+
+  var SHORT_WEEKDAY_LABELS = Object.freeze([
+    '日',
+    '一',
+    '二',
+    '三',
+    '四',
+    '五',
+    '六'
+  ]);
+
   /**
-   * 取得 Month View 日期核心資料。
+   * 取得 Month View 標準資料。
    *
    * @param {Date|string|number|Object=} targetMonth
    * @return {Object}
@@ -47,13 +74,39 @@ var MonthViewService = (function () {
       var monthRange =
         getMonthRange(normalizedMonth);
 
+      var grid =
+        buildMonthGrid(normalizedMonth);
+
       return {
         ok: true,
         version: VERSION,
         targetMonth: normalizedMonth,
-        monthRange: monthRange,
+
+        monthRange: {
+          startDate:
+            monthRange.startDate,
+          endDate:
+            monthRange.endDate,
+          gridStartDate:
+            grid.gridStartDate,
+          gridEndDate:
+            grid.gridEndDate,
+          daysInMonth:
+            monthRange.daysInMonth
+        },
+
         navigation:
           buildNavigation(normalizedMonth),
+
+        summary:
+          createEmptyMonthSummary_(),
+
+        weeks:
+          grid.weeks,
+
+        days:
+          grid.days,
+
         generatedAt:
           formatDateTime_(new Date())
       };
@@ -64,6 +117,10 @@ var MonthViewService = (function () {
         targetMonth: '',
         monthRange: null,
         navigation: null,
+        summary:
+          createEmptyMonthSummary_(),
+        weeks: [],
+        days: [],
         generatedAt:
           formatDateTime_(new Date()),
         message:
@@ -73,17 +130,306 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 將輸入標準化為 YYYY-MM。
+   * 建立固定 42 天 Month Grid。
    *
-   * 支援：
-   * - undefined／null／空字串：目前月份
-   * - Date
-   * - YYYY-MM
-   * - YYYY-MM-DD
-   * - 年份數字，例如 2026
-   * - { targetMonth: '2026-07' }
-   * - { month: '2026-07' }
-   * - { date: '2026-07-15' }
+   * 週一為每週第一天。
+   *
+   * @param {Date|string|number|Object=} targetMonth
+   * @return {Object}
+   */
+  function buildMonthGrid(targetMonth) {
+    var normalizedMonth =
+      normalizeMonth(targetMonth);
+
+    var monthParts =
+      parseMonth_(normalizedMonth);
+
+    var monthStart =
+      createLocalDate_(
+        monthParts.year,
+        monthParts.month - 1,
+        1
+      );
+
+    var gridStart =
+      getMondayOnOrBefore_(monthStart);
+
+    var gridEnd =
+      addDays_(
+        gridStart,
+        GRID_DAY_COUNT - 1
+      );
+
+    var todayKey =
+      formatDate_(new Date());
+
+    var days = [];
+
+    for (
+      var index = 0;
+      index < GRID_DAY_COUNT;
+      index += 1
+    ) {
+      var date =
+        addDays_(gridStart, index);
+
+      days.push(
+        buildMonthDay_({
+          date: date,
+          index: index,
+          targetMonth:
+            normalizedMonth,
+          targetYear:
+            monthParts.year,
+          targetMonthNumber:
+            monthParts.month,
+          todayKey:
+            todayKey
+        })
+      );
+    }
+
+    var weeks =
+      buildMonthWeeks_(days);
+
+    validateMonthGrid_(
+      days,
+      weeks,
+      gridStart,
+      gridEnd
+    );
+
+    return {
+      targetMonth:
+        normalizedMonth,
+      gridStartDate:
+        formatDate_(gridStart),
+      gridEndDate:
+        formatDate_(gridEnd),
+      totalDays:
+        days.length,
+      totalWeeks:
+        weeks.length,
+      days: days,
+      weeks: weeks
+    };
+  }
+
+  /**
+   * 建立單一日期格。
+   *
+   * @param {Object} options
+   * @return {Object}
+   */
+  function buildMonthDay_(options) {
+    var date =
+      options.date;
+
+    var index =
+      options.index;
+
+    var weekday =
+      date.getDay();
+
+    var isoWeekday =
+      weekday === 0
+        ? 7
+        : weekday;
+
+    var dateKey =
+      formatDate_(date);
+
+    var monthKey =
+      formatMonth_(date);
+
+    var isCurrentMonth =
+      monthKey === options.targetMonth;
+
+    return {
+      index: index,
+
+      weekIndex:
+        Math.floor(
+          index / DAYS_PER_WEEK
+        ),
+
+      dayIndex:
+        index % DAYS_PER_WEEK,
+
+      date:
+        dateKey,
+
+      year:
+        date.getFullYear(),
+
+      month:
+        date.getMonth() + 1,
+
+      dayNumber:
+        date.getDate(),
+
+      weekday:
+        isoWeekday,
+
+      nativeWeekday:
+        weekday,
+
+      weekdayLabel:
+        WEEKDAY_LABELS[weekday],
+
+      shortWeekdayLabel:
+        SHORT_WEEKDAY_LABELS[weekday],
+
+      isCurrentMonth:
+        isCurrentMonth,
+
+      isPreviousMonth:
+        monthKey <
+        options.targetMonth,
+
+      isNextMonth:
+        monthKey >
+        options.targetMonth,
+
+      isToday:
+        dateKey === options.todayKey,
+
+      isWeekend:
+        weekday === 0 ||
+        weekday === 6,
+
+      isMonday:
+        isoWeekday === 1,
+
+      isSunday:
+        isoWeekday === 7,
+
+      monthPosition:
+        isCurrentMonth
+          ? 'current'
+          : (
+              monthKey <
+              options.targetMonth
+                ? 'previous'
+                : 'next'
+            ),
+
+      events: [],
+
+      orders: [],
+
+      summary:
+        createEmptyDaySummary_()
+    };
+  }
+
+  /**
+   * 將 42 天切成六週。
+   *
+   * @param {Object[]} days
+   * @return {Object[]}
+   */
+  function buildMonthWeeks_(days) {
+    var weeks = [];
+
+    for (
+      var weekIndex = 0;
+      weekIndex < GRID_WEEK_COUNT;
+      weekIndex += 1
+    ) {
+      var startIndex =
+        weekIndex * DAYS_PER_WEEK;
+
+      var weekDays =
+        days.slice(
+          startIndex,
+          startIndex +
+          DAYS_PER_WEEK
+        );
+
+      weeks.push({
+        weekIndex:
+          weekIndex,
+
+        weekNumber:
+          weekIndex + 1,
+
+        startDate:
+          weekDays.length
+            ? weekDays[0].date
+            : '',
+
+        endDate:
+          weekDays.length
+            ? weekDays[
+                weekDays.length - 1
+              ].date
+            : '',
+
+        days:
+          weekDays,
+
+        summary:
+          createEmptyWeekSummary_()
+      });
+    }
+
+    return weeks;
+  }
+
+  /**
+   * 計算月份第一天與最後一天。
+   *
+   * @param {Date|string|number|Object=} targetMonth
+   * @return {Object}
+   */
+  function getMonthRange(targetMonth) {
+    var normalizedMonth =
+      normalizeMonth(targetMonth);
+
+    var parts =
+      parseMonth_(normalizedMonth);
+
+    var startDate =
+      createLocalDate_(
+        parts.year,
+        parts.month - 1,
+        1
+      );
+
+    var endDate =
+      createLocalDate_(
+        parts.year,
+        parts.month,
+        0
+      );
+
+    return {
+      startDate:
+        formatDate_(startDate),
+
+      endDate:
+        formatDate_(endDate),
+
+      daysInMonth:
+        endDate.getDate(),
+
+      year:
+        parts.year,
+
+      month:
+        parts.month,
+
+      monthLabel:
+        parts.year +
+        ' 年 ' +
+        parts.month +
+        ' 月'
+    };
+  }
+
+  /**
+   * 標準化為 YYYY-MM。
    *
    * @param {Date|string|number|Object=} value
    * @return {string}
@@ -110,7 +456,10 @@ var MonthViewService = (function () {
 
       validateYear_(numericYear);
 
-      return padYear_(numericYear) + '-01';
+      return (
+        padYear_(numericYear) +
+        '-01'
+      );
     }
 
     if (
@@ -134,7 +483,9 @@ var MonthViewService = (function () {
           'month'
         )
       ) {
-        return normalizeMonth(value.month);
+        return normalizeMonth(
+          value.month
+        );
       }
 
       if (
@@ -143,7 +494,9 @@ var MonthViewService = (function () {
           'date'
         )
       ) {
-        return normalizeMonth(value.date);
+        return normalizeMonth(
+          value.date
+        );
       }
     }
 
@@ -176,6 +529,7 @@ var MonthViewService = (function () {
 
     validateYear_(year);
     validateMonth_(month);
+
     validateDateParts_(
       year,
       month,
@@ -187,52 +541,6 @@ var MonthViewService = (function () {
       '-' +
       pad2_(month)
     );
-  }
-
-  /**
-   * 計算月份第一天、最後一天。
-   *
-   * @param {Date|string|number|Object=} targetMonth
-   * @return {Object}
-   */
-  function getMonthRange(targetMonth) {
-    var normalizedMonth =
-      normalizeMonth(targetMonth);
-
-    var parts =
-      parseMonth_(normalizedMonth);
-
-    var startDate =
-      createLocalDate_(
-        parts.year,
-        parts.month,
-        1
-      );
-
-    var endDate =
-      createLocalDate_(
-        parts.year,
-        parts.month + 1,
-        0
-      );
-
-    return {
-      startDate:
-        formatDate_(startDate),
-      endDate:
-        formatDate_(endDate),
-      daysInMonth:
-        endDate.getDate(),
-      year:
-        parts.year,
-      month:
-        parts.month,
-      monthLabel:
-        parts.year +
-        ' 年 ' +
-        parts.month +
-        ' 月'
-    };
   }
 
   /**
@@ -262,7 +570,7 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 建立 Renderer 使用的月份導覽資料。
+   * 建立月份導覽資料。
    *
    * @param {Date|string|number|Object=} targetMonth
    * @return {Object}
@@ -274,13 +582,134 @@ var MonthViewService = (function () {
     return {
       previousMonth:
         getPreviousMonth(currentMonth),
+
       currentMonth:
         currentMonth,
+
       nextMonth:
         getNextMonth(currentMonth),
+
       todayMonth:
         formatMonth_(new Date())
     };
+  }
+
+  /**
+   * 建立空的每日摘要。
+   *
+   * @return {Object}
+   */
+  function createEmptyDaySummary_() {
+    return {
+      totalOrders: 0,
+      totalConflicts: 0,
+      dispatchedOrders: 0,
+      undispatchedOrders: 0,
+      totalDrivers: 0,
+      totalRevenue: 0
+    };
+  }
+
+  /**
+   * 建立空的每週摘要。
+   *
+   * @return {Object}
+   */
+  function createEmptyWeekSummary_() {
+    return {
+      totalOrders: 0,
+      totalConflicts: 0,
+      dispatchedOrders: 0,
+      undispatchedOrders: 0,
+      totalDrivers: 0,
+      totalRevenue: 0
+    };
+  }
+
+  /**
+   * 建立空的整月摘要。
+   *
+   * @return {Object}
+   */
+  function createEmptyMonthSummary_() {
+    return {
+      totalOrders: 0,
+      totalRevenue: 0,
+      totalDrivers: 0,
+      totalConflicts: 0,
+      dispatchedOrders: 0,
+      undispatchedOrders: 0
+    };
+  }
+
+  /**
+   * 找到指定日期當週星期一。
+   *
+   * @param {Date} date
+   * @return {Date}
+   */
+  function getMondayOnOrBefore_(date) {
+    var copy =
+      cloneDate_(date);
+
+    var weekday =
+      copy.getDay();
+
+    var offset =
+      weekday === 0
+        ? -6
+        : 1 - weekday;
+
+    return addDays_(copy, offset);
+  }
+
+  /**
+   * 日期加減天數。
+   *
+   * @param {Date} date
+   * @param {number} amount
+   * @return {Date}
+   */
+  function addDays_(date, amount) {
+    var result =
+      cloneDate_(date);
+
+    result.setDate(
+      result.getDate() + amount
+    );
+
+    result.setHours(
+      12,
+      0,
+      0,
+      0
+    );
+
+    return result;
+  }
+
+  /**
+   * 複製 Date。
+   *
+   * @param {Date} date
+   * @return {Date}
+   */
+  function cloneDate_(date) {
+    if (!isValidDate_(date)) {
+      throw new Error(
+        '無法複製無效日期。'
+      );
+    }
+
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      12,
+      0,
+      0,
+      0
+    );
   }
 
   /**
@@ -308,7 +737,7 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 解析標準月份。
+   * 解析 YYYY-MM。
    *
    * @param {string} normalizedMonth
    * @return {{year:number, month:number}}
@@ -341,7 +770,7 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 建立本地日期，避免 UTC 時區造成日期偏移。
+   * 建立本地中午日期，避免 UTC 日期偏移。
    *
    * @param {number} year
    * @param {number} monthIndex
@@ -374,7 +803,7 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 驗證年月日組合。
+   * 驗證日期組合。
    *
    * @param {number} year
    * @param {number} month
@@ -419,6 +848,90 @@ var MonthViewService = (function () {
   }
 
   /**
+   * 驗證 Grid 完整性。
+   *
+   * @param {Object[]} days
+   * @param {Object[]} weeks
+   * @param {Date} gridStart
+   * @param {Date} gridEnd
+   */
+  function validateMonthGrid_(
+    days,
+    weeks,
+    gridStart,
+    gridEnd
+  ) {
+    if (
+      !Array.isArray(days) ||
+      days.length !== GRID_DAY_COUNT
+    ) {
+      throw new Error(
+        'Month Grid 必須固定包含 42 天。'
+      );
+    }
+
+    if (
+      !Array.isArray(weeks) ||
+      weeks.length !== GRID_WEEK_COUNT
+    ) {
+      throw new Error(
+        'Month Grid 必須固定包含 6 週。'
+      );
+    }
+
+    for (
+      var index = 0;
+      index < weeks.length;
+      index += 1
+    ) {
+      if (
+        !Array.isArray(
+          weeks[index].days
+        ) ||
+        weeks[index].days.length !==
+          DAYS_PER_WEEK
+      ) {
+        throw new Error(
+          'Month Grid 每週必須固定包含 7 天。'
+        );
+      }
+    }
+
+    if (
+      days[0].date !==
+      formatDate_(gridStart)
+    ) {
+      throw new Error(
+        'Month Grid 起始日期不一致。'
+      );
+    }
+
+    if (
+      days[days.length - 1].date !==
+      formatDate_(gridEnd)
+    ) {
+      throw new Error(
+        'Month Grid 結束日期不一致。'
+      );
+    }
+
+    if (days[0].weekday !== 1) {
+      throw new Error(
+        'Month Grid 必須從星期一開始。'
+      );
+    }
+
+    if (
+      days[days.length - 1]
+        .weekday !== 7
+    ) {
+      throw new Error(
+        'Month Grid 必須於星期日結束。'
+      );
+    }
+  }
+
+  /**
    * 驗證年份。
    *
    * @param {number} year
@@ -457,7 +970,7 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 判斷是否為有效 Date。
+   * 是否為有效 Date。
    *
    * @param {*} value
    * @return {boolean}
@@ -500,7 +1013,7 @@ var MonthViewService = (function () {
   }
 
   /**
-   * 格式化產生時間。
+   * 格式化時間。
    *
    * @param {Date} date
    * @return {string}
@@ -517,23 +1030,11 @@ var MonthViewService = (function () {
     );
   }
 
-  /**
-   * 年份補零。
-   *
-   * @param {number} value
-   * @return {string}
-   */
   function padYear_(value) {
     return String(value)
       .padStart(4, '0');
   }
 
-  /**
-   * 兩位數補零。
-   *
-   * @param {number} value
-   * @return {string}
-   */
   function pad2_(value) {
     return String(value)
       .padStart(2, '0');
@@ -556,28 +1057,53 @@ var MonthViewService = (function () {
 
     return String(
       error ||
-      'Month View 日期服務發生未知錯誤。'
+      'Month View 服務發生未知錯誤。'
     );
   }
 
   return Object.freeze({
     VERSION: VERSION,
-    getMonthView: getMonthView,
-    normalizeMonth: normalizeMonth,
-    getMonthRange: getMonthRange,
-    buildNavigation: buildNavigation,
-    getPreviousMonth: getPreviousMonth,
-    getNextMonth: getNextMonth
+
+    GRID_WEEK_COUNT:
+      GRID_WEEK_COUNT,
+
+    DAYS_PER_WEEK:
+      DAYS_PER_WEEK,
+
+    GRID_DAY_COUNT:
+      GRID_DAY_COUNT,
+
+    getMonthView:
+      getMonthView,
+
+    normalizeMonth:
+      normalizeMonth,
+
+    getMonthRange:
+      getMonthRange,
+
+    buildMonthGrid:
+      buildMonthGrid,
+
+    buildNavigation:
+      buildNavigation,
+
+    getPreviousMonth:
+      getPreviousMonth,
+
+    getNextMonth:
+      getNextMonth
   });
 })();
 
 /**
  * Node.js 本機測試支援。
- * Google Apps Script 執行時會自動略過。
+ * Google Apps Script 執行時自動略過。
  */
 if (
   typeof module !== 'undefined' &&
   module.exports
 ) {
-  module.exports = MonthViewService;
+  module.exports =
+    MonthViewService;
 }
