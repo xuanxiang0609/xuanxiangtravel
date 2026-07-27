@@ -1,0 +1,3462 @@
+<!DOCTYPE html>
+<html
+  lang="zh-Hant"
+  data-member-guard-mode="guest"
+  data-member-guard="checking"
+>
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#090909"
+  >
+
+  <meta
+    name="description"
+    content="玹翔旅遊會員中心，提供會員訂單、點數、優惠券、常用地址及再次預約服務。"
+  >
+
+  <title>會員登入｜玹翔旅遊</title>
+
+  <link
+    rel="preconnect"
+    href="https://www.gstatic.com"
+    crossorigin
+  >
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      --bg: #070707;
+      --bg-soft: #0d0d0d;
+      --panel: rgba(17, 17, 17, 0.92);
+      --panel-strong: #111111;
+      --panel-light: #171717;
+
+      --gold: #d7b56d;
+      --gold-bright: #f2d28a;
+      --gold-deep: #9e7834;
+      --gold-muted: rgba(215, 181, 109, 0.16);
+
+      --text: #f7f3ea;
+      --text-soft: #ccc5b8;
+      --text-muted: #918b81;
+
+      --line: rgba(255, 255, 255, 0.09);
+      --line-gold: rgba(215, 181, 109, 0.34);
+
+      --success: #81c995;
+      --danger: #ff938f;
+      --warning: #f5c768;
+      --info: #8ab4f8;
+
+      --shadow:
+        0 36px 90px rgba(0, 0, 0, 0.48);
+
+      --radius-xl: 32px;
+      --radius-lg: 22px;
+      --radius-md: 15px;
+      --radius-sm: 11px;
+
+      --font:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans TC",
+        "PingFang TC",
+        "Microsoft JhengHei",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 14% 14%,
+          rgba(215, 181, 109, 0.15),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 84% 78%,
+          rgba(158, 120, 52, 0.11),
+          transparent 34%
+        ),
+        linear-gradient(
+          145deg,
+          #050505 0%,
+          #0c0c0c 48%,
+          #050505 100%
+        );
+
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: var(--gold-bright);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ambient::before,
+    .ambient::after {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      content: "";
+      filter: blur(110px);
+      opacity: 0.16;
+    }
+
+    .ambient::before {
+      top: -180px;
+      left: -130px;
+      background: var(--gold);
+    }
+
+    .ambient::after {
+      right: -180px;
+      bottom: -200px;
+      background: #7c5823;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 58px 58px;
+      mask-image:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.7),
+          transparent 88%
+        );
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #080808;
+      background: var(--gold-bright);
+      transform: translateY(-160%);
+      transition: transform 160ms ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .boot-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(5, 5, 5, 0.96);
+      transition:
+        opacity 260ms ease,
+        visibility 260ms ease;
+    }
+
+    body[data-ready="true"] .boot-screen {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .boot-content {
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .boot-logo {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      border: 1px solid var(--line-gold);
+      border-radius: 24px;
+
+      color: #090909;
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-bright),
+          var(--gold-deep)
+        );
+
+      font-size: 29px;
+      font-weight: 900;
+      box-shadow:
+        0 16px 40px rgba(215, 181, 109, 0.22);
+    }
+
+    .boot-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+    }
+
+    .boot-description {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(215, 181, 109, 0.2);
+      border-top-color: var(--gold-bright);
+      border-radius: 999px;
+      animation: spin 760ms linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .app-shell {
+      width: min(1420px, 100%);
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0 auto;
+      padding:
+        max(24px, env(safe-area-inset-top))
+        max(24px, env(safe-area-inset-right))
+        max(24px, env(safe-area-inset-bottom))
+        max(24px, env(safe-area-inset-left));
+
+      transition:
+        opacity 260ms ease,
+        transform 260ms ease;
+    }
+
+    body[data-ready="false"] .app-shell {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.08fr)
+        minmax(420px, 0.92fr);
+
+      min-height:
+        calc(
+          100vh -
+          max(48px, env(safe-area-inset-top)) -
+          max(48px, env(safe-area-inset-bottom))
+        );
+
+      min-height:
+        calc(
+          100svh -
+          max(48px, env(safe-area-inset-top)) -
+          max(48px, env(safe-area-inset-bottom))
+        );
+
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(10, 10, 10, 0.78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px);
+    }
+
+    .brand-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 680px;
+      overflow: hidden;
+      padding: clamp(38px, 5vw, 78px);
+      border-right: 1px solid var(--line);
+      isolation: isolate;
+    }
+
+    .brand-panel::before {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(215, 181, 109, 0.16),
+          rgba(15, 15, 15, 0.36) 42%,
+          rgba(4, 4, 4, 0.86)
+        );
+
+      content: "";
+    }
+
+    .brand-panel::after {
+      position: absolute;
+      right: -100px;
+      bottom: -170px;
+      z-index: -2;
+
+      width: 560px;
+      height: 560px;
+      border: 1px solid rgba(215, 181, 109, 0.16);
+      border-radius: 50%;
+
+      content: "";
+      box-shadow:
+        0 0 0 80px rgba(215, 181, 109, 0.025),
+        0 0 0 160px rgba(215, 181, 109, 0.016);
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-mark {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 19px;
+
+      color: #080808;
+      background:
+        linear-gradient(
+          135deg,
+          #f5daa0,
+          #bb8e3e
+        );
+
+      font-size: 25px;
+      font-weight: 900;
+      box-shadow:
+        0 14px 34px rgba(215, 181, 109, 0.17);
+    }
+
+    .brand-name {
+      display: grid;
+      gap: 1px;
+    }
+
+    .brand-name strong {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .brand-name span {
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-copy {
+      max-width: 650px;
+      margin: clamp(74px, 11vh, 150px) 0 58px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: var(--gold-bright);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 38px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    .brand-copy h1 {
+      max-width: 700px;
+      margin: 0;
+
+      font-size:
+        clamp(40px, 5.2vw, 76px);
+
+      font-weight: 790;
+      line-height: 1.08;
+      letter-spacing: -0.055em;
+    }
+
+    .brand-copy h1 span {
+      color: transparent;
+      background:
+        linear-gradient(
+          105deg,
+          #fff2cb,
+          #c99c4a 74%
+        );
+
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .brand-copy p {
+      max-width: 590px;
+      margin: 28px 0 0;
+      color: var(--text-soft);
+      font-size: clamp(15px, 1.5vw, 18px);
+      line-height: 1.9;
+    }
+
+    .benefit-list {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 620px;
+      margin-top: 40px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 58px;
+      padding: 14px 16px;
+
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.027);
+      backdrop-filter: blur(10px);
+    }
+
+    .benefit-icon {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      color: var(--gold-bright);
+      background: var(--gold-muted);
+    }
+
+    .benefit-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .benefit-item span {
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .service-note {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+    }
+
+    .service-note-copy {
+      display: grid;
+      gap: 3px;
+    }
+
+    .service-note-copy strong {
+      font-size: 14px;
+    }
+
+    .service-note-copy span {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .service-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+      color: var(--success);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .service-status::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+      box-shadow:
+        0 0 0 5px rgba(129, 201, 149, 0.12);
+    }
+
+    .form-panel {
+      display: grid;
+      place-items: center;
+      padding: clamp(28px, 4.5vw, 68px);
+      background:
+        linear-gradient(
+          165deg,
+          rgba(19, 19, 19, 0.95),
+          rgba(8, 8, 8, 0.98)
+        );
+    }
+
+    .auth-card {
+      width: min(100%, 500px);
+    }
+
+    .mobile-brand {
+      display: none;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 34px;
+    }
+
+    .mobile-brand .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      font-size: 21px;
+    }
+
+    .card-heading {
+      margin-bottom: 28px;
+    }
+
+    .card-heading small {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .card-heading h2 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.24;
+      letter-spacing: -0.035em;
+    }
+
+    .card-heading p {
+      margin: 10px 0 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .alert {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: start;
+      gap: 12px;
+
+      margin-bottom: 20px;
+      padding: 14px 15px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+    }
+
+    .alert[data-type="error"] {
+      color: #ffd6d3;
+      border-color: rgba(255, 147, 143, 0.28);
+      background: rgba(255, 147, 143, 0.09);
+    }
+
+    .alert[data-type="success"] {
+      color: #d8f5df;
+      border-color: rgba(129, 201, 149, 0.28);
+      background: rgba(129, 201, 149, 0.09);
+    }
+
+    .alert[data-type="warning"] {
+      color: #ffe9ad;
+      border-color: rgba(245, 199, 104, 0.28);
+      background: rgba(245, 199, 104, 0.09);
+    }
+
+    .alert[data-type="info"] {
+      color: #d8e7ff;
+      border-color: rgba(138, 180, 248, 0.28);
+      background: rgba(138, 180, 248, 0.09);
+    }
+
+    .alert-icon {
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      margin-top: 1px;
+    }
+
+    .alert-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .alert-copy {
+      display: grid;
+      gap: 3px;
+    }
+
+    .alert-copy strong {
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .alert-copy span {
+      color: inherit;
+      opacity: 0.86;
+      line-height: 1.55;
+    }
+
+    .alert-close {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+      opacity: 0.72;
+    }
+
+    .alert-close:hover {
+      background: rgba(255, 255, 255, 0.08);
+      opacity: 1;
+    }
+
+    .provider-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .provider-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+
+      min-height: 52px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+
+      transition:
+        border-color 170ms ease,
+        background 170ms ease,
+        transform 170ms ease;
+    }
+
+    .provider-button:hover:not(:disabled) {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.068);
+      transform: translateY(-1px);
+    }
+
+    .provider-button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .provider-button svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .provider-button.line-button {
+      border-color: rgba(6, 199, 85, 0.28);
+    }
+
+    .provider-button.line-button:hover:not(:disabled) {
+      border-color: rgba(6, 199, 85, 0.55);
+      background: rgba(6, 199, 85, 0.08);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+    }
+
+    .divider {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      margin: 24px 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      height: 1px;
+      background: var(--line);
+      content: "";
+    }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 6px;
+
+      margin-bottom: 24px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.028);
+    }
+
+    .mode-tab {
+      min-height: 43px;
+      padding: 9px 12px;
+      border: 0;
+      border-radius: 11px;
+
+      color: var(--text-muted);
+      background: transparent;
+
+      font-size: 13px;
+      font-weight: 750;
+      cursor: pointer;
+      transition:
+        color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease;
+    }
+
+    .mode-tab[aria-selected="true"] {
+      color: #0b0b0b;
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-bright),
+          #c89b49
+        );
+
+      box-shadow:
+        0 8px 20px rgba(215, 181, 109, 0.16);
+    }
+
+    .form-view {
+      animation:
+        view-enter 180ms ease both;
+    }
+
+    @keyframes view-enter {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 17px;
+    }
+
+    .form-grid.two-columns {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .field label {
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .text-action {
+      padding: 0;
+      border: 0;
+      color: var(--gold-bright);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .text-action:hover {
+      text-decoration: underline;
+    }
+
+    .input-shell {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      display: grid;
+      place-items: center;
+      color: var(--text-muted);
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
+    .input-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .input-shell input {
+      width: 100%;
+      min-height: 53px;
+      padding: 12px 46px 12px 46px;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      outline: none;
+
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+
+      font-size: 15px;
+      transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background 160ms ease;
+    }
+
+    .input-shell input::placeholder {
+      color: #68645d;
+    }
+
+    .input-shell input:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .input-shell input:focus {
+      border-color: var(--gold);
+      background: rgba(215, 181, 109, 0.045);
+      box-shadow:
+        0 0 0 4px rgba(215, 181, 109, 0.1);
+    }
+
+    .input-shell input[aria-invalid="true"] {
+      border-color: var(--danger);
+      box-shadow:
+        0 0 0 4px rgba(255, 147, 143, 0.08);
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      display: grid;
+      place-items: center;
+
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 0;
+      border-radius: 10px;
+
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .password-toggle:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .password-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .field-help {
+      margin: -1px 0 0;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .checkbox-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .checkbox-field input {
+      width: 17px;
+      height: 17px;
+      margin: 3px 0 0;
+      accent-color: var(--gold);
+    }
+
+    .primary-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      width: 100%;
+      min-height: 55px;
+      margin-top: 2px;
+      padding: 13px 18px;
+      overflow: hidden;
+
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius-md);
+
+      color: #0a0a0a;
+      background:
+        linear-gradient(
+          120deg,
+          #f7dda4,
+          #d2a551 52%,
+          #b98634
+        );
+
+      font-size: 15px;
+      font-weight: 850;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+
+      box-shadow:
+        0 14px 34px rgba(215, 181, 109, 0.17);
+
+      transition:
+        transform 170ms ease,
+        box-shadow 170ms ease,
+        filter 170ms ease;
+    }
+
+    .primary-button::before {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          100deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.42) 50%,
+          transparent 80%
+        );
+
+      content: "";
+      transform: translateX(-130%);
+      transition: transform 560ms ease;
+    }
+
+    .primary-button:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+      box-shadow:
+        0 18px 42px rgba(215, 181, 109, 0.23);
+    }
+
+    .primary-button:hover:not(:disabled)::before {
+      transform: translateX(130%);
+    }
+
+    .button-spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(8, 8, 8, 0.25);
+      border-top-color: #080808;
+      border-radius: 999px;
+      animation: spin 720ms linear infinite;
+    }
+
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 16px;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+
+      color: var(--text-soft);
+      background: rgba(255, 255, 255, 0.025);
+
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .secondary-button:hover:not(:disabled) {
+      border-color: var(--line-gold);
+      color: var(--gold-bright);
+      background: rgba(215, 181, 109, 0.05);
+    }
+
+    .reset-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .reset-icon {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+
+      color: var(--gold-bright);
+      background: var(--gold-muted);
+    }
+
+    .reset-icon svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .reset-heading h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .reset-heading p {
+      margin: 5px 0 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .security-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+
+      margin-top: 20px;
+      padding: 13px 14px;
+      border: 1px solid rgba(215, 181, 109, 0.12);
+      border-radius: var(--radius-md);
+
+      color: var(--text-muted);
+      background: rgba(215, 181, 109, 0.035);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .security-note svg {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      margin-top: 1px;
+      color: var(--gold);
+    }
+
+    .card-footer {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      margin-top: 26px;
+      text-align: center;
+    }
+
+    .card-footer p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .card-footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 16px;
+    }
+
+    .card-footer-links a {
+      color: var(--text-soft);
+      font-size: 11px;
+    }
+
+    .noscript {
+      max-width: 620px;
+      margin: 60px auto;
+      padding: 24px;
+      border: 1px solid rgba(255, 147, 143, 0.28);
+      border-radius: 18px;
+      color: #ffd6d3;
+      background: rgba(255, 147, 143, 0.08);
+      text-align: center;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(242, 210, 138, 0.78);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 1040px) {
+      .app-shell {
+        padding: 18px;
+      }
+
+      .auth-layout {
+        grid-template-columns: 1fr;
+        min-height: calc(100svh - 36px);
+      }
+
+      .brand-panel {
+        display: none;
+      }
+
+      .form-panel {
+        min-height: calc(100svh - 36px);
+        padding: clamp(28px, 7vw, 60px);
+      }
+
+      .mobile-brand {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app-shell {
+        padding:
+          max(10px, env(safe-area-inset-top))
+          max(10px, env(safe-area-inset-right))
+          max(10px, env(safe-area-inset-bottom))
+          max(10px, env(safe-area-inset-left));
+      }
+
+      .auth-layout {
+        min-height:
+          calc(
+            100svh -
+            max(20px, env(safe-area-inset-top)) -
+            max(20px, env(safe-area-inset-bottom))
+          );
+
+        border-radius: 24px;
+      }
+
+      .form-panel {
+        display: block;
+        min-height: inherit;
+        padding: 28px 20px 30px;
+      }
+
+      .mobile-brand {
+        margin-bottom: 30px;
+      }
+
+      .card-heading h2 {
+        font-size: 30px;
+      }
+
+      .provider-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid.two-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+
+</head>
+
+<body data-ready="false">
+  <a
+    class="skip-link"
+    href="#member-auth-main"
+  >
+    跳至會員登入
+  </a>
+
+  <div
+    class="ambient"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="grid-overlay"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    id="boot-screen"
+    class="boot-screen"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="boot-content">
+      <div
+        class="boot-logo"
+        aria-hidden="true"
+      >
+        玹
+      </div>
+
+      <div class="spinner" aria-hidden="true"></div>
+
+      <div>
+        <p class="boot-title">
+          會員中心安全驗證中
+        </p>
+
+        <p
+          id="boot-message"
+          class="boot-description"
+        >
+          正在確認登入狀態與系統設定
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="noscript">
+      會員中心需要啟用 JavaScript 才能登入。
+      請開啟瀏覽器 JavaScript 後重新整理頁面。
+    </div>
+  </noscript>
+
+  <div class="app-shell">
+    <main
+      id="member-auth-main"
+      class="auth-layout"
+    >
+      <section
+        class="brand-panel"
+        aria-labelledby="brand-title"
+      >
+        <header class="brand-header">
+          <div
+            class="brand-mark"
+            aria-hidden="true"
+          >
+            玹
+          </div>
+
+          <div class="brand-name">
+            <strong>玹翔旅遊</strong>
+            <span>Xuan Xiang Travel</span>
+          </div>
+        </header>
+
+        <div class="brand-copy">
+          <div class="eyebrow">
+            Premium Member Experience
+          </div>
+
+          <h1 id="brand-title">
+            每一段旅程，
+            <br>
+            從<span>尊榮登入</span>開始。
+          </h1>
+
+          <p>
+            集中管理您的訂單、點數、優惠券、常用乘車人與地址，
+            讓下次預約更快一步，服務品質則依然慢工出細活。
+          </p>
+
+          <div class="benefit-list">
+            <div class="benefit-item">
+              <span
+                class="benefit-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M4 7h16v12H4z"></path>
+                  <path d="M8 7V5h8v2"></path>
+                  <path d="M4 12h16"></path>
+                </svg>
+              </span>
+
+              <span>訂單進度集中管理</span>
+            </div>
+
+            <div class="benefit-item">
+              <span
+                class="benefit-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M12 3l2.2 4.5 5 .7-3.6 3.5.8 5-4.4-2.4-4.4 2.4.8-5-3.6-3.5 5-.7z"></path>
+                </svg>
+              </span>
+
+              <span>點數與優惠券查詢</span>
+            </div>
+
+            <div class="benefit-item">
+              <span
+                class="benefit-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <circle cx="12" cy="8" r="3"></circle>
+                  <path d="M5 20c.7-4 3-6 7-6s6.3 2 7 6"></path>
+                </svg>
+              </span>
+
+              <span>常用乘車人快速帶入</span>
+            </div>
+
+            <div class="benefit-item">
+              <span
+                class="benefit-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M12 21s7-5.1 7-12a7 7 0 10-14 0c0 6.9 7 12 7 12z"></path>
+                  <circle cx="12" cy="9" r="2"></circle>
+                </svg>
+              </span>
+
+              <span>常用地址一鍵選擇</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="service-note">
+          <div class="service-note-copy">
+            <strong>24 小時客服支援</strong>
+            <span>
+              機場接送・商務包車・旅遊行程
+            </span>
+          </div>
+
+          <span class="service-status">
+            專人服務中
+          </span>
+        </footer>
+      </section>
+
+      <section
+        class="form-panel"
+        aria-labelledby="auth-card-title"
+      >
+        <div class="auth-card">
+          <div class="mobile-brand">
+            <div
+              class="brand-mark"
+              aria-hidden="true"
+            >
+              玹
+            </div>
+
+            <div class="brand-name">
+              <strong>玹翔旅遊</strong>
+              <span>Member Center</span>
+            </div>
+          </div>
+
+          <header class="card-heading">
+            <small>Member Access</small>
+
+            <h2 id="auth-card-title">
+              歡迎回來
+            </h2>
+
+            <p id="auth-card-description">
+              登入會員中心，繼續您的尊榮旅程。
+            </p>
+          </header>
+
+          <div
+            id="auth-alert"
+            class="alert"
+            data-type="info"
+            role="alert"
+            aria-live="assertive"
+            hidden
+          >
+            <span
+              class="alert-icon"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.9"
+              >
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 8v5"></path>
+                <path d="M12 16.5h.01"></path>
+              </svg>
+            </span>
+
+            <span class="alert-copy">
+              <strong id="alert-title">
+                系統通知
+              </strong>
+
+              <span id="alert-message"></span>
+            </span>
+
+            <button
+              id="alert-close"
+              class="alert-close"
+              type="button"
+              aria-label="關閉通知"
+            >
+              ×
+            </button>
+          </div>
+
+          <section
+            id="provider-section"
+            aria-label="快速登入方式"
+          >
+            <div class="provider-grid">
+              <button
+                id="google-login-button"
+                class="provider-button requires-config"
+                type="button"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="#4285F4"
+                    d="M21.6 12.23c0-.77-.07-1.5-.2-2.2H12v4.17h5.38a4.6 4.6 0 01-2 3.02v2.7h3.24c1.9-1.74 2.98-4.31 2.98-7.69z"
+                  ></path>
+                  <path
+                    fill="#34A853"
+                    d="M12 22c2.7 0 4.98-.9 6.64-2.43l-3.24-2.7c-.9.6-2.05.96-3.4.96-2.61 0-4.82-1.76-5.61-4.13H3.04v2.78A10 10 0 0012 22z"
+                  ></path>
+                  <path
+                    fill="#FBBC05"
+                    d="M6.39 13.7A6 6 0 016.08 12c0-.59.1-1.16.31-1.7V7.52H3.04A10 10 0 002 12c0 1.61.39 3.14 1.04 4.48l3.35-2.78z"
+                  ></path>
+                  <path
+                    fill="#EA4335"
+                    d="M12 6.17c1.47 0 2.8.5 3.84 1.5l2.88-2.88C16.97 3.16 14.7 2 12 2a10 10 0 00-8.96 5.52l3.35 2.78C7.18 7.93 9.39 6.17 12 6.17z"
+                  ></path>
+                </svg>
+
+                <span>Google 登入</span>
+              </button>
+
+              <button
+                id="line-login-button"
+                class="provider-button line-button requires-config"
+                type="button"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="#06C755"
+                    d="M21.5 10.25c0-4.25-4.26-7.7-9.5-7.7s-9.5 3.45-9.5 7.7c0 3.81 3.38 7 7.94 7.6.31.07.73.21.84.49.1.25.06.64.03.89l-.14.84c-.04.25-.2.98.83.53 1.03-.43 5.55-3.27 7.57-5.6 1.4-1.53 1.93-3.08 1.93-4.75z"
+                  ></path>
+                  <path
+                    fill="#fff"
+                    d="M7.7 8.17H6.86a.23.23 0 00-.23.23v3.97c0 .13.1.23.23.23h.84c.13 0 .23-.1.23-.23V8.4a.23.23 0 00-.23-.23zm4.4 0h-.83a.23.23 0 00-.23.23v2.36L9.22 8.27a.25.25 0 00-.02-.03h-.01l-.02-.02h-.01l-.02-.02h-.01l-.02-.01h-.92a.23.23 0 00-.23.23v3.95c0 .13.1.23.23.23h.84c.13 0 .23-.1.23-.23v-2.35l1.82 2.49.06.06h.01l.02.01h.02l.02.01h.89c.13 0 .23-.1.23-.23V8.4a.23.23 0 00-.23-.23zm-5.87 3.43H4.5V8.4a.23.23 0 00-.23-.23h-.84a.23.23 0 00-.23.23v3.97c0 .13.1.23.23.23h2.8c.13 0 .23-.1.23-.23v-.54a.23.23 0 00-.23-.23zm7.53-3.43h2.8c.13 0 .23.1.23.23v.54c0 .13-.1.23-.23.23h-1.73v.67h1.73c.13 0 .23.1.23.23v.54c0 .13-.1.23-.23.23h-1.73v.67h1.73c.13 0 .23.1.23.23v.54c0 .13-.1.23-.23.23h-2.8a.23.23 0 01-.23-.23V8.4c0-.13.1-.23.23-.23z"
+                  ></path>
+                </svg>
+
+                <span>LINE 登入</span>
+              </button>
+            </div>
+          </section>
+
+          <div
+            id="provider-divider"
+            class="divider"
+          >
+            或使用 Email
+          </div>
+
+          <div
+            id="mode-tabs"
+            class="mode-tabs"
+            role="tablist"
+            aria-label="會員登入與註冊"
+          >
+            <button
+              id="login-tab"
+              class="mode-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="login-view"
+            >
+              會員登入
+            </button>
+
+            <button
+              id="register-tab"
+              class="mode-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="register-view"
+            >
+              免費註冊
+            </button>
+          </div>
+
+          <section
+            id="login-view"
+            class="form-view"
+            role="tabpanel"
+            aria-labelledby="login-tab"
+          >
+            <form
+              id="login-form"
+              class="form-grid"
+              novalidate
+            >
+              <div class="field">
+                <label for="login-email">
+                  Email
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                      <path d="M4 7l8 6 8-6"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="login-email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    maxlength="254"
+                    placeholder="member@example.com"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field-label-row">
+                  <label for="login-password">
+                    密碼
+                  </label>
+
+                  <button
+                    id="forgot-password-button"
+                    class="text-action"
+                    type="button"
+                  >
+                    忘記密碼？
+                  </button>
+                </div>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                      <path d="M8 10V7a4 4 0 018 0v3"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="login-password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    maxlength="128"
+                    placeholder="請輸入會員密碼"
+                    required
+                  >
+
+                  <button
+                    class="password-toggle"
+                    type="button"
+                    data-password-target="login-password"
+                    aria-label="顯示密碼"
+                    aria-pressed="false"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      aria-hidden="true"
+                    >
+                      <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"></path>
+                      <circle cx="12" cy="12" r="2.5"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <button
+                id="login-submit-button"
+                class="primary-button requires-config"
+                type="submit"
+              >
+                <span class="button-label">
+                  登入會員中心
+                </span>
+
+                <span
+                  class="button-spinner"
+                  aria-hidden="true"
+                  hidden
+                ></span>
+              </button>
+            </form>
+          </section>
+
+          <section
+            id="register-view"
+            class="form-view"
+            role="tabpanel"
+            aria-labelledby="register-tab"
+            hidden
+          >
+            <form
+              id="register-form"
+              class="form-grid two-columns"
+              novalidate
+            >
+              <div class="field">
+                <label for="register-name">
+                  會員姓名
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <circle cx="12" cy="8" r="3"></circle>
+                      <path d="M5 20c.7-4 3-6 7-6s6.3 2 7 6"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="register-name"
+                    name="displayName"
+                    type="text"
+                    autocomplete="name"
+                    maxlength="50"
+                    placeholder="請輸入姓名"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="register-phone">
+                  聯絡電話
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M7 3h3l1.2 4-2 1.5a15 15 0 006.3 6.3l1.5-2L21 14v3c0 2.2-1.8 4-4 4C9.3 21 3 14.7 3 7c0-2.2 1.8-4 4-4z"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="register-phone"
+                    name="phone"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    maxlength="24"
+                    placeholder="09xx-xxx-xxx"
+                  >
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="register-email">
+                  Email
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                      <path d="M4 7l8 6 8-6"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="register-email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    maxlength="254"
+                    placeholder="member@example.com"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="register-password">
+                  設定密碼
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                      <path d="M8 10V7a4 4 0 018 0v3"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="register-password"
+                    name="password"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    maxlength="128"
+                    placeholder="至少 6 個字元"
+                    required
+                  >
+
+                  <button
+                    class="password-toggle"
+                    type="button"
+                    data-password-target="register-password"
+                    aria-label="顯示密碼"
+                    aria-pressed="false"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      aria-hidden="true"
+                    >
+                      <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"></path>
+                      <circle cx="12" cy="12" r="2.5"></circle>
+                    </svg>
+                  </button>
+                </div>
+
+                <p class="field-help">
+                  建議混合英文、數字與符號。
+                </p>
+              </div>
+
+              <div class="field">
+                <label for="register-password-confirm">
+                  確認密碼
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M9 12l2 2 4-4"></path>
+                      <path d="M12 3l7 3v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6z"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="register-password-confirm"
+                    name="passwordConfirm"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    maxlength="128"
+                    placeholder="請再次輸入密碼"
+                    required
+                  >
+
+                  <button
+                    class="password-toggle"
+                    type="button"
+                    data-password-target="register-password-confirm"
+                    aria-label="顯示密碼"
+                    aria-pressed="false"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      aria-hidden="true"
+                    >
+                      <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"></path>
+                      <circle cx="12" cy="12" r="2.5"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <label class="checkbox-field full">
+                <input
+                  id="register-terms"
+                  type="checkbox"
+                  required
+                >
+
+                <span>
+                  我已閱讀並同意
+                  <a href="../terms.html">
+                    服務條款
+                  </a>
+                  與
+                  <a href="../privacy.html">
+                    隱私權政策
+                  </a>
+                  。
+                </span>
+              </label>
+
+              <button
+                id="register-submit-button"
+                class="primary-button requires-config full"
+                type="submit"
+              >
+                <span class="button-label">
+                  建立會員帳號
+                </span>
+
+                <span
+                  class="button-spinner"
+                  aria-hidden="true"
+                  hidden
+                ></span>
+              </button>
+            </form>
+          </section>
+
+          <section
+            id="reset-view"
+            class="form-view"
+            aria-labelledby="reset-title"
+            hidden
+          >
+            <div class="reset-heading">
+              <span
+                class="reset-icon"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M4 4v6h6"></path>
+                  <path d="M5.6 15a8 8 0 101.2-8.2L4 10"></path>
+                  <path d="M12 8v4l2.5 1.5"></path>
+                </svg>
+              </span>
+
+              <div>
+                <h3 id="reset-title">
+                  重設會員密碼
+                </h3>
+
+                <p>
+                  輸入註冊 Email，我們將寄出密碼重設信件。
+                </p>
+              </div>
+            </div>
+
+            <form
+              id="reset-form"
+              class="form-grid"
+              novalidate
+            >
+              <div class="field">
+                <label for="reset-email">
+                  註冊 Email
+                </label>
+
+                <div class="input-shell">
+                  <span
+                    class="input-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                      <path d="M4 7l8 6 8-6"></path>
+                    </svg>
+                  </span>
+
+                  <input
+                    id="reset-email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    maxlength="254"
+                    placeholder="member@example.com"
+                    required
+                  >
+                </div>
+              </div>
+
+              <button
+                id="reset-submit-button"
+                class="primary-button requires-config"
+                type="submit"
+              >
+                <span class="button-label">
+                  寄送重設信件
+                </span>
+
+                <span
+                  class="button-spinner"
+                  aria-hidden="true"
+                  hidden
+                ></span>
+              </button>
+
+              <button
+                id="reset-back-button"
+                class="secondary-button"
+                type="button"
+              >
+                返回會員登入
+              </button>
+            </form>
+          </section>
+
+          <div class="security-note">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M12 3l7 3v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+
+            <span>
+              登入憑證由 Firebase Authentication 安全管理；
+              本頁不會將您的密碼保存於瀏覽器或傳送至一般試算表。
+            </span>
+          </div>
+
+          <footer class="card-footer">
+            <div class="card-footer-links">
+              <a href="../index.html">
+                返回玹翔旅遊首頁
+              </a>
+
+              <a href="../privacy.html">
+                隱私權政策
+              </a>
+
+              <a href="../terms.html">
+                服務條款
+              </a>
+            </div>
+
+            <p>
+              © <span id="copyright-year"></span>
+              玹翔旅遊．用心、貼心、深得你心
+            </p>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script
+    src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"
+  ></script>
+
+  <script
+    src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"
+  ></script>
+
+  <script src="./assets/env.js"></script>
+  <script src="./assets/config.js"></script>
+  <script src="./assets/firebase.js"></script>
+  <script src="./assets/api.js"></script>
+  <script src="./assets/auth.js"></script>
+  <script src="./assets/guard.js"></script>
+
+  <script>
+    (function initializeMemberLoginPage(global) {
+      "use strict";
+
+      const state = {
+        mode: "login",
+        busy: false,
+        configured: false,
+        callbackHandled: false
+      };
+
+      const elements = {};
+
+      function getElement(id) {
+        return global.document.getElementById(id);
+      }
+
+      function cacheElements() {
+        Object.assign(elements, {
+          bootMessage:
+            getElement("boot-message"),
+
+          alert:
+            getElement("auth-alert"),
+
+          alertTitle:
+            getElement("alert-title"),
+
+          alertMessage:
+            getElement("alert-message"),
+
+          alertClose:
+            getElement("alert-close"),
+
+          title:
+            getElement("auth-card-title"),
+
+          description:
+            getElement("auth-card-description"),
+
+          providerSection:
+            getElement("provider-section"),
+
+          providerDivider:
+            getElement("provider-divider"),
+
+          modeTabs:
+            getElement("mode-tabs"),
+
+          loginTab:
+            getElement("login-tab"),
+
+          registerTab:
+            getElement("register-tab"),
+
+          loginView:
+            getElement("login-view"),
+
+          registerView:
+            getElement("register-view"),
+
+          resetView:
+            getElement("reset-view"),
+
+          loginForm:
+            getElement("login-form"),
+
+          registerForm:
+            getElement("register-form"),
+
+          resetForm:
+            getElement("reset-form"),
+
+          loginEmail:
+            getElement("login-email"),
+
+          loginPassword:
+            getElement("login-password"),
+
+          registerName:
+            getElement("register-name"),
+
+          registerPhone:
+            getElement("register-phone"),
+
+          registerEmail:
+            getElement("register-email"),
+
+          registerPassword:
+            getElement("register-password"),
+
+          registerPasswordConfirm:
+            getElement(
+              "register-password-confirm"
+            ),
+
+          registerTerms:
+            getElement("register-terms"),
+
+          resetEmail:
+            getElement("reset-email"),
+
+          loginSubmit:
+            getElement("login-submit-button"),
+
+          registerSubmit:
+            getElement(
+              "register-submit-button"
+            ),
+
+          resetSubmit:
+            getElement("reset-submit-button"),
+
+          resetBack:
+            getElement("reset-back-button"),
+
+          forgotPassword:
+            getElement(
+              "forgot-password-button"
+            ),
+
+          googleButton:
+            getElement(
+              "google-login-button"
+            ),
+
+          lineButton:
+            getElement(
+              "line-login-button"
+            ),
+
+          copyrightYear:
+            getElement("copyright-year")
+        });
+      }
+
+      function setBootMessage(message) {
+        if (elements.bootMessage) {
+          elements.bootMessage.textContent =
+            message;
+        }
+      }
+
+      function revealPage() {
+        global.document.body.setAttribute(
+          "data-ready",
+          "true"
+        );
+      }
+
+      function showAlert(
+        type,
+        title,
+        message
+      ) {
+        elements.alert.dataset.type =
+          type || "info";
+
+        elements.alertTitle.textContent =
+          title || "系統通知";
+
+        elements.alertMessage.textContent =
+          message || "";
+
+        elements.alert.hidden = false;
+      }
+
+      function hideAlert() {
+        elements.alert.hidden = true;
+        elements.alertMessage.textContent = "";
+      }
+
+      function getErrorMessage(error) {
+        if (!error) {
+          return "系統發生未知錯誤，請稍後再試。";
+        }
+
+        if (
+          typeof error.message === "string" &&
+          error.message.trim()
+        ) {
+          return error.message.trim();
+        }
+
+        return "登入程序暫時無法完成，請稍後再試。";
+      }
+
+      function markInvalid(input, invalid) {
+        if (!input) {
+          return;
+        }
+
+        input.setAttribute(
+          "aria-invalid",
+          invalid ? "true" : "false"
+        );
+      }
+
+      function clearValidation() {
+        global.document
+          .querySelectorAll(
+            'input[aria-invalid="true"]'
+          )
+          .forEach(function clearInput(input) {
+            input.removeAttribute(
+              "aria-invalid"
+            );
+          });
+      }
+
+      function validateRequiredInput(
+        input,
+        message
+      ) {
+        const value =
+          input && input.value
+            ? input.value.trim()
+            : "";
+
+        const valid = Boolean(value);
+
+        markInvalid(input, !valid);
+
+        if (!valid) {
+          throw new Error(message);
+        }
+
+        return value;
+      }
+
+      function validateEmailInput(input) {
+        const email =
+          validateRequiredInput(
+            input,
+            "請輸入 Email。"
+          ).toLowerCase();
+
+        const valid =
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            email
+          );
+
+        markInvalid(input, !valid);
+
+        if (!valid) {
+          throw new Error(
+            "Email 格式不正確。"
+          );
+        }
+
+        return email;
+      }
+
+      function setButtonBusy(
+        button,
+        busy,
+        label
+      ) {
+        if (!button) {
+          return;
+        }
+
+        const labelElement =
+          button.querySelector(
+            ".button-label"
+          );
+
+        const spinner =
+          button.querySelector(
+            ".button-spinner"
+          );
+
+        if (labelElement && label) {
+          if (
+            !button.dataset.originalLabel
+          ) {
+            button.dataset.originalLabel =
+              labelElement.textContent.trim();
+          }
+
+          labelElement.textContent =
+            busy
+              ? label
+              : button.dataset.originalLabel;
+        }
+
+        if (spinner) {
+          spinner.hidden = !busy;
+        }
+
+        button.disabled =
+          busy || !state.configured;
+      }
+
+      function setBusy(
+        busy,
+        button,
+        busyLabel
+      ) {
+        state.busy = Boolean(busy);
+
+        global.document
+          .querySelectorAll(
+            "button, input"
+          )
+          .forEach(function toggleControl(
+            control
+          ) {
+            if (
+              control.classList.contains(
+                "requires-config"
+              )
+            ) {
+              control.disabled =
+                state.busy ||
+                !state.configured;
+            } else if (
+              control.tagName === "BUTTON"
+            ) {
+              control.disabled =
+                state.busy;
+            } else {
+              control.disabled =
+                state.busy;
+            }
+          });
+
+        if (button) {
+          setButtonBusy(
+            button,
+            state.busy,
+            busyLabel
+          );
+        }
+      }
+
+      function updateHeading(mode) {
+        const headings = {
+          login: {
+            title: "歡迎回來",
+            description:
+              "登入會員中心，繼續您的尊榮旅程。"
+          },
+
+          register: {
+            title: "加入會員",
+            description:
+              "建立會員帳號，讓每一次預約更從容。"
+          },
+
+          reset: {
+            title: "找回密碼",
+            description:
+              "安全重設密碼，很快就能重新啟程。"
+          }
+        };
+
+        const content =
+          headings[mode] ||
+          headings.login;
+
+        elements.title.textContent =
+          content.title;
+
+        elements.description.textContent =
+          content.description;
+      }
+
+      function switchMode(mode) {
+        if (state.busy) {
+          return;
+        }
+
+        const normalizedMode =
+          ["login", "register", "reset"]
+            .includes(mode)
+            ? mode
+            : "login";
+
+        state.mode = normalizedMode;
+
+        const showingReset =
+          normalizedMode === "reset";
+
+        elements.modeTabs.hidden =
+          showingReset;
+
+        elements.providerSection.hidden =
+          showingReset;
+
+        elements.providerDivider.hidden =
+          showingReset;
+
+        elements.loginView.hidden =
+          normalizedMode !== "login";
+
+        elements.registerView.hidden =
+          normalizedMode !== "register";
+
+        elements.resetView.hidden =
+          normalizedMode !== "reset";
+
+        elements.loginTab.setAttribute(
+          "aria-selected",
+          normalizedMode === "login"
+            ? "true"
+            : "false"
+        );
+
+        elements.registerTab.setAttribute(
+          "aria-selected",
+          normalizedMode === "register"
+            ? "true"
+            : "false"
+        );
+
+        updateHeading(normalizedMode);
+        clearValidation();
+        hideAlert();
+
+        global.requestAnimationFrame(
+          function focusActiveField() {
+            if (normalizedMode === "login") {
+              elements.loginEmail.focus();
+            }
+
+            if (
+              normalizedMode === "register"
+            ) {
+              elements.registerName.focus();
+            }
+
+            if (normalizedMode === "reset") {
+              elements.resetEmail.value =
+                elements.loginEmail.value ||
+                elements.registerEmail.value ||
+                "";
+
+              elements.resetEmail.focus();
+            }
+          }
+        );
+      }
+
+      function applyFeatureFlags() {
+        const config =
+          global.XuanXiangMemberConfig;
+
+        const features =
+          config &&
+          config.features
+            ? config.features
+            : {};
+
+        elements.googleButton.hidden =
+          features.googleLogin === false;
+
+        elements.lineButton.hidden =
+          features.lineLogin === false;
+
+        elements.loginTab.hidden =
+          features.emailLogin === false;
+
+        elements.registerTab.hidden =
+          features.emailLogin === false;
+
+        if (
+          features.googleLogin === false &&
+          features.lineLogin === false
+        ) {
+          elements.providerSection.hidden =
+            true;
+
+          elements.providerDivider.hidden =
+            true;
+        }
+      }
+
+      function validateRuntimeConfig() {
+        if (
+          !global.XuanXiangMember ||
+          typeof global.XuanXiangMember
+            .validate !== "function"
+        ) {
+          return {
+            ok: false,
+            errors: [
+              "會員中心設定模組尚未載入。"
+            ],
+            warnings: []
+          };
+        }
+
+        return global.XuanXiangMember
+          .validate();
+      }
+
+      function disableConfigurationActions() {
+        global.document
+          .querySelectorAll(
+            ".requires-config"
+          )
+          .forEach(function disableAction(
+            action
+          ) {
+            action.disabled = true;
+          });
+      }
+
+      function enableConfigurationActions() {
+        global.document
+          .querySelectorAll(
+            ".requires-config"
+          )
+          .forEach(function enableAction(
+            action
+          ) {
+            action.disabled = false;
+          });
+      }
+
+      function getCleanReturnUrl() {
+        const url =
+          new URL(global.location.href);
+
+        [
+          "customToken",
+          "firebaseCustomToken",
+          "state",
+          "provider",
+          "error",
+          "error_description"
+        ].forEach(function removeParameter(
+          key
+        ) {
+          url.searchParams.delete(key);
+        });
+
+        return url.toString();
+      }
+
+      function redirectAfterSuccess() {
+        setBootMessage(
+          "登入成功，正在前往會員中心"
+        );
+
+        global.document.body.setAttribute(
+          "data-ready",
+          "false"
+        );
+
+        global.XuanXiangMemberGuard
+          .redirectAfterLogin({
+            navigate: true,
+            replace: true
+          });
+      }
+
+      async function handleEmailLogin(event) {
+        event.preventDefault();
+
+        hideAlert();
+        clearValidation();
+
+        try {
+          const email =
+            validateEmailInput(
+              elements.loginEmail
+            );
+
+          const password =
+            validateRequiredInput(
+              elements.loginPassword,
+              "請輸入會員密碼。"
+            );
+
+          setBusy(
+            true,
+            elements.loginSubmit,
+            "安全登入中"
+          );
+
+          await global
+            .XuanXiangMemberAuth
+            .signInWithEmail(
+              email,
+              password
+            );
+
+          showAlert(
+            "success",
+            "登入成功",
+            "身分驗證完成，正在前往會員中心。"
+          );
+
+          redirectAfterSuccess();
+        } catch (error) {
+          showAlert(
+            "error",
+            "登入未完成",
+            getErrorMessage(error)
+          );
+
+          setBusy(
+            false,
+            elements.loginSubmit
+          );
+        }
+      }
+
+      async function handleRegister(event) {
+        event.preventDefault();
+
+        hideAlert();
+        clearValidation();
+
+        try {
+          const displayName =
+            validateRequiredInput(
+              elements.registerName,
+              "請輸入會員姓名。"
+            );
+
+          const phone =
+            elements.registerPhone.value
+              .trim();
+
+          const email =
+            validateEmailInput(
+              elements.registerEmail
+            );
+
+          const password =
+            validateRequiredInput(
+              elements.registerPassword,
+              "請設定會員密碼。"
+            );
+
+          const passwordConfirm =
+            validateRequiredInput(
+              elements
+                .registerPasswordConfirm,
+              "請再次輸入會員密碼。"
+            );
+
+          if (password.length < 6) {
+            markInvalid(
+              elements.registerPassword,
+              true
+            );
+
+            throw new Error(
+              "密碼至少需要 6 個字元。"
+            );
+          }
+
+          if (
+            password !==
+            passwordConfirm
+          ) {
+            markInvalid(
+              elements
+                .registerPasswordConfirm,
+              true
+            );
+
+            throw new Error(
+              "兩次輸入的密碼不一致。"
+            );
+          }
+
+          if (
+            !elements.registerTerms
+              .checked
+          ) {
+            throw new Error(
+              "請先同意服務條款與隱私權政策。"
+            );
+          }
+
+          setBusy(
+            true,
+            elements.registerSubmit,
+            "建立會員中"
+          );
+
+          await global
+            .XuanXiangMemberAuth
+            .registerWithEmail({
+              displayName:
+                displayName,
+              phone: phone,
+              email: email,
+              password: password,
+              source:
+                "member-login-page"
+            });
+
+          showAlert(
+            "success",
+            "註冊完成",
+            "會員帳號建立成功，正在前往會員中心。"
+          );
+
+          redirectAfterSuccess();
+        } catch (error) {
+          showAlert(
+            "error",
+            "註冊未完成",
+            getErrorMessage(error)
+          );
+
+          setBusy(
+            false,
+            elements.registerSubmit
+          );
+        }
+      }
+
+      async function handlePasswordReset(
+        event
+      ) {
+        event.preventDefault();
+
+        hideAlert();
+        clearValidation();
+
+        try {
+          const email =
+            validateEmailInput(
+              elements.resetEmail
+            );
+
+          setBusy(
+            true,
+            elements.resetSubmit,
+            "寄送信件中"
+          );
+
+          const result =
+            await global
+              .XuanXiangMemberAuth
+              .sendPasswordReset(email);
+
+          setBusy(
+            false,
+            elements.resetSubmit
+          );
+
+          switchMode("login");
+
+          elements.loginEmail.value =
+            email;
+
+          showAlert(
+            "success",
+            "重設信件已寄出",
+            result.message ||
+              "請前往信箱完成密碼重設。"
+          );
+        } catch (error) {
+          showAlert(
+            "error",
+            "無法寄送重設信件",
+            getErrorMessage(error)
+          );
+
+          setBusy(
+            false,
+            elements.resetSubmit
+          );
+        }
+      }
+
+      function isMobileDevice() {
+        return (
+          /Android|iPhone|iPad|iPod/i
+            .test(
+              global.navigator
+                .userAgent || ""
+            ) ||
+          global.matchMedia(
+            "(max-width: 760px)"
+          ).matches
+        );
+      }
+
+      async function handleGoogleLogin() {
+        hideAlert();
+
+        try {
+          setBusy(
+            true,
+            elements.googleButton
+          );
+
+          const mode =
+            isMobileDevice()
+              ? "redirect"
+              : "popup";
+
+          const result =
+            await global
+              .XuanXiangMemberAuth
+              .signInWithGoogle({
+                mode: mode,
+                prompt:
+                  "select_account"
+              });
+
+          if (
+            result &&
+            result.redirecting
+          ) {
+            setBootMessage(
+              "正在前往 Google 安全登入"
+            );
+
+            global.document.body
+              .setAttribute(
+                "data-ready",
+                "false"
+              );
+
+            return;
+          }
+
+          redirectAfterSuccess();
+        } catch (error) {
+          const firebaseCode =
+            error &&
+            error.firebaseCode
+              ? error.firebaseCode
+              : "";
+
+          if (
+            firebaseCode ===
+              "auth/popup-blocked" ||
+            firebaseCode ===
+              "auth/cancelled-popup-request"
+          ) {
+            try {
+              await global
+                .XuanXiangMemberAuth
+                .signInWithGoogle({
+                  mode: "redirect"
+                });
+
+              return;
+            } catch (
+              redirectError
+            ) {
+              showAlert(
+                "error",
+                "Google 登入未完成",
+                getErrorMessage(
+                  redirectError
+                )
+              );
+            }
+          } else {
+            showAlert(
+              "error",
+              "Google 登入未完成",
+              getErrorMessage(error)
+            );
+          }
+
+          setBusy(
+            false,
+            elements.googleButton
+          );
+        }
+      }
+
+      function handleLineLogin() {
+        hideAlert();
+
+        try {
+          setBusy(
+            true,
+            elements.lineButton
+          );
+
+          setBootMessage(
+            "正在前往 LINE 安全登入"
+          );
+
+          global.document.body.setAttribute(
+            "data-ready",
+            "false"
+          );
+
+          global.XuanXiangMemberAuth
+            .beginLineLogin({
+              navigate: true,
+              returnUrl:
+                getCleanReturnUrl(),
+              action:
+                "lineLoginStart"
+            });
+        } catch (error) {
+          revealPage();
+
+          showAlert(
+            "error",
+            "LINE 登入未完成",
+            getErrorMessage(error)
+          );
+
+          setBusy(
+            false,
+            elements.lineButton
+          );
+        }
+      }
+
+      async function processLoginCallbacks() {
+        const currentUrl =
+          new URL(global.location.href);
+
+        const hasLineCallback =
+          currentUrl.searchParams.has(
+            "customToken"
+          ) ||
+          currentUrl.searchParams.has(
+            "firebaseCustomToken"
+          ) ||
+          currentUrl.searchParams.get(
+            "provider"
+          ) === "line";
+
+        if (hasLineCallback) {
+          setBootMessage(
+            "正在完成 LINE 身分驗證"
+          );
+
+          const result =
+            await global
+              .XuanXiangMemberAuth
+              .completeLineLogin(
+                global.location.href
+              );
+
+          if (result) {
+            state.callbackHandled = true;
+            redirectAfterSuccess();
+            return true;
+          }
+        }
+
+        setBootMessage(
+          "正在確認 Google 登入結果"
+        );
+
+        const googleResult =
+          await global
+            .XuanXiangMemberAuth
+            .completeGoogleRedirect();
+
+        if (
+          googleResult &&
+          googleResult.session
+        ) {
+          state.callbackHandled = true;
+          redirectAfterSuccess();
+          return true;
+        }
+
+        return false;
+      }
+
+      function bindPasswordToggles() {
+        global.document
+          .querySelectorAll(
+            "[data-password-target]"
+          )
+          .forEach(
+            function bindToggle(button) {
+              button.addEventListener(
+                "click",
+                function togglePassword() {
+                  const targetId =
+                    button.dataset
+                      .passwordTarget;
+
+                  const input =
+                    getElement(targetId);
+
+                  if (!input) {
+                    return;
+                  }
+
+                  const visible =
+                    input.type === "text";
+
+                  input.type =
+                    visible
+                      ? "password"
+                      : "text";
+
+                  button.setAttribute(
+                    "aria-pressed",
+                    visible
+                      ? "false"
+                      : "true"
+                  );
+
+                  button.setAttribute(
+                    "aria-label",
+                    visible
+                      ? "顯示密碼"
+                      : "隱藏密碼"
+                  );
+                }
+              );
+            }
+          );
+      }
+
+      function bindEvents() {
+        elements.alertClose
+          .addEventListener(
+            "click",
+            hideAlert
+          );
+
+        elements.loginTab
+          .addEventListener(
+            "click",
+            function showLogin() {
+              switchMode("login");
+            }
+          );
+
+        elements.registerTab
+          .addEventListener(
+            "click",
+            function showRegister() {
+              switchMode("register");
+            }
+          );
+
+        elements.forgotPassword
+          .addEventListener(
+            "click",
+            function showReset() {
+              switchMode("reset");
+            }
+          );
+
+        elements.resetBack
+          .addEventListener(
+            "click",
+            function returnToLogin() {
+              switchMode("login");
+            }
+          );
+
+        elements.loginForm
+          .addEventListener(
+            "submit",
+            handleEmailLogin
+          );
+
+        elements.registerForm
+          .addEventListener(
+            "submit",
+            handleRegister
+          );
+
+        elements.resetForm
+          .addEventListener(
+            "submit",
+            handlePasswordReset
+          );
+
+        elements.googleButton
+          .addEventListener(
+            "click",
+            handleGoogleLogin
+          );
+
+        elements.lineButton
+          .addEventListener(
+            "click",
+            handleLineLogin
+          );
+
+        global.document
+          .querySelectorAll(
+            "input"
+          )
+          .forEach(
+            function bindInput(input) {
+              input.addEventListener(
+                "input",
+                function clearInvalid() {
+                  input.removeAttribute(
+                    "aria-invalid"
+                  );
+                }
+              );
+            }
+          );
+
+        bindPasswordToggles();
+      }
+
+      function showReasonMessage() {
+        const url =
+          new URL(global.location.href);
+
+        const reason =
+          url.searchParams.get(
+            "reason"
+          );
+
+        const messages = {
+          "authentication-required":
+            "請先登入會員中心，再繼續查看您原本選擇的頁面。",
+
+          "signed-out":
+            "您的會員工作階段已結束，請重新登入。",
+
+          "authentication-error":
+            "登入狀態驗證未完成，請重新登入。"
+        };
+
+        if (messages[reason]) {
+          showAlert(
+            "info",
+            "請先完成登入",
+            messages[reason]
+          );
+        }
+      }
+
+      async function start() {
+        cacheElements();
+        bindEvents();
+
+        elements.copyrightYear
+          .textContent =
+            String(
+              new Date().getFullYear()
+            );
+
+        applyFeatureFlags();
+
+        const configValidation =
+          validateRuntimeConfig();
+
+        state.configured =
+          configValidation.ok;
+
+        if (!state.configured) {
+          disableConfigurationActions();
+
+          revealPage();
+
+          showAlert(
+            "warning",
+            "系統設定尚未完成",
+            configValidation.errors
+              .join(" ")
+          );
+
+          return;
+        }
+
+        enableConfigurationActions();
+
+        try {
+          const callbackCompleted =
+            await processLoginCallbacks();
+
+          if (callbackCompleted) {
+            return;
+          }
+
+          setBootMessage(
+            "正在確認會員登入狀態"
+          );
+
+          const guard =
+            global.XuanXiangMemberGuard;
+
+          const result =
+            await guard.initialize(
+              guard.MODES.GUEST,
+              {
+                redirect: true,
+                replace: true,
+                watch: true
+              }
+            );
+
+          if (
+            result &&
+            result.redirected
+          ) {
+            return;
+          }
+
+          revealPage();
+          showReasonMessage();
+
+          global.requestAnimationFrame(
+            function focusLoginEmail() {
+              elements.loginEmail.focus();
+            }
+          );
+        } catch (error) {
+          revealPage();
+
+          showAlert(
+            "error",
+            "會員系統暫時無法啟動",
+            getErrorMessage(error)
+          );
+        }
+      }
+
+      if (
+        global.document.readyState ===
+        "loading"
+      ) {
+        global.document.addEventListener(
+          "DOMContentLoaded",
+          start,
+          {
+            once: true
+          }
+        );
+      } else {
+        start();
+      }
+    })(globalThis);
+  </script>
+</body>
+</html>
