@@ -1319,35 +1319,6 @@
     }
   </style>
 
-  <script>
-    /**
-     * 正式部署前，將下列空白內容替換成實際設定。
-     *
-     * API URL 範例：
-     * https://script.google.com/macros/s/DEPLOYMENT_ID/exec
-     *
-     * Firebase 設定可在：
-     * Firebase Console → 專案設定 → 您的應用程式 → Web App
-     * 取得。
-     */
-    window.__XUANXIANG_MEMBER_ENV__ =
-      window.__XUANXIANG_MEMBER_ENV__ || {
-        environment: "production",
-        apiUrl: "",
-        apiTimeoutMs: 15000,
-
-        firebase: {
-          apiKey: "",
-          authDomain:
-            "xuanxiang-travel.firebaseapp.com",
-          projectId:
-            "xuanxiang-travel",
-          appId: "",
-          messagingSenderId: "",
-          measurementId: ""
-        }
-      };
-  </script>
 </head>
 
 <body data-ready="false">
@@ -2240,6 +2211,7 @@
     src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"
   ></script>
 
+  <script src="./assets/env.js"></script>
   <script src="./assets/config.js"></script>
   <script src="./assets/firebase.js"></script>
   <script src="./assets/api.js"></script>
