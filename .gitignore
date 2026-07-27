@@ -7,3 +7,6 @@ node_modules/
 # Backup files
 *.bak
 *.bak.*
+
+# V39 Member production environment
+public/member/assets/env.js

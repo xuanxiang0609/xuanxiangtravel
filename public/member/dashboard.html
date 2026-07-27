@@ -1555,29 +1555,6 @@
     }
   </style>
 
-  <script>
-    /**
-     * 此設定必須與 login.html 使用相同內容。
-     * 正式部署時填入 Apps Script 與 Firebase Web App 設定。
-     */
-    window.__XUANXIANG_MEMBER_ENV__ =
-      window.__XUANXIANG_MEMBER_ENV__ || {
-        environment: "production",
-        apiUrl: "",
-        apiTimeoutMs: 15000,
-
-        firebase: {
-          apiKey: "",
-          authDomain:
-            "xuanxiang-travel.firebaseapp.com",
-          projectId:
-            "xuanxiang-travel",
-          appId: "",
-          messagingSenderId: "",
-          measurementId: ""
-        }
-      };
-  </script>
 </head>
 
 <body
@@ -2507,6 +2484,7 @@
     src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"
   ></script>
 
+  <script src="./assets/env.js"></script>
   <script src="./assets/config.js"></script>
   <script src="./assets/firebase.js"></script>
   <script src="./assets/api.js"></script>
