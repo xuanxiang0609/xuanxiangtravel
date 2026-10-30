@@ -49,40 +49,36 @@
       "FINAL_ONLINE_REPORT.txt",
       "README.txt",
       "reports/**",
-
       "**/*.bak*",
       "**/*.backup*",
       "firebase.backup.*",
-
       ".clasp.json",
       ".claspignore",
       "appsscript.json",
-
       "MERGE_LOG.*",
       "validation-report.*",
-
       "FINAL_CHECK_REPORT.*",
       "FINAL_ONLINE_REPORT.*",
-
       "*.py",
       "**/*.py",
-
       "**/*.bak*",
       "**/*.backup*",
       "firebase.backup.*",
-
       ".clasp.json",
       ".claspignore",
       "appsscript.json",
-
       "MERGE_LOG.*",
       "validation-report.*",
-
       "FINAL_CHECK_REPORT.*",
       "FINAL_ONLINE_REPORT.*",
-
       "*.py",
-      "**/*.py"
+      "**/*.py",
+      "functions/**",
+      "tests/**",
+      "package.json",
+      "package-lock.json",
+      "**/.env*",
+      "**/*service-account*.json"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
@@ -334,9 +330,109 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com; connect-src 'self' https:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://accounts.google.com https://script.google.com https://docs.google.com;"
+            "value": "default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com; connect-src 'self' https:; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://accounts.google.com https://script.google.com https://docs.google.com https://xuanxiang-travel.firebaseapp.com https://www.google.com https://www.recaptcha.net;"
           }
         ]
+      },
+      {
+        "source": "/assets/js/member.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      },
+      {
+        "source": "/assets/js/member-account.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      },
+      {
+        "source": "/assets/js/member-orders.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      },
+      {
+        "source": "/assets/js/firebase-member-config.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      },
+      {
+        "source": "/assets/css/member-account.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      },
+      {
+        "source": "/member-center",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      },
+      {
+        "source": "/member-auth/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/member-auth/**",
+        "function": {
+          "functionId": "memberAuth",
+          "region": "asia-east1"
+        }
       }
     ]
   },
@@ -345,6 +441,19 @@
       "database": "xuanxiangtravel",
       "rules": "firestore.rules",
       "indexes": "firestore.indexes.json"
+    }
+  ],
+  "functions": [
+    {
+      "source": "functions/membership",
+      "codebase": "membership",
+      "runtime": "nodejs22",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "*.log",
+        ".env*"
+      ]
     }
   ]
 }

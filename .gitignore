@@ -10,3 +10,9 @@ node_modules/
 
 # V39 Member production environment
 public/member/assets/env.js
+
+# Membership runtime secrets and local state
+**/.env
+**/.env.*
+!**/.env.example
+**/node_modules/
