@@ -6,6 +6,7 @@ import {defineSecret,defineString} from 'firebase-functions/params';
 import {randomBytes,createHmac} from 'node:crypto';
 import {hash,randomPattern,readCookie,requireSession,requireOrigin,requireRecentToken,requireLineClaims,profileInput,selectLinkedUid,PublicError} from './security.mjs';
 import {memberProfileView,memberOrderView} from './member-view.mjs';
+import {lineCallbackReason,safeLineErrorCode} from './line-diagnostics.mjs';
 initializeApp();
 const db=getFirestore('xuanxiangtravel'),auth=getAuth();
 const lineSecret=defineSecret('LINE_CHANNEL_SECRET');
@@ -28,7 +29,7 @@ async function rateLimit(req){
 }
 async function postLine(path,body){
  const response=await fetch('https://api.line.me'+path,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(body),signal:AbortSignal.timeout(12000)});
- if(!response.ok)throw new PublicError('LINE 驗證失敗，請重新操作',401);
+ if(!response.ok){const error=new PublicError('LINE 驗證失敗，請重新操作',401);try{const body=await response.json();if(['invalid_client','invalid_grant','invalid_request','unsupported_grant_type'].includes(body.error))error.lineCode=body.error}catch{}throw error;}
  return response.json();
 }
 async function startLine(req,res,origin,channel){
@@ -48,20 +49,27 @@ async function startLine(req,res,origin,channel){
  json(res,{url:url.href});
 }
 async function callback(req,res,origin,channel){
+ res.locals.lineStage='input';
  const state=typeof req.query.state==='string'?req.query.state:'',code=typeof req.query.code==='string'?req.query.code:'';
  if(!randomPattern.test(state)||!code||code.length>4096)throw new PublicError('LINE 授權未完成，請重新操作',401);
+ res.locals.lineStage='session';
  const browser=readCookie(req.get('cookie')),ref=doc('xuanxiangAuthSessions',hash(state));
  const session=await db.runTransaction(async tx=>{const saved=(await tx.get(ref)).data();requireSession(saved,browser,Date.now());tx.update(ref,{used:true});return saved});
+ res.locals.lineStage='exchange';
  const tokens=await postLine('/oauth2/v2.1/token',{grant_type:'authorization_code',code,redirect_uri:origin+'/member-auth/line/callback',client_id:channel,client_secret:lineSecret.value(),code_verifier:session.verifier});
  if(typeof tokens.id_token!=='string')throw new PublicError('LINE 未提供可驗證的身分',401);
+ res.locals.lineStage='claims';
  const raw=await postLine('/oauth2/v2.1/verify',{id_token:tokens.id_token,client_id:channel,nonce:session.nonce});
  const claims=requireLineClaims(raw,channel,session.nonce,Date.now());
+ res.locals.lineStage='identity';
  const identityKey=hash(channel+'|'+claims.sub),identityRef=doc('xuanxiangIdentityLinks',identityKey);
  const fixedUid='line_'+identityKey;
  // Reserve the identity mapping in a transaction; never merge by name/email/phone.
  const uid=await db.runTransaction(async tx=>{const old=(await tx.get(identityRef)).data();const selected=selectLinkedUid(old?.uid,session.uid,fixedUid);tx.set(identityRef,{uid:selected,provider:'line',channel,updatedAt:Timestamp.now()},{merge:true});return selected});
+ res.locals.lineStage='account';
  try{await auth.getUser(uid)}catch(error){if(error.code!=='auth/user-not-found'||session.mode==='link')throw error;try{await auth.createUser({uid,displayName:typeof claims.name==='string'?claims.name.slice(0,80):'LINE 會員'})}catch(createError){if(createError.code!=='auth/uid-already-exists')throw createError}}
  await doc('xuanxiangMemberBindings',uid).set({lineLinked:true,updatedAt:Timestamp.now()},{merge:true});
+ res.locals.lineStage='grant';
  const grant=newRandom();
  await doc('xuanxiangAuthGrants',hash(grant)).create({uid,mode:session.mode,browserHash:hash(browser),used:false,expiresAt:expire(90)});
  // No Firebase/LINE tokens or grant codes in URLs. The browser-bound grant is stored server-side.
@@ -125,7 +133,12 @@ export const memberAuth=onRequest({region:'asia-east1',secrets:[lineSecret],maxI
  }catch(error){
   const safe=error instanceof PublicError?error:new PublicError('會員服務暫時無法使用，請稍後再試',503);
   // Do not log request headers, OAuth codes, tokens, secrets or phone numbers.
-  if(path==='/member-auth/line/callback'){cookie(res,'',0);return res.redirect(303,origin+'/member-center?line=failed')}
+  if(path==='/member-auth/line/callback'){
+   const reason=lineCallbackReason(res.locals.lineStage,{cancelled:req.query.error==='access_denied',browserPresent:!!readCookie(req.get('cookie')),status:safe.status});
+   // Only fixed reason enums and allowlisted service codes are logged. Never log the error object, request, token or authorization code.
+   console.warn(JSON.stringify({event:'line_callback_failed',reason,status:safe.status,serviceCode:safeLineErrorCode(error)}));
+   cookie(res,'',0);return res.redirect(303,origin+'/member-center?line=failed&line_reason='+encodeURIComponent(reason));
+  }
   return json(res,{error:safe.message},safe.status);
  }
 });
