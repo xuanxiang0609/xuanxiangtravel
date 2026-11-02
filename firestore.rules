@@ -560,6 +560,15 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Server-only member verification state; no client identity claims.
+    match /xuanxiangIdentityLinks/{id} { allow read, write: if false; }
+    match /xuanxiangMemberBindings/{id} { allow read, write: if false; }
+    match /xuanxiangMemberProfiles/{id} { allow read, write: if false; }
+    match /xuanxiangAuthSessions/{id} { allow read, write: if false; }
+    match /xuanxiangAuthGrants/{id} { allow read, write: if false; }
+    match /xuanxiangAuthBrowsers/{id} { allow read, write: if false; }
+    match /xuanxiangAuthLimits/{id} { allow read, write: if false; }
+
     match /{document=**} {
       allow read, write: if false;
     }

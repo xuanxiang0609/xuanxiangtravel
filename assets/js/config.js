@@ -22,10 +22,11 @@
     APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxPhHQ4U7HUxj7zZ_TNCfaKVQcE1UD1aTN7gSN8RwgX8FF2U-dFKQ0weQEHB3eCJNiJ/exec",
 
     LINE_CHANNEL_ID: "2010261169",
-    LINE_AUTH_API: "https://access.line.me/oauth2/v2.1/authorize",
-    LINE_REDIRECT_URI: "https://xuanxiangtravel.com/register.html",
-    LINE_REDIRECT_PATH: "register.html",
+    LINE_AUTH_API: "/member-auth/line/start",
+    LINE_REDIRECT_URI: "https://xuanxiangtravel.com/member-auth/line/callback",
+    LINE_REDIRECT_PATH: "member-auth/line/callback",
 
+    FIREBASE_DATABASE_ID: "xuanxiangtravel",
     MEMBER_REQUIRED_FOR_BOOKING: false,
 
     ANALYTICS: {
@@ -84,7 +85,7 @@
       storageBucket: "xuanxiang-travel.firebasestorage.app",
       messagingSenderId: "359961148631",
       appId: "1:359961148631:web:7348ad9406596f8f370492",
-      measurementId: "G-HEPD04QGPK"
+      measurementId: "G-JS0XRQ5VJ7"
     },
 
     PRICE_GROUPS: {

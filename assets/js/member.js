@@ -8,9 +8,9 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   setPersistence,
-  signInWithCustomToken,
   signInWithEmailAndPassword,
   signInWithPopup,
+  linkWithPopup,
   signOut,
   updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -45,7 +45,8 @@ const LINE_REDIRECT_PATH = String(cfg.LINE_REDIRECT_PATH || "register.html").rep
 let auth = null;
 let db = null;
 let authChecked = false;
-let pendingLinePayload = null;
+let resolveAuthReady;
+const authReady=new Promise(resolve=>{resolveAuthReady=resolve;});
 const BOOKING_MALL_VERSION = String(cfg.BOOKING_MALL_VERSION || cfg.BOOKING_VERSION || "v12");
 const MEMBER_SOURCE = "member-v12-2-booking-mall-shared-layout";
 
@@ -113,41 +114,18 @@ function cleanLineQuery() {
 
 async function upsertMember(user, extra = {}) {
   if (!db || !user) return;
-  const ref = doc(db, "members", user.uid);
-  const old = await getDoc(ref);
-  const providerIds = Array.isArray(user.providerData) ? user.providerData.map((provider) => provider.providerId) : [];
-  const lineProfile = extra.lineProfile || null;
-  const payload = {
-    uid: user.uid,
-    memberVersion: MEMBER_VERSION,
-    memberSource: MEMBER_SOURCE,
-    bookingMallVersion: BOOKING_MALL_VERSION,
-    layoutVersion: cfg.LAYOUT_VERSION || "Ultimate Final v12.2 Shared Layout Core",
-    name: extra.name || lineProfile?.displayName || user.displayName || "",
-    phone: extra.phone || "",
-    email: extra.email || user.email || "",
-    lineId: extra.lineId || lineProfile?.userId || "",
-    lineUserId: extra.lineUserId || lineProfile?.userId || "",
-    lineDisplayName: extra.lineDisplayName || lineProfile?.displayName || "",
-    photoURL: extra.photoURL || lineProfile?.pictureUrl || user.photoURL || "",
-    pictureUrl: extra.pictureUrl || lineProfile?.pictureUrl || "",
-    providerIds: Array.from(new Set([...providerIds, ...(lineProfile ? ["line.com"] : [])])),
-    updatedAt: serverTimestamp(),
-    lastLoginAt: serverTimestamp()
-  };
-  if (!old.exists()) payload.createdAt = serverTimestamp();
-  await setDoc(ref, payload, { merge: true });
-}
-
-async function bindLineProfileToCurrentUser(lineProfile = {}) {
-  if (!auth?.currentUser) return false;
-  await upsertMember(auth.currentUser, {
-    lineProfile,
-    lineUserId: lineProfile.userId || "",
-    lineDisplayName: lineProfile.displayName || "",
-    pictureUrl: lineProfile.pictureUrl || ""
-  });
-  return true;
+  const ref=doc(db,'members',user.uid),old=await getDoc(ref);
+  const previous=old.exists()?old.data():{};
+  const payload={uid:user.uid,updatedAt:serverTimestamp(),lastLoginAt:serverTimestamp()};
+  if(!old.exists())payload.createdAt=serverTimestamp();
+  for(const key of ['name','phone','lineId']){
+    if(Object.prototype.hasOwnProperty.call(extra,key))payload[key]=String(extra[key]||'').trim();
+    else if(!Object.prototype.hasOwnProperty.call(previous,key)&&key==='name')payload.name=user.displayName||'';
+  }
+  if(user.email)payload.email=user.email;
+  if(user.photoURL)payload.photoURL=user.photoURL;
+  payload.providerIds=(user.providerData||[]).map(provider=>provider.providerId);
+  await setDoc(ref,payload,{merge:true});
 }
 
 async function googleLogin(options = {}) {
@@ -157,9 +135,10 @@ async function googleLogin(options = {}) {
     show(isBind ? "正在開啟 Google 綁定…" : "Google 登入中，請稍候。");
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
-    const result = await signInWithPopup(auth, provider);
+    if(isBind&&!auth.currentUser)throw new Error('請先登入原會員，再綁定 Google。');
+    const result = isBind?await linkWithPopup(auth.currentUser,provider):await signInWithPopup(auth,provider);
     await upsertMember(result.user);
-    setBindStatus(`Google 綁定成功：${result.user.displayName || result.user.email || "玹翔會員"}`, "success");
+    setBindStatus(`${isBind?'Google 綁定成功':'Google 登入成功'}：${result.user.displayName || result.user.email || "玹翔會員"}`, "success");
     if (!isBind) redirectAfterLogin();
   } catch (error) {
     console.error(error);
@@ -169,92 +148,26 @@ async function googleLogin(options = {}) {
   }
 }
 
-function lineLogin(options = {}) {
-  if (!LINE_CHANNEL_ID) return show("LINE Channel ID 尚未設定，請先到 config.js 填入 LINE_CHANNEL_ID。", "error");
-  const state = crypto.randomUUID ? crypto.randomUUID() : `xx-line-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  const next = new URLSearchParams(location.search).get("next");
-  if (next) sessionStorage.setItem("xx_login_next", next);
-  if (options.bindOnly) sessionStorage.setItem("xx_line_bind_mode", "1");
-  sessionStorage.setItem("xx_line_state", state);
-
-  const params = new URLSearchParams({
-    response_type: "code",
-    client_id: LINE_CHANNEL_ID,
-    redirect_uri: getRedirectUri(),
-    state,
-    scope: "profile openid email"
-  });
-
-  show("正在前往 LINE 授權頁面…");
-  location.href = `https://access.line.me/oauth2/v2.1/authorize?${params.toString()}`;
+async function lineLogin(options = {}) {
+  if(!ready||!auth)return show('Firebase 尚未設定完成。','error');
+  await authReady;
+  if(options.bindOnly&&!auth.currentUser)return show('請先登入會員，再綁定 LINE。','error');
+  try{
+    const mode=auth.currentUser?'link':'login';
+    const token=auth.currentUser?await auth.currentUser.getIdToken():null;
+    const response=await fetch('/member-auth/line/start',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify({mode})});
+    const data=await response.json();
+    if(!response.ok)throw new Error(data.error||'LINE 驗證服務尚未完成設定');
+    const target=new URL(data.url);
+    if(target.origin!=='https://access.line.me')throw new Error('LINE 授權網址不正確');
+    location.assign(target.href);
+  }catch(error){show(error.message||'目前無法開始 LINE 驗證，請稍後重試。','error')}
 }
 
-async function handleLineCallback() {
-  const params = new URLSearchParams(location.search);
-  const code = params.get("code");
-  const state = params.get("state");
-  if (!code || !state) return;
-
-  const savedState = sessionStorage.getItem("xx_line_state") || localStorage.getItem("xx_line_state");
-  sessionStorage.removeItem("xx_line_state");
-  localStorage.removeItem("xx_line_state");
-  const isBindMode = sessionStorage.getItem("xx_line_bind_mode") === "1";
-  sessionStorage.removeItem("xx_line_bind_mode");
-
-  if (!savedState || savedState !== state) {
+async function handleLineCallback(){
+  if(new URLSearchParams(location.search).has('code')){
     cleanLineQuery();
-    return show("LINE 授權驗證失敗，請重新點擊 LINE 登入。", "error");
-  }
-
-  if (!LINE_AUTH_API) {
-    cleanLineQuery();
-    return show("LINE 後端 API 尚未設定，請先到 config.js 填入 LINE_AUTH_API。", "error");
-  }
-
-  try {
-    show("LINE 授權成功，正在建立會員資料…");
-    const response = await fetch(LINE_AUTH_API, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({
-        action: "line-login",
-        memberVersion: MEMBER_VERSION,
-        bookingMallVersion: BOOKING_MALL_VERSION,
-        source: MEMBER_SOURCE,
-        code,
-        redirectUri: getRedirectUri(),
-        origin: location.origin
-      })
-    });
-
-    const data = await response.json();
-    if (!response.ok || data.ok === false) throw new Error(data.message || data.error || "LINE 後端驗證失敗");
-
-    const lineProfile = data.profile || data.lineProfile || data;
-    pendingLinePayload = { data, lineProfile };
-
-    if (data.firebaseCustomToken && auth) {
-      const result = await signInWithCustomToken(auth, data.firebaseCustomToken);
-      await upsertMember(result.user, { lineProfile });
-      cleanLineQuery();
-      redirectAfterLogin();
-      return;
-    }
-
-    if (auth?.currentUser) {
-      await bindLineProfileToCurrentUser(lineProfile);
-      cleanLineQuery();
-      setBindStatus(`LINE 綁定成功：${lineProfile.displayName || lineProfile.userId || "玹翔會員"}`, "success");
-      if (!isBindMode) redirectAfterLogin();
-      return;
-    }
-
-    cleanLineQuery();
-    setBindStatus("LINE 資料已取得。請先用 Email 或 Google 登入後，再點一次 LINE 綁定。", "info");
-  } catch (error) {
-    console.error(error);
-    cleanLineQuery();
-    show(`LINE 登入失敗：${error.message || "請稍後再試"}`, "error");
+    show('舊 LINE 授權流程已更新，請重新點擊 LINE 登入。','error');
   }
 }
 
@@ -266,7 +179,6 @@ async function emailLogin() {
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
     await upsertMember(result.user);
-    if (pendingLinePayload?.lineProfile) await bindLineProfileToCurrentUser(pendingLinePayload.lineProfile);
     redirectAfterLogin();
   } catch (error) {
     console.error(error);
@@ -286,7 +198,6 @@ async function register() {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     if (name) await updateProfile(result.user, { displayName: name });
     await upsertMember(result.user, { name, phone, lineId });
-    if (pendingLinePayload?.lineProfile) await bindLineProfileToCurrentUser(pendingLinePayload.lineProfile);
     redirectAfterLogin();
   } catch (error) {
     console.error(error);
@@ -353,8 +264,8 @@ function syncBookingMember(user) {
   form.dataset.xxSharedLayoutVersion = cfg.LAYOUT_VERSION || "Ultimate Final v12.2 Shared Layout Core";
 
   if (gate) gate.innerHTML = user
-    ? `<div class="notice-box">已登入：${esc(user.email || user.displayName || "玹翔會員")}。訂單會自動綁定會員。</div>`
-    : '<div class="notice-box">可直接預約；登入會員後，訂單會自動綁定帳號方便追蹤。 <a href="login.html?next=booking.html">會員登入</a></div>';
+    ? `<div class="notice-box">已登入：${esc(user.email || user.displayName || "玹翔會員")}。會員識別已帶入，訂單紀錄待客服核對。</div>`
+    : '<div class="notice-box">可直接預約；登入會員可帶入帳號識別，訂單紀錄待客服核對。 <a href="login.html?next=booking.html">會員登入</a></div>';
 
   document.dispatchEvent(new CustomEvent("xx:booking-member-sync", {
     detail: {
@@ -390,6 +301,7 @@ if (!ready) {
   setPersistence(auth, browserLocalPersistence).catch(console.warn);
   onAuthStateChanged(auth, async (user) => {
     authChecked = true;
+    resolveAuthReady(user);
     syncBookingMember(user);
     if (window.XXAnalytics && typeof window.XXAnalytics.trackEvent === "function") {
       window.XXAnalytics.trackEvent("member_auth_state", {
@@ -402,10 +314,7 @@ if (!ready) {
     }
     document.body.classList.toggle("is-member", Boolean(user));
     document.body.classList.toggle("is-guest", !user);
-    if (pendingLinePayload?.lineProfile && user) {
-      await bindLineProfileToCurrentUser(pendingLinePayload.lineProfile);
-      pendingLinePayload = null;
-    }
+
     if ($("#memberMessage")) show(user ? `目前已登入：${user.email || user.displayName || "玹翔會員"}` : "目前尚未登入，可使用 Email、Google 或 LINE 登入。", user ? "success" : "info");
   });
 }

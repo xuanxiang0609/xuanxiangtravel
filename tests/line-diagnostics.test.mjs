@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {lineCallbackReason,safeLineErrorCode} from '../functions/membership/src/line-diagnostics.mjs';
+test('LINE callback distinguishes cancellation, missing cookies, provider exchange and Firebase persistence',()=>{assert.equal(lineCallbackReason('input',{cancelled:true}),'cancelled');assert.equal(lineCallbackReason('session',{browserPresent:false}),'browser_session');assert.equal(lineCallbackReason('session',{browserPresent:true}),'session_invalid');assert.equal(lineCallbackReason('exchange'),'line_exchange');assert.equal(lineCallbackReason('claims'),'line_claims');assert.equal(lineCallbackReason('identity',{status:409}),'identity_conflict');assert.equal(lineCallbackReason('account'),'firebase_account');assert.equal(lineCallbackReason('grant'),'grant_store');});
+test('LINE callback logs exclude arbitrary provider error data',()=>{assert.equal(safeLineErrorCode({code:'not-an-allowed-value',message:'sensitive-data'}),'unknown');assert.equal(safeLineErrorCode({lineCode:'invalid_client'}),'invalid_client');assert.equal(safeLineErrorCode({code:7}),'7');});

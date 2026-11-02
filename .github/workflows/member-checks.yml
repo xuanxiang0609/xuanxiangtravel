@@ -1,0 +1,23 @@
+name: Member integration checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  member-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
+      - run: node --check assets/js/member.js && node --check assets/js/member-account.js && node --check functions/membership/src/index.mjs
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: functions/membership
+      - run: GCLOUD_PROJECT=xuanxiang-travel node --input-type=module -e "await import('./src/index.mjs')"
+        working-directory: functions/membership

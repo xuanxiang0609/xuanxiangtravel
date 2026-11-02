@@ -1,69 +1,131 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>會員中心｜玹翔旅遊</title><meta name="description" content="玹翔旅遊查看會員狀態、前往預約商城與客服協助。"><link rel="canonical" href="https://xuanxiangtravel.com/member-center.html"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
-<meta property="og:title" content="會員中心｜玹翔旅遊">
-<meta property="og:description" content="玹翔旅遊查看會員狀態、前往預約商城與客服協助。">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://xuanxiangtravel.com/images/logo.jpg">
-<meta name="robots" content="noindex,follow">
-<link rel="stylesheet" href="assets/css/xx-v8.css">
-<script src="assets/js/config.js"></script>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/xx-enterprise-v10.css">
-</head><body data-xx-layout="v8">
-<div id="xx-site-header"></div>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>會員登入與帳號綁定｜玹翔旅遊</title>
+<link rel="stylesheet" href="/assets/css/member-account.css">
+<script src="/assets/js/config.js">
+</script>
+</head>
+<body>
+<header>
+<a href="/" class="brand">玹翔旅遊<small>XUAN XIANG TRAVEL</small>
+</a>
+<nav>
+<a href="/booking.html">立即預約</a> · <a href="/">返回官網 ↗</a>
+</nav>
+</header>
 <main>
-    <section class="hero">
-        <div class="wrap">
-            <article class="hero-card member-card">
-                <div class="kicker">MEMBER SYSTEM</div>
-                <h1>會員中心</h1>
-                <p class="lead">查看會員狀態、前往預約商城與客服協助。</p>
-                <div id="memberMessage" class="member-alert">系統檢查中</div>
-                <div class="form-grid"><div class="full member-help"></div>
-                <div class="full member-actions">
-                    <a class="btn primary" href="booking.html">建立預約</a>
-    <button class="btn" type="button" data-google-login>Google 綁定 / 登入</button>
-    <button class="btn" type="button" data-logout>登出</button>
-    <a class="btn" href="#" data-xx-line-link target="_blank" rel="noopener">客服協助</a>
+<section class="intro">
+<span class="eyebrow">YOUR TRAVEL COMPANION</span>
+<h1>每一段旅程，<br>都有專屬的安心。</h1>
+<p>用熟悉的帳號登入，<br>讓下一趟接送，從容開始。</p>
+<div class="features">
+<p>
+<b>01</b> Google 與 LINE 帳號登入</p>
+<p>
+<b>02</b> 同一會員綁定多種登入方式</p>
+<p>
+<b>03</b> 手機簡訊驗證與常用資料</p>
 </div>
+<p class="note">原網站訂單不會因姓名或電話相同而自動合併。<br>舊訂單需由客服核對後串接。</p>
+</section>
+<section class="card">
+<div id="boot" role="status">正在確認登入狀態…</div>
+<div id="signed-out" hidden>
+<span class="eyebrow">WELCOME BACK</span>
+<h2>歡迎回到玹翔旅遊</h2>
+<p>選擇您習慣的方式登入。</p>
+<button id="google-login" class="gold">使用 Google 登入</button>
+<button id="line-login" class="line">使用 LINE 登入</button>
+<p>
+<a href="/login.html">使用既有 Email 帳號登入 ↗</a>
+</p>
+<p class="note">首次登入會建立會員。之後請從帳號設定綁定其他登入方式，避免分成不同會員。</p>
 </div>
-</article>
+<div id="signed-in" hidden>
+<span class="eyebrow">MEMBER ACCOUNT</span>
+<h2 id="welcome">我的會員資料</h2>
+<p id="account-email">
+</p>
+<details>
+<summary>會員識別碼</summary>
+<code id="uid">
+</code>
+</details>
+<h3>我的訂單</h3>
+<p class="note">顯示網站資料庫中已綁定此會員的訂單。LINE 或試算表訂單，需先由客服核對。</p>
+<button id="refresh-orders">更新訂單</button>
+<div id="member-orders" aria-live="polite">
 </div>
+<h3>帳號綁定</h3>
+<div class="binding">
+<span>Google <small id="google-state">讀取中</small>
+</span>
+<button id="google-link">綁定 Google</button>
+</div>
+<div class="binding">
+<span>LINE <small id="line-state">讀取中</small>
+</span>
+<button id="line-link">綁定 LINE</button>
+</div>
+<div class="binding">
+<span>手機驗證 <small id="phone-state">讀取中</small>
+</span>
+</div>
+<form id="phone-form">
+<label>台灣手機號碼<input id="phone-number" type="tel" inputmode="tel" autocomplete="tel" placeholder="0912345678" required pattern="(09[0-9]{8}|\+8869[0-9]{8})" maxlength="13">
+</label>
+<div id="recaptcha">
+</div>
+<button id="send-code" type="submit">傳送簡訊驗證碼</button>
+</form>
+<form id="code-form" hidden>
+<label>簡訊驗證碼<input id="sms-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+</label>
+<button id="confirm-code" type="submit" class="gold">確認並綁定手機</button>
+</form>
+<h3>常用預約資料</h3>
+<form id="profile-form">
+<label>聯絡姓名<input name="name" maxlength="80" autocomplete="name">
+</label>
+<label>聯絡電話（自行填寫）<input name="contactPhone" type="tel" maxlength="40">
+</label>
+<label>LINE ID（聯絡用）<input name="lineContact" maxlength="80">
+</label>
+<label>常用出發地區<input name="region" maxlength="80" autocomplete="address-level2">
+</label>
+<label>常用上車地址<input name="address" maxlength="200" autocomplete="street-address">
+</label>
+<label>偏好車型<select name="vehicle">
+<option value="">由客服建議</option>
+<option>五人座</option>
+<option>休旅車</option>
+<option>九人座</option>
+<option>VITO</option>
+<option>Alphard</option>
+<option>Lexus LM</option>
+<option>明星保母車</option>
+</select>
+</label>
+<p class="note">聯絡電話與 LINE ID 可自行修改，並不代表完成手機或 LINE 帳號驗證。修改常用資料不會變更既有訂單。</p>
+<button id="save-profile" class="gold">儲存常用資料</button>
+</form>
+<button id="refresh-profile">重新整理資料</button>
+<button id="logout" class="plain">登出會員</button>
+</div>
+<p id="message" role="status" aria-live="polite">
+</p>
+<p id="error" role="alert" hidden>
+</p>
+<p class="note privacy">登入與綁定前請閱讀本站<a href="/privacy">隱私權說明</a>。Google／LINE 由各自平台完成驗證；本站不收取其帳號密碼。簡訊驗證會將手機號碼交由 Firebase Authentication 處理。</p>
 </section>
 </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="xx-site-footer"></div>
-<div id="xx-site-floating"></div>
-<script src="assets/js/site-layout.js" defer></script>
-<script src="assets/js/site.js" defer></script>
-<script src="assets/js/pricing-freeze.js" defer></script>
-<script type="module" src="assets/js/member.js"></script>
-</body></html>
+<footer>玹翔旅遊 · 用心服務，每一段旅程。</footer>
+<script type="module" src="/assets/js/member-account.js">
+</script>
+</body>
+</html>
