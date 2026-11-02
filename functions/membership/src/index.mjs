@@ -20,7 +20,14 @@ function cookie(res,value,maxAge=600){res.set('Set-Cookie',`__session=${value}; 
 async function signedUser(req){
  const bearer=req.get('authorization')||'';
  if(!bearer.startsWith('Bearer '))throw new PublicError('請先登入會員',401);
- try{return await auth.verifyIdToken(bearer.slice(7),true)}catch{throw new PublicError('登入已過期，請重新登入',401)}
+ try{return await auth.verifyIdToken(bearer.slice(7),true)}catch(error){
+  const code=typeof error?.code==='string'?error.code:'';
+  const invalid=['auth/id-token-expired','auth/id-token-revoked','auth/invalid-id-token','auth/argument-error','auth/user-disabled','auth/user-not-found'];
+  if(invalid.includes(code))throw new PublicError('會員憑證已失效，請重新登入',401);
+  const safe=['auth/insufficient-permission','auth/internal-error','app/invalid-credential','app/network-error'].includes(code)?code:'unknown';
+  console.warn(JSON.stringify({event:'firebase_token_verification_unavailable',serviceCode:safe}));
+  throw new PublicError('會員驗證服務暫時無法使用，請稍後再試；若持續發生請聯絡客服',503);
+ }
 }
 async function rateLimit(req){
  const bucket=Math.floor(Date.now()/600000),key=createHmac('sha256',lineSecret.value()).update(`${req.ip||'unknown'}|${bucket}`).digest('hex');
